@@ -8,11 +8,11 @@ docker pull pgc-images.sbgenomics.com/d3b-bixu/pbta-splicing:v1.0.0
 ```
 #### docker run
 ```
-docker run --platform linux/amd64 --name <CONTAINER_NAME> -d -e PASSWORD=pass -p 8787:8787 -v $PWD:/home/rstudio/pbta-splicing pgc-images.sbgenomics.com/d3b-bixu/pbta-splicing:v1.0.0
+docker run --platform linux/amd64 --name <CONTAINER_NAME> -d -e PASSWORD=pass -p 8787:8787 -v $PWD:/home/rstudio/clk1-splicing pgc-images.sbgenomics.com/d3b-bixu/pbta-splicing:v1.0.0
 ```
 #### docker execute
 ```
-docker exec -ti pbta-splicing bash
+docker exec -ti clk1-splicing bash
 ```
 ### Get project data files
 ```
