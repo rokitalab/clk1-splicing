@@ -1,6 +1,9 @@
 # Characterization of aberrant splicing in pediatric central nervous system tumors reveals CLK1 as a candidate oncogenic dependency
 Ammar S. Naqvi, Ryan J. Corbett, Priyanka Seghal, Karina L. Conkrite, Komal S. Rathi, Brian M. Ennis, Katharina E Hayer, Bo Zhang, Miguel A. Brown, Daniel P. Miller, Adam A. Kraya, Joseph M. Dybas, Zhuangzhuang Geng, Christopher Blackden, Shebheel Arif, Antonia Chroni, Aditya Lahiri, Madison L. Hollawell, Phillip B. Storm, Jessica B. Foster, Matuesz Koptyra, Peter J. Madsen, Sharon J. Diskin, Andrei Thomas Tikhonenko, Adam C. Resnick, Jo Lynne Rokita 
 
+This project originated at the Center for Data-Driven Discovery in Biomedicine at Children's Hospital of Philadelphia.
+For issue and pull request history, please see https://github.com/d3b-center/pbta-splicing.
+
 ### Docker set-up
 #### docker pull
 ```
@@ -22,5 +25,8 @@ bash download_data.sh
 ```
 bash scripts/run_analyses.sh
 ```
+### Code Authors
+Ammar S. Naqvi (@naqvia), Jo Lynne Rokita (@jharenza), Ryan Corbett (@rjcorb)
+
 ### Contact
-For questions, please submit an issue or send an email to Jo Lynne Rokita (@jharenza): rokita@chop.edu and Ammar S. Naqvi (@naqvia): naqvia@chop.edu.
+For questions, please submit an issue.
