@@ -39,7 +39,7 @@ indep_rna_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary
 indep_wgs_file <- file.path(data_dir, "independent-specimens.wgswxspanel.primary.prefer.wgs.tsv")
 tmb_coding_file  <- file.path(data_dir,"snv-mutation-tmb-coding.tsv") # OPC v15 TMB file
 sbi_coding_file  <- file.path(results_dir,"splicing_index.SE.txt")
-palette_file <- file.path(map_dir,"histologies-plot-group.tsv") 
+palette_file <- file.path(data_dir,"histologies-plot-group.tsv") 
 
 # read in files
 hist_pal <- read_tsv(palette_file) %>%
@@ -50,11 +50,14 @@ hist_pal <- read_tsv(palette_file) %>%
 indep_rna_df <- read_tsv(indep_rna_file) %>% 
   filter(cohort == "PBTA") %>%
  # dplyr::rename(Kids_First_Biospecimen_ID_RNA = Kids_First_Biospecimen_ID) %>%
-  dplyr::select(Kids_First_Participant_ID, Kids_First_Biospecimen_ID)
+  dplyr::select(Kids_First_Participant_ID, Kids_First_Biospecimen_ID) %>%
+  filter(Kids_First_Biospecimen_ID %in% hist_pal$Kids_First_Biospecimen_ID)
+
 indep_wgs_df <- read_tsv(indep_wgs_file) %>% 
   filter(cohort == "PBTA") %>%
   #dplyr::rename(Kids_First_Biospecimen_ID_DNA = Kids_First_Biospecimen_ID) %>%
-  dplyr::select(Kids_First_Participant_ID, Kids_First_Biospecimen_ID)
+  dplyr::select(Kids_First_Participant_ID, Kids_First_Biospecimen_ID)  %>%
+  filter(Kids_First_Biospecimen_ID %in% hist_pal$Kids_First_Biospecimen_ID)
 
 ## get tmb file (source: OpenPedCan v15)
 tmb_coding_df  <-  read_tsv(tmb_coding_file)  %>% 
