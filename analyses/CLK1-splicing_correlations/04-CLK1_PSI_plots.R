@@ -43,7 +43,7 @@ figures_dir <- file.path(root_dir, "figures")
 source(file.path(figures_dir, "theme_for_plots.R"))
 
 ## input files
-rmats_file <- file.path(data_dir,"clk1-splice-events-rmats.tsv")
+rmats_file <- file.path(results_dir,"clk1-splice-events-rmats.tsv")
 clin_file  <- file.path(hist_dir,"histologies-plot-group.tsv")
 
 ## output files for final plots
