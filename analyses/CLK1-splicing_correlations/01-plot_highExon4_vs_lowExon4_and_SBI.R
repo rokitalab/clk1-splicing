@@ -20,6 +20,7 @@ suppressPackageStartupMessages({
 root_dir <- rprojroot::find_root(rprojroot::has_dir(".git"))
 data_dir <- file.path(root_dir, "data")
 analysis_dir <- file.path(root_dir, "analyses", "CLK1-splicing_correlations")
+results_dir <- file.path(analysis_dir, "results")
 hist_dir <- file.path(root_dir, "analyses", "cohort_summary", "results")
 figures_dir <- file.path(root_dir, "figures")
 input_dir   <- file.path(root_dir, "analyses", "splicing_index", "results")
@@ -28,7 +29,7 @@ input_dir   <- file.path(root_dir, "analyses", "splicing_index", "results")
 # Specify file paths
 sbi_file <-  file.path(input_dir,"splicing_index.SE.txt")
 clin_file  <- file.path(hist_dir,"histologies-plot-group.tsv")
-rmats_file <- file.path(data_dir, "clk1-splice-events-rmats.tsv")
+rmats_file <- file.path(results_dir, "clk1-splice-events-rmats.tsv")
 indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
   
 # Output directories
