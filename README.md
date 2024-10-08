@@ -4,8 +4,18 @@ Ammar S. Naqvi, Ryan J. Corbett, Priyanka Seghal, Karina L. Conkrite, Komal S. R
 This project originated at the Center for Data-Driven Discovery in Biomedicine at Children's Hospital of Philadelphia.
 For issue and pull request history, please see https://github.com/d3b-center/pbta-splicing.
 
+### Clone repository
+```
+git clone git@github.com:rokitalab/clk1-splicing.git
+```
+
+### Download data
+```
+bash download_data.sh
+```
+
 ### Docker set-up
-#### docker pull
+#### Pull docker image
 ```
 docker pull pgc-images.sbgenomics.com/d3b-bixu/pbta-splicing:v1.0.0
 ```
@@ -17,14 +27,12 @@ docker run --platform linux/amd64 --name <CONTAINER_NAME> -d -e PASSWORD=pass -p
 ```
 docker exec -ti clk1-splicing bash
 ```
-### Get project data files
-```
-bash download_data.sh
-```
+
 ### Generate paper figures
 ```
 bash scripts/run_analyses.sh
 ```
+
 ### Code Authors
 Ammar S. Naqvi (@naqvia), Jo Lynne Rokita (@jharenza), Ryan Corbett (@rjcorb)
 
