@@ -51,6 +51,10 @@ count_data <- readRDS(file_gene_counts) %>%
   #filter for HGG midline samples stranded and high sbi
   dplyr::select(any_of(hgg_bs_id)) 
 
+# Add gene names as a column to count_data
+count_data <- count_data %>%
+  mutate(gene = rownames(.))
+         
 count_data_sf <- count_data %>%
   dplyr::filter(gene %in% sf_list) %>%
   dplyr::select(gene, any_of(clin_tab$Kids_First_Biospecimen_ID)) %>%
@@ -82,3 +86,9 @@ boxplot_tpm<- ggplot(data_long, aes(x = gene, y = expression)) +
     axis.text.x = element_text(color = "#2c3e50"),
     axis.text.y = element_text(color = "#2c3e50")
   ) + theme_Publication()
+
+# Save plot as PDF
+pdf(file.path(plots_dir, "CLK-tpms.pdf"), 
+    width = 6, height = 5)
+print(boxplot_tpm)
+dev.off()
