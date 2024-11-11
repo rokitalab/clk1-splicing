@@ -71,7 +71,7 @@ psi_comb <- rbind(dpsi_unip_neg,dpsi_unip_pos) %>%
 ## ggstatplot across functional sites
 set.seed(123)
 counts_psi_comb <- psi_comb %>% 
-  count(Preference, Uniprot_wrapped)
+  dplyr::count(Preference, Uniprot_wrapped)
 plot_dsp <-  ggplot(psi_comb, aes(Uniprot_wrapped, dPSI*100) ) +  
   ylab(expression(bold("dPSI"))) +
   ggforce::geom_sina(aes(color = Preference, alpha = 0.4), pch = 16, size = 5, method="density") +
@@ -104,7 +104,7 @@ known_kinase_df <-read.delim(system.file("extdata", "genelistreference.txt", pac
   dplyr::filter(type=='Kinase')
 
 psi_unip_kinase <- dplyr::inner_join(psi_comb, known_kinase_df, by='gene') 
-counts_psi_unip_kinase <- psi_unip_kinase %>% count(Preference )
+counts_psi_unip_kinase <- psi_unip_kinase %>% dplyr::count(Preference )
 
 ## make sina plot
 set.seed(45)
@@ -218,6 +218,13 @@ kinase_incl_pref <- kinase_incl_pref %>%
 kinase_pref <- rbind(kinase_skip_pref, kinase_incl_pref) %>% 
   dplyr::select(SpliceID,dPSI,Uniprot, gene, Preference,`Exon Coordinates`)
 
+total_diff_events <- vroom(file.path(results_dir,"splice_events.diff.SE.txt")) %>%
+  dplyr::rename(SpliceID="Splice ID") %>%
+  dplyr::count(SpliceID)  %>% 
+  inner_join(kinase_pref,by="SpliceID") %>%
+  dplyr::rename('Frequency'=n)
+
+
 ## write kinase results for table
-write_tsv(kinase_pref, kinases_functional_sites)
+write_tsv(total_diff_events, kinases_functional_sites)
 
