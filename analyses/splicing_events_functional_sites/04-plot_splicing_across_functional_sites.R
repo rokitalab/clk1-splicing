@@ -224,7 +224,52 @@ total_diff_events <- vroom(file.path(results_dir,"splice_events.diff.SE.txt")) %
   inner_join(kinase_pref,by="SpliceID") %>%
   dplyr::rename('Frequency'=n)
 
+# read in exp file
+clin_file  <- file.path(hist_dir,"histologies-plot-group.tsv")
+expr_file <- file.path(data_dir,"gene-expression-rsem-tpm-collapsed.rds")
+
+
+## load histologies info for HGG subtypes
+hgg_bs_id <- hist_rna_df %>%
+  # Select only "RNA-Seq" samples
+  filter(plot_group %in% c("DIPG or DMG", "Other high-grade glioma")) %>%
+  pull(Kids_First_Biospecimen_ID)
+
+
+histologies_df  <-  read_tsv(clin_file) %>%
+  filter(cohort == "PBTA",
+         experimental_strategy == "RNA-Seq",
+         RNA_library=='stranded',
+         plot_group %in% c("DIPG or DMG", "Other high-grade glioma") ) %>%
+  pull(Kids_First_Biospecimen_ID)
+
+exp <- readRDS(exp_file) %>%
+  dplyr::select(any_of(histologies_df)) %>%
+  mutate(gene = rownames(.)) %>%
+  dplyr::filter(gene %in% total_diff_events$gene) %>%
+  dplyr::rowwise() %>%  # Ensure you use parentheses here
+  dplyr::filter(sum(c_across(where(is.numeric))) >= 1) %>%
+  dplyr::ungroup() %>%
+  pivot_longer(
+    cols = -gene,          # Select all columns to pivot
+    names_to = "Sample",          # Column name for former column names
+    values_to = "TPM"      # Column name for values
+  ) %>%
+  group_by(gene) %>%                     # Group by gene
+  summarize(Average_TPM = mean(TPM, na.rm = TRUE))  # Compute mean TPM per gene
+
+# Add gene names as a column to count_data
+total_diff_events_gene <- inner_join(total_diff_events,exp, by='gene') %>%
+  dplyr::rename(Differential_freq=Frequency,
+                mean_dPSI=dPSI,
+                Baseline_preference=Preference) %>%
+  mutate(Baseline_preference = case_when(
+    Baseline_preference == "Inclusion" ~ "Skipping",  # Replace "Inclusion" with "Skipping"
+    Baseline_preference == "Skipping" ~ "Inclusion",  # Replace "Skipping" with "Inclusion"
+    TRUE ~ Baseline_preference                      # Keep other values unchanged
+  ))
+
 
 ## write kinase results for table
-write_tsv(total_diff_events, kinases_functional_sites)
+write_tsv(total_diff_events_gene, kinases_functional_sites)
 
