@@ -99,9 +99,9 @@ exp <- readRDS(expr_file) %>%
 var_exp_filt <- add_TPM_values(clk1_rmats, exp) 
 
 # filter for very high expression 
-high_expression <- quantile(var_exp_filt$gene_tpm, 0.75)
+high_expression <- quantile(var_exp_filt$gene_tpm, 0.90)
 ex4_psi_filtered <- var_exp_filt %>%
-   filter(gene_tpm > top10) %>%
+   filter(gene_tpm > high_expression) %>%
   # Compute variance and add as a new column
   group_by(plot_group) %>%
   mutate(PSI_variance = sd(IncLevel1, na.rm = TRUE)) %>%
@@ -122,16 +122,38 @@ boxplot_tpm<- ggplot(var_exp_filt, aes(x = plot_group, y = IncLevel1)) +
 
 var_plot<- ggplot(data=ex4_psi_filtered, 
        aes(reorder(plot_group, PSI_variance),PSI_variance,  
-           group=1)) +
-  geom_point(aes(fill = plot_group_hex), size = 3, pch = 21, color="black") +  # Map color inside aes()
+           group=1), color="black") +
+  geom_point(aes(fill = 'black'), size = 3, pch = 21, color="black") +  # Map color inside aes()
   xlab("Histology") + 
   ylab("Standard Deviation") + 
-  ggtitle("Variation") +
+  ggtitle("CLK1 Exon 4 variation") +
+  theme_Publication() + 
+  theme(axis.text.x=element_text(angle = 75, hjust = 1, size = 11),legend.position = "none") 
+
+ex4_psi_range <- ex4_psi_filtered %>%
+  group_by(plot_group) %>%
+  mutate(PSI_range = max(IncLevel1, na.rm = TRUE) - min(IncLevel1, na.rm = TRUE)) %>%
+  ungroup() %>% 
+  select(plot_group,PSI_range) %>%
+  unique()
+
+psi_range_plot<- ggplot(data=ex4_psi_range, 
+       aes(reorder(plot_group, PSI_range),PSI_range,  
+           group=1), color="black") +
+  geom_point(aes(fill = 'black'), size = 3, pch = 21, color="black") +  # Map color inside aes()
+  xlab("Histology") + 
+  ylab("PSI Range") + 
+  ggtitle("CLK1 Exon 4 PSI Range") +
   theme_Publication() + 
   theme(axis.text.x=element_text(angle = 75, hjust = 1, size = 11),legend.position = "none") 
 
 # Save plot as PDF
 pdf(file.path(plots_dir, "CLK1-Ex4-sdev-across.pdf"), 
-    width = 6, height = 5)
+    width = 4, height = 6)
 print(var_plot)
+dev.off()
+
+pdf(file.path(plots_dir, "CLK1-Ex4-range-across.pdf"), 
+    width = 4, height = 6)
+print(psi_range_plot)
 dev.off()
