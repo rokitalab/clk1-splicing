@@ -7,6 +7,8 @@
 
 # Load libraries
 suppressPackageStartupMessages({
+  library("clusterProfiler")
+  
   library(tidyverse)
   library(ggplot2)
   library(ggpubr)
@@ -14,7 +16,9 @@ suppressPackageStartupMessages({
   library(data.table)
   library(DESeq2)
   library(EnhancedVolcano)
-  
+  library("msigdbr")
+  library("org.Hs.eg.db")
+  library("DOSE")
   })
 
 
@@ -133,6 +137,53 @@ process_rmats_data <- function(sample_ids, name) {
   ggsave(filename = file.path(plots_dir, paste0(name, "_volcano_plot.pdf")),
          plot = volc_hgg_plot, width = 8, height = 6)
   
+  
+  
+  ## outplut file for plot
+  ora_dotplot_func_path <- file.path(plots_dir, paste0("high_low_ex4_diff-genes-ora-dotplot-",name,".pdf"))
+  
+  ## get gene sets relevant to H. sapiens
+  hs_msigdb_df <- msigdbr(species = "Homo sapiens")
+  pathway_df <- hs_msigdb_df %>%
+    dplyr::filter(gs_cat == "H")
+  
+  res_fc2 <- res %>% filter(abs(log2FoldChange) >= 2)
+  
+  ## run enrichR to compute and identify significant over-repr pathways
+  ora_results <- enricher(
+    gene = res_fc2$gene, # A vector of your genes of interest
+    pvalueCutoff = 0.05, 
+    pAdjustMethod = "BH", 
+    TERM2GENE = dplyr::select(
+      pathway_df,
+      gs_name,
+      human_gene_symbol
+    )
+  )
+  
+  ora_result_df <- data.frame(ora_results@result)
+  options(enrichplot.colours = c("darkorange","blue"))
+  enrich_plot_func <- enrichplot::dotplot(ora_results,
+                                          x = "geneRatio",
+                                          size = "Count",
+                                          color = "p.adjust",
+                                          label_format = 30,
+                                          showCategory = 20) +   
+    labs(y = "Pathway",
+         x = "Gene Ratio") +
+    theme_Publication() +
+    scale_size(name = "Gene Count") +  
+    scale_fill_gradient(low = "darkorange", high = "blue", name = "B-H p-value") +
+    guides(
+      fill = guide_colorbar(title = "B-H p-value", label.position = "right", barwidth = 1, barheight = 4)
+    )
+  
+  ggplot2::ggsave(ora_dotplot_func_path,
+                  plot=enrich_plot_func,
+                  width=7.5,
+                  height=3,
+                  device="pdf",
+                  dpi=300)
   return(volc_hgg_plot)
 }
 
@@ -143,11 +194,11 @@ plots <- purrr::map2(sample_id_groups, output_names, process_rmats_data)
 ### CLK1 exon 4 correlates that are SRSF targets
 rmats_clk1_df <- vroom(rmats_file) %>%
   filter(geneSymbol == "CLK1", exonStart_0base == "200860124", exonEnd == "200860215") %>%
-  select(sample_id, geneSymbol, IncLevel1) %>%
+  dplyr::select(sample_id, geneSymbol, IncLevel1) %>%
   inner_join(hist_rna_df, by = c('sample_id' = 'Kids_First_Biospecimen_ID')) %>%
   filter(sample_id %in% hgg_bs_id) %>%
   dplyr::rename(Kids_First_Biospecimen_ID=sample_id) %>%
-  select(Kids_First_Biospecimen_ID,IncLevel1) %>%
+  dplyr::select(Kids_First_Biospecimen_ID,IncLevel1) %>%
   dplyr::rename("CLK1_PSI"=IncLevel1)
 
 
