@@ -71,7 +71,7 @@ other_hgg_bs_id <- hist_rna_df %>%
 
 # List of sample ID groups and corresponding names for output files
 sample_id_groups <- list(hgg_bs_id = hgg_bs_id, dmg_bs_id = dmg_bs_id, other_hgg_bs_id = other_hgg_bs_id)
-output_names <- c("hgg", "dmg", "other_hgg")
+output_names <- c("All", "DMGs", "Other HGGs")
 
 # Function to process each sample ID group and save the plot
 process_rmats_data <- function(sample_ids, name) {
@@ -107,14 +107,22 @@ process_rmats_data <- function(sample_ids, name) {
     mutate(Significant = ifelse(padj < 0.05, "P-Adj < 0.05", "Not Sig")) %>%
     add_column(gene = count_data$gene)
   
+  max_padj_log <- max(-log10(res$padj), na.rm = TRUE)
+  
   volc_hgg_plot <- EnhancedVolcano(res,
                                    lab = gsub("ENSG[1234567890]+[.][1234567890]+_", "", res$gene),
                                    x = 'log2FoldChange', y = 'padj',
                                    title = paste('High vs Low', name, 'Ex4 HGGs'),
-                                   pCutoff = 0.05, FCcutoff = 2)
+                                   subtitle = NULL,
+                                   caption = NULL,
+                                   pCutoff = 0.05, 
+                                   FCcutoff = 2,
+                                   labSize = 2.5,
+                                   ylim = c(0, max_padj_log)) # Set y-axis limits
   
   volc_hgg_plot <- volc_hgg_plot + labs(x = expression(bold(Log[2] * " Fold Change")),
                                         y = expression(bold("-Log"[10] * " p-value")))
+    
   
   # Save significant genes to file
   res %>%
@@ -167,11 +175,11 @@ rmats_clk1_targets <- rmats_se_full_df %>%
       downstreamES, "-", downstreamEE
     )  # Combine fields into SpliceID
   ) %>%
-  select(sample_id, geneSymbol, SpliceID, IncLevel1) %>%
+  dplyr::select(sample_id, geneSymbol, SpliceID, IncLevel1) %>%
   inner_join(hist_rna_df, by = c("sample_id" = "Kids_First_Biospecimen_ID")) %>%
-  filter(sample_id %in% hgg_bs_id) %>%
+  dplyr::filter(sample_id %in% hgg_bs_id) %>%
   dplyr::rename(Kids_First_Biospecimen_ID = sample_id) %>%
-  select(Kids_First_Biospecimen_ID, SpliceID, IncLevel1)
+  dplyr::select(Kids_First_Biospecimen_ID, SpliceID, IncLevel1)
 
 # Check the resulting data frame
 joined_df <- inner_join(rmats_clk1_targets,rmats_clk1_df, by='Kids_First_Biospecimen_ID')
