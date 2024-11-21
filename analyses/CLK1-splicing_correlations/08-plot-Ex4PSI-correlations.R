@@ -181,7 +181,7 @@ process_rmats_data <- function(sample_ids, name) {
   ggplot2::ggsave(ora_dotplot_func_path,
                   plot=enrich_plot_func,
                   width=7.5,
-                  height=3,
+                  height=4,
                   device="pdf",
                   dpi=300)
   return(volc_hgg_plot)
