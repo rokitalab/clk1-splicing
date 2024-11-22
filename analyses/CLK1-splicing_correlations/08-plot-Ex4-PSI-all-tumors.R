@@ -70,8 +70,6 @@ add_TPM_values <- function(df, matrix) {
   return(df)
 }
 
-
-
 ## load histologies info for HGG subty  
 histologies_df  <-  read_tsv(clin_file) %>%
   filter(cohort == "PBTA",
@@ -147,6 +145,7 @@ psi_range_plot<- ggplot(data=ex4_psi_range,
   theme_Publication() + 
   theme(axis.text.x=element_text(angle = 75, hjust = 1, size = 11),legend.position = "none") 
 
+
 # Save plot as PDF
 pdf(file.path(plots_dir, "CLK1-Ex4-sdev-across.pdf"), 
     width = 4, height = 6)
@@ -154,6 +153,54 @@ print(var_plot)
 dev.off()
 
 pdf(file.path(plots_dir, "CLK1-Ex4-range-across.pdf"), 
+    width = 4, height = 6)
+print(psi_range_plot)
+dev.off()
+
+## add ctrls
+## add ctrls
+gtex_rmats <- file.path("~/d3b_coding/neoepitope-identification/data/gtex-brain-under40-harmonized-splice-events-rmats.SE.tsv.gz")
+pedr_rmats <- file.path("~/d3b_coding/neoepitope-identification/data/GSE243682_normal_splice-events-rmats.tsv.gz")
+
+gtex_psi_df <- vroom(gtex_rmats) %>% # Select CLK1 gene
+  filter(geneSymbol=="CLK1") %>%
+  # Select exon 4
+  filter(exonStart_0base=="200860124", exonEnd=="200860215") %>%
+  # Select "sample", "geneSymbol", and "IncLevel1" columns
+  select(sample_id, geneSymbol, IncLevel1) %>%
+  dplyr::rename(gene_symbol=geneSymbol) %>% 
+  dplyr::mutate(plot_group="gtex-brain")
+
+ped_psi_df <- vroom(pedr_rmats) %>% # Select CLK1 gene
+  filter(geneSymbol=="CLK1") %>%
+  # Select exon 4
+  filter(exonStart_0base=="200860124", exonEnd=="200860215") %>%
+  # Select "sample", "geneSymbol", and "IncLevel1" columns
+  select(sample_id, geneSymbol, IncLevel1) %>%
+  dplyr::rename(gene_symbol=geneSymbol) %>% 
+  dplyr::mutate(plot_group="pediatric_ctrls")
+
+ctrl_psi_df<- rbind(ped_psi_df,gtex_psi_df)
+
+ctrl_psi_range <- ctrl_psi_df %>% group_by(plot_group) %>%
+  mutate(PSI_range = max(IncLevel1, na.rm = TRUE) - min(IncLevel1, na.rm = TRUE)) %>%
+  ungroup() %>% 
+  select(plot_group,PSI_range) %>%
+  unique()
+
+combo_psi_range <- rbind(ctrl_psi_range,ex4_psi_range)
+
+psi_range_plot<- ggplot(data=combo_psi_range, 
+                        aes(reorder(plot_group, PSI_range),PSI_range,  
+                            group=1), color="black") +
+  geom_point(aes(fill = 'black'), size = 3, pch = 21, color="black") +  # Map color inside aes()
+  xlab("Histology") + 
+  ylab("PSI Range") + 
+  ggtitle("CLK1 Exon 4 PSI Range") +
+  theme_Publication() + 
+  theme(axis.text.x=element_text(angle = 75, hjust = 1, size = 11),legend.position = "none") 
+
+pdf(file.path(plots_dir, "CLK1-Ex4-range-across-ctrls.pdf"), 
     width = 4, height = 6)
 print(psi_range_plot)
 dev.off()
