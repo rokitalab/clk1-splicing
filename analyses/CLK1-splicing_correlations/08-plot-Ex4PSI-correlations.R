@@ -7,8 +7,6 @@
 
 # Load libraries
 suppressPackageStartupMessages({
-  library("clusterProfiler")
-  
   library(tidyverse)
   library(ggplot2)
   library(ggpubr)
@@ -81,29 +79,53 @@ output_names <- c("All", "DMGs", "Other HGGs")
 process_rmats_data <- function(sample_ids, name) {
   rmats_df <- vroom(rmats_file) %>%
     filter(geneSymbol == "CLK1", exonStart_0base == "200860124", exonEnd == "200860215") %>%
-    select(sample_id, geneSymbol, IncLevel1) %>%
+    dplyr::select(sample_id, geneSymbol, IncLevel1) %>%
     inner_join(hist_rna_df, by = c('sample_id' = 'Kids_First_Biospecimen_ID')) %>%
     filter(sample_id %in% sample_ids)
   
-  quartiles_psi <- quantile(rmats_df$IncLevel1, probs = c(.25, .75), na.rm = TRUE)
-  rmats_levels_df <- rmats_df %>%
-    mutate(PSI = case_when(
-      IncLevel1 > quartiles_psi[2] ~ "high",
-      IncLevel1 < quartiles_psi[1] ~ "low",
-      TRUE ~ NA_character_
-    )) %>%
+  # List of sample_ids to match for "low"
+  low_sample_ids <- c(
+    "BS_0XHT9W4Q", "BS_17ZSMXFH", "BS_2EN3X6HB", "BS_7PVJ6Q3D",
+    "BS_9Y1K14Q5", "BS_FYP2B298", "BS_MD0937XT", "BS_MDBT7S5Z",
+    "BS_N6TQBQ8M", "BS_NPMEGFW8", "BS_TRPXB3AV", "BS_XM1AHBDJ"
+  )
+  
+  # Step 1: Label entries with matching sample IDs as "low"
+  rmats_labeled_df <- rmats_df %>%
+    mutate(PSI = if_else(sample_id %in% low_sample_ids, "low", NA_character_))
+  
+  # Step 2: Count the number of "low" entries
+  n_lows <- rmats_labeled_df %>%
+    filter(PSI == "low") %>%
+    nrow()
+  
+  # Step 3: Select the top `n_lows` entries with the highest IncLevel1
+  top_high_samples <- rmats_labeled_df %>%
+    arrange(desc(IncLevel1)) %>%
+    slice_head(n = n_lows) %>%
+    mutate(PSI = "high")
+  
+  # Step 4: Combine the "low" and "high" labels
+  rmats_final_df <- rmats_labeled_df %>%
+    left_join(top_high_samples %>% dplyr::select(sample_id, IncLevel1, PSI), 
+              by = c("sample_id", "IncLevel1"),
+              suffix = c("", "_high")) %>%
+    mutate(PSI = coalesce(PSI_high, PSI)) %>%
+    dplyr::select(-PSI_high) %>%
     filter(!is.na(PSI))
   
+    #print(rmats_final_df)
+
   count_data <- readRDS(file_gene_counts) %>%
-    select(any_of(rmats_levels_df$sample_id)) %>%
+    dplyr::select(any_of(rmats_final_df$sample_id)) %>%
     mutate(gene = rownames(.)) %>%
     rowwise() %>%
     # Keep rows where every count in the selected samples is at least 10
     filter(min(c_across(where(is.numeric))) >= 2) %>%
     ungroup()
  
-  design <- data.frame(row.names = rmats_levels_df$sample_id, condition = rmats_levels_df$PSI)
-  cds <- DESeqDataSetFromMatrix(countData = round(select(count_data, -gene)), colData = design, design = ~ condition)
+  design <- data.frame(row.names = rmats_final_df$sample_id, condition = rmats_final_df$PSI)
+  cds <- DESeqDataSetFromMatrix(countData = round(dplyr::select(count_data, -gene)), colData = design, design = ~ condition)
   cds <- DESeq(cds)
   
   res <- results(cds) %>%
@@ -138,29 +160,30 @@ process_rmats_data <- function(sample_ids, name) {
          plot = volc_hgg_plot, width = 8, height = 6)
   
   
-  
+  library("clusterProfiler")
+
   ## outplut file for plot
   ora_dotplot_func_path <- file.path(plots_dir, paste0("high_low_ex4_diff-genes-ora-dotplot-",name,".pdf"))
-  
+
   ## get gene sets relevant to H. sapiens
   hs_msigdb_df <- msigdbr(species = "Homo sapiens")
   pathway_df <- hs_msigdb_df %>%
     dplyr::filter(gs_cat == "H")
-  
+
   res_fc2 <- res %>% filter(abs(log2FoldChange) >= 2)
-  
+
   ## run enrichR to compute and identify significant over-repr pathways
   ora_results <- enricher(
     gene = res_fc2$gene, # A vector of your genes of interest
-    pvalueCutoff = 0.05, 
-    pAdjustMethod = "BH", 
+    pvalueCutoff = 0.05,
+    pAdjustMethod = "BH",
     TERM2GENE = dplyr::select(
       pathway_df,
       gs_name,
       human_gene_symbol
     )
   )
-  
+
   ora_result_df <- data.frame(ora_results@result)
   options(enrichplot.colours = c("darkorange","blue"))
   enrich_plot_func <- enrichplot::dotplot(ora_results,
@@ -168,22 +191,24 @@ process_rmats_data <- function(sample_ids, name) {
                                           size = "Count",
                                           color = "p.adjust",
                                           label_format = 30,
-                                          showCategory = 20) +   
+                                          showCategory = 20) +
     labs(y = "Pathway",
          x = "Gene Ratio") +
     theme_Publication() +
-    scale_size(name = "Gene Count") +  
+    scale_size(name = "Gene Count") +
     scale_fill_gradient(low = "darkorange", high = "blue", name = "B-H p-value") +
     guides(
       fill = guide_colorbar(title = "B-H p-value", label.position = "right", barwidth = 1, barheight = 4)
     )
-  
+
   ggplot2::ggsave(ora_dotplot_func_path,
                   plot=enrich_plot_func,
                   width=7.5,
                   height=4,
                   device="pdf",
                   dpi=300)
+  detach("package:clusterProfiler", unload = TRUE)
+
   return(volc_hgg_plot)
 }
 
