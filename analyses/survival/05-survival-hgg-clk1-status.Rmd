@@ -46,17 +46,24 @@ Set file paths
 
 ```{r}
 histologies_file <- file.path(results_dir, "splicing_indices_with_survival.tsv")
-
-diff_psi_file <- file.path(root_dir, "analyses",
+indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
+psi_file <- file.path(root_dir, "analyses",
                            "CLK1-splicing_correlations", "results",
                            "clk1-splice-events-rmats.tsv")
+diff_psi_file <- file.path(root_dir, "analyses",
+                           "splicing_events_functional_sites",
+                           "results",
+                           "splice_events.diff.SE.txt")
+
 ```
 
 Load histologies and subset for HGG and DMG
 
 ```{r}
+indep_spec <- read_tsv(indep_file)
 hgg_hist <- read_tsv(histologies_file) %>%
-  dplyr::filter(Histology %in% c("DIPG or DMG", "Other high-grade glioma"),
+  dplyr::filter(Kids_First_Biospecimen_ID %in% indep_spec$Kids_First_Biospecimen_ID,
+                Histology %in% c("DIPG or DMG", "Other high-grade glioma"),
                 !is.na(OS_days) | !is.na(EFS_days)) %>%
   dplyr::select(Kids_First_Biospecimen_ID, Histology, mol_sub_group,
                 extent_of_tumor_resection,
@@ -72,12 +79,25 @@ hgg_hist <- read_tsv(histologies_file) %>%
 Load rMATs file and subset for CLK1 exon 4 PSI values
 
 ```{r}
-splice_CLK1_df <-  fread(diff_psi_file) %>%
+# CLK1 ENST00000321356: 200860125-200860215
+splice_CLK1_df <-  fread(psi_file) %>%
    dplyr::filter(geneSymbol=="CLK1",
                  exonStart_0base=="200860124", exonEnd=="200860215") %>%
   dplyr::rename('Kids_First_Biospecimen_ID'=sample_id,
                 PSI = IncLevel1) %>%
   dplyr::select(Kids_First_Biospecimen_ID, PSI)
+
+# load in diff splice file for CLK1 
+# take only the differentially spliced from mean samples as low
+low_clk1_psi <- read_tsv(diff_psi_file) %>%
+  filter(`Splice ID` == "CLK1:200860125-200860215_200859679-200859746_200861237-200861466") %>%
+  pull(Sample)
+
+high_clk1_psi <- splice_CLK1_df %>%
+  filter(Kids_First_Biospecimen_ID %in% hgg_hist$Kids_First_Biospecimen_ID) %>%
+  arrange(-PSI) %>%
+  slice(1:length(low_clk1_psi)) %>%
+  pull(Kids_First_Biospecimen_ID)
 
 # join PSI value to hgg_hist
 hgg_hist <- hgg_hist %>%
@@ -87,26 +107,19 @@ hgg_hist <- hgg_hist %>%
 Calculate CLK1 quantiles and define samples as Low, Medium, High within tumor histologies
 
 ```{r}
-quantiles_clk1_hgg <- quantile(hgg_hist$PSI[hgg_hist$Histology == "Other high-grade glioma"], probs=c(.25, .75), na.rm = TRUE)
-lower_sbi_hgg <- quantiles_clk1_hgg[1]
-upper_sbi_hgg <- quantiles_clk1_hgg[2]
 
-quantiles_clk1_dmg <- quantile(hgg_hist$PSI[hgg_hist$Histology == "DIPG or DMG"], probs=c(.25, .75), na.rm = TRUE)
-lower_sbi_dmg <- quantiles_clk1_dmg[1]
-upper_sbi_dmg <- quantiles_clk1_dmg[2]
-
-hgg_hist <- hgg_hist %>%
-  mutate(clk1_status = case_when((Histology == "DIPG or DMG" & PSI > upper_sbi_dmg) |
-                                  (Histology == "Other high-grade glioma" & PSI > upper_sbi_hgg) ~ "CLK1 exon 4 High",
-                                 (Histology == "DIPG or DMG" & PSI <= lower_sbi_dmg) |
-                                  (Histology == "Other high-grade glioma" & PSI <= lower_sbi_hgg) ~ "CLK1 exon 4 Low",
+hgg_hist_scaled <- hgg_hist %>%
+  mutate(clk1_status = case_when(Kids_First_Biospecimen_ID %in% high_clk1_psi ~ "CLK1 exon 4 High",
+                                 Kids_First_Biospecimen_ID %in% low_clk1_psi ~ "CLK1 exon 4 Low",
                                  TRUE ~ "Middle"))
+table(hgg_hist_scaled$clk1_status)
+
 ```
 
 Create survival df with only high & low CLK1 status, and relevel mol subgroups
 
 ```{r}
-survival_df <- hgg_hist %>%
+survival_df <- hgg_hist_scaled %>%
   dplyr::filter(clk1_status %in% c("CLK1 exon 4 High", "CLK1 exon 4 Low")) %>%
   dplyr::mutate(mol_sub_group = fct_relevel(mol_sub_group,
                                             c("HGG, H3 wildtype", "HGG, H3 wildtype, TP53",
