@@ -141,6 +141,7 @@ ex4_psi_filtered <- var_exp_filt %>%
 var_kinase_plot<- ggplot(data = ex4_psi_filtered, 
                   aes(x = reorder(plot_group, PSI_variance), y = PSI_variance, group = 1)) +
   geom_point(size = 3, pch = 21, color = "black", fill = "black") +
+  ylim(0,1) + 
   xlab("Histology") + 
   ylab("Standard Deviation") + 
   ggtitle("PSI Variation") +
@@ -162,7 +163,8 @@ ex4_psi_range <- ex4_psi_filtered %>%
 psi_range_kinase_plot<- ggplot(data=ex4_psi_range, 
                         aes(reorder(plot_group, PSI_range),PSI_range,  
                             group=1), color="black") +
-  geom_point(aes(fill = 'black'), size = 3, pch = 21, color="black") +  # Map color inside aes()
+  geom_point(aes(fill = 'black'), size = 3, pch = 21, color="black") +  # Map color inside aes() + 
+  ylim(0,1) + 
   xlab("Histology") + 
   ylab("Range") + 
   ggtitle("PSI Range") +
