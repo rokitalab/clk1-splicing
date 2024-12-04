@@ -94,6 +94,30 @@ gtex_clk1_transcr_counts <- fread(gtex_trans_file, skip = 2) %>%
 
 transcript_expr_CLK1_combined_df <- rbind(hgg_clk4_transcr_counts,ped_clk1_transcr_counts,gtex_clk1_transcr_counts)
 
+## add pediatric metadata
+metadata_ped <- vroom("~/d3b_coding/neoepitope-identification/data/ped-normal-brain-histologies.tsv")
+
+# Create a conversion table as a dataframe
+sra_mapping <- data.frame(
+  GSM = c("GSM7794191", "GSM7794190", "GSM7794185", "GSM7794180", "GSM7794176", "GSM7794214", "GSM7794155"),
+  SRR = c("SRR26129063", "SRR26129064", "SRR26129066", "SRR26129078", "SRR26129084", "SRR26129123", "SRR26129178")
+) %>% inner_join(metadata_ped,by=c("GSM" = "Kids_First_Biospecimen_ID")) %>%
+  inner_join(ped_clk1_transcr_counts,by=c("SRR" = "Sample")) %>%
+  dplyr::select(SRR, aliquot_id) %>%
+  mutate(
+    region = case_when(
+      grepl("CEREB", aliquot_id, ignore.case = TRUE) ~ "Cerebellum",
+      grepl("PIT", aliquot_id, ignore.case = TRUE) ~ "Pituitary",
+      grepl("PONS", aliquot_id, ignore.case = TRUE) ~ "Pons",
+      grepl("frontal", aliquot_id, ignore.case = TRUE) ~ "Frontal",
+      TRUE ~ NA_character_  # Default to NA if no match
+    )
+  )
+  
+
+# View the conversion table
+print(sra_mapping)
+
 # Calculate mean and 2 standard deviations of pediatric_ctrls
 ctrl_stats <- transcript_expr_CLK1_combined_df %>%
   filter(group == "pediatric_ctrls") %>%
@@ -105,21 +129,48 @@ ctrl_stats <- transcript_expr_CLK1_combined_df %>%
 mean_ctrl <- ctrl_stats$mean_ctrl
 sd_ctrl <- ctrl_stats$sd_ctrl
 
-tpm_plot<- ggplot(transcript_expr_CLK1_combined_df, aes(x = group, y = TPM, color = group)) +
-  geom_jitter(width = 0.2, size = 2, alpha = 0.7) +  # Jittered points for individual samples
+# Define region-specific colors
+region_colors <- c(
+  "Cerebellum" = "#E69F00",  # Orange
+  "Pituitary" = "#56B4E9",  # Sky blue
+  "Pons" = "#009E73",       # Green
+  "Frontal" = "#F0E442",    # Yellow
+  "pHGGs" = "#0072B2",      # Blue
+  "pediatric_ctrls" = "#D55E00"  # Vermillion
+)
+
+# Add region column to the combined dataframe for pediatric_ctrls
+transcript_expr_CLK1_combined_df <- transcript_expr_CLK1_combined_df %>%
+  left_join(sra_mapping %>% select(SRR, region), by = c("Sample" = "SRR"))
+
+
+# Modify the plot
+tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = group, y = TPM)) +
+  geom_jitter(
+    aes(color = ifelse(group == "pediatric_ctrls", region, group)),  # Use region for pediatric_ctrls
+    width = 0.2, size = 2, alpha = 0.7
+  ) +
   geom_hline(yintercept = mean_ctrl + 2 * sd_ctrl, linetype = "dashed", color = "black", size = 1) +  # +2 SD line
   labs(
     title = "ENST00000321356 Expression",
     x = "Group",
     y = "TPM"
   ) +
-  scale_color_manual(values = c("pHGGs" = "blue", "pediatric_ctrls" = "orange")) +
+  scale_color_manual(
+    values = region_colors,
+    name = "Pediatric Regions"  # Set legend title
+  ) +
   theme_Publication() +
-  theme(legend.position = "none", 
-        axis.text.x = element_text(angle = 75, hjust = 1)) +
+  theme(
+    legend.position = "right", 
+    axis.text.x = element_text(angle = 75, hjust = 1)
+  ) +
   scale_x_discrete(labels = function(x) sapply(x, function(l) str_wrap(l, width = 30))) + 
   scale_y_continuous(breaks = seq(0, max(transcript_expr_CLK1_combined_df$TPM), by = 50))  # Ticks every 50
+
 
 pdf(file.path(plots_dir,"clk4-tpm-phgg-ctrls.pdf"), height = 8, width = 9)
 tpm_plot
 dev.off()
+
+
