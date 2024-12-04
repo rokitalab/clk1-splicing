@@ -109,7 +109,7 @@ sra_mapping <- data.frame(
       grepl("CEREB", aliquot_id, ignore.case = TRUE) ~ "Cerebellum",
       grepl("PIT", aliquot_id, ignore.case = TRUE) ~ "Pituitary",
       grepl("PONS", aliquot_id, ignore.case = TRUE) ~ "Pons",
-      grepl("frontal", aliquot_id, ignore.case = TRUE) ~ "Frontal",
+      grepl("frontal", aliquot_id, ignore.case = TRUE) ~ "Frontal_Cortex",
       TRUE ~ NA_character_  # Default to NA if no match
     )
   )
@@ -134,7 +134,7 @@ region_colors <- c(
   "Cerebellum" = "#E69F00",  # Orange
   "Pituitary" = "#56B4E9",  # Sky blue
   "Pons" = "#009E73",       # Green
-  "Frontal" = "#F0E442",    # Yellow
+  "Frontal_Cortex" = "#F0E442",    # Yellow
   "pHGGs" = "#0072B2",      # Blue
   "pediatric_ctrls" = "#D55E00"  # Vermillion
 )
