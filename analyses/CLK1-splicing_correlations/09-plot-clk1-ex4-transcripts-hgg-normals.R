@@ -158,7 +158,7 @@ tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = group, y = TPM)) +
   ) +
   scale_color_manual(
     values = region_colors,
-    name = "Pediatric Regions"  # Set legend title
+    name = "Pediatric Samples"  # Set legend title
   ) +
   theme_Publication() +
   theme(
