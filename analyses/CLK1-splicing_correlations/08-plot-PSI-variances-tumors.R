@@ -138,12 +138,12 @@ ex4_psi_filtered <- var_exp_filt %>%
 
 
 
-var_plot<- ggplot(data = ex4_psi_filtered, 
+var_kinase_plot<- ggplot(data = ex4_psi_filtered, 
                   aes(x = reorder(plot_group, PSI_variance), y = PSI_variance, group = 1)) +
   geom_point(size = 3, pch = 21, color = "black", fill = "black") +
   xlab("Histology") + 
   ylab("Standard Deviation") + 
-  ggtitle("PSI Variation by SpliceID") +
+  ggtitle("PSI Variation") +
   theme_Publication() + 
   theme(
     axis.text.x = element_text(angle = 75, hjust = 1, size = 11),
@@ -159,13 +159,13 @@ ex4_psi_range <- ex4_psi_filtered %>%
   select(plot_group,SpliceID,PSI_range) %>%
   unique()
 
-psi_range_plot<- ggplot(data=ex4_psi_range, 
+psi_range_kinase_plot<- ggplot(data=ex4_psi_range, 
                         aes(reorder(plot_group, PSI_range),PSI_range,  
                             group=1), color="black") +
   geom_point(aes(fill = 'black'), size = 3, pch = 21, color="black") +  # Map color inside aes()
   xlab("Histology") + 
-  ylab("PSI Range") + 
-  ggtitle("CLK1 Exon 4 PSI Range") +
+  ylab("Range") + 
+  ggtitle("PSI Range") +
   theme_Publication() + 
   theme(axis.text.x=element_text(angle = 75, hjust = 1, size = 11),legend.position = "none") +
   facet_wrap(~SpliceID, scales = "free_y", ncol = 2)  # Facet by SpliceID, adjust columns
@@ -173,7 +173,12 @@ psi_range_plot<- ggplot(data=ex4_psi_range,
 
 
 # Save plot as PDF
-pdf(file.path(plots_dir, "CLK1-Ex4-sdev-across.pdf"), 
-    width = 4, height = 6)
-print(var_plot)
+pdf(file.path(plots_dir, "PSI-sdev-across.pdf"), 
+    width = 7, height = 8)
+print(var_kinase_plot)
+dev.off()
+
+pdf(file.path(plots_dir, "PSI-range-kinses.pdf"), 
+    width = 7, height = 8)
+print(psi_range_kinase_plot)
 dev.off()
