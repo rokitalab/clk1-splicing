@@ -23,6 +23,7 @@ rmats_file <- file.path(results_dir, "clk1-splice-events-rmats.tsv")
 indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
 
 gtex_trans_file <- file.path("/Users/naqvia/d3b_coding/neoepitope-identification/data/gtex-harmonized-isoform-expression-rsem-tpm.rds")
+ped_trans_file = "~/d3b_coding/neoepitope-identification/data/GSE243682_normal_rna-isoform-expression-rsem-tpm.rds"
 
 # Output directories
 results_dir <- file.path(analysis_dir, "results")
@@ -44,7 +45,7 @@ gtex_rmats <- vroom("/Users/naqvia/d3b_coding/neoepitope-identification/data/gte
 indep_df <- read_tsv(indep_file)
 hist_indep_rna_df  <-  read_tsv(clin_file) %>%
   filter(cohort == "PBTA",
-         grepl("poly", RNA_library),
+         #grepl("poly", RNA_library),
          Kids_First_Biospecimen_ID %in% indep_df$Kids_First_Biospecimen_ID)
 
 gtex_brain <- read_tsv(hist_file)  %>% 
@@ -54,7 +55,6 @@ gtex_brain <- read_tsv(hist_file)  %>%
 
 expr_tpm_tumor_file <- file.path(data_dir,"rna-isoform-expression-rsem-tpm.rds")
 
-# transcript is ENST00000321356.9 in pbta
 all_clk4_transcr_counts <- readRDS(expr_tpm_tumor_file) %>%
   filter(grepl("^CLK1", gene_symbol)) %>%
   mutate(
@@ -73,9 +73,6 @@ all_clk4_transcr_counts <- readRDS(expr_tpm_tumor_file) %>%
   inner_join(hist_indep_rna_df, by="Kids_First_Biospecimen_ID") %>%
   dplyr::select(transcript_id,Kids_First_Biospecimen_ID,plot_group, TPM) %>%
   dplyr::mutate(group="Tumors")
-
-ped_trans_file = "~/d3b_coding/neoepitope-identification/data/GSE243682_normal_rna-isoform-expression-rsem-tpm.rds"
-
 
 gtex_clk1_transc_counts <- readRDS(gtex_trans_file) %>%
   filter(grepl("^CLK1", gene_symbol)) %>%
@@ -99,7 +96,6 @@ gtex_clk1_transc_counts <- readRDS(gtex_trans_file) %>%
   dplyr::mutate(group="Gtex",
                 plot_group=str_replace_all(plot_group, "Brain - ", ""))
   
-
 evo_devo_tpm <- readRDS("~/d3b_coding/neoepitope-identification/data/evodevo_rna-isoform-expression-rsem-tpm.rds") %>%
   filter(grepl("^CLK1", gene_symbol)) %>%  # Filter for CLK1 genes
   mutate(
