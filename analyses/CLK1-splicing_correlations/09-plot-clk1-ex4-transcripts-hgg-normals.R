@@ -22,7 +22,7 @@ hist_file  <- file.path(data_dir,"histologies.tsv")
 rmats_file <- file.path(results_dir, "clk1-splice-events-rmats.tsv")
 indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
 
-gtex_trans_file <- file.path(data_dir,"GTEx_Analysis_2017-06-05_v8_RSEMv1.3.0_transcript_tpm.gct.gz")
+gtex_trans_file <- file.path("/Users/naqvia/d3b_coding/neoepitope-identification/data/gtex-harmonized-isoform-expression-rsem-tpm.rds")
 
 # Output directories
 results_dir <- file.path(analysis_dir, "results")
@@ -44,49 +44,85 @@ gtex_rmats <- vroom("/Users/naqvia/d3b_coding/neoepitope-identification/data/gte
 indep_df <- read_tsv(indep_file)
 hist_indep_rna_df  <-  read_tsv(clin_file) %>%
   filter(cohort == "PBTA",
+         grepl("poly", RNA_library),
          Kids_First_Biospecimen_ID %in% indep_df$Kids_First_Biospecimen_ID)
-
-color_df <- hist_indep_rna_df %>%
-  dplyr::select(plot_group_hex, plot_group) %>%
-  dplyr::filter(!is.na(plot_group)) %>%
-  unique()
-
-cols <- as.character(color_df$plot_group_hex)
-names(cols) <- as.character(color_df$plot_group)
 
 gtex_brain <- read_tsv(hist_file)  %>% 
   dplyr::filter(cohort == "GTEx",
-                gtex_group == "Brain") 
+                gtex_group == "Brain",
+                Kids_First_Biospecimen_ID %in% gtex_rmats$sample_id) 
 
 expr_tpm_tumor_file <- file.path(data_dir,"rna-isoform-expression-rsem-tpm.rds")
 
 # transcript is ENST00000321356.9 in pbta
 all_clk4_transcr_counts <- readRDS(expr_tpm_tumor_file) %>%
-  filter(transcript_id == "ENST00000321356.9") %>%
-  select(-gene_symbol) %>% # Remove 'gene_symbol'
+  filter(grepl("^CLK1", gene_symbol)) %>%
+  mutate(
+    transcript_id = case_when(
+      transcript_id %in% c("ENST00000321356.9", "ENST00000434813.3", "ENST00000409403.6") ~ "Exon 4",  # Rename specified transcripts
+      TRUE ~ "Other"  # All other transcripts are renamed to "Other"
+    )
+  ) %>%
+  group_by(transcript_id) %>%
+  summarise(across(starts_with("BS"), sum, na.rm = TRUE)) %>%
   pivot_longer(
     cols = -transcript_id,
-    names_to = "Sample",
+    names_to = "Kids_First_Biospecimen_ID",
     values_to = "TPM"
   ) %>%
-  inner_join(hist_indep_rna_df, by=c("Sample"="Kids_First_Biospecimen_ID")) %>%
-  dplyr::select(transcript_id,Sample,plot_group, TPM) 
+  inner_join(hist_indep_rna_df, by="Kids_First_Biospecimen_ID") %>%
+  dplyr::select(transcript_id,Kids_First_Biospecimen_ID,plot_group, TPM) %>%
+  dplyr::mutate(group="Tumors")
 
 ped_trans_file = "~/d3b_coding/neoepitope-identification/data/GSE243682_normal_rna-isoform-expression-rsem-tpm.rds"
 
 
-gtex_clk1_transcr_counts <- fread(gtex_trans_file, skip = 2) %>%
-  select(c(transcript_id, gtex_brain$Kids_First_Biospecimen_ID)) %>%
-  filter(transcript_id == "ENST00000321356.8") %>%
-  select(-transcript_id) %>%
-  {data.frame(t(.))} %>%
+gtex_clk1_transc_counts <- readRDS(gtex_trans_file) %>%
+  filter(grepl("^CLK1", gene_symbol)) %>%
+  mutate(
+    transcript_id = case_when(
+      transcript_id %in% c("ENST00000321356.9", "ENST00000434813.3", "ENST00000409403.6") ~ "Exon 4",  # Rename specified transcripts
+      TRUE ~ "Other"  # All other transcripts are renamed to "Other"
+    )
+  ) %>%
+  group_by(transcript_id) %>%
+  summarise(across(starts_with("GTEX"), sum, na.rm = TRUE)) %>%
+  pivot_longer(
+    cols = -transcript_id,
+    names_to = "Kids_First_Biospecimen_ID",
+    values_to = "TPM"
+  ) %>%
+  inner_join(gtex_brain, by="Kids_First_Biospecimen_ID") %>%
+  dplyr::rename(plot_group=gtex_subgroup) %>%
+  
+  dplyr::select(transcript_id,Kids_First_Biospecimen_ID,plot_group, TPM) %>%
+  dplyr::mutate(group="Gtex",
+                plot_group=str_replace_all(plot_group, "Brain - ", ""))
+  
+
+evo_devo_tpm <- readRDS("~/d3b_coding/neoepitope-identification/data/evodevo_rna-isoform-expression-rsem-tpm.rds") %>%
+  filter(grepl("^CLK1", gene_symbol)) %>%  # Filter for CLK1 genes
+  mutate(
+    transcript_id = case_when(
+      transcript_id %in% c("ENST00000321356.9", "ENST00000434813.3", "ENST00000409403.6") ~ "Exon 4",  # Rename specified transcripts
+      TRUE ~ "Other" ) ) %>% # All other transcripts are renamed to "Other"  
+  group_by(transcript_id) %>%
+  summarise(across(starts_with("SAMEA"), sum, na.rm = TRUE)) %>%
   rownames_to_column("Kids_First_Biospecimen_ID") %>%
-  dplyr::rename(ENST00000321356 = `t...`) %>%
-  left_join(gtex_brain[,c("Kids_First_Biospecimen_ID", "gtex_subgroup")]) %>% 
-  rename(plot_group=gtex_subgroup,
-         Sample=Kids_First_Biospecimen_ID,
-         TPM=ENST00000321356) %>%
-  mutate(transcript_id='ENST00000321356.9')
+  filter(Kids_First_Biospecimen_ID != "transcript_id") %>%  # Remove the "transcript_id" row
+  pivot_longer(cols = starts_with("SAMEA"),  # Assuming your sample columns start with "SAMEA"
+               names_to = "Sample_ID",
+               values_to = "TPM") %>%
+  select(transcript_id, Sample_ID, transcript_id, TPM) %>%
+  dplyr::rename(Kids_First_Biospecimen_ID=Sample_ID) # Select necessary columns
+
+
+evodevo_histology_df <- vroom("~/d3b_coding/neoepitope-identification/data/evodevo-histologies.tsv") 
+evodevo_clk1_transc_counts <- inner_join(evodevo_histology_df,evo_devo_tpm, by="Kids_First_Biospecimen_ID") %>%
+  dplyr::filter(primary_site=='Hindbrain') %>%
+  dplyr::mutate(plot_group=pathology_free_text_diagnosis,
+                group="Evodevo") %>%
+  dplyr::select(Kids_First_Biospecimen_ID,TPM,plot_group,group,transcript_id) 
 
 ## pediatric metadata
 metadata_ped <- vroom("~/d3b_coding/neoepitope-identification/data/ped-normal-brain-histologies.tsv")
@@ -98,7 +134,7 @@ sra_mapping <- data.frame(
 ) %>% inner_join(metadata_ped,by=c("GSM" = "Kids_First_Biospecimen_ID")) %>%
   dplyr::select(SRR, aliquot_id) %>%
   mutate(
-    region = case_when(
+    plot_group = case_when(
       grepl("CEREB", aliquot_id, ignore.case = TRUE) ~ "Cerebellum",
       grepl("PIT", aliquot_id, ignore.case = TRUE) ~ "Pituitary",
       grepl("PONS", aliquot_id, ignore.case = TRUE) ~ "Pons",
@@ -108,83 +144,115 @@ sra_mapping <- data.frame(
   ) %>%
   dplyr::select(-aliquot_id) 
   
-
-
+# ENST00000434813.3, ENST00000321356.9, ENST00000409403.6, ENST00000434813.3
 ped_clk1_transcr_counts <- readRDS(ped_trans_file) %>%
-  filter(transcript_id == "ENST00000321356.9") %>%
-  select(-gene_symbol) %>% # Remove 'gene_symbol'
+  filter(grepl("^CLK1", gene_symbol)) %>%
+  mutate(
+    transcript_id = case_when(
+      transcript_id %in% c("ENST00000321356.9","ENST00000434813.3", "ENST00000409403.6") ~ "Exon 4",  # Rename specified transcripts
+      TRUE ~ "Other"  # All other transcripts are renamed to "Other"
+    ) ) %>%
+  group_by(transcript_id) %>%
+  summarise(across(starts_with("SRR"), sum, na.rm = TRUE)) %>%
+  #select(-gene_symbol) %>% # Remove 'gene_symbol'
   pivot_longer(
     cols = -transcript_id,
     names_to = "Sample",
     values_to = "TPM"
   ) %>%
-  #inner_join(sra_mapping,by=c("Sample" = "SRR")) %>%
-  dplyr::mutate(plot_group="pediatric_ctrls")
+  dplyr::mutate(group="Pediatric") %>%
+  dplyr::rename(Kids_First_Biospecimen_ID=Sample) %>%
+  inner_join(sra_mapping,by=c("Kids_First_Biospecimen_ID" = "SRR"))
 
-transcript_expr_CLK1_combined_df <- rbind(all_clk4_transcr_counts,ped_clk1_transcr_counts,gtex_clk1_transcr_counts)
-transcript_expr_CLK1_combined_df<- transcript_expr_CLK1_combined_df %>% full_join(sra_mapping,by=c("Sample" = "SRR"))
+transcript_expr_CLK1_combined_df <- rbind(all_clk4_transcr_counts,ped_clk1_transcr_counts,gtex_clk1_transc_counts,evodevo_clk1_transc_counts) %>% 
+  group_by(Kids_First_Biospecimen_ID) %>%
+  mutate(total_TPM = sum(TPM[transcript_id %in% c("Exon 4", "Other")], na.rm = TRUE)) %>%
+  mutate(proportion = ifelse(transcript_id == "Exon 4", TPM, 0) / total_TPM) %>%
+  ungroup() %>% 
+  filter(transcript_id=='Exon 4',
+         total_TPM> quantile(total_TPM, 0.25))
 
-# View the conversion table
-print(sra_mapping)
+color_df <- hist_indep_rna_df %>%
+  dplyr::select(plot_group_hex, plot_group) %>%
+  dplyr::filter(!is.na(plot_group)) %>%
+  unique()
 
-# Calculate mean and 2 standard deviations of pediatric_ctrls
-ctrl_stats <- transcript_expr_CLK1_combined_df %>%
-  filter(plot_group == "pediatric_ctrls") %>%
-  summarise(
-    mean_ctrl = mean(TPM, na.rm = TRUE),
-    sd_ctrl = sd(TPM, na.rm = TRUE)
-  )
+cols <- as.character(color_df$plot_group_hex)
+names(cols) <- as.character(color_df$plot_group)
 
-mean_ctrl <- ctrl_stats$mean_ctrl
-sd_ctrl <- ctrl_stats$sd_ctrl
-
-# Define region-specific colors
 # Define region-specific color-blind-friendly palette
-region_ped_colors <- c(
+ped_colors <- c(
   "Cerebellum" = "#E69F00",  # Orange
   "Pituitary" = "#56B4E9",  # Sky blue
   "Pons" = "#009E73",       # Green
   "Frontal" = "#F0E442"    # Yellow
 )
 
-color_df <- dplyr::bind_rows(color_df, ped_colors)
-color_mapping <- setNames(color_df$plot_group_hex, color_df$plot_group)
+# Convert ped_colors (named vector) into a dataframe
+ped_colors_df <- data.frame(
+  plot_group = names(ped_colors),
+  plot_group_hex = unname(ped_colors), # Remove names for values
+  stringsAsFactors = FALSE
+)
 
-# Add a color column to the data based on region and plot_group
+# Bind color_df with ped_colors_df
+color_df <- dplyr::bind_rows(color_df, ped_colors_df)
+
+# Ensure no duplicate rows
+color_df <- color_df %>%
+  dplyr::distinct()
+
+# Create the color mapping
+color_mapping <- setNames(color_df$plot_group_hex, color_df$plot_group)
+ 
+# Add a color column to the data based only on plot_group
 transcript_expr_CLK1_combined_df <- transcript_expr_CLK1_combined_df %>%
   mutate(
     dot_color = case_when(
-      !is.na(region) & region %in% names(region_ped_colors) ~ region_ped_colors[region], # Use region-specific colors
-      plot_group %in% names(color_mapping) ~ color_mapping[plot_group],                 # Use plot_group-specific colors
-      TRUE ~ "#b5b5b5"                                                                  # Default to grey
+      plot_group %in% names(color_mapping) ~ color_mapping[plot_group], # Use plot_group-specific colors
+      TRUE ~ "#b5b5b5"                                                  # Default to grey
     )
-  )
+  ) %>%
+  filter(!is.na(plot_group)) # Remove rows with NA in plot_group
 
-# Modify the plot
-tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = TPM)) +
+# Ensure plot_group is ordered as it appears in the dataframe
+transcript_expr_CLK1_combined_df$plot_group <- factor(
+  transcript_expr_CLK1_combined_df$plot_group,
+  levels = unique(transcript_expr_CLK1_combined_df$plot_group)
+)
+
+
+## make plot for proportion
+tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = proportion)) +
   geom_jitter(
-    aes(color = dot_color),  # Use precomputed colors
-    width = 0.2, size = 2, alpha = 0.7
-  ) +
-  geom_hline(yintercept = mean_ctrl + 2 * sd_ctrl, linetype = "dashed", color = "black", size = 1) +  # +2 SD line
+    aes(color = dot_color),   # Use precomputed colors for jitter points
+    width = 0.2, size = 2) +
+  geom_boxplot(
+    aes(group = plot_group),  # Create boxplots for each group
+    width = 0.6,              # Adjust the width of the boxplots
+    color = "black",          # Set the color of the boxplot borders
+    fill = "white",           # Fill color for the boxplots
+    alpha = 0.2 ) +
   labs(
-    title = "ENST00000321356 Expression",
+    title = "ENST00000321356 Expression (TPM)",
     x = "Group",
-    y = "TPM"
+    y = "Isoform Fraction") +
+  scale_color_identity(
+    name = "Group"
   ) +
-  scale_color_identity(  # Use the colors directly from the data
-    name = "Group"       # Set legend title
-  ) +
+  facet_grid(
+    ~ group,                  # Facet by 'group'
+    scales = "free_x"         # Allow different x-axis scales for each facet
+  )  +
   theme_Publication() +
   theme(
     legend.position = "right", 
     axis.text.x = element_text(angle = 75, hjust = 1)
-  ) +
-  scale_x_discrete(labels = function(x) sapply(x, function(l) stringr::str_wrap(l, width = 30))) + 
-  scale_y_continuous(breaks = seq(0, max(transcript_expr_CLK1_combined_df$TPM, na.rm = TRUE), by = 50))  # Ticks every 50
+  ) 
 
 
-pdf(file.path(plots_dir,"clk4-tpm-phgg-ctrls.pdf"), height = 8, width = 11)
+
+pdf(file.path(plots_dir,"clk4-tpm-phgg-ctrls.pdf"), height = 8, width = 16)
 tpm_plot
 dev.off()
 
