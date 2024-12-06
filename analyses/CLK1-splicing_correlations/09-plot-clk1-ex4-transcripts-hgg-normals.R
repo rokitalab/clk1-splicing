@@ -252,7 +252,7 @@ tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = pro
 
 
 
-pdf(file.path(plots_dir,"clk4-tpm-phgg-ctrls.pdf"), height = 8, width = 16)
+pdf(file.path(plots_dir,"clk4-tpm-phgg-ctrls.pdf"), height = 6, width = 20)
 tpm_plot
 dev.off()
 
