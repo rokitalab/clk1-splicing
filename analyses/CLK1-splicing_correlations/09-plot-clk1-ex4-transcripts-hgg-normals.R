@@ -180,24 +180,6 @@ color_df <- hist_indep_rna_df %>%
 cols <- as.character(color_df$plot_group_hex)
 names(cols) <- as.character(color_df$plot_group)
 
-# Define region-specific color-blind-friendly palette
-ped_colors <- c(
-  "Cerebellum" = "#E69F00",  # Orange
-  "Pituitary" = "#56B4E9",  # Sky blue
-  "Pons" = "#009E73",       # Green
-  "Frontal" = "#F0E442"    # Yellow
-)
-
-# Convert ped_colors (named vector) into a dataframe
-ped_colors_df <- data.frame(
-  plot_group = names(ped_colors),
-  plot_group_hex = unname(ped_colors), # Remove names for values
-  stringsAsFactors = FALSE
-)
-
-# Bind color_df with ped_colors_df
-color_df <- dplyr::bind_rows(color_df, ped_colors_df)
-
 # Ensure no duplicate rows
 color_df <- color_df %>%
   dplyr::distinct()
@@ -219,6 +201,21 @@ transcript_expr_CLK1_combined_df <- transcript_expr_CLK1_combined_df %>%
 transcript_expr_CLK1_combined_df$plot_group <- factor(
   transcript_expr_CLK1_combined_df$plot_group,
   levels = unique(transcript_expr_CLK1_combined_df$plot_group)
+)
+
+# Calculate the mean of 'proportion' within each 'group' and 'plot_group'
+transcript_expr_CLK1_combined_df <- transcript_expr_CLK1_combined_df %>%
+  group_by(group, plot_group) %>%
+  mutate(mean_proportion = mean(proportion, na.rm = TRUE)) %>%
+  ungroup()
+
+# Reorder 'plot_group' within each 'group' based on 'mean_proportion' in descending order
+transcript_expr_CLK1_combined_df$plot_group <- factor(
+  transcript_expr_CLK1_combined_df$plot_group,
+  levels = transcript_expr_CLK1_combined_df %>%
+    arrange(group, desc(mean_proportion)) %>%
+    pull(plot_group) %>%
+    unique()
 )
 
 
@@ -249,8 +246,6 @@ tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = pro
     legend.position = "right", 
     axis.text.x = element_text(angle = 75, hjust = 1)
   ) 
-
-
 
 pdf(file.path(plots_dir,"clk4-tpm-phgg-ctrls.pdf"), height = 6, width = 20)
 tpm_plot
