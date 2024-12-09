@@ -165,8 +165,8 @@ transcript_expr_CLK1_combined_df <- rbind(all_clk4_transcr_counts,ped_clk1_trans
   mutate(total_TPM = sum(TPM[transcript_id %in% c("Exon 4", "Other")], na.rm = TRUE)) %>%
   mutate(proportion = ifelse(transcript_id == "Exon 4", TPM, 0) / total_TPM) %>%
   ungroup() %>% 
-  filter(transcript_id=='Exon 4',
-         total_TPM> quantile(total_TPM, 0.25))
+  filter(transcript_id=='Exon 4')#,
+        # total_TPM > quantile(total_TPM, 0.25))
 
 color_df <- hist_indep_rna_df %>%
   dplyr::select(plot_group_hex, plot_group) %>%
