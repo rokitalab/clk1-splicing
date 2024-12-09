@@ -25,6 +25,7 @@ bash run_module.sh
 * `10-crispr-screen-intersection.R` plots the intersection of CLK1 targets and genes that are essential in HGGs (via CRISPR scores obtained from [CCMA](https://data.mendeley.com/datasets/rnfs539pfw/3), doi: 10.17632/rnfs539pfw.3)
 
 ## Directory structure
+```
 .
 ├── 00-get-splice-transcripts.R
 ├── 01-diffExpr-ctrl_vs_morph.R
