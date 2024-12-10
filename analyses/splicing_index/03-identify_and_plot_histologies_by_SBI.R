@@ -87,8 +87,8 @@ plot_df <- clin_df_w_highSBI %>%
   mutate(perc_low = Low_SBI/n*100,
          perc_high = High_SBI/n*100,
          Histology = fct_reorder(Histology, High_SBI)) %>%
-  dplyr::rename(`High SBI (%)` = perc_high,
-                `Low SBI (%)` = perc_low) 
+  dplyr::rename(`High SE SBI (%)` = perc_high,
+                `Low SE SBI (%)` = perc_low) 
 
 # make colors
 plot_colors <- palette_df$plot_group_hex
@@ -108,7 +108,7 @@ g.mid <- ggplot(plot_df,aes(x=1,y=Histology)) +
         axis.ticks.x=element_line(color=NA),
         plot.margin = unit(c(2,1,10,2), "mm")) 
 
-g1 <- ggplot(data = plot_df, aes(x = Histology, y = `Low SBI (%)`)) +
+g1 <- ggplot(data = plot_df, aes(x = Histology, y = `Low SE SBI (%)`)) +
   geom_bar(stat = "identity", aes(fill = Histology), show.legend = FALSE) + 
   scale_fill_manual(values = plot_colors) +
   theme_Publication() +
@@ -125,7 +125,7 @@ g1 <- ggplot(data = plot_df, aes(x = Histology, y = `Low SBI (%)`)) +
  # labs(x = "N with Low SBI") +
   geom_hline(yintercept = 0, color = "black", linetype = "solid", linewidth = 0.75)
 
-g2 <- ggplot(data = plot_df, aes(x = Histology, y = `High SBI (%)`)) +
+g2 <- ggplot(data = plot_df, aes(x = Histology, y = `High SE SBI (%)`)) +
   geom_bar(stat = "identity", aes(fill = Histology), show.legend = FALSE) +
   scale_fill_manual(values = plot_colors) +
   theme_Publication() +
