@@ -212,11 +212,11 @@ for (group in groups){
                                       group %in% c("Mixed neuronal-glial tumor", "Low-grade glioma",
                                              "Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                              "Medulloblastoma"),
-                                      "mol_sub_group+extent_of_tumor_resection+SI_SE",
+                                      "mol_sub_group+extent_of_tumor_resection+SI_SE+age_at_diagnosis_days",
                                       ifelse(group %in% c("Ependymoma",
                                                           "DIPG or DMG"),
-                                             "mol_sub_group+SI_SE",
-                                              "SI_SE"
+                                             "mol_sub_group+SI_SE+age_at_diagnosis_days",
+                                              "SI_SE+age_at_diagnosis_days"
                                   )),
              coxph_os_model_file,
              "multivariate",
@@ -231,11 +231,11 @@ for (group in groups){
                                       group %in% c("Mixed neuronal-glial tumor", "Low-grade glioma",
                                              "Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                              "Medulloblastoma"),
-                                      "mol_sub_group+extent_of_tumor_resection+SI_SE",
+                                      "mol_sub_group+extent_of_tumor_resection+SI_SE+age_at_diagnosis_days",
                                       ifelse(group %in% c("Ependymoma",
                                                           "DIPG or DMG"),
-                                             "mol_sub_group+SI_SE",
-                                              "SI_SE"
+                                             "mol_sub_group+SI_SE+age_at_diagnosis_days",
+                                              "SI_SE+age_at_diagnosis_days"
                                   )),
              coxph_efs_model_file,
              "multivariate",
@@ -297,8 +297,8 @@ for (i in 1:nrow(subtype_df)) {
                                   terms = ifelse(subtype_df$hist[i] %in% c("Mixed neuronal-glial tumor", "Low-grade glioma",
                                                                            "Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                                                            "Medulloblastoma"),
-                                                 "extent_of_tumor_resection+SI_SE",
-                                                        "SI_SE"
+                                                 "extent_of_tumor_resection+SI_SE+age_at_diagnosis_days",
+                                                        "SI_SE+age_at_diagnosis_days"
                                                         ),
                                    coxph_os_model_file,
                                    "multivariate",
@@ -310,8 +310,8 @@ for (i in 1:nrow(subtype_df)) {
                                   terms = ifelse(subtype_df$hist[i] %in% c("Mixed neuronal-glial tumor", "Low-grade glioma",
                                                                            "Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                                                            "Medulloblastoma"),
-                                                 "extent_of_tumor_resection+SI_SE",
-                                                        "SI_SE"
+                                                 "extent_of_tumor_resection+SI_SE+age_at_diagnosis_days",
+                                                        "SI_SE+age_at_diagnosis_days"
                                                         ),
                                      coxph_efs_model_file,
                                      "multivariate",
