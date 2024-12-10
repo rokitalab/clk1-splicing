@@ -73,12 +73,11 @@ all_clk4_transcr_years_counts <- all_clk4_transcr_counts %>%  select(transcript_
   mutate(
     year_group = cut(
       years,
-      breaks = c(0, 15, 26, 40),  # Defines intervals: [0,15], (15,26], (26,40]
-      labels = c("[0,15]", "(15,26]", "(26,40]"),
-      right = TRUE  # Right-inclusive intervals
-    ))%>% 
+      breaks = c(0, 1, 2, 6, 12, 18, 21, 39),
+      labels = c("[0-1)", "[1-2)", "[2-6)", "[6-12)", "[12-18)", "[18-21)", "[21-39)"),
+      right = FALSE
+    )) %>% 
   na.omit()
-
 
 
 transcript_expr_CLK1_combined_df <- all_clk4_transcr_years_counts %>% 
