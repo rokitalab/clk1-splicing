@@ -134,26 +134,48 @@ transcript_expr_CLK1_combined_df$plot_group <- factor(
     unique()
 )
 
-kruskal_result <- kruskal.test(proportion ~ year_group, data = transcript_expr_CLK1_combined_df)
-p_value <- kruskal_result$p.value
+# Initialize a list to store results for each plot group
+kruskal_results <- list()
 
-# Example linear model summary (if needed)
-model <- lm(proportion ~ year_group, data = transcript_expr_CLK1_combined_df)
-model_summary <- summary(model)
-r_squared <- model_summary$r.squared
+# Perform Kruskal-Wallis test and fit models for each plot_group
+for (group in unique(transcript_expr_CLK1_combined_df$plot_group)) {
+  group_data <- subset(transcript_expr_CLK1_combined_df, plot_group == group)
+  
+  # Kruskal-Wallis test
+  kruskal_result <- kruskal.test(proportion ~ year_group, data = group_data)
+  kruskal_results[[group]] <- list(
+    p_value = kruskal_result$p.value,
+    model = lm(proportion ~ as.numeric(year_group), data = group_data),
+    group = group
+  )
+}
 
+# Extract p-values and R² values
+kruskal_annotations <- lapply(kruskal_results, function(res) {
+  model_summary <- summary(res$model)
+  r_squared <- model_summary$r.squared
+  
+  data.frame(
+    plot_group = res$group,
+    p_value = signif(res$p_value, 4),
+    r_squared = signif(r_squared, 4)
+  )
+})
 
-## make plot for proportion
-tpm_plot <-ggplot(transcript_expr_CLK1_combined_df, aes(x = year_group, y = proportion)) +
+# Combine annotations into a single data frame
+kruskal_annotations_df <- do.call(rbind, kruskal_annotations)
+
+# Create plot with separate annotations per plot_group
+tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = year_group, y = proportion)) +
   geom_jitter(
-    aes(color = dot_color),   # Use precomputed colors for jitter points
+    aes(color = dot_color),
     width = 0.2, size = 2
   ) +
   geom_boxplot(
-    aes(group = year_group),  # Create boxplots for each group
-    width = 0.6,              # Adjust the width of the boxplots
-    color = "black",          # Set the color of the boxplot borders
-    fill = "white",           # Fill color for the boxplots
+    aes(group = year_group),
+    width = 0.6,
+    color = "black",
+    fill = "white",
     alpha = 0.2
   ) +
   labs(
@@ -162,36 +184,27 @@ tpm_plot <-ggplot(transcript_expr_CLK1_combined_df, aes(x = year_group, y = prop
     y = "Isoform Fraction"
   ) +
   scale_color_identity(name = "Dot Color") +
-  facet_wrap(~ plot_group, scales = "free_x", nrow = 1) +  # Facet with a single row
+  facet_wrap(~ plot_group, scales = "free_x", nrow = 1) +
   theme_Publication() +
   theme(
     legend.position = "right",
     axis.text.x = element_text(angle = 75, hjust = 1),
-    plot.margin = margin(t = 50, r = 20, b = 20, l = 20)  # Further increase the top margin
+    plot.margin = margin(t = 50, r = 20, b = 20, l = 20)
   ) +
-  # Add Kruskal-Wallis p-value annotation
-  annotate(
-    "text",
-    x = 1,  # Adjust x position for annotation
-    y = max(transcript_expr_CLK1_combined_df$proportion, na.rm = TRUE) * 1.05,  # Place above the plot area
-    label = paste0("KW p = ", signif(p_value, 3)),
-    size = 3,  # Adjust font size
-    hjust = 0
-  ) +
-  # Add R² annotation
-  annotate(
-    "text",
-    x = 1,  # Adjust x position
-    y = max(transcript_expr_CLK1_combined_df$proportion, na.rm = TRUE) * 1.00,  # Slightly below the first annotation
-    label = paste0("R² = ", signif(r_squared, 3)),
-    size = 3,  # Adjust font size
+  # Add annotations dynamically for each plot_group
+  geom_text(
+    data = kruskal_annotations_df,
+    aes(
+      x = 1,  # Adjust position as needed
+      y = max(transcript_expr_CLK1_combined_df$proportion, na.rm = TRUE) * 1.05,
+      label = paste0("KW p = ", p_value, "\nR² = ", r_squared)
+    ),
+    inherit.aes = FALSE,
+    size = 3,
     hjust = 0
   )
 
-
-
-pdf(file.path(plots_dir,"clk4-tpm-phgg-ctrls.age_years.pdf"), height = 8, width = 40)
-tpm_plot
+# Save the plot
+pdf(file.path(plots_dir, "clk4-tpm-phgg-ctrls.age_years.pdf"), height = 8, width = 40)
+print(tpm_plot)
 dev.off()
-
-
