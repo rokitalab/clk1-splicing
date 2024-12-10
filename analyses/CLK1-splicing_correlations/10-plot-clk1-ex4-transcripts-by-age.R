@@ -73,10 +73,10 @@ all_clk4_transcr_years_counts <- all_clk4_transcr_counts %>%  select(transcript_
   mutate(
     year_group = cut(
       years,
-      breaks = c(0, 1, 2, 6, 12, 18, 21, 39),
-      labels = c("[0-1)", "[1-2)", "[2-6)", "[6-12)", "[12-18)", "[18-21)", "[21-39)"),
-      right = FALSE
-    )) %>% 
+      breaks = c(0, 15, 26, 40),  # Defines intervals: [0,15], (15,26], (26,40]
+      labels = c("[0,15]", "(15,26]", "(26,40]"),
+      right = TRUE  # Right-inclusive intervals
+    ))%>% 
   na.omit()
 
 
@@ -134,6 +134,14 @@ transcript_expr_CLK1_combined_df$plot_group <- factor(
     unique()
 )
 
+kruskal_result <- kruskal.test(proportion ~ year_group, data = transcript_expr_CLK1_combined_df)
+p_value <- kruskal_result$p.value
+
+# Example linear model summary (if needed)
+model <- lm(proportion ~ year_group, data = transcript_expr_CLK1_combined_df)
+model_summary <- summary(model)
+r_squared <- model_summary$r.squared
+
 
 ## make plot for proportion
 tpm_plot <-ggplot(transcript_expr_CLK1_combined_df, aes(x = year_group, y = proportion)) +
@@ -158,11 +166,31 @@ tpm_plot <-ggplot(transcript_expr_CLK1_combined_df, aes(x = year_group, y = prop
   theme_Publication() +
   theme(
     legend.position = "right",
-    axis.text.x = element_text(angle = 75, hjust = 1)
+    axis.text.x = element_text(angle = 75, hjust = 1),
+    plot.margin = margin(t = 50, r = 20, b = 20, l = 20)  # Further increase the top margin
+  ) +
+  # Add Kruskal-Wallis p-value annotation
+  annotate(
+    "text",
+    x = 1,  # Adjust x position for annotation
+    y = max(transcript_expr_CLK1_combined_df$proportion, na.rm = TRUE) * 1.05,  # Place above the plot area
+    label = paste0("KW p = ", signif(p_value, 3)),
+    size = 3,  # Adjust font size
+    hjust = 0
+  ) +
+  # Add R² annotation
+  annotate(
+    "text",
+    x = 1,  # Adjust x position
+    y = max(transcript_expr_CLK1_combined_df$proportion, na.rm = TRUE) * 1.00,  # Slightly below the first annotation
+    label = paste0("R² = ", signif(r_squared, 3)),
+    size = 3,  # Adjust font size
+    hjust = 0
   )
 
 
-pdf(file.path(plots_dir,"clk4-tpm-phgg-ctrls.age_years-v2.pdf"), height = 6, width = 26)
+
+pdf(file.path(plots_dir,"clk4-tpm-phgg-ctrls.age_years.pdf"), height = 8, width = 40)
 tpm_plot
 dev.off()
 
