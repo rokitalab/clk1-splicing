@@ -29,6 +29,7 @@ library(tidyverse)
 library(survival)
 library(ggpubr)
 library(ggplot2)
+library(data.table)
 
 root_dir <- rprojroot::find_root(rprojroot::has_dir(".git"))
 
@@ -72,7 +73,7 @@ meta <- read_tsv(metadata_file) %>%
                                                           "Biopsy only", "Not Reported",
                                                           "Unavailable")))
 
-clk1_psi <- fread(clk1_psi_file) %>%
+clk1_psi <- data.table::fread(clk1_psi_file) %>%
    dplyr::filter(geneSymbol=="CLK1",
                  exonStart_0base=="200860124", exonEnd=="200860215") %>%
   dplyr::rename('Kids_First_Biospecimen_ID'=sample_id,
@@ -227,10 +228,10 @@ for (group in groups){
   add_model_os <- suppressWarnings(fit_save_model(group_hist,
                                   terms = ifelse(
                                       group == "Low-grade glioma",
-                                      "mol_sub_group+extent_of_tumor_resection+clk1_group",
+                                      "mol_sub_group+extent_of_tumor_resection+clk1_group+age_at_diagnosis_days+age_at_diagnosis_days",
                                       ifelse(group == "Mixed neuronal-glial tumor",
-                                             "extent_of_tumor_resection+clk1_group",
-                                              "clk1_group"
+                                             "extent_of_tumor_resection+clk1_group+age_at_diagnosis_days+age_at_diagnosis_days",
+                                              "clk1_group+age_at_diagnosis_days"
                                   )),
              coxph_os_model_file,
              "multivariate",
@@ -242,10 +243,10 @@ for (group in groups){
   add_model_efs <- suppressWarnings(fit_save_model(group_hist,
                                   terms = ifelse(
                                       group == "Low-grade glioma",
-                                      "mol_sub_group+extent_of_tumor_resection+clk1_group",
+                                      "mol_sub_group+extent_of_tumor_resection+clk1_group+age_at_diagnosis_days",
                                       ifelse(group == "Mixed neuronal-glial tumor",
-                                             "extent_of_tumor_resection+clk1_group",
-                                              "clk1_group"
+                                             "extent_of_tumor_resection+clk1_group+age_at_diagnosis_days",
+                                              "clk1_group+age_at_diagnosis_days"
                                   )),
              coxph_efs_model_file,
              "multivariate",
@@ -337,8 +338,8 @@ for (i in 1:nrow(subtype_df)) {
                                   terms = ifelse(subtype_df$hist[i] %in% c("Mixed neuronal-glial tumor", "Low-grade glioma",
                                                                            "Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                                                            "Medulloblastoma"),
-                                                 "extent_of_tumor_resection+clk1_group",
-                                                        "clk1_group"
+                                                 "extent_of_tumor_resection+clk1_group+age_at_diagnosis_days",
+                                                        "clk1_group+age_at_diagnosis_days"
                                                         ),
                                  coxph_os_model_file,
                                  "multivariate",
@@ -350,8 +351,8 @@ for (i in 1:nrow(subtype_df)) {
                                   terms = ifelse(subtype_df$hist[i] %in% c("Mixed neuronal-glial tumor", "Low-grade glioma",
                                                                            "Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                                                            "Medulloblastoma"),
-                                                 "extent_of_tumor_resection+clk1_group",
-                                                        "clk1_group"
+                                                 "extent_of_tumor_resection+clk1_group+age_at_diagnosis_days",
+                                                        "clk1_group+age_at_diagnosis_days"
                                                         ),
                                    coxph_efs_model_file,
                                    "multivariate",
