@@ -24,6 +24,8 @@ indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv
 
 gtex_trans_file <- file.path("/Users/naqvia/d3b_coding/neoepitope-identification/data/gtex-harmonized-isoform-expression-rsem-tpm.rds")
 ped_trans_file = "~/d3b_coding/neoepitope-identification/data/GSE243682_normal_rna-isoform-expression-rsem-tpm.rds"
+astro_trans_file <- "~/downloads/normal-brain-isoform-expression-rsem-tpm.rds"
+astro_metadata_file<- "~/downloads/_1_SraRun_astrocytes_under40_hot.csv"
 
 # Output directories
 results_dir <- file.path(analysis_dir, "results")
@@ -54,6 +56,31 @@ gtex_brain <- read_tsv(hist_file)  %>%
                 Kids_First_Biospecimen_ID %in% gtex_rmats$sample_id) 
 
 expr_tpm_tumor_file <- file.path(data_dir,"rna-isoform-expression-rsem-tpm.rds")
+
+metadata_astrocytes = read_csv(astro_metadata_file) %>% 
+  select(source_name,Run) %>%
+  dplyr::rename(Kids_First_Biospecimen_ID=Run,
+                plot_group=source_name) %>%
+  unique()
+
+clk4_transcr_counts_astro <- readRDS(astro_trans_file) %>%
+  filter(grepl("^CLK1", gene_symbol)) %>%
+  mutate(
+    transcript_id = case_when(
+      transcript_id %in% c("ENST00000321356.9", "ENST00000434813.3", "ENST00000409403.6") ~ "Exon 4",  # Rename specified transcripts
+      TRUE ~ "Other"  # All other transcripts are renamed to "Other"
+    )
+  ) %>%
+  group_by(transcript_id) %>%
+  summarise(across(starts_with("SRR"), sum, na.rm = TRUE)) %>%
+  pivot_longer(
+    cols = -transcript_id,
+    names_to = "Kids_First_Biospecimen_ID",
+    values_to = "TPM"
+  ) %>%
+  inner_join(metadata_astrocytes, by='Kids_First_Biospecimen_ID') %>%
+  mutate(group="Astrocytes")
+
 
 all_clk4_transcr_counts <- readRDS(expr_tpm_tumor_file) %>%
   filter(grepl("^CLK1", gene_symbol)) %>%
@@ -160,7 +187,7 @@ ped_clk1_transcr_counts <- readRDS(ped_trans_file) %>%
   dplyr::rename(Kids_First_Biospecimen_ID=Sample) %>%
   inner_join(sra_mapping,by=c("Kids_First_Biospecimen_ID" = "SRR"))
 
-transcript_expr_CLK1_combined_df <- rbind(all_clk4_transcr_counts,ped_clk1_transcr_counts,gtex_clk1_transc_counts,evodevo_clk1_transc_counts) %>% 
+transcript_expr_CLK1_combined_df <- rbind(all_clk4_transcr_counts,ped_clk1_transcr_counts,gtex_clk1_transc_counts,evodevo_clk1_transc_counts,clk4_transcr_counts_astro) %>% 
   group_by(Kids_First_Biospecimen_ID) %>%
   mutate(total_TPM = sum(TPM[transcript_id %in% c("Exon 4", "Other")], na.rm = TRUE)) %>%
   mutate(proportion = ifelse(transcript_id == "Exon 4", TPM, 0) / total_TPM) %>%
@@ -243,7 +270,7 @@ tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = pro
     axis.text.x = element_text(angle = 75, hjust = 1)
   ) 
 
-pdf(file.path(plots_dir,"clk4-tpm-phgg-ctrls.pdf"), height = 6, width = 20)
+pdf(file.path(plots_dir,"clk4-tpm-phgg-ctrls.pdf"), height = 6, width = 22)
 tpm_plot
 dev.off()
 
