@@ -123,8 +123,12 @@ Create survival df with only high & low CLK1 status, and relevel mol subgroups
 ```{r}
 survival_df <- hgg_hist_scaled %>%
   dplyr::filter(clk1_status %in% c("CLK1 exon 4 High", "CLK1 exon 4 Low")) %>%
+  dplyr::mutate(mol_sub_group = case_when(
+    grepl("H3 wildtype", mol_sub_group) ~ "HGG, H3 wildtype",
+    TRUE ~ mol_sub_group
+  )) %>%
   dplyr::mutate(mol_sub_group = fct_relevel(mol_sub_group,
-                                            c("HGG, H3 wildtype", "HGG, H3 wildtype, TP53",
+                                            c("HGG, H3 wildtype",
                                               "DMG, H3 K28", "DMG, H3 K28, TP53",
                                               "DHG, H3 G35, TP53"))) %>%
   dplyr::mutate(subgroup_broad = str_replace(mol_sub_group, ", TP53", "")) %>%
@@ -204,7 +208,7 @@ mixed_os_surv_result <- file.path(results_dir,
                      "cox_HGG_OS_subtype_interaction_terms_clk1_status_agedx.RDS")
 
 mixed_model_os <- fit_save_model(survival_df,
-                               terms = "subgroup_broad+clk1_status*age_at_diagnosis_years",
+                               terms = "mol_sub_group+clk1_status*age_at_diagnosis_years",
                                mixed_os_surv_result,
                                "multivariate",
                                years_col = "OS_years",
@@ -225,7 +229,7 @@ add_os_surv_result <- file.path(results_dir,
                      "cox_HGG_OS_additive_terms_subtype_clk1_status.RDS")
 
 add_model_os <- fit_save_model(survival_df,
-                               terms = "subgroup_broad+clk1_status+age_at_diagnosis_years",
+                               terms = "mol_sub_group+clk1_status+age_at_diagnosis_years",
                                add_os_surv_result,
                                "multivariate",
                                years_col = "OS_years",
@@ -266,8 +270,8 @@ mixed_efs_surv_result <- file.path(results_dir,
                      "cox_HGG_EFS_subtype_interaction_terms_clk1_status_agedx.RDS")
 
 mixed_model_efs <- fit_save_model(survival_df,
-                               terms = "subgroup_broad+clk1_status*age_at_diagnosis_years",
-                               int_efs_surv_result,
+                               terms = "mol_sub_group+clk1_status*age_at_diagnosis_years",
+                               mixed_efs_surv_result,
                                "multivariate",
                                years_col = "EFS_years",
                                status_col = "EFS_status"
@@ -277,7 +281,7 @@ mixed_efs_forest_plot <- plotForest(readRDS(mixed_efs_surv_result),
                                  filter_estimates = FALSE)
 
 ggsave(file.path(plot_dir, "forest_HGG_DMG_EFS_subtype_int_clk1_status_agedx.pdf"), 
-       mixed_efs_forest_plot, width = 12, height = 5)
+       mixed_efs_forest_plot, width = 12, height = 4)
 ```
 
 EFS additive model: 
@@ -287,7 +291,7 @@ add_efs_surv_result <- file.path(results_dir,
                      "cox_HGG_EFS_additive_terms_subtype_clk1_status.RDS")
 
 add_model_efs <- fit_save_model(survival_df,
-                               terms = "subgroup_broad+clk1_status+age_at_diagnosis_years",
+                               terms = "mol_sub_group+age_at_diagnosis_years",
                                add_efs_surv_result,
                                "multivariate",
                                years_col = "EFS_years",
