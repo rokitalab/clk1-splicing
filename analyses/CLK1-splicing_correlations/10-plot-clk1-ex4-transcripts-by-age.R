@@ -57,13 +57,14 @@ all_clk4_transcr_counts <- readRDS(expr_tpm_tumor_file) %>%
     age_years = age_at_diagnosis_days / 365,
     age_bin = cut(
       age_years,
-      breaks = c(0, 15, 26, 40),
-      labels = c("[0,15]", "(15,26]", "(26,40]"),
+      breaks = c(0, 14, 18, 39),
+      labels = c("[1-14]", "[15-18]", "[19-39]"),
       right = TRUE
     )
   ) %>%
   select(Kids_First_Biospecimen_ID, plot_group, age_bin, transcript_id, TPM) %>%
   na.omit()
+
 
 # Step 3: Calculate exon proportions
 transcript_expr_CLK1_combined_df <- all_clk4_transcr_counts %>%
