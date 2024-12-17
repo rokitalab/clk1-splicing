@@ -58,9 +58,11 @@ gtex_brain <- read_tsv(hist_file)  %>%
 expr_tpm_tumor_file <- file.path(data_dir,"rna-isoform-expression-rsem-tpm.rds")
 
 metadata_astrocytes = read_csv(astro_metadata_file) %>% 
+  filter(cell_type=="Astrocyte") %>%
   select(source_name,Run) %>%
   dplyr::rename(Kids_First_Biospecimen_ID=Run,
                 plot_group=source_name) %>%
+    dplyr::mutate(plot_group=str_replace_all(plot_group, "Adult","Young")) %>%
   unique()
 
 clk4_transcr_counts_astro <- readRDS(astro_trans_file) %>%
@@ -254,7 +256,7 @@ tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = pro
     fill = "white",           # Fill color for the boxplots
     alpha = 0.2 ) +
   labs(
-    title = "ENST00000321356 Expression (TPM)",
+    title = "Relative CLK1 Exon 4 Transcript Expression",
     x = "Group",
     y = "Isoform Fraction") +
   scale_color_identity(
@@ -275,3 +277,59 @@ tpm_plot
 dev.off()
 
 
+
+
+
+# Data for the inset pie chart
+inset_data <- transcript_expr_CLK1_combined_df %>%
+  filter(proportion > 0.75) %>%
+  count(plot_group, name = "count") %>%
+  mutate(percentage = round(count / sum(count) * 100, 1))  # Calculate percentages
+
+# Main scatter plot with points colored by `plot_group`
+scatter_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = log(total_TPM, 2), y = proportion)) +
+  geom_point(
+    aes(color = group),  # Color points based on `plot_group`
+    size = 2                  # Set point size
+  ) +
+  scale_y_continuous(
+    breaks = seq(0, 1, by = 0.25)  # Y-axis ticks at intervals of 0.25
+  ) +
+  labs(
+    title = "Exon 4 Transcript Expression",
+    x = "Log2(Total TPM)",
+    y = "Isoform Proportion"
+  ) +
+  theme_Publication()
+
+# Inset pie chart with numeric annotations
+inset_piechart <-  ggplot(inset_data, aes(x = "", y = count, fill = dot_color)) +
+  geom_bar(stat = "identity", width = 1, color = "black") +
+  coord_polar(theta = "y") +  # Create a pie chart
+  geom_text(
+    aes(label = paste0(percentage, "%")),  # Add percentage labels inside the pie
+    position = position_stack(vjust = 0.5),
+    size = 4, color = "white"
+  ) +
+  labs(
+    title = "Plot Groups > 0.75 Proportion",
+    x = NULL,
+    y = NULL
+  ) +
+  scale_fill_identity(
+    name = "Dot Color"  # Retain original `dot_color` scheme
+  ) +
+  theme_void() +              # Minimalistic theme for pie chart
+  theme(
+    legend.position = "right",
+    plot.title = element_text(hjust = 0.5, size = 10),
+    text = element_text(size = 10)  # Adjust font size for readability
+  )
+
+# Combine the main plot with the inset pie chart
+combined_plot <- ggdraw() +
+  draw_plot(scatter_plot, 0, 0, 1, 1) +  # Main plot takes full canvas
+  draw_plot(inset_piechart, x = 0.05, y = 0.6, width = 0.35, height = 0.35)  # Inset in top-left corner
+
+# Display the combined plot
+print(combined_plot)

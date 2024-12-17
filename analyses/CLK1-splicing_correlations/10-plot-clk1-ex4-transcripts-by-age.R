@@ -144,8 +144,8 @@ create_plot <- function(data, title, p_values, value_label) {
     )
 }
 
-tpm_plot_wilcoxon <- create_plot(transcript_expr_CLK1_combined_df, "", plot_p_values_wilcoxon, "")
-tpm_plot_permutation <- create_plot(transcript_expr_CLK1_combined_df, "", plot_p_values_permutation, "")
+tpm_plot_wilcoxon <- create_plot(transcript_expr_CLK1_combined_df, "Relative CLK1 Exon 4 Transcript Expression", plot_p_values_wilcoxon, "")
+tpm_plot_permutation <- create_plot(transcript_expr_CLK1_combined_df, "Relative CLK1 Exon 4 Transcript Expression", plot_p_values_permutation, "")
 
 # Save plots
 pdf(file.path(plots_dir, "clk4-tpm-tumor-age-bin-wc-test.pdf"), height = 14, width = 12)
