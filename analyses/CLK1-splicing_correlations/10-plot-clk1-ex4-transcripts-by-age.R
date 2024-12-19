@@ -58,7 +58,7 @@ all_clk4_transcr_counts <- readRDS(expr_tpm_tumor_file) %>%
     age_bin = cut(
       age_years,
       breaks = c(0, 14, 18, 39),
-      labels = c("[1-14]", "[15-18]", "[19-39]"),
+      labels = c("[0-14]", "[15-18]", "[19-39]"),
       right = TRUE
     )
   ) %>%
@@ -156,3 +156,7 @@ dev.off()
 pdf(file.path(plots_dir, "clk4-tpm-tumor-age-bin-perm-test.pdf"), height = 14, width = 12)
 print(tpm_plot_permutation)
 dev.off()
+
+transcript_expr_CLK1_prop_df <- transcript_expr_CLK1_combined_df %>% select(Kids_First_Biospecimen_ID, plot_group,group,proportion)
+ 
+write_tsv(x = transcript_expr_CLK1_prop_df,file = file.path(results_dir,"clk1-exon4-proportion.tsv"))
