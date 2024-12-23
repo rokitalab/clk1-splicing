@@ -25,7 +25,11 @@ indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv
 gtex_trans_file <- file.path("/Users/naqvia/d3b_coding/neoepitope-identification/data/gtex-harmonized-isoform-expression-rsem-tpm.rds")
 ped_trans_file = "~/d3b_coding/neoepitope-identification/data/GSE243682_normal_rna-isoform-expression-rsem-tpm.rds"
 astro_trans_file <- "~/downloads/normal-brain-isoform-expression-rsem-tpm.rds"
+expr_tpm_tumor_file <- file.path(data_dir,"rna-isoform-expression-rsem-tpm.rds")
+
+
 astro_metadata_file<- "~/downloads/_1_SraRun_astrocytes_under40_hot.csv"
+
 
 # Output directories
 results_dir <- file.path(analysis_dir, "results")
@@ -55,7 +59,6 @@ gtex_brain <- read_tsv(hist_file)  %>%
                 gtex_group == "Brain",
                 Kids_First_Biospecimen_ID %in% gtex_rmats$sample_id) 
 
-expr_tpm_tumor_file <- file.path(data_dir,"rna-isoform-expression-rsem-tpm.rds")
 
 metadata_astrocytes = read_csv(astro_metadata_file) %>% 
   filter(cell_type=="Astrocyte") %>%
@@ -222,6 +225,30 @@ transcript_expr_CLK1_combined_df <- transcript_expr_CLK1_combined_df %>%
   ) %>%
   filter(!is.na(plot_group)) # Remove rows with NA in plot_group
 
+
+## order evodevo
+evodevo_order <- c(
+  "4 Week Post Conception",
+  "5 Week Post Conception",
+  "6 Week Post Conception",
+  "7 Week Post Conception",
+  "8 Week Post Conception",
+  "9 Week Post Conception",
+  "10 Week Post Conception",
+  "11 Week Post Conception",
+  "12 Week Post Conception",
+  "13 Week Post Conception",
+  "16 Week Post Conception",
+  "Adolescent",
+  "Elderly",
+  "Infant",
+  "Neonate",
+  "School Age Child",
+  "Toddler",
+  "Young Adult",
+  "Middle Adult")
+
+# Calculate the mean proportion for each 'plot_group' 
 # Ensure plot_group is ordered as it appears in the dataframe
 transcript_expr_CLK1_combined_df$plot_group <- factor(
   transcript_expr_CLK1_combined_df$plot_group,
@@ -240,8 +267,7 @@ transcript_expr_CLK1_combined_df$plot_group <- factor(
   levels = transcript_expr_CLK1_combined_df %>%
     arrange(group, desc(mean_proportion)) %>%
     pull(plot_group) %>%
-    unique()
-)
+    unique() )
 
 
 ## make plot for proportion
@@ -274,6 +300,37 @@ tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = pro
 
 pdf(file.path(plots_dir,"clk4-tpm-phgg-ctrls.pdf"), height = 6, width = 22)
 tpm_plot
+dev.off()
+
+tpm_abs_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = TPM)) +
+  geom_jitter(
+    aes(color = dot_color),   # Use precomputed colors for jitter points
+    width = 0.2, size = 2) +
+  geom_boxplot(
+    aes(group = plot_group),  # Create boxplots for each group
+    width = 0.6,              # Adjust the width of the boxplots
+    color = "black",          # Set the color of the boxplot borders
+    fill = "white",           # Fill color for the boxplots
+    alpha = 0.2 ) +
+  labs(
+    title = "Exon 4 Transcript Expression",
+    x = "Group",
+    y = "CLK1 Exon 4 TPM") +
+  scale_color_identity(
+    name = "Group"
+  ) +
+  facet_grid(
+    ~ group,                  # Facet by 'group'
+    scales = "free_x"         # Allow different x-axis scales for each facet
+  )  +
+  theme_Publication() +
+  theme(
+    legend.position = "right", 
+    axis.text.x = element_text(angle = 75, hjust = 1)
+  ) 
+
+pdf(file.path(plots_dir,"clk4-tpm-total-phgg-ctrls.pdf"), height = 6, width = 22)
+tpm_abs_plot
 dev.off()
 
 
