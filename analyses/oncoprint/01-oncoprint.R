@@ -45,8 +45,9 @@ indep_rna_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary
 goi_file <- file.path(input_dir,"oncoprint-goi-lists-OpenPedCan-gencode-v39.csv")
 tmb_file <- file.path(input_dir, "snv-mutation-tmb-coding.tsv")
 cnv_file <- file.path(data_dir, "consensus_wgs_plus_freec_wxs_plus_freec_tumor_only.tsv.gz")
-psi_exp_file <- file.path(root_dir, "analyses", "CLK1-splicing_correlations", "results", "clk1-nf1-psi-exp-phos-df.rds")
+psi_exp_file <- file.path(root_dir, "analyses", "CLK1-splicing_correlations", "results", "hgg-dmg-clk-srsf-expression-phosphorylation.tsv")
 fus_file <- file.path(data_dir, "fusion-putative-oncogenic.tsv")
+diff_psi_file <- file.path(root_dir, "analyses", "splicing_events_functional_sites", "results", "splice_events.diff.SE.txt")
 
 ## color for barplot
 source(file.path(input_dir, "mutation-colors.R"))
@@ -65,6 +66,10 @@ histologies_df <- read_tsv(clin_file, guess_max = 100000) %>%
                                            Kids_First_Participant_ID == "PT_JNEV57VK" ~ "LS",
                                            Kids_First_Participant_ID == "PT_ZH3SBJPZ" ~ NA_character_,
                                            TRUE ~ NA_character_))
+
+low_clk1_psi <- read_tsv(diff_psi_file) %>%
+  filter(`Splice ID` == "CLK1:200860125-200860215_200859679-200859746_200861237-200861466") %>%
+  pull(Sample)
 
 goi <- read_csv(goi_file) %>%
   pull(HGAT) %>%
@@ -94,14 +99,22 @@ tmb_df <- read_tsv(tmb_file) %>%
   # remove WXS for a sample we have WGS for
   filter(Kids_First_Biospecimen_ID != "BS_QF7M4SHH")
 
-splice_df <-  readRDS(psi_exp_file) %>%
-  rownames_to_column("match_id") %>%
+splice_df <-  read_tsv(psi_exp_file) %>%
   filter(match_id %in% indep_rna_df$match_id) %>%
   # z-score
-  dplyr::mutate(`CLK1-201 (Exon4) PSI` = as.numeric(scale(`CLK1-201 (Exon4) PSI`)),
-                `CLK1-201` = as.numeric(scale(`CLK1-201`)),
-                `Total CLK1` = as.numeric(scale(`Total CLK1`))
-                )
+  dplyr::mutate(`CLK1-201 (Exon4) PSI` = as.numeric(scale(IncLevel1)),
+                `CLK1-201` = as.numeric(scale(`CLK1_201`)),
+                `Total CLK1` = as.numeric(scale(`CLK1`))) 
+
+high_clk1_psi <- splice_df %>%
+  arrange(-IncLevel1) %>%
+  slice(1:length(low_clk1_psi)) %>%
+  pull(Kids_First_Biospecimen_ID)
+
+splice_df_anno <- splice_df %>%
+  mutate(clk1_status = case_when(Kids_First_Biospecimen_ID %in% low_clk1_psi ~ "Low",
+                              Kids_First_Biospecimen_ID %in% high_clk1_psi ~ "High",
+                              TRUE ~ NA_character_))
 
 # read in cnv file and reformat to add to maf
 cnv_df <- read_tsv(cnv_file) %>%
@@ -211,13 +224,13 @@ gene_matrix <- gene_matrix %>%
   select(-c(Sort_Order, Hugo_Symbol)) 
 
 # mutate the hgg dataframe for plotting
-histologies_df_sorted <- splice_df %>%
+histologies_df_sorted <- splice_df_anno %>%
   left_join(histologies_df, by = "match_id", relationship = "many-to-many") %>%
   select(match_id, plot_group, cancer_predisposition, reported_gender, molecular_subtype, CNS_region, `CLK1-201 (Exon4) PSI`,
-         `CLK1-201`, `Total CLK1`) %>%
+         `CLK1-201`, `Total CLK1`, clk1_status) %>%
   unique() %>%
   group_by(match_id, plot_group, cancer_predisposition, reported_gender, molecular_subtype, `CLK1-201 (Exon4) PSI`,
-            `CLK1-201`, `Total CLK1`) %>%
+            `CLK1-201`, `Total CLK1`, clk1_status) %>%
   summarise(CNS_region = str_c(unique(na.omit(CNS_region)), collapse = ","),
             CLK1_PSI = mean(`CLK1-201 (Exon4) PSI`),
             .groups = "drop") %>%
@@ -233,18 +246,6 @@ histologies_df_sorted <- splice_df %>%
                                        TRUE ~ CNS_region),
                 tmb_status = case_when(is.na(tmb_status) ~ "Unknown",
                                        TRUE ~ tmb_status)) 
-
-# get clk1 high/low
-quantiles_clk1 <- quantile(histologies_df_sorted$CLK1_PSI, probs=c(.25, .75), na.rm = TRUE)
-lower_sbi <- quantiles_clk1[1]
-upper_sbi <- quantiles_clk1[2]
-
-
-
-histologies_df_sorted <- histologies_df_sorted %>%
-  mutate(clk1_status = case_when(CLK1_PSI > upper_sbi ~ "High",
-                                 CLK1_PSI < lower_sbi ~ "Low",
-                                 TRUE ~ "Middle"))
 
 histologies_df_sorted2 <- histologies_df_sorted %>%
   select(reported_gender,  cancer_predisposition, plot_group, molecular_subtype, CNS_region, tmb_status, 
@@ -344,7 +345,7 @@ plot_oncoprint <- oncoPrint(gene_matrix_sorted[1:25,], get_type = function(x) st
                             column_order =  colnames(gene_matrix_sorted))
 
 # Save plot as PDF
-pdf(plot_out, width = 15, height = 8)
+pdf(plot_out, width = 15, height = 7)
 plot_oncoprint
 dev.off()
 
@@ -359,7 +360,7 @@ total_low <- nrow(ids_clk1)/2
 
 alteration_counts <- collapse_snv_dat %>%
   full_join(ids_clk1) %>%
-  filter(clk1_status != "Middle") %>%
+  filter(!is.na(clk1_status)) %>%
   ## group by junction and calculate means
   select(Hugo_Symbol, clk1_status) %>%
   group_by(Hugo_Symbol, clk1_status) %>%
