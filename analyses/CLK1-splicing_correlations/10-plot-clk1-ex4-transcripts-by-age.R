@@ -158,5 +158,4 @@ print(tpm_plot_permutation)
 dev.off()
 
 transcript_expr_CLK1_prop_df <- transcript_expr_CLK1_combined_df %>% select(Kids_First_Biospecimen_ID, plot_group,group,proportion)
- 
 write_tsv(x = transcript_expr_CLK1_prop_df,file = file.path(results_dir,"clk1-exon4-proportion.tsv"))
