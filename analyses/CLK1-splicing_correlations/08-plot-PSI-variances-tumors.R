@@ -176,8 +176,8 @@ psi_range_kinase_plot<- ggplot(data = ex4_psi_range,
                                aes(x = reorder(plot_group, PSI_range), 
                                    y = PSI_range, 
                                    fill = SpliceID)) +
-  geom_jitter(size = 3, pch = 21, color = "black", width = 0.3, height = 0.02, alpha = 0.7) +
-  ylim(0, 1) +
+  geom_jitter(size = 3, pch = 21, color = "black", width = 0.2, height = 0, alpha = 0.4) +
+  ylim(0, .85) +
   xlab("Histology") +
   ylab("Range") +
   ggtitle("PSI Range") +
