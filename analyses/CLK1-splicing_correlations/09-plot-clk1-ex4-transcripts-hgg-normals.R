@@ -333,4 +333,130 @@ pdf(file.path(plots_dir,"clk4-tpm-total-phgg-ctrls.pdf"), height = 6, width = 22
 tpm_abs_plot
 dev.off()
 
+## spinal samples comparison
+hist_indep_rna_spinal_df <- hist_indep_rna_df %>% filter(grepl("Spin",primary_site))
+hist_indep_rna_spinal_df <- hist_indep_rna_df %>% filter(CNS_region=="Spine")
+
+all_clk1_transcr_spinal_counts <- readRDS(expr_tpm_tumor_file) %>%
+  filter(grepl("^CLK1", gene_symbol)) %>%
+  mutate(
+    transcript_id = case_when(
+      transcript_id %in% c("ENST00000321356.9", "ENST00000434813.3", "ENST00000409403.6") ~ "Exon 4",  # Rename specified transcripts
+      TRUE ~ "Other"  # All other transcripts are renamed to "Other"
+    )
+  ) %>%
+  group_by(transcript_id) %>%
+  summarise(across(starts_with("BS"), sum, na.rm = TRUE)) %>%
+  pivot_longer(
+    cols = -transcript_id,
+    names_to = "Kids_First_Biospecimen_ID",
+    values_to = "TPM"
+  ) %>%
+  inner_join(hist_indep_rna_spinal_df, by="Kids_First_Biospecimen_ID") %>%
+  dplyr::select(transcript_id,Kids_First_Biospecimen_ID,plot_group, TPM) %>%
+  dplyr::mutate(group="Tumors")
+
+gtex_clk1_transc_spinal_counts <- readRDS(gtex_trans_file) %>%
+  filter(grepl("^CLK1", gene_symbol)) %>%
+  mutate(
+    transcript_id = case_when(
+      transcript_id %in% c("ENST00000321356.9", "ENST00000434813.3", "ENST00000409403.6") ~ "Exon 4",  # Rename specified transcripts
+      TRUE ~ "Other"  # All other transcripts are renamed to "Other"
+    )
+  ) %>%
+  group_by(transcript_id) %>%
+  summarise(across(starts_with("GTEX"), sum, na.rm = TRUE)) %>%
+  pivot_longer(
+    cols = -transcript_id,
+    names_to = "Kids_First_Biospecimen_ID",
+    values_to = "TPM"
+  ) %>%
+  inner_join(gtex_brain, by="Kids_First_Biospecimen_ID") %>%
+  dplyr::rename(plot_group=gtex_subgroup) %>%
+  
+  dplyr::select(transcript_id,Kids_First_Biospecimen_ID,plot_group, TPM) %>%
+  dplyr::mutate(group="Gtex",
+                plot_group=str_replace_all(plot_group, "Brain - ", "Gtex -")) %>%
+  dplyr::filter(grepl("Spin",plot_group))
+
+
+transcript_expr_CLK1_spinal_combined_df <- rbind(all_clk1_transcr_spinal_counts,gtex_clk1_transc_spinal_counts) %>% 
+  group_by(Kids_First_Biospecimen_ID) %>%
+  mutate(total_TPM = sum(TPM[transcript_id %in% c("Exon 4", "Other")], na.rm = TRUE)) %>%
+  mutate(proportion = ifelse(transcript_id == "Exon 4", TPM, 0) / total_TPM) %>%
+  ungroup() %>% 
+  filter(transcript_id=='Exon 4')
+
+color_df <- hist_indep_rna_df %>%
+  dplyr::select(plot_group_hex, plot_group) %>%
+  dplyr::filter(!is.na(plot_group)) %>%
+  unique()
+
+cols <- as.character(color_df$plot_group_hex)
+names(cols) <- as.character(color_df$plot_group)
+
+# Ensure no duplicate rows
+color_df <- color_df %>%
+  dplyr::distinct()
+
+# Create the color mapping
+color_mapping <- setNames(color_df$plot_group_hex, color_df$plot_group)
+
+# Add a color column to the data based only on plot_group
+transcript_expr_CLK1_spinal_combined_df <- transcript_expr_CLK1_spinal_combined_df %>%
+  mutate(
+    dot_color = case_when(
+      plot_group %in% names(color_mapping) ~ color_mapping[plot_group], # Use plot_group-specific colors
+      TRUE ~ "#b5b5b5"                                                  # Default to grey
+    )
+  ) %>%
+  filter(!is.na(plot_group)) # Remove rows with NA in plot_group
+
+# Calculate the mean proportion for each 'plot_group' 
+# Ensure plot_group is ordered as it appears in the dataframe
+transcript_expr_CLK1_spinal_combined_df$plot_group <- factor(
+  transcript_expr_CLK1_spinal_combined_df$plot_group,
+  levels = unique(transcript_expr_CLK1_spinal_combined_df$plot_group)
+)
+
+# Calculate the mean of 'proportion' within each 'group' and 'plot_group'
+transcript_expr_CLK1_spinal_combined_df <- transcript_expr_CLK1_spinal_combined_df %>%
+  group_by(group, plot_group) %>%
+  mutate(mean_proportion = mean(proportion, na.rm = TRUE)) %>%
+  ungroup()
+
+# Reorder 'plot_group' within each 'group' based on 'mean_proportion' in descending order
+transcript_expr_CLK1_spinal_combined_df$plot_group <- factor(
+  transcript_expr_CLK1_spinal_combined_df$plot_group,
+  levels = transcript_expr_CLK1_spinal_combined_df %>%
+    arrange(group, desc(mean_proportion)) %>%
+    pull(plot_group) %>%
+    unique() )
+
+tpm_spinal_plot <- ggplot(transcript_expr_CLK1_spinal_combined_df, aes(x = plot_group, y = proportion)) +
+  geom_jitter(
+    aes(color = dot_color),   # Use precomputed colors for jitter points
+    width = 0.2, size = 2) +
+  geom_boxplot(
+    aes(group = plot_group),  # Create boxplots for each group
+    width = 0.6,              # Adjust the width of the boxplots
+    color = "black",          # Set the color of the boxplot borders
+    fill = "white",           # Fill color for the boxplots
+    alpha = 0.2 ) +
+  labs(
+    title = "Relative CLK1 Exon 4 Transcript Expression",
+    x = "Group",
+    y = "Isoform Fraction") +
+  scale_color_identity(
+    name = "Group") +
+  theme_Publication() +
+  theme(
+    legend.position = "right", 
+    axis.text.x = element_text(angle = 75, hjust = 1)
+  ) 
+
+pdf(file.path(plots_dir,"clk1-ex4-tpm-spinal-ctrls.pdf"), height = 6, width = 10)
+tpm_spinal_plot
+dev.off()
+
 
