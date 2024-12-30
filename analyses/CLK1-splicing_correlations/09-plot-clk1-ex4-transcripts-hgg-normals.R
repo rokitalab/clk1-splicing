@@ -61,10 +61,10 @@ gtex_brain <- read_tsv(hist_file)  %>%
 
 
 metadata_astrocytes = read_csv(astro_metadata_file) %>% 
-  filter(cell_type=="Astrocyte") %>%
-  select(source_name,Run) %>%
+  #filter(cell_type=="Astrocyte") %>%
+  select(cell_type,Run) %>%
   dplyr::rename(Kids_First_Biospecimen_ID=Run,
-                plot_group=source_name) %>%
+                plot_group=cell_type) %>%
     dplyr::mutate(plot_group=str_replace_all(plot_group, "Adult","Young")) %>%
   unique()
 
@@ -84,7 +84,7 @@ clk4_transcr_counts_astro <- readRDS(astro_trans_file) %>%
     values_to = "TPM"
   ) %>%
   inner_join(metadata_astrocytes, by='Kids_First_Biospecimen_ID') %>%
-  mutate(group="Astrocytes")
+  mutate(group="Cell Type Ctrl")
 
 
 all_clk4_transcr_counts <- readRDS(expr_tpm_tumor_file) %>%
