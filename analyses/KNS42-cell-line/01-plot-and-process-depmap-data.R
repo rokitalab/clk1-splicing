@@ -56,7 +56,6 @@ depmap_glioma <- depmap_data %>%
 depmap_data_KNS42 <- depmap_glioma %>% 
   filter(`Cell line` =="KNS42")
 
-
 gene_score_plot <- ggplot(data=depmap_glioma, 
                           aes(reorder(`Cell line`,`CRISPR (DepMap Public 23Q2+Score, Chronos)`),`CRISPR (DepMap Public 23Q2+Score, Chronos)`,  
                               group=1)) +
