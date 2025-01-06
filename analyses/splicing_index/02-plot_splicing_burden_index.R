@@ -78,7 +78,7 @@ file_si_RI_plot = "sbi-plot-RI.pdf"
 file_si_A5SS_plot = "sbi-plot-A5SS.pdf"
 file_si_A3SS_plot = "sbi-plot-A3SS.pdf"
 
-plot_sbi <- function(sbi_df, plot_file) {
+plot_sbi <- function(sbi_df, plot_file,label) {
   
   si_cdf_plot <- sbi_df %>%
     as_tibble() %>%
@@ -122,8 +122,8 @@ plot_sbi <- function(sbi_df, plot_file) {
     
     # add labels
     labs(x = "",
-         y = expression(bold("Splicing Burden Index (SBI)"))
-         ) +
+         y = bquote(bold("Splicing Burden Index "*.(label)))
+    ) +
 
     ggpubr::theme_pubr() +
     theme(
@@ -143,8 +143,9 @@ plot_sbi <- function(sbi_df, plot_file) {
 }
 
 ## plot SBI for each splicing case
-plot_sbi(splice_index_SE_df,file_si_SE_plot)
-plot_sbi(splice_index_RI_df,file_si_RI_plot)
-plot_sbi(splice_index_A5SS_df,file_si_A5SS_plot)
-plot_sbi(splice_index_A3SS_df,file_si_A3SS_plot)
+plot_sbi(splice_index_SE_df,file_si_SE_plot,"(SE)")
+plot_sbi(splice_index_RI_df,file_si_RI_plot,"(RI)")
+plot_sbi(splice_index_A5SS_df,file_si_A5SS_plot,"(A5SS)")
+plot_sbi(splice_index_A3SS_df,file_si_A3SS_plot,"(A3SS)")
+
 
