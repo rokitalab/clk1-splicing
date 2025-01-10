@@ -16,3 +16,6 @@ Rscript --vanilla 01-plot-diffExp_highlowSBI.R
 
 ## plot heatmap of select splicing factor RNA vs proteo obtained from CPTAC
 Rscript --vanilla 02-plot_SFs_rna_vs_prot.R
+
+## plot boxplot of CLK1 family expression
+Rscript --vanilla 03-plot_CLK_fam_expression.R
