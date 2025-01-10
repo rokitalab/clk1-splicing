@@ -1,3 +1,12 @@
+################################################################################
+# 03-plot_CLK_fam_expression.R
+# script that plots splicing factor related kinases (CLK1,CLK2,CLK3, CLK4, SRPK)
+# that hit functional sites that were differential amongst HGGs
+#
+# written by Ammar Naqvi
+# usage: Rscript 03-plot_CLK_fam_expression.R
+################################################################################
+
 # Libraries
 suppressPackageStartupMessages({
   library("dplyr")
