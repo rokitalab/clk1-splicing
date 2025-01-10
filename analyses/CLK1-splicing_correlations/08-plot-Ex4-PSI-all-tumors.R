@@ -1,3 +1,11 @@
+################################################################################
+# 08-plot-Ex4-PSI-all-tumors.R
+# script that plots CLK1 exon 4 PSI variations
+# written by Ammar Naqvi
+#
+# usage: Rscript 08-plot-Ex4-PSI-all-tumors.R
+################################################################################
+
 suppressPackageStartupMessages({
   library("reshape2")
   library("tidyverse")
@@ -36,6 +44,8 @@ source(file.path(figures_dir, "theme_for_plots.R"))
 rmats_file <- file.path(results_dir,"clk1-splice-events-rmats.tsv")
 clin_file  <- file.path(hist_dir,"histologies-plot-group.tsv")
 expr_file <- file.path(data_dir,"gene-expression-rsem-tpm-collapsed.rds")
+gtex_rmats <- file.path(data_dir,"gtex-brain-under40-harmonized-splice-events-rmats.SE.tsv.gz")
+pedr_rmats <- file.path(data_dir,"GSE243682-normal-splice-events-rmats.tsv.gz")
 
 ## output files for final plots
 hgg_plot_file <- file.path(plots_dir,"all_hgg_CLK1_exon4_inclusion_fraction_hgg_stacked.pdf")
@@ -92,7 +102,7 @@ clk1_rmats <- fread(rmats_file) %>%
   mutate(gene_symbol="CLK1")
 
 exp <- readRDS(expr_file) %>%
-  select(any_of(histologies_df$Kids_First_Biospecimen_ID))
+  dplyr::select(any_of(histologies_df$Kids_First_Biospecimen_ID))
 
 var_exp_filt <- add_TPM_values(clk1_rmats, exp) 
 
@@ -132,7 +142,7 @@ ex4_psi_range <- ex4_psi_filtered %>%
   group_by(plot_group) %>%
   mutate(PSI_range = max(IncLevel1, na.rm = TRUE) - min(IncLevel1, na.rm = TRUE)) %>%
   ungroup() %>% 
-  select(plot_group,PSI_range) %>%
+  dplyr::select(plot_group,PSI_range) %>%
   unique()
 
 psi_range_plot<- ggplot(data=ex4_psi_range, 
@@ -157,26 +167,22 @@ pdf(file.path(plots_dir, "CLK1-Ex4-range-across.pdf"),
 print(psi_range_plot)
 dev.off()
 
-## add ctrls
-## add ctrls
-gtex_rmats <- file.path("~/d3b_coding/neoepitope-identification/data/gtex-brain-under40-harmonized-splice-events-rmats.SE.tsv.gz")
-pedr_rmats <- file.path("~/d3b_coding/neoepitope-identification/data/GSE243682_normal_splice-events-rmats.tsv.gz")
-
+## add ctrls to plots
 gtex_psi_df <- vroom(gtex_rmats) %>% # Select CLK1 gene
-  filter(geneSymbol=="CLK1") %>%
+  dplyr::filter(geneSymbol=="CLK1") %>%
   # Select exon 4
-  filter(exonStart_0base=="200860124", exonEnd=="200860215") %>%
+  dplyr::filter(exonStart_0base=="200860124", exonEnd=="200860215") %>%
   # Select "sample", "geneSymbol", and "IncLevel1" columns
-  select(sample_id, geneSymbol, IncLevel1) %>%
+  dplyr::select(sample_id, geneSymbol, IncLevel1) %>%
   dplyr::rename(gene_symbol=geneSymbol) %>% 
   dplyr::mutate(plot_group="gtex-brain")
 
 ped_psi_df <- vroom(pedr_rmats) %>% # Select CLK1 gene
-  filter(geneSymbol=="CLK1") %>%
+  dplyr::filter(geneSymbol=="CLK1") %>%
   # Select exon 4
-  filter(exonStart_0base=="200860124", exonEnd=="200860215") %>%
+  dplyr::filter(exonStart_0base=="200860124", exonEnd=="200860215") %>%
   # Select "sample", "geneSymbol", and "IncLevel1" columns
-  select(sample_id, geneSymbol, IncLevel1) %>%
+  dplyr::select(sample_id, geneSymbol, IncLevel1) %>%
   dplyr::rename(gene_symbol=geneSymbol) %>% 
   dplyr::mutate(plot_group="pediatric_ctrls")
 
@@ -185,7 +191,7 @@ ctrl_psi_df<- rbind(ped_psi_df,gtex_psi_df)
 ctrl_psi_range <- ctrl_psi_df %>% group_by(plot_group) %>%
   mutate(PSI_range = max(IncLevel1, na.rm = TRUE) - min(IncLevel1, na.rm = TRUE)) %>%
   ungroup() %>% 
-  select(plot_group,PSI_range) %>%
+  dplyr::select(plot_group,PSI_range) %>%
   unique()
 
 combo_psi_range <- rbind(ctrl_psi_range,ex4_psi_range)
