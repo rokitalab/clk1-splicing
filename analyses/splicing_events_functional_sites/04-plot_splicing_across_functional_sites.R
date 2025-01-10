@@ -50,6 +50,9 @@ kinases_functional_sites = file.path(results_dir,"kinases-functional_sites.tsv")
 file_psi_pos_func <- file.path(results_dir,"splicing_events.SE.total.pos.intersectunip.ggplot.txt")
 file_psi_neg_func <- file.path(results_dir,"splicing_events.SE.total.neg.intersectunip.ggplot.txt")
 
+## histologies
+hist_indep_rna_df <- vroom(file.path(data_dir,"histologies.tsv"))
+
 ## read table of recurrent functional splicing (skipping)
 dpsi_unip_pos <- vroom(file_psi_pos_func) %>% 
   mutate(gene=str_match(SpliceID, "(\\w+[\\.\\d]*)\\:")[, 2]) %>%
@@ -222,7 +225,8 @@ total_diff_events <- vroom(file.path(results_dir,"splice_events.diff.SE.txt")) %
   dplyr::rename(SpliceID="Splice ID") %>%
   dplyr::count(SpliceID)  %>% 
   inner_join(kinase_pref,by="SpliceID") %>%
-  dplyr::rename('Frequency'=n)
+  dplyr::rename('Frequency'=n) %>%
+  dplyr::mutate(Baseline_freq=325-Frequency) # 325 are primary HGGs 
 
 # read in exp file
 clin_file  <- file.path(hist_dir,"histologies-plot-group.tsv")
@@ -230,7 +234,7 @@ expr_file <- file.path(data_dir,"gene-expression-rsem-tpm-collapsed.rds")
 
 
 ## load histologies info for HGG subtypes
-hgg_bs_id <- hist_rna_df %>%
+hgg_bs_id <- vroom(clin_file) %>%
   # Select only "RNA-Seq" samples
   filter(plot_group %in% c("DIPG or DMG", "Other high-grade glioma")) %>%
   pull(Kids_First_Biospecimen_ID)
@@ -243,7 +247,7 @@ histologies_df  <-  read_tsv(clin_file) %>%
          plot_group %in% c("DIPG or DMG", "Other high-grade glioma") ) %>%
   pull(Kids_First_Biospecimen_ID)
 
-exp <- readRDS(exp_file) %>%
+exp <- readRDS(expr_file) %>%
   dplyr::select(any_of(histologies_df)) %>%
   mutate(gene = rownames(.)) %>%
   dplyr::filter(gene %in% total_diff_events$gene) %>%
