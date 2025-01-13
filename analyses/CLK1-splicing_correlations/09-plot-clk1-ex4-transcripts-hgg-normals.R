@@ -1,3 +1,11 @@
+################################################################################
+# 09-plot-clk1-ex4-transcripts-hgg-normals 
+# Plot CLK1 exon 4 transcript expression with normals/ctrls
+#
+# written by Ammar S Naqvi
+# Usage: Rscript 09-plot-clk1-ex4-transcripts-hgg-normals
+################################################################################
+
 # Load libraries
 suppressPackageStartupMessages({
   library(tidyverse)
@@ -22,14 +30,16 @@ hist_file  <- file.path(data_dir,"histologies.tsv")
 rmats_file <- file.path(results_dir, "clk1-splice-events-rmats.tsv")
 indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
 
-gtex_trans_file <- file.path("/Users/naqvia/d3b_coding/neoepitope-identification/data/gtex-harmonized-isoform-expression-rsem-tpm.rds")
-ped_trans_file = "~/d3b_coding/neoepitope-identification/data/GSE243682_normal_rna-isoform-expression-rsem-tpm.rds"
-astro_trans_file <- "~/downloads/normal-brain-isoform-expression-rsem-tpm.rds"
+## input files
+gtex_trans_file <- file.path(data_dir,"gtex-harmonized-isoform-expression-rsem-tpm.rds")
+ped_trans_file = file.path(data_dir,"GSE243682-normal-rna-isoform-expression-rsem-tpm.rds")
+astro_trans_file <- file.path(data_dir,"GSE73721-normal-rna-isoform-expression-rsem-tpm.rds")
 expr_tpm_tumor_file <- file.path(data_dir,"rna-isoform-expression-rsem-tpm.rds")
-
-
-astro_metadata_file<- "~/downloads/_1_SraRun_astrocytes_under40_hot.csv"
-
+gtex_rmats_file <- file.path(data_dir,"gtex-brain-under40-harmonized-splice-events-rmats.SE.tsv.gz")
+expr_evodevo_file <-  file.path(data_dir,"evodevo_rna-isoform-expression-rsem-tpm.rds")
+evodevo_hist_file <- file.path(data_dir,"evodevo-histologies.tsv")
+astro_metadata_file<-file.path(data_dir,"GSE73721-normal-histologies.tsv")
+metadata_pedr_file <-file.path(data_dir,"GSE243682-normal-brain-histologies.tsv")
 
 # Output directories
 results_dir <- file.path(analysis_dir, "results")
@@ -39,7 +49,7 @@ plots_dir   <- file.path(analysis_dir, "plots")
 source(file.path(root_dir, "figures/theme_for_plots.R"))
 
 ## to get under 40 samples
-gtex_rmats <- vroom("/Users/naqvia/d3b_coding/neoepitope-identification/data/gtex-brain-under40-harmonized-splice-events-rmats.SE.tsv.gz") %>%
+gtex_rmats <- vroom(gtex_rmats) %>%
   # Select CLK1 gene
   filter(geneSymbol=="CLK1") %>%
   # Select exon 4
@@ -128,7 +138,7 @@ gtex_clk1_transc_counts <- readRDS(gtex_trans_file) %>%
   dplyr::mutate(group="GTEx",
                 plot_group=str_replace_all(plot_group, "Brain - ", ""))
   
-evo_devo_tpm <- readRDS("~/d3b_coding/neoepitope-identification/data/evodevo_rna-isoform-expression-rsem-tpm.rds") %>%
+evo_devo_tpm <- readRDS(expr_evodevo_file) %>%
   filter(grepl("^CLK1", gene_symbol)) %>%  # Filter for CLK1 genes
   mutate(
     transcript_id = case_when(
@@ -145,7 +155,7 @@ evo_devo_tpm <- readRDS("~/d3b_coding/neoepitope-identification/data/evodevo_rna
   dplyr::rename(Kids_First_Biospecimen_ID=Sample_ID) # Select necessary columns
 
 
-evodevo_histology_df <- vroom("~/d3b_coding/neoepitope-identification/data/evodevo-histologies.tsv") 
+evodevo_histology_df <- vroom(evodevo_hist_file) 
 evodevo_clk1_transc_counts <- inner_join(evodevo_histology_df,evo_devo_tpm, by="Kids_First_Biospecimen_ID") %>%
   dplyr::filter(primary_site=='Hindbrain') %>%
   dplyr::mutate(plot_group=pathology_free_text_diagnosis,
@@ -153,7 +163,7 @@ evodevo_clk1_transc_counts <- inner_join(evodevo_histology_df,evo_devo_tpm, by="
   dplyr::select(Kids_First_Biospecimen_ID,TPM,plot_group,group,transcript_id) 
 
 ## pediatric metadata
-metadata_ped <- vroom("~/d3b_coding/neoepitope-identification/data/ped-normal-brain-histologies.tsv")
+metadata_ped <- vroom(metadata_pedr_file)
 
 # Create a conversion table as a dataframe
 sra_mapping <- data.frame(
@@ -306,35 +316,4 @@ tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = pro
 
 pdf(file.path(plots_dir,"clk1_ex4-tpm-phgg-ctrls.pdf"), height = 7, width = 22)
 tpm_plot
-dev.off()
-
-tpm_abs_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = TPM)) +
-  geom_jitter(
-    aes(color = dot_color),   # Use precomputed colors for jitter points
-    width = 0.2, size = 2) +
-  geom_boxplot(
-    aes(group = plot_group),  # Create boxplots for each group
-    width = 0.6,              # Adjust the width of the boxplots
-    color = "black",          # Set the color of the boxplot borders
-    fill = "white",           # Fill color for the boxplots
-    alpha = 0.2 ) +
-  labs(
-    title = "Exon 4 Transcript Expression",
-    x = "Group",
-    y = "CLK1 Exon 4 TPM") +
-  scale_color_identity(
-    name = "Group"
-  ) +
-  facet_grid(
-    ~ group,                  # Facet by 'group'
-    scales = "free_x"         # Allow different x-axis scales for each facet
-  )  +
-  theme_Publication() +
-  theme(
-    legend.position = "right", 
-    axis.text.x = element_text(angle = 75, hjust = 1)
-  ) 
-
-pdf(file.path(plots_dir,"clk1_ex4-tpm-total-phgg-ctrls.pdf"), height = 7, width = 22)
-tpm_abs_plot
 dev.off()
