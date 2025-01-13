@@ -1,5 +1,5 @@
 ################################################################################
-# 12-plot-Ex4-PSI-all-tumors.R
+# 09-plot-kinase-PSI-variances-tumors.R
 # script that plots CLK1 exon 4 PSI variations across tumors and ctrls
 # written by Ammar Naqvi
 #

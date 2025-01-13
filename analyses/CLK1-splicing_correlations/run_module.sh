@@ -6,6 +6,7 @@ Rscript --vanilla 01-plot_highExon4_vs_lowExon4_and_SBI.R
 
 ## plot correlations of splicing vs expr
 Rscript --vanilla 02-plot_splicing_vs_expr.R
+
 Rscript --vanilla 03-plot_SR-phosp_vs_CLK1-RNA.R
 
 ## plot CLK1 stacked barplots
@@ -17,11 +18,23 @@ Rscript --vanilla 05-CLK-SRSF-expr-correlations.R
 # run CLK1-SRSF protein/phosphoprotein expression correlation script
 Rscript --vanilla 06-CLK1-psi-expr-SRSF-expr-prot-phospho-heatmap.R
 
-# plot CLK1-201 expression in normals
-Rscript --vanilla 07-plot-clk1ex4-hgg-normals.R   
+# plot CLK1 exon 4 expression in normals
+Rscript --vanilla 07-plot-clk1ex4-hgg-normals.R
+
+# plot CLK1 Ex 4 PSI
+Rscript --vanilla 08-plot-Ex4-PSI-all-tumors.R
+
+# plot CLK1 Ex 4 and all functionally hit splicing factor kinase PSIs
+Rscript --vanilla 09-plot-kinase-PSI-variances-tumors.R
+
+# plot CLK1 Ex 4 transcripts and all functionally hit splicing factor kinase PSIs
+Rscript --vanilla 10-plot-clk1-ex4-transcripts-hgg-normals.R
+
+
+
 
 ## run correlation analyses for CLK1 and NF1 transcripts
-#Rscript -e "rmarkdown::render('08-CLK1-impact-NF1-splicing.Rmd', clean = TRUE)" 
+#Rscript -e "rmarkdown::render('08-CLK1-impact-NF1-splicing.Rmd', clean = TRUE)"
 
 # run CLK1-NF1 protein/phosphoprotein expression correlation script
 #Rscript --vanilla 09-clk1-nf1-protein-correlations.R
