@@ -27,10 +27,8 @@ Rscript --vanilla 08-plot-Ex4-PSI-all-tumors.R
 # plot CLK1 Ex 4 and all functionally hit splicing factor kinase PSIs
 Rscript --vanilla 09-plot-kinase-PSI-variances-tumors.R
 
-# plot CLK1 Ex 4 transcripts and all functionally hit splicing factor kinase PSIs
+# plot CLK1 Ex 4 transcripts proportion in tumors and control samples
 Rscript --vanilla 10-plot-clk1-ex4-transcripts-hgg-normals.R
-
-
 
 
 ## run correlation analyses for CLK1 and NF1 transcripts
