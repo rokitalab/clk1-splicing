@@ -36,9 +36,11 @@ Input files:
 * `05-CLK-SRSF-expr-correlations.R` generates scatter plots of CLK and SRSF transcript abundance vs. CLK1 exon 4 PSI and transcript abundance
 * `06-CLK1-psi-expr-SRSF-expr-prot-phospho-heatmap.R` generates summary heatmap of spearman correlation coefficients between CLK1 PSI and transcript abundance against CLK and SRSF RNA, total protein, and phosphoprotein expression
 * `07-plot-clk1ex4-hgg-normals.R` plots CLK1 exon 4 transcript expression for HGGs, GTEX normals, fetal brain, and TGEN pediatric normals.
-* `08-plot-Ex4-PSI-all-tumors.R` plot CLK1 Ex 4 PSIs across tumors 
+* `08-plot-Ex4-PSI-all-tumors.R` plot CLK1 Ex 4 PSIs across tumors
 * `09-plot-kinase-PSI-variances-tumors.R` plot CLK1 Ex 4 and all splicing factor kinase PSIs that are functional and differential
 * `10-plot-clk1-ex4-transcripts-hgg-normals.R` plot CLK1 Ex 4 transcripts proportion in tumors and control samples
+* `11-plot-clk1-ex4-transcripts-by-age-gtex.R` plots CLK1 exon 4 PSI variations across gtex by age
+* `12-plot-clk1-ex4-transcripts-by-age.R` plots CLK1 exon 4 PSI variations across tumors by age
 
 ## Directory structure
 ```

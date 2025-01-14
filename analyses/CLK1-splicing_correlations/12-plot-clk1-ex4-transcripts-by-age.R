@@ -1,5 +1,5 @@
 ################################################################################
-# 12-plot-clk1-ex4-transcripts-by-age
+# 12-plot-clk1-ex4-transcripts-by-age.R
 # Script that plots CLK1 exon 4 PSI variations across tumors by age
 # written by Ammar Naqvi
 #
