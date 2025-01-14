@@ -1,3 +1,11 @@
+################################################################################
+# 11-plot-clk1-ex4-transcripts-by-age-gtex
+# Script that plots CLK1 exon 4 PSI variations across gtex ctrls by age
+# written by Ammar Naqvi
+#
+# usage: Rscript 11-plot-clk1-ex4-transcripts-by-age-gtex
+################################################################################
+
 library(dplyr)
 library(ggplot2)
 library(vroom)
@@ -11,16 +19,19 @@ root_dir <- rprojroot::find_root(rprojroot::has_dir(".git"))
 data_dir <- file.path(root_dir, "data")
 analysis_dir <- file.path(root_dir, "analyses", "CLK1-splicing_correlations")
 results_dir <- file.path(analysis_dir, "results")
-input_dir <- file.path(root_dir, "results")
+input_dir <- file.path(analysis_dir, "input")
 results_dir <- file.path(analysis_dir, "results")
 plots_dir   <- file.path(analysis_dir, "plots")
 
 # Define file paths
-gtex_trans_file <- "/Users/naqvia/d3b_coding/neoepitope-identification/data/gtex-harmonized-isoform-expression-rsem-tpm.rds"
-histology_gtex_file <- "/Users/naqvia/d3b_coding/neoepitope-identification/analyses/find-gtex-aya/results/gtex-samples-by-age.tsv"
+histology_gtex_file <- file.path(input_dir,"gtex-samples-by-age.tsv")
+gtex_trans_file <- file.path(data_dir,"gtex-harmonized-isoform-expression-rsem-tpm.rds")
 
 # Ensure the output directory exists
 if (!dir.exists(plots_dir)) dir.create(plots_dir)
+
+# Source function for plots theme
+source(file.path(root_dir, "figures/theme_for_plots.R"))
 
 # Load histology data and filter by age and tissue
 histology_gtex_df <- vroom(histology_gtex_file)

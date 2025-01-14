@@ -1,3 +1,11 @@
+################################################################################
+# 12-plot-clk1-ex4-transcripts-by-age
+# Script that plots CLK1 exon 4 PSI variations across tumors by age
+# written by Ammar Naqvi
+#
+# usage: Rscript 12-plot-clk1-ex4-transcripts-by-age.R
+################################################################################
+
 # Load libraries
 suppressPackageStartupMessages({
   library(tidyverse)
@@ -20,8 +28,9 @@ input_dir <- file.path(root_dir, "results")
 clin_file  <- file.path(data_dir,"histologies-plot-group.tsv")
 indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
 
-gtex_trans_file <- file.path("/Users/naqvia/d3b_coding/neoepitope-identification/data/gtex-harmonized-isoform-expression-rsem-tpm.rds")
-ped_trans_file = "~/d3b_coding/neoepitope-identification/data/GSE243682_normal_rna-isoform-expression-rsem-tpm.rds"
+# Define file paths
+histology_gtex_file <- file.path(input_dir,"gtex-samples-by-age.tsv")
+gtex_trans_file <- file.path(data_dir,"gtex-harmonized-isoform-expression-rsem-tpm.rds")
 
 # Output directories
 results_dir <- file.path(analysis_dir, "results")
@@ -149,13 +158,14 @@ tpm_plot_wilcoxon <- create_plot(transcript_expr_CLK1_combined_df, "Relative CLK
 tpm_plot_permutation <- create_plot(transcript_expr_CLK1_combined_df, "Relative CLK1 Exon 4 Transcript Expression", plot_p_values_permutation, "")
 
 # Save plots
-pdf(file.path(plots_dir, "clk4-tpm-tumor-age-bin-wc-test.pdf"), height = 14, width = 12)
+pdf(file.path(plots_dir, "clk1ex4-tpm-tumor-age-bin-wc-test.pdf"), height = 14, width = 12)
 print(tpm_plot_wilcoxon)
 dev.off()
 
-pdf(file.path(plots_dir, "clk4-tpm-tumor-age-bin-perm-test.pdf"), height = 14, width = 12)
+pdf(file.path(plots_dir, "clk1ex4-tpm-tumor-age-bin-perm-test.pdf"), height = 14, width = 12)
 print(tpm_plot_permutation)
 dev.off()
 
-transcript_expr_CLK1_prop_df <- transcript_expr_CLK1_combined_df %>% select(Kids_First_Biospecimen_ID, plot_group,group,proportion)
+transcript_expr_CLK1_prop_df <- transcript_expr_CLK1_combined_df %>% 
+  dplyr::select(Kids_First_Biospecimen_ID, plot_group,proportion)
 write_tsv(x = transcript_expr_CLK1_prop_df,file = file.path(results_dir,"clk1-exon4-proportion.tsv"))
