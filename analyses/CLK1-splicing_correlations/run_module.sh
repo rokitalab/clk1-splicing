@@ -31,13 +31,3 @@ Rscript --vanilla 09-plot-kinase-PSI-variances-tumors.R
 Rscript --vanilla 10-plot-clk1-ex4-transcripts-hgg-normals.R
 
 
-## run correlation analyses for CLK1 and NF1 transcripts
-#Rscript -e "rmarkdown::render('08-CLK1-impact-NF1-splicing.Rmd', clean = TRUE)"
-
-# run CLK1-NF1 protein/phosphoprotein expression correlation script
-#Rscript --vanilla 09-clk1-nf1-protein-correlations.R
-
-# plot DMG clk1/nf1 rna, protein, splicing z-scores
-#Rscript --vanilla 10-clk1-nf1-single-sample-heatmap.R
-
-rm ./Rplots.pdf

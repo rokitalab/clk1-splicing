@@ -49,7 +49,7 @@ plots_dir   <- file.path(analysis_dir, "plots")
 source(file.path(root_dir, "figures/theme_for_plots.R"))
 
 ## to get under 40 samples
-gtex_rmats <- vroom(gtex_rmats) %>%
+gtex_rmats <- vroom(gtex_rmats_file) %>%
   # Select CLK1 gene
   filter(geneSymbol=="CLK1") %>%
   # Select exon 4
