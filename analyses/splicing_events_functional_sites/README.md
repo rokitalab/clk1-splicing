@@ -44,15 +44,17 @@ results/splicing_events.total.HGG.neg.intersectUnip.ggplot.txt
 * `03-format_for_ggplot.sh` formats and appends file into table for plotting
 * `04-plot_splicing_across_functional_sites.R` generates ggplot violin plots of average dPSI per event identidied overlapping a functional site, outputting to `plots/*png`
 * `05-plot-splice-patterns` generates plots for visualizing splicing event types into `plots` folder
+* `06-get-pfam-domains.R` annotate alternative SE splice events with pfam domains
 
 ## Directory structure
+```
 .
 ├── 01-extract_recurrent_splicing_events_hgg.pl
 ├── 02-run_bedtools_intersect.sh
-├── 02-run_bedtools_intersect.tmp.sh
 ├── 03-format_for_ggplot.pl
 ├── 04-plot_splicing_across_functional_sites.R
 ├── 05-plot-splice-patterns.R
+├── 06-get-pfam-domains.R
 ├── README.md
 ├── input
 │   ├── CLK1-rmats.tsv
@@ -69,8 +71,11 @@ results/splicing_events.total.HGG.neg.intersectUnip.ggplot.txt
 │   └── splicing_pattern_plot.pdf
 ├── results
 │   ├── kinases-functional_sites.tsv
+│   ├── splice-events-pfam-annotated.tsv
 │   ├── splice_events.diff.SE.txt
+│   ├── splicing_events.SE.total.neg.bed
 │   ├── splicing_events.SE.total.neg.intersectunip.ggplot.txt
+│   ├── splicing_events.SE.total.pos.bed
 │   └── splicing_events.SE.total.pos.intersectunip.ggplot.txt
-├── run_module.sh
-└── scr
+└── run_module.sh
+```

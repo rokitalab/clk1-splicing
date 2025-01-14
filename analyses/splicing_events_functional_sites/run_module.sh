@@ -38,6 +38,10 @@ Rscript 04-plot_splicing_across_functional_sites.R
 echo "plot splice patterns";
 Rscript --vanilla 05-plot-splice-patterns.R
 
+## annotate pfam domains
+echo "perform Pfam annotation";
+Rscript --vanilla 06-get-pfam-domains.R
+
 ##rm intermediatery files
 rm results/splicing_events*.wo.txt
 rm results/*bed
