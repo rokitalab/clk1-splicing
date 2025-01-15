@@ -11,6 +11,7 @@ Modifications:
 -`GSE243682-normal-splice-events-rmats.tsv.gz`: rMATs results from publicly available pediatric normal brain samples (GSE243682)   
 -`GSE73721-normal-histologies.tsv` Publicly available pediatric normal astrocyte samples (GSE73721) metadata
 -`GSE73721-normal-rna-isoform-expression-rsem-tpm.rds` transcript expression results from publicly available normal astrocyte samples (GSE73721)
+-`GSE73721-normal-splice-events-rmats.tsv.gz` rMATs results from publicly available pediatric normal brain samples (GSE73721)   
 -`evodevo-histologies.tsv` Evo-Devo (developmental-normal) metadata
 -`evodevo_rna-isoform-expression-rsem-tpm.rds` transcript expression results of Evo-Devo (developmental-normal) metadata
 -`gtex-brain-under40-harmonized-splice-events-rmats.SE.tsv.gz`: rMATs results of Evo-Devo (developmental-normal)
