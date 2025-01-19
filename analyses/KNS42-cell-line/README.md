@@ -21,6 +21,10 @@ input/qpcr-raw-triplicates.tsv
 ```03-plot-qPCR-results.R``` visualizes qRT-PCR results
 ```04-prioritization-depmap-morph.R``` investigates the prioritization of functional splice events, clk1 targets, and depmap dependencies
 
+Current DepMap Release data, including CRISPR Screens, PRISM Drug Screens, Copy Number, Mutation, Expression, and Fusions
+DepMap, Broad (2024). DepMap 24Q4 Public. Figshare+. Dataset. https://doi.org/10.25452/figshare.plus.27993248.v1
+
+
 ## Directory Structure
 ```
 .

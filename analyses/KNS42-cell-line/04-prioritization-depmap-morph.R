@@ -62,7 +62,7 @@ func_sites_filt_splice %>% func_sites_filt
   write_tsv(file.path(res_dir, "splice_genes_functional.tsv"))
   
 # explore whether any of these also overlap as dependencies
-dep <- read_csv(file.path(input_dir, "CRISPRGeneEffect.csv"))
+dep <- read_csv(file.path(data_dir, "CRISPRGeneEffect.csv"))
 models <- read_csv(file.path(input_dir, "Model.csv")) %>%
 # filter for pediatric, AYA
     filter(Age < 40,
@@ -71,7 +71,7 @@ models <- read_csv(file.path(input_dir, "Model.csv")) %>%
          # glioma only
          grepl("Glioma", OncotreePrimaryDisease),
          # rm sarcoma
-         OncotreeCOde != "GSARC")
+         OncotreeCode != "GSARC")
 
 crispr_df_long <- dep %>%
   filter(...1 %in% models$ModelID) %>%  # Filter for a specific row
