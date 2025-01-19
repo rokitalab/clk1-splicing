@@ -57,7 +57,7 @@ func_sites_filt <- func_sites %>%
   summarise(max_dPSI = max(mean_dPSI)) %>%
   unique() 
 
-func_sites_filt_splice %>% func_sites_filt
+func_sites_filt_splice <- func_sites_filt %>%
   filter(splice_gene == "yes") %>%
   write_tsv(file.path(res_dir, "splice_genes_functional.tsv"))
   
