@@ -4,7 +4,7 @@ set -o pipefail
 
 # Use the OpenPBTA bucket as the default.
 URL=${SPLICE_URL:-https://s3.amazonaws.com/d3b-openaccess-us-east-1-prd-pbta/pbta-splicing}
-RELEASE=${SPLICE_RELEASE:-v10}
+RELEASE=${SPLICE_RELEASE:-v11}
 
 # Remove old symlinks in data
 find data -type l -delete
