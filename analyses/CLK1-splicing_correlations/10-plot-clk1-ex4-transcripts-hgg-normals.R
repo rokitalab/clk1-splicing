@@ -236,27 +236,7 @@ transcript_expr_CLK1_combined_df <- transcript_expr_CLK1_combined_df %>%
   filter(!is.na(plot_group)) # Remove rows with NA in plot_group
 
 
-## order evodevo
-evodevo_order <- c(
-  "4 Week Post Conception",
-  "5 Week Post Conception",
-  "6 Week Post Conception",
-  "7 Week Post Conception",
-  "8 Week Post Conception",
-  "9 Week Post Conception",
-  "10 Week Post Conception",
-  "11 Week Post Conception",
-  "12 Week Post Conception",
-  "13 Week Post Conception",
-  "16 Week Post Conception",
-  "Adolescent",
-  "Elderly",
-  "Infant",
-  "Neonate",
-  "School Age Child",
-  "Toddler",
-  "Young Adult",
-  "Middle Adult")
+
 
 # Calculate the mean proportion for each 'plot_group' 
 # Ensure plot_group is ordered as it appears in the dataframe
@@ -285,6 +265,54 @@ transcript_expr_CLK1_combined_df$group <- factor(
   levels = c("PBTA", "Pediatric normals", "Evo-Devo", "Cell Type Controls", "GTEx")
 )
 
+## order evodevo
+evodevo_order <-  fct_relevel(
+  "4 Week Post Conception",
+  "5 Week Post Conception",
+  "6 Week Post Conception",
+  "7 Week Post Conception",
+  "8 Week Post Conception",
+  "9 Week Post Conception",
+  "10 Week Post Conception",
+  "11 Week Post Conception",
+  "12 Week Post Conception",
+  "13 Week Post Conception",
+  "16 Week Post Conception",
+  "Adolescent",
+  "Elderly",
+  "Infant",
+  "Neonate",
+  "School Age Child",
+  "Toddler",
+  "Young Adult",
+  "Middle Adult")
+
+# Reordering the plot group names for "Evo-Devo"
+transcript_expr_CLK1_combined_df <- transcript_expr_CLK1_combined_df %>%
+  mutate(plot_group = case_when(
+    group == "Evo-Devo" ~ fct_relevel(plot_group,
+                                      "4 Week Post Conception",
+                                      "5 Week Post Conception",
+                                      "6 Week Post Conception",
+                                      "7 Week Post Conception",
+                                      "8 Week Post Conception",
+                                      "9 Week Post Conception",
+                                      "10 Week Post Conception",
+                                      "11 Week Post Conception",
+                                      "12 Week Post Conception",
+                                      "13 Week Post Conception",
+                                      "16 Week Post Conception",
+                                      "Adolescent",
+                                      "Elderly",
+                                      "Infant",
+                                      "Neonate",
+                                      "School Age Child",
+                                      "Toddler",
+                                      "Young Adult",
+                                      "Middle Adult"
+    ),
+    TRUE ~ plot_group # Leave other groups as-is
+  ))
 
 ## make plot for proportion
 tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = proportion)) +
