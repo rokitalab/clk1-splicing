@@ -87,10 +87,12 @@ splice_index <- splice_index %>%
                     "molecular_subtype",
                     "extent_of_tumor_resection", 
                     "EFS_days", "EFS_event_type", 
-                    "OS_days", "OS_status")]) %>%
+                    "OS_days", "OS_status",
+                    "age_at_diagnosis_days")]) %>%
   distinct(Kids_First_Participant_ID, .keep_all = T) %>%
   dplyr::mutate(EFS_days = as.numeric(EFS_days),
-         OS_days = as.numeric(OS_days)) %>%
+         OS_days = as.numeric(OS_days),
+         age_at_diagnosis = as.numeric(age_at_diagnosis_days)) %>%
   dplyr::mutate(OS_years = OS_days/365.25,
          EFS_years = EFS_days/365.25) %>%
   

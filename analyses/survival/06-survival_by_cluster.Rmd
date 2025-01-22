@@ -134,7 +134,7 @@ Generate coxph models including extent of tumor resection, lgg group, and cluste
 
 ```{r}
 add_model_os <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                              terms = "extent_of_tumor_resection+lgg_group+cluster_assigned",
+                              terms = "extent_of_tumor_resection+lgg_group+cluster_assigned+age_at_diagnosis_days",
                                file.path(results_dir, "cox_OS_additive_terms_resection_lgg_group_cluster.RDS"),
                                "multivariate",
                                years_col = "OS_years",
@@ -150,7 +150,7 @@ ggsave(file.path(plot_dir, "forest_add_OS_resection_lgg_group_cluster_assignment
        device = "pdf")
 
 add_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                              terms = "extent_of_tumor_resection+lgg_group+cluster_assigned",
+                              terms = "extent_of_tumor_resection+lgg_group+cluster_assigned+age_at_diagnosis_days",
                                file.path(results_dir, "cox_EFS_additive_terms_resection_lgg_group_cluster.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
@@ -244,7 +244,7 @@ Generate coxph models including covariates `extent_of_tumor_resection`, `mol_sub
 
 ```{r}
 add_model_lgg_os <- fit_save_model(lgg[!lgg$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                              terms = "extent_of_tumor_resection+mol_sub_group+cluster_assigned",
+                              terms = "extent_of_tumor_resection+mol_sub_group+cluster_assigned+age_at_diagnosis_days",
                                file.path(results_dir, "cox_lgg_OS_additive_terms_resection_subtype_cluster.RDS"),
                                "multivariate",
                                years_col = "OS_years",
@@ -269,7 +269,7 @@ lgg_clusters <- metadata %>%
 
 
 add_model_lgg_efs <- fit_save_model(lgg[!lgg$cluster_assigned %in% lgg_clusters & !lgg$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                              terms = "extent_of_tumor_resection+mol_sub_group+cluster_assigned",
+                              terms = "extent_of_tumor_resection+mol_sub_group+cluster_assigned+age_at_diagnosis_days",
                                file.path(results_dir, "cox_lgg_EFS_additive_terms_resection_subtype_cluster.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
@@ -367,7 +367,7 @@ Generate coxph models for HGG including covariates `mol_sub_group` and `cluster_
 
 ```{r}
 add_model_hgg_os <- fit_save_model(hgg,
-                              terms = "mol_sub_group+cluster_assigned",
+                              terms = "mol_sub_group+cluster_assigned+age_at_diagnosis_days",
                                file.path(results_dir, "cox_hgg_OS_additive_terms_subtype_cluster.RDS"),
                                "multivariate",
                                years_col = "OS_years",
@@ -383,7 +383,7 @@ ggsave(file.path(plot_dir, "forest_add_OS_HGG_subtype_cluster_assignment.pdf"),
        device = "pdf")
 
 add_model_hgg_efs <- fit_save_model(hgg,
-                              terms = "mol_sub_group+cluster_assigned",
+                              terms = "mol_sub_group+cluster_assigned+age_at_diagnosis_days",
                                file.path(results_dir, "cox_hgg_EFS_additive_terms_subtype_cluster.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
