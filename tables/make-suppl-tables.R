@@ -32,6 +32,8 @@ deseq2_sf_file <- file.path(analysis_dir, "splicing-factor_dysregulation", "resu
 func_sites_es_file <- file.path(analysis_dir, "splicing_events_functional_sites", "results", "splicing_events.SE.total.neg.intersectunip.ggplot.txt") 
 func_sites_ei_file <- file.path(analysis_dir, "splicing_events_functional_sites", "results", "splicing_events.SE.total.pos.intersectunip.ggplot.txt") 
 kinase_func_sites_file <- file.path(analysis_dir, "splicing_events_functional_sites", "results", "kinases-functional_sites.tsv")
+clk1_ex4_prop <- file.path(analysis_dir, "CLK1-splicing_correlations", "results", "clk1-exon4-proportion.tsv")
+
 deseq2_morph_file <- file.path(root_dir,"analyses/CLK1-splicing-impact-morpholino","results","ctrl_vs_treated.de.tsv")
 rmats_tsv_file <- file.path(data_dir,"ctrl-vs-morpholino-merged-rmats.tsv")
 func_sites_SE_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","splicing_events.morpho.SE.intersectUnip.ggplot.txt")
@@ -215,12 +217,14 @@ es_events_df <- vroom(func_sites_es_file)
 ##sheet 3 kinases
 kinase_events_df <- vroom(kinase_func_sites_file)
 
-
+## sheet 4 exon 4 proportions
+clk1_ex4_prop_df <- vroom(clk1_ex4_prop)
 
 # Combine and output
 list_s4_table <- list(ds_skipping = ds_events_es_df,
                       ds_inclusion = ds_events_ei_df,
-                      kinases= kinase_events_df)
+                      kinases= kinase_events_df,
+                      clk1_ex4_prop = clk1_ex4_prop_df)
 
 write.xlsx(list_s4_table,
            table_s4_file,
