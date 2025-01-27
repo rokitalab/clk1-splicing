@@ -175,7 +175,7 @@ gtex_psi_df <- vroom(gtex_rmats) %>% # Select CLK1 gene
   # Select "sample", "geneSymbol", and "IncLevel1" columns
   dplyr::select(sample_id, geneSymbol, IncLevel1) %>%
   dplyr::rename(gene_symbol=geneSymbol) %>% 
-  dplyr::mutate(plot_group="gtex-brain")
+  dplyr::mutate(plot_group="GTEx Brain (<40yrs)")
 
 ped_psi_df <- vroom(pedr_rmats) %>% # Select CLK1 gene
   dplyr::filter(geneSymbol=="CLK1") %>%
@@ -184,7 +184,7 @@ ped_psi_df <- vroom(pedr_rmats) %>% # Select CLK1 gene
   # Select "sample", "geneSymbol", and "IncLevel1" columns
   dplyr::select(sample_id, geneSymbol, IncLevel1) %>%
   dplyr::rename(gene_symbol=geneSymbol) %>% 
-  dplyr::mutate(plot_group="pediatric_ctrls")
+  dplyr::mutate(plot_group="Pediatric Brain")
 
 ctrl_psi_df<- rbind(ped_psi_df,gtex_psi_df)
 

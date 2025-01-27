@@ -34,6 +34,6 @@ Rscript --vanilla 10-plot-clk1-ex4-transcripts-hgg-normals.R
 Rscript --vanilla 11-plot-clk1-ex4-transcripts-by-age-gtex.R
 
 # Plot CLK1 exon 4 PSI variations across tumors by age
-Rscript --vanilla 12-plot-clk1-ex4-transcripts-by-age
+Rscript --vanilla 12-plot-clk1-ex4-transcripts-by-age.R
 
 
