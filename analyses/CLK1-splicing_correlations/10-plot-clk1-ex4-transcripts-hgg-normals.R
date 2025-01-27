@@ -22,7 +22,7 @@ root_dir <- rprojroot::find_root(rprojroot::has_dir(".git"))
 data_dir <- file.path(root_dir, "data")
 analysis_dir <- file.path(root_dir, "analyses", "CLK1-splicing_correlations")
 results_dir <- file.path(analysis_dir, "results")
-input_dir <- file.path(root_dir, "results")
+input_dir <- file.path(analysis_dir, "input")
 
 # Specify file paths
 clin_file  <- file.path(data_dir,"histologies-plot-group.tsv")
@@ -40,6 +40,7 @@ expr_evodevo_file <-  file.path(data_dir,"evodevo_rna-isoform-expression-rsem-tp
 evodevo_hist_file <- file.path(data_dir,"evodevo-histologies.tsv")
 astro_metadata_file<-file.path(data_dir,"GSE73721-normal-histologies.tsv")
 metadata_pedr_file <-file.path(data_dir,"GSE243682-normal-brain-histologies.tsv")
+pons_cnh_trans_file<- file.path(input_dir,"Pons-CNH.rsem.isoforms.results.gz")
 
 # Output directories
 results_dir <- file.path(analysis_dir, "results")
@@ -201,6 +202,24 @@ ped_clk1_transcr_counts <- readRDS(ped_trans_file) %>%
   dplyr::mutate(group="Pediatric normals") %>%
   dplyr::rename(Kids_First_Biospecimen_ID=Sample) %>%
   inner_join(sra_mapping,by=c("Kids_First_Biospecimen_ID" = "SRR"))
+
+pons_cnh_counts <- vroom(pons_cnh_trans_file) %>%
+  filter(grepl("_CLK1", transcript_id)) %>%
+  mutate(transcript_id = ifelse(
+    grepl("ENST00000321356.9|ENST00000434813.3|ENST00000409403.6", transcript_id),
+    "Exon 4",  # Rename specified transcripts
+    "Other"    # All other transcripts are renamed to "Other"
+  )) %>%
+  group_by(transcript_id) %>%
+  dplyr::select(-gene_id) %>% # Remove 'gene_symbol'
+  summarise(TPM = sum(TPM, na.rm = TRUE)) %>%
+  dplyr::mutate(group="Pediatric normals",
+                plot_group="Pons",
+                Kids_First_Biospecimen_ID="Pons_CNH") %>%
+  dplyr::select(Kids_First_Biospecimen_ID,transcript_id,TPM,group,plot_group)
+
+ped_clk1_transcr_counts <- rbind(ped_clk1_transcr_counts,pons_cnh_counts) %>% 
+  unique()
 
 transcript_expr_CLK1_combined_df <- rbind(all_clk4_transcr_counts,ped_clk1_transcr_counts,gtex_clk1_transc_counts,evodevo_clk1_transc_counts,clk4_transcr_counts_astro) %>% 
   group_by(Kids_First_Biospecimen_ID) %>%
