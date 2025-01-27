@@ -15,18 +15,21 @@ bash run_module.sh
 * `run_module.sh` shell script to pre-process histology file and run analysis
 * `01-plot-diffExp_highlowSBI.R` performs differential gene expression on high vs low SBI tumors
 * `02-plot_SFs_rna_vs_prot.R` generates heatmap of dysregulated splicing factors showing RNA and protein levels across brain tumors  
+* `03-plot_CLK_fam_expression.R` generates boxplot of CLK1,CLK2,CLK3,CLK4, and SRPK1 expression (TPM)
 
 ## Directory structure
 ```
 .
 ├── 01-plot-diffExp_highlowSBI.R
 ├── 02-plot_SFs_rna_vs_prot.R
+├── 03-plot_CLK_fam_expression.R
 ├── README.md
 ├── input
 │   ├── CPTAC3-pbt_SF_family.xls
 │   └── splicing_factors.txt
 ├── plots
-│   ├── SF_RNA_vs_protein_levels_heatmap.pdf
+│   ├── CLK1-tpms-CLK-SPRK1-kinases.pdf
+|   ├── SF_RNA_vs_protein_levels_heatmap.pdf
 │   ├── barplot_hgg_SFs.pdf
 │   └── enhancedVolcano_hgg_sbi.pdf
 ├── results

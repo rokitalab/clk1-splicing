@@ -1,4 +1,22 @@
 # release notes
+## current releease (v11)
+- Data release date: 2024-09-18
+- Data release update (CNV consensus file): 2024-07-07
+- OpenPedCan (OPC) data release date: 2024-01-03 (v13)
+	- v14 pre-release `histologies.tsv` was created in [PR 542](https://github.com/d3b-center/OpenPedCan-analysis/pull/542) and is used here
+- status: available
+
+Modifications:
+- `GSE243682-normal-brain-histologies.tsv`: Publicly available pediatric normal brain samples (GSE243682) metadata
+- `GSE243682-normal-splice-events-rmats.tsv.gz`: rMATs results from publicly available pediatric normal brain samples (GSE243682)   
+- `GSE73721-normal-histologies.tsv` Publicly available pediatric normal astrocyte samples (GSE73721) metadata
+- `GSE73721-normal-rna-isoform-expression-rsem-tpm.rds` transcript expression results from publicly available normal astrocyte samples (GSE73721)
+- `GSE73721-normal-splice-events-rmats.tsv.gz` rMATs results from publicly available pediatric normal brain samples (GSE73721)   
+- `evodevo-histologies.tsv` Evo-Devo (developmental-normal) metadata
+- `evodevo_rna-isoform-expression-rsem-tpm.rds` transcript expression results of Evo-Devo (developmental-normal) metadata
+- `gtex-brain-under40-harmonized-splice-events-rmats.SE.tsv.gz`: rMATs results of Evo-Devo (developmental-normal)
+- `gtex-harmonized-isoform-expression-rsem-tpm.rds`: transcript expression results of GTex samples
+
 ## current release (v10)
 - Data release date: 2024-09-18
 - Data release update (CNV consensus file): 2024-07-07
@@ -7,7 +25,7 @@
 - status: available
 
 Modifications:
--`histologies-plot_group.tsv` was re-generated to remove samples corresponding to patients >= 40 years of age and updated PNOC with pathology dx of DIPG to have DIPG cancer_group
+- `histologies-plot_group.tsv` was re-generated to remove samples corresponding to patients >= 40 years of age and updated PNOC with pathology dx of DIPG to have DIPG cancer_group
 v10
 .
 ├── CLK1-CRISPR-DepMap-score.csv
@@ -84,7 +102,7 @@ v10
 - status: available
 
 Modifications:
--`snv-mutect2-tumor-only-plus-hotspots.maf.tsv.gz` was re-generated (OPC pre-v16 release) and now contains SIFT/PolyPhen scores
+- `snv-mutect2-tumor-only-plus-hotspots.maf.tsv.gz` was re-generated (OPC pre-v16 release) and now contains SIFT/PolyPhen scores
 - OPC v15 modified CNV consensus file `consensus_wgs_plus_freec_wxs_plus_freec_tumor_only.tsv.gz` was created in [PR 591](https://github.com/d3b-center/OpenPedCan-analysis/pull/591) and is used here
 
 v9

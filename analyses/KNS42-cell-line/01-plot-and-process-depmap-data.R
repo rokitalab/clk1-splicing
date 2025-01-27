@@ -182,4 +182,3 @@ clk1_box <- ggplot(clk1_by_quartiles_brain,
 pdf(file_depmap_cns_score_plot, height = 4, width = 4)
 print(clk1_box)
 dev.off()
-
