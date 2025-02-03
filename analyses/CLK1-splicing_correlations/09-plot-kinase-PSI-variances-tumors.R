@@ -191,7 +191,8 @@ psi_range_kinase_plot<- ggplot(data = ex4_psi_range,
   ggtitle("PSI Range") +
   theme_Publication() +
   theme(axis.text.x = element_text(angle = 75, hjust = 1, size = 11),
-        legend.position = "right") +
+        legend.position = "right",
+        legend.text = element_text(size = 14)) +
   scale_fill_manual(values = colorblind_palette)
 
 # Save plot as PDF
@@ -201,6 +202,6 @@ psi_range_kinase_plot<- ggplot(data = ex4_psi_range,
 #dev.off()
 
 pdf(file.path(plots_dir, "PSI-range-kinses.pdf"), 
-    width = 9, height = 8)
+    width = 10, height = 8)
 print(psi_range_kinase_plot)
 dev.off()
