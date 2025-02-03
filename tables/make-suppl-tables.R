@@ -32,8 +32,11 @@ deseq2_sf_file <- file.path(analysis_dir, "splicing-factor_dysregulation", "resu
 func_sites_es_file <- file.path(analysis_dir, "splicing_events_functional_sites", "results", "splicing_events.SE.total.neg.intersectunip.ggplot.txt") 
 func_sites_ei_file <- file.path(analysis_dir, "splicing_events_functional_sites", "results", "splicing_events.SE.total.pos.intersectunip.ggplot.txt") 
 kinase_func_sites_file <- file.path(analysis_dir, "splicing_events_functional_sites", "results", "kinases-functional_sites.tsv")
+clk1_ex4_prop <- file.path(analysis_dir, "CLK1-splicing_correlations", "results", "clk1-exon4-proportion.tsv")
+
 deseq2_morph_file <- file.path(root_dir,"analyses/CLK1-splicing-impact-morpholino","results","ctrl_vs_treated.de.tsv")
 rmats_tsv_file <- file.path(data_dir,"ctrl-vs-morpholino-merged-rmats.tsv")
+clk1_consens_targets_file<-file.path(root_dir,"analyses/KNS42-cell-line/results/clk1_consensus_targets.tsv")
 func_sites_SE_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","splicing_events.morpho.SE.intersectUnip.ggplot.txt")
 func_sites_A5SS_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","splicing_events.morpho.A5SS.intersectUnip.ggplot.txt")
 func_sites_A3SS_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","splicing_events.morpho.A3SS.intersectUnip.ggplot.txt")
@@ -186,9 +189,9 @@ write.xlsx(list_s2_table,
 ## sheet 1, exon inclusion splicing
 sf_list <- readLines(sf_list_file) 
 hugo_list <- read_csv(hugo_file, skip = 1) %>%
-           pull(`Approved symbol`) 
+  pull(`Approved symbol`) 
 goi_list <- c(sf_list, hugo_list) %>%
-           unique()
+  unique()
 
 deseq_df <- vroom(deseq2_sf_file) %>%
   dplyr::select(-Significant)
@@ -215,12 +218,14 @@ es_events_df <- vroom(func_sites_es_file)
 ##sheet 3 kinases
 kinase_events_df <- vroom(kinase_func_sites_file)
 
-
+## sheet 4 exon 4 proportions
+clk1_ex4_prop_df <- vroom(clk1_ex4_prop)
 
 # Combine and output
 list_s4_table <- list(ds_skipping = ds_events_es_df,
                       ds_inclusion = ds_events_ei_df,
-                      kinases= kinase_events_df)
+                      kinases= kinase_events_df,
+                      clk1_ex4_prop = clk1_ex4_prop_df)
 
 write.xlsx(list_s4_table,
            table_s4_file,
@@ -250,6 +255,7 @@ primers_df <- vroom(primers_file, delim = "\t")
 ds_de_crispr_df <-  vroom(ds_de_crispr_events_file) %>%
   mutate(across(everything(), ~ replace_na(as.character(.), "-")))
 
+consensus_targets_df <- vroom(clk1_consens_targets_file)
 
 list_s5_table <- list(deseq2_morp = deseq2_morpholino_df,
                       rmats = rmats_df,
@@ -259,7 +265,8 @@ list_s5_table <- list(deseq2_morp = deseq2_morpholino_df,
                       ds_RI = ds_events_RI_df,
                       ds_cancer_genes = cancer_genes_func_df,
                       primers = primers_df,
-                      intersection_de_ds_crispr = ds_de_crispr_df)
+                      intersection_de_ds_crispr = ds_de_crispr_df,
+                      consensus_targets = consensus_targets_df)
 
 write.xlsx(list_s5_table,
            table_s5_file,
