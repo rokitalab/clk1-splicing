@@ -31,6 +31,7 @@ indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv
 # Define file paths
 histology_gtex_file <- file.path(input_dir,"gtex-samples-by-age.tsv")
 gtex_trans_file <- file.path(data_dir,"gtex-harmonized-isoform-expression-rsem-tpm.rds")
+expr_tpm_tumor_file <- file.path(data_dir,"rna-isoform-expression-rsem-tpm.rds")
 
 # Output directories
 results_dir <- file.path(analysis_dir, "results")
