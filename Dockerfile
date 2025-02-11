@@ -46,6 +46,7 @@ RUN R -e "BiocManager::install(version = '3.19')"
 RUN R -e 'BiocManager::install(c( \
   "AnnotationDbi", \
   "Biobase", \
+  "Biostrings" \
   "broom", \
   "circlize", \
   "COINr", \
