@@ -49,6 +49,7 @@ RUN R -e 'BiocManager::install(c( \
   "broom", \
   "circlize", \
   "COINr", \
+  "coin", \
   "clusterProfiler", \
   "ComplexHeatmap", \
   "ConsensusClusterPlus", \
