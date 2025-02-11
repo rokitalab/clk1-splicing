@@ -11,6 +11,7 @@ suppressPackageStartupMessages({
   library(tidyverse)
   library(ggplot2)
   library(ggpubr)
+  library(coin)  # For oneway_test
   library(vroom)
   library(data.table)
 })
