@@ -27,7 +27,7 @@ do
 done
 
 
-GENCODE39="ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_39/gencode.v39.primary_assembly.annotation.gtf.gz"
+GENCODE39="https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_39/gencode.v39.primary_assembly.annotation.gtf.gz"
 cd data
 if [ ! -e ${GENCODE39##*/} ]
 then
