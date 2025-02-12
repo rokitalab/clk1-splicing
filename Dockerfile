@@ -40,13 +40,14 @@ RUN R -e "options(repos = BiocManager::repositories())"
 
 # Install BiocManager and the desired version of Bioconductor
 RUN R -e "install.packages('BiocManager', dependencies=TRUE)"
-RUN R -e "BiocManager::install(version = '3.19')"
+#RUN R -e "BiocManager::install(version = '3.19')"
+RUN R -e "options(repos = c(CRAN = 'https://cran.rstudio.com/')); BiocManager::install(version = '3.19', ask = FALSE)"
 
 # Install packages
 RUN R -e 'BiocManager::install(c( \
   "AnnotationDbi", \
   "Biobase", \
-  "Biostrings" \
+  "Biostrings", \
   "broom", \
   "circlize", \
   "COINr", \
