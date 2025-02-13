@@ -507,7 +507,7 @@ plotKM <- function(model,
 
 
 
-plotForest <- function(model) {
+plotForest <- function(model, filter_estimates = TRUE) {
   
   # Determine if OS or EFS model 
   
@@ -554,9 +554,25 @@ plotForest <- function(model) {
       term = factor(term, 
                     levels = term_order,
                     labels = term_labels)
-    ) %>%
-    filter(estimate > 1e-4 & estimate < 1500)
+    )
   
+  if (filter_estimates == TRUE){
+    
+    survival_df <- survival_df %>%
+      filter(estimate > 1e-5 & estimate < 10000)
+    
+  }
+  
+  if (length(names(model$xlevels)) > 0) {
+
+    survival_df <- survival_df %>%
+      arrange(term) %>%
+      dplyr::mutate(term = str_replace_all(term, paste(names(model$xlevels), collapse = "|"), "")) %>%
+      dplyr::mutate(term = str_replace_all(term, "_", " ")) %>%
+      dplyr::mutate(term = fct_relevel(term, unique(term)))
+    
+  }
+
   if (nrow(survival_df) > 0){
   
     forest_plot <- ggplot(survival_df) +
@@ -604,8 +620,8 @@ plotForest <- function(model) {
           paste0("P = ", format(round(p.value, 2), nsmall = 2)),
           "P < 0.01"
         ),
-        conf.low = format(round(conf.low, 2), nsmall = 2),
-        conf.high = format(round(conf.high, 2), nsmall = 2),
+        conf.low = format(round(conf.low, 1), nsmall = 1),
+        conf.high = format(round(conf.high, 1), nsmall = 1),
         estimate = format(round(estimate, 2), nsmall = 2),
         hr_ci = glue::glue("{estimate} ({conf.low} - {conf.high})")
       ) %>%
