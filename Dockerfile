@@ -28,12 +28,14 @@ RUN apt-get -y update && apt-get install -y bedtools \
 	libv8-dev \
 	libxt-dev \
 	libudunits2-dev \
-	zlib1g-dev 
+	zlib1g-dev
 
 # Install java
 RUN apt-get update && apt-get -y --no-install-recommends install \
   default-jdk \
   libxt6
+
+RUN R -e "remotes::install_github('YuLab-SMU/yulab.utils',dependencies = TRUE)"
 
 # Set the Bioconductor repository as the primary repository
 RUN R -e "options(repos = BiocManager::repositories())"
@@ -52,7 +54,6 @@ RUN R -e 'BiocManager::install(c( \
   "circlize", \
   "COINr", \
   "coin", \
-  "clusterProfiler", \
   "ComplexHeatmap", \
   "ConsensusClusterPlus", \
   "corrplot", \
@@ -85,6 +86,7 @@ RUN R -e 'BiocManager::install(c( \
   "org.Hs.eg.db", \
   "PMCMRplus", \
   "pheatmap", \
+  "pwalign", \
   "preprocessCore", \
   "reshape2", \
   "rstatix", \
@@ -92,10 +94,10 @@ RUN R -e 'BiocManager::install(c( \
   "R.utils", \
   "sva", \
   "survival", \
-	"survminer", \
-	"sva", \
-	"WGCNA", \
-  "VennDiagram",\	
+  "survminer", \
+  "sva", \
+  "WGCNA", \
+  "VennDiagram",\
   "UpSetR" \
 ))'
 
@@ -106,6 +108,12 @@ RUN R -e "remotes::install_github('d3b-center/annoFuseData', ref = '321bc4f6db6e
 RUN R -e "remotes::install_github('thomasp85/patchwork', ref = '1cb732b129ed6a65774796dc1f618558c7498b66', dependencies = TRUE)"
 #RUN R -e "remotes::install_github('rcastelo/GSVA', ref = 'df9001cfd07017001dfba07a3099e6b7dc5ce324', dependencies = TRUE)"
 RUN R -e "remotes::install_github('andymckenzie/DGCA', ref = '075fc79a32df3955e75e262b8269c257d8ffac9c', dependencies = TRUE)"
+RUN R -e "remotes::install_github('YuLab-SMU/yulab.utils',dependencies = TRUE)"
+
+# install clusterProfiler
+RUN R -e 'BiocManager::install("clusterProfiler")'
+
+
 # install perl packages
 RUN cpanm install Statistics::Lite
 

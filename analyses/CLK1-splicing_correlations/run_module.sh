@@ -36,4 +36,5 @@ Rscript --vanilla 11-plot-clk1-ex4-transcripts-by-age-gtex.R
 # Plot CLK1 exon 4 PSI variations across tumors by age
 Rscript --vanilla 12-plot-clk1-ex4-transcripts-by-age.R
 
-
+# Compare high vs low Exon 4 PSI samples
+Rscript --vanilla 13-volcano-plot-high-vs-low-Ex4-PSI.R
