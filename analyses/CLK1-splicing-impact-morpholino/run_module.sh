@@ -40,3 +40,6 @@ Rscript --vanilla 09-intersection-dex-des.R
 
 ## intersect with crispr scores from CCMA
 Rscript --vanilla 10-crispr-screen-intersection.R
+
+## calculate deltaG for CLK1 morpholino
+Rscript --vanilla 11-compute-binding-affinities.R
