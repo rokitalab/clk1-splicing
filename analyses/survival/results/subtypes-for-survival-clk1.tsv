@@ -1,0 +1,5 @@
+hist	subtype	n	names	foldername	subtype_name
+Low-grade glioma	BRAF V600E	30	lgg	LGG	BRAF-V600E
+Low-grade glioma	BRAF fusion	134	lgg	LGG	BRAF-fusion
+Low-grade glioma	Wildtype	29	lgg	LGG	Wildtype
+Mixed neuronal-glial tumor	BRAF V600E	20	gng	GNG	BRAF-V600E
