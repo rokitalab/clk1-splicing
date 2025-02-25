@@ -170,7 +170,7 @@ ex4_psi_range <- ex4_psi_filtered %>%
 
 # Use a colorblind-friendly palette
 colorblind_palette <- c(
-  "#D55E00", # Vermillion
+  "darkred", # Vermillion
   "#0072B2", # Blue
   "#F0E442", # Yellow
   "#009E73", # Green
@@ -179,29 +179,30 @@ colorblind_palette <- c(
   "#E69F00", # Orange
   "#000000"  # Black
 )
-  
-psi_range_kinase_plot<- ggplot(data = ex4_psi_range, 
-                               aes(x = reorder(plot_group, PSI_range), 
-                                   y = PSI_range, 
-                                   fill = SpliceID)) +
+
+psi_range_kinase_plot <- ggplot(data = ex4_psi_range, 
+                                aes(x = reorder(plot_group, PSI_range), 
+                                    y = PSI_range, 
+                                    fill = SpliceID)) +
   geom_jitter(size = 3, pch = 21, color = "black", width = 0.2, height = 0, alpha = 0.4) +
-  ylim(0, .85) +
+  ylim(0, 1.0) +
   xlab("Histology") +
   ylab("Range") +
-  ggtitle("PSI Range") +
   theme_Publication() +
   theme(axis.text.x = element_text(angle = 75, hjust = 1),
-        legend.position = "right",
-        legend.text = element_text(size = 14)) +
-  scale_fill_manual(values = colorblind_palette)
+        legend.position = "top",
+        legend.justification = "left",
+        legend.direction = "horizontal",
+        legend.text = element_text(size = 10),
+        legend.box.margin = margin(0, 0, 0, -20),  # Slight left shift without excessive whitespace
+        plot.margin = margin(10, 10, 10, 10)) +  # Keep balanced margins
+  scale_fill_manual(values = colorblind_palette, guide = guide_legend(nrow = 4))
 
-# Save plot as PDF
-#pdf(file.path(plots_dir, "PSI-sdev-across.pdf"), 
-    #width = 7, height = 8)
-#print(var_kinase_plot)
-#dev.off()
+psi_range_kinase_plot
+
 
 pdf(file.path(plots_dir, "PSI-range-kinses.pdf"), 
-    width = 8, height = 6)
+    width = 6, height = 6)
 print(psi_range_kinase_plot)
 dev.off()
+
