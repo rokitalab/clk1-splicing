@@ -155,7 +155,7 @@ var_kinase_plot<- ggplot(data = ex4_psi_filtered,
   ggtitle("PSI Variation") +
   theme_Publication() + 
   theme(
-    axis.text.x = element_text(angle = 75, hjust = 1, size = 11),
+    axis.text.x = element_text(angle = 75, hjust = 1),
     legend.position = "none"
   ) +
   facet_wrap(~SpliceID, scales = "free_y", ncol = 2)  # Facet by SpliceID, adjust columns
@@ -190,7 +190,7 @@ psi_range_kinase_plot<- ggplot(data = ex4_psi_range,
   ylab("Range") +
   ggtitle("PSI Range") +
   theme_Publication() +
-  theme(axis.text.x = element_text(angle = 75, hjust = 1, size = 11),
+  theme(axis.text.x = element_text(angle = 75, hjust = 1),
         legend.position = "right",
         legend.text = element_text(size = 14)) +
   scale_fill_manual(values = colorblind_palette)
@@ -202,6 +202,6 @@ psi_range_kinase_plot<- ggplot(data = ex4_psi_range,
 #dev.off()
 
 pdf(file.path(plots_dir, "PSI-range-kinses.pdf"), 
-    width = 10, height = 8)
+    width = 8, height = 6)
 print(psi_range_kinase_plot)
 dev.off()
