@@ -198,11 +198,8 @@ psi_range_kinase_plot <- ggplot(data = ex4_psi_range,
         plot.margin = margin(10, 10, 10, 10)) +  # Keep balanced margins
   scale_fill_manual(values = colorblind_palette, guide = guide_legend(nrow = 4))
 
-psi_range_kinase_plot
-
-
 pdf(file.path(plots_dir, "PSI-range-kinses.pdf"), 
-    width = 6, height = 6)
+    width = 6, height = 7)
 print(psi_range_kinase_plot)
 dev.off()
 
