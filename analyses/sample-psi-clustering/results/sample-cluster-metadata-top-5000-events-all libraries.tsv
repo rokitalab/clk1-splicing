@@ -1,0 +1,1416 @@
+sample_id	plot_group	RNA_library	molecular_subtype	cluster
+BS_PGHK1JRW	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, MYC	1
+BS_W7MFJZ5A	DIPG or DMG	poly-A	DIPG, H3 wildtype	1
+BS_6M2053M0	DIPG or DMG	poly-A	DMG, H3 K28, TP53	1
+BS_NGSG2KB6	DIPG or DMG	poly-A	DMG, H3 K28, TP53	1
+BS_EZ3147MX	DIPG or DMG	poly-A	DMG, H3 K28, TP53	1
+BS_F0JB4EAK	DIPG or DMG	poly-A	DIPG, H3 wildtype, TP53	1
+BS_8ZY4GST0	DIPG or DMG	poly-A	DMG, H3 K28, TP53	1
+BS_3ZPJAK9A	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	1
+BS_Z3RCA1T9	DIPG or DMG	poly-A	DMG, H3 K28	1
+BS_GWSJ4Z9H	DIPG or DMG	poly-A	DMG, H3 K28, TP53	1
+BS_XGDPK33A	DIPG or DMG	poly-A	DMG, H3 K28, TP53	1
+BS_ZF6BSFNF	DIPG or DMG	poly-A	DMG, H3 K28	1
+BS_FXJY0MNH	DIPG or DMG	stranded	DIPG, H3 wildtype	1
+BS_H97S5SQN	DIPG or DMG	poly-A	DMG, H3 K28, TP53	1
+BS_QNNX91SM	DIPG or DMG	poly-A	DMG, H3 K28, TP53	1
+BS_FCDAH728	DIPG or DMG	poly-A	DMG, H3 K28, TP53	1
+BS_0ZA67BBC	DIPG or DMG	poly-A	DMG, H3 K28, TP53	1
+BS_JQVAWTTM	DIPG or DMG	poly-A	DMG, H3 K28	1
+BS_5VPM0F36	DIPG or DMG	poly-A	DMG, H3 K28, TP53	1
+BS_NEVYM2FP	DIPG or DMG	poly-A	DMG, H3 K28	1
+BS_JB43XBCQ	DIPG or DMG	poly-A	DMG, H3 K28, TP53	1
+BS_NB9XXBW6	DIPG or DMG	poly-A	DMG, H3 K28, TP53	1
+BS_R9B92M75	DIPG or DMG	poly-A	DMG, H3 K28	1
+BS_7WM3MNZ0	DIPG or DMG	poly-A	DMG, H3 K28, TP53	1
+BS_C83TK159	DIPG or DMG	poly-A	DMG, H3 K28, TP53	1
+BS_YDEVMD24	DIPG or DMG	poly-A	DMG, H3 K28	1
+BS_HZ9AYDCQ	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	1
+BS_VF3NVT4G	DIPG or DMG	exome_capture	DMG, H3 K28	1
+BS_ENEYB4TG	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	1
+BS_CVEDJGHZ	DIPG or DMG	exome_capture	DMG, H3 K28	1
+BS_M0FA190Y	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	1
+BS_BBQ6BHGN	DIPG or DMG	poly-A stranded	DMG, H3 K28, TP53	1
+BS_STAJHZDX	DIPG or DMG	exome_capture	DMG, H3 K28	1
+BS_K2PCC777	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	1
+BS_75YRDXET	DIPG or DMG	exome_capture	DMG, H3 K28	1
+BS_DK87G2MP	DIPG or DMG	exome_capture	DIPG, To be classified	1
+BS_QGKEP3KB	DIPG or DMG	poly-A stranded	DMG, H3 K28, TP53	1
+BS_G19QZG4S	DIPG or DMG	poly-A stranded	DMG, H3 K28	1
+BS_RPH4DCMK	DIPG or DMG	poly-A stranded	DIPG, To be classified	1
+BS_NQ54ST98	DIPG or DMG	poly-A stranded	DMG, H3 K28	1
+BS_X3HR4Z21	DIPG or DMG	poly-A stranded	DMG, H3 K28	1
+BS_8YWYN7VH	DIPG or DMG	poly-A stranded	DMG, H3 K28	1
+BS_MPZ6PKW8	Ependymoma	poly-A stranded	EPN, To be classified	1
+BS_WETH5SAH	Ependymoma	poly-A stranded	EPN, PF A	1
+BS_WNJ9Q829	Germ cell tumor	poly-A stranded	NA	1
+BS_EHVYJAVA	Low-grade glioma	stranded	LGG, FGFR	1
+BS_B0SVFK4P	Low-grade glioma	stranded	LGG, BRAF V600E	1
+BS_CGB2WS2A	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	1
+BS_DV86M0Y7	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	1
+BS_0WVJYM9R	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	1
+BS_ME3HKN2C	Low-grade glioma	stranded	LGG, wildtype	1
+BS_G5QBBHDV	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	1
+BS_21RE8W46	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	1
+BS_YG0A13JH	Low-grade glioma	stranded	LGG, MAPK	1
+BS_063ERW0R	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	1
+BS_0T17SY47	Low-grade glioma	stranded	LGG, IDH	1
+BS_ET8CJXSF	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	1
+BS_X0F9AYEC	Low-grade glioma	stranded	LGG, wildtype	1
+BS_68BW2163	Low-grade glioma	stranded	LGG, FGFR	1
+BS_3P20Q2C3	Low-grade glioma	stranded	LGG, RTK	1
+BS_GCA4GET3	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	1
+BS_H8A9PSYA	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	1
+BS_0Y66ZBWE	Low-grade glioma	stranded	LGG, NF1-somatic, FGFR	1
+BS_470DYRJQ	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	1
+BS_9F09XV62	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	1
+BS_E4QK839R	Low-grade glioma	stranded	LGG, IDH	1
+BS_QTSXW7DA	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	1
+BS_T2QPMZCM	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	1
+BS_9RT63JD9	Low-grade glioma	stranded	LGG, IDH	1
+BS_Y7F9E2E9	Low-grade glioma	stranded	LGG, wildtype	1
+BS_YZ2Z1Q6Y	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	1
+BS_SFKZSJN1	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	1
+BS_T55Y4Z0Y	Low-grade glioma	stranded	LGG, wildtype	1
+BS_52426AMF	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	1
+BS_SDA4RMMG	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	1
+BS_NYS8TRCB	Low-grade glioma	stranded	LGG, wildtype	1
+BS_H0WF1WHE	Low-grade glioma	exome_capture	LGG, other MAPK	1
+BS_BW79W2PD	Low-grade glioma	exome_capture	LGG, other MAPK, IDH	1
+BS_V92ZMBXX	Low-grade glioma	exome_capture	LGG, wildtype	1
+BS_A2YNJVVG	Low-grade glioma	poly-A stranded	LGG, MYB/MYBL1	1
+BS_YBGXGEM3	Low-grade glioma	poly-A stranded	LGG, MYB/MYBL1	1
+BS_9S7AG4EN	Low-grade glioma	poly-A stranded	LGG, other MAPK	1
+BS_MX92FD6D	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	1
+BS_880ESDFZ	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	1
+BS_TVV122JG	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	1
+BS_R7V8BC98	Low-grade glioma	poly-A stranded	LGG, other MAPK	1
+BS_B2QMR6Z9	Low-grade glioma	poly-A stranded	LGG, wildtype	1
+BS_1N76FQZY	Low-grade glioma	poly-A stranded	LGG, FGFR	1
+BS_G1DAGKSY	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	1
+BS_YT4E515V	Low-grade glioma	poly-A stranded	SEGA, wildtype	1
+BS_DZ4B5A40	Low-grade glioma	poly-A stranded	LGG, IDH	1
+BS_76DRXZRJ	Low-grade glioma	poly-A stranded	LGG, other MAPK	1
+BS_C8RVHTVV	Medulloblastoma	poly-A stranded	MB, SHH	1
+BS_MD3DT41J	Mesenchymal tumor	stranded	NA	1
+BS_CZ82ANWP	Mixed neuronal-glial tumor	stranded	NA	1
+BS_AD4JPN9Q	Mixed neuronal-glial tumor	stranded	GNG, FGFR	1
+BS_23W9EPFE	Mixed neuronal-glial tumor	stranded	GNG, IDH	1
+BS_JXNZYGCR	Mixed neuronal-glial tumor	stranded	NA	1
+BS_55JW3HFM	Mixed neuronal-glial tumor	stranded	GNG, wildtype	1
+BS_273HKCT4	Mixed neuronal-glial tumor	stranded	NA	1
+BS_264RCK7G	Mixed neuronal-glial tumor	stranded	NA	1
+BS_GTZCFGRZ	Mixed neuronal-glial tumor	stranded	GNG, BRAF V600E, CDKN2A/B	1
+BS_YNEQJ6AH	Mixed neuronal-glial tumor	stranded	NA	1
+BS_699TN5RN	Mixed neuronal-glial tumor	stranded	GNG, RTK, BRAF V600E	1
+BS_ERJAJ0KA	Mixed neuronal-glial tumor	stranded	GNG, MYB/MYBL1	1
+BS_77CDMEY4	Mixed neuronal-glial tumor	stranded	GNG, To be classified	1
+BS_VTJ9ESSV	Mixed neuronal-glial tumor	stranded	NA	1
+BS_NT9NZYFD	Mixed neuronal-glial tumor	stranded	GNG, KIAA1549-BRAF	1
+BS_5PEFNDCY	Mixed neuronal-glial tumor	stranded	GNT, KIAA1549-BRAF	1
+BS_RGSMX7QD	Mixed neuronal-glial tumor	stranded	GNG, KIAA1549-BRAF	1
+BS_ZRSHXK63	Mixed neuronal-glial tumor	poly-A stranded	NA	1
+BS_ZK6WE17T	Mixed neuronal-glial tumor	exome_capture	GNG, RTK	1
+BS_X67SWFPS	Mixed neuronal-glial tumor	poly-A stranded	NA	1
+BS_SW8C9Y5Y	Mixed neuronal-glial tumor	poly-A stranded	GNG, BRAF V600E	1
+BS_C9GNTZ1T	Mixed neuronal-glial tumor	poly-A stranded	NA	1
+BS_JDWFEE36	Mixed neuronal-glial tumor	poly-A stranded	GNT, wildtype	1
+BS_C8RWMN8X	Mixed neuronal-glial tumor	poly-A stranded	NA	1
+BS_MNQPSK14	Mixed neuronal-glial tumor	poly-A stranded	NA	1
+BS_N48DTDNC	Mixed neuronal-glial tumor	poly-A stranded	NA	1
+BS_55X1W2MR	Mixed neuronal-glial tumor	poly-A stranded	GNG, BRAF V600E	1
+BS_T2X8ZD79	Mixed neuronal-glial tumor	poly-A stranded	GNT, BRAF V600E	1
+BS_DZBVFTQF	Mixed neuronal-glial tumor	poly-A stranded	NA	1
+BS_NYEVBZPS	Mixed neuronal-glial tumor	poly-A stranded	GNT, FGFR	1
+BS_5TKDAEGA	Mixed neuronal-glial tumor	poly-A stranded	NA	1
+BS_W18SF91A	Non-neoplastic tumor	stranded	NA	1
+BS_AG4H9S3J	Non-neoplastic tumor	stranded	NA	1
+BS_1T19NFJ8	Non-neoplastic tumor	stranded	NA	1
+BS_2XD3MNKD	Non-neoplastic tumor	stranded	NA	1
+BS_Z6MC4N8D	Non-neoplastic tumor	stranded	NA	1
+BS_60K3EQ9S	Non-neoplastic tumor	stranded	NA	1
+BS_Z2NWPQKF	Non-neoplastic tumor	stranded	NA	1
+BS_Z7G68ZS2	Non-neoplastic tumor	stranded	NA	1
+BS_421D5Q6J	Non-neoplastic tumor	poly-A stranded	NA	1
+BS_FX2P2WEG	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	1
+BS_BKR4E30C	Other high-grade glioma	stranded	NA	1
+BS_J9CBGP57	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	1
+BS_R7NTZR4C	Other high-grade glioma	poly-A	HGG, IDH, TP53	1
+BS_TPB6WVF4	Other high-grade glioma	stranded	HGG, H3 wildtype	1
+BS_RJC3WDD6	Other high-grade glioma	stranded	DHG, H3 G35, TP53	1
+BS_V3Z3DB4N	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	1
+BS_3AC3SRWH	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype	1
+BS_3MS8WVNR	Other high-grade glioma	stranded	DHG, H3 G35	1
+BS_ZD5HN296	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype	1
+BS_SBMAM00V	Other high-grade glioma	exome_capture	HGG, H3 wildtype	1
+BS_WQNXWJXE	Other high-grade glioma	stranded	NA	1
+BS_A8XW5S0W	Other high-grade glioma	exome_capture	HGG, H3 wildtype	1
+BS_A8V685RR	Other high-grade glioma	stranded	NA	1
+BS_AS4K2YQW	Other high-grade glioma	stranded	NA	1
+BS_S8ZE9VMN	Other high-grade glioma	exome_capture	HGG, IDH, TP53	1
+BS_CXAQDK7S	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype, TP53	1
+BS_0Y1BP5A4	Other high-grade glioma	stranded	NA	1
+BS_4Q3NRFBD	Other high-grade glioma	stranded	NA	1
+BS_8SQARNQW	Other high-grade glioma	stranded	NA	1
+BS_CFD3WHAY	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype, TP53	1
+BS_CV9QNWN7	Other high-grade glioma	stranded	NA	1
+BS_74GHJS7N	Other high-grade glioma	stranded	NA	1
+BS_4GNN7J8E	Other high-grade glioma	exome_capture	HGG, H3 wildtype	1
+BS_V0JFAS12	Other high-grade glioma	stranded	NA	1
+BS_G1E5DATJ	Other high-grade glioma	exome_capture	HGG, H3 wildtype, TP53	1
+BS_NPA6CZQF	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype	1
+BS_056Q8577	Other high-grade glioma	exome_capture	DHG, H3 G35, TP53	1
+BS_2QGRF15R	Other high-grade glioma	stranded	NA	1
+BS_N5NA83D2	Other high-grade glioma	exome_capture	HGG, To be classified	1
+BS_2T5PJAW8	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype	1
+BS_73AZT1Q3	Other high-grade glioma	poly-A stranded	HGG, To be classified	1
+BS_1ZZW5HMJ	Other high-grade glioma	poly-A stranded	HGG, To be classified	1
+BS_NNYXMSTX	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype, TP53	1
+BS_DDR2A5JK	Other high-grade glioma	poly-A stranded	HGG, To be classified	1
+BS_EN5WR747	Other high-grade glioma	poly-A stranded	HGG, To be classified	1
+BS_J3J27QY7	Other high-grade glioma	poly-A stranded	HGG, To be classified	1
+BS_T80VQKVE	Other high-grade glioma	poly-A stranded	HGG, To be classified	1
+BS_PVCWX633	Other high-grade glioma	poly-A stranded	HGG, To be classified	1
+BS_X1G0TKP4	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype	1
+BS_Q54JNT3K	Other tumor	poly-A stranded	NA	1
+BS_MWWZBQ60	DIPG or DMG	stranded	DMG, H3 K28	2
+BS_NB5XWMJT	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_PEP9NZXN	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_V89HGTET	Low-grade glioma	stranded	LGG, KIAA1549-BRAF, RTK	2
+BS_B7GEH89C	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_M8WP5T16	Low-grade glioma	stranded	LGG, FGFR	2
+BS_T0RKFEKR	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_EBMCTR80	Low-grade glioma	stranded	LGG, RTK	2
+BS_ARBQDTT5	Low-grade glioma	stranded	LGG, NF1-somatic, FGFR	2
+BS_SXRS2P6T	Low-grade glioma	stranded	LGG, KIAA1549-BRAF, RTK	2
+BS_V72GX2AZ	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_RWJZFTP9	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_KEA474HN	Low-grade glioma	stranded	LGG, KIAA1549-BRAF, other MAPK	2
+BS_T1W4JA94	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_BN986DF6	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_BPSTSCBJ	Low-grade glioma	stranded	LGG, KIAA1549-BRAF, RTK	2
+BS_M8M56Z4Y	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_EFEZB0ZH	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_MF9X3PKH	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_RRAEQZ97	Low-grade glioma	stranded	LGG, RTK	2
+BS_BC936YNZ	Low-grade glioma	stranded	LGG, other MAPK	2
+BS_K7MVS0Z7	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_CTR5X93B	Low-grade glioma	stranded	LGG, other MAPK	2
+BS_GYXSDZ56	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_C7A2TYAC	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_BKQZ550R	Low-grade glioma	stranded	LGG, RTK	2
+BS_CB6VK7PB	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_H3FE3TH9	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_J6VKB1VE	Low-grade glioma	stranded	LGG, To be classified	2
+BS_4BWB0FA0	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_66HQ3E4Z	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_JVA2NQFF	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_JWSR581E	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_JKXA3FQC	Low-grade glioma	stranded	LGG, other MAPK	2
+BS_HSHN8PBB	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_49852ZBH	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_HV8PFRBR	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_2R9TCR03	Low-grade glioma	stranded	LGG, RTK	2
+BS_M4TTKPNR	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_4NF35AF6	Low-grade glioma	stranded	LGG, RTK	2
+BS_7P83Z28P	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_42Y3YANN	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_4C4MZ4NT	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_0J9SHHSC	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_GHNJ4CYC	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_5NWDARXG	Low-grade glioma	stranded	LGG, BRAF V600E	2
+BS_401R3KV0	Low-grade glioma	stranded	LGG, other MAPK	2
+BS_42DY6WS7	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_4Y6BCYK5	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_JMHG7GCN	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_JH29M4KG	Low-grade glioma	stranded	LGG, BRAF V600E	2
+BS_YVMEEBKC	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_014EVM2D	Low-grade glioma	stranded	LGG, other MAPK	2
+BS_1ZVXF5FE	Low-grade glioma	stranded	LGG, KIAA1549-BRAF, other MAPK	2
+BS_4A45GGSW	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_3G3KWY18	Low-grade glioma	stranded	LGG, BRAF V600E	2
+BS_7Z93ZYMS	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_17WYVEEC	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_G7AGNB5G	Low-grade glioma	stranded	LGG, FGFR	2
+BS_0SCXXM6N	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_X16PENSA	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_3Q0GTSYH	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_ZVX2GRD6	Low-grade glioma	stranded	LGG, BRAF V600E	2
+BS_MY9D8XZ1	Low-grade glioma	stranded	LGG, other MAPK	2
+BS_GPEGRCCT	Low-grade glioma	stranded	LGG, BRAF V600E	2
+BS_2WPQ8YCW	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_DPF1CX0G	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_2KJ2YAZR	Low-grade glioma	stranded	LGG, BRAF V600E	2
+BS_24AHZ9ZW	Low-grade glioma	stranded	LGG, BRAF V600E	2
+BS_Z7Y2466H	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_FJWZ3M7V	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_N1E0H8YQ	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_EXYHZ6D4	Low-grade glioma	stranded	LGG, BRAF/MAPK	2
+BS_ZZMYDZJW	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_X59HSFGG	Low-grade glioma	stranded	LGG, NF1-somatic	2
+BS_MBSTWZA6	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_YY5B2XDD	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_EYSS0ZDS	Low-grade glioma	stranded	LGG, BRAF V600E	2
+BS_F8N6CFQE	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_HQ5BJ6MW	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_SHMC4902	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_9P9MB8X8	Low-grade glioma	stranded	LGG, BRAF V600E	2
+BS_55P8HPYD	Low-grade glioma	stranded	LGG, KIAA1549-BRAF, FGFR	2
+BS_QH82PBMB	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_6N3AFF66	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_775HDFNY	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_NQB91P48	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_X9EGD530	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_5YJEPPTP	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_SDZY6RZ3	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_T4JFN54G	Low-grade glioma	stranded	LGG, KIAA1549-BRAF, other MAPK	2
+BS_9Q6Z6VJC	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_Z0AVVB1V	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_VP3C8WZT	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_Z6BWR941	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_Q79NP5YY	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_DSS3S5XD	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_NS7GSHB9	Low-grade glioma	stranded	LGG, other MAPK	2
+BS_53GQKVEX	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_9SJWWYQ4	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_S1KK7XRH	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_4HQ3T2NC	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_52DAPP1Y	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_8VAZSJEN	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_94MT16N2	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_XKKB4MZV	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_4EN8D8Y4	Low-grade glioma	stranded	LGG, NF1-germline, CDKN2A/B	2
+BS_ZTWGFWTX	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_66ABA973	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_Y0PCBNJV	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_N210XMKR	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_5PV5N4HQ	Low-grade glioma	stranded	LGG, KIAA1549-BRAF, RTK	2
+BS_S50KQEXV	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_NRFQEQKP	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_8J3B6ZB6	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_Q3TBCK4V	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_XGSA3GQE	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_A13BMEF5	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_9HSGV9TJ	Low-grade glioma	stranded	LGG, RTK	2
+BS_VR7FR1NE	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_R13X6TMW	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_A46RDWGM	Low-grade glioma	stranded	LGG, FGFR	2
+BS_AP0SZ364	Low-grade glioma	stranded	LGG, other MAPK	2
+BS_A1VEGWTR	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	2
+BS_FWMJPKCV	Mixed neuronal-glial tumor	stranded	NA	2
+BS_RVSEDNJ4	Mixed neuronal-glial tumor	stranded	GNG, KIAA1549-BRAF	2
+BS_ARFQ1WG3	Mixed neuronal-glial tumor	stranded	GNT, FGFR	2
+BS_1NPD7PVG	Mixed neuronal-glial tumor	stranded	GNG, BRAF V600E	2
+BS_478TN841	Mixed neuronal-glial tumor	stranded	GNG, other MAPK, IDH	2
+BS_EXGBH3TD	Mixed neuronal-glial tumor	stranded	GNT, BRAF V600E	2
+BS_KM2EX0K6	Mixed neuronal-glial tumor	stranded	NA	2
+BS_QB7YGKN1	Mixed neuronal-glial tumor	stranded	GNT, wildtype	2
+BS_593HEWBF	Mixed neuronal-glial tumor	stranded	GNG, other MAPK	2
+BS_W7FP2G3F	Mixed neuronal-glial tumor	stranded	NA	2
+BS_H1XPVS9A	Other high-grade glioma	stranded	HGG, PXA	2
+BS_0C7VZC0A	Other high-grade glioma	stranded	HGG, H3 wildtype	2
+BS_P7EY9DXG	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, SHH	3
+BS_WVW3W6ZB	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, To be classified	3
+BS_GJNCYABP	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, To be classified	3
+BS_MVW01FPB	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, SHH	3
+BS_K25F4J3V	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, SHH	3
+BS_J483EMFP	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, SHH	3
+BS_9FHSNVS0	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, SHH	3
+BS_4E1G7E3G	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, TYR	3
+BS_P5KE73DA	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, SHH	3
+BS_NTG278B6	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, SHH	3
+BS_TBBZ93A5	Atypical Teratoid Rhabdoid Tumor	exome_capture	ATRT, To be classified	3
+BS_PPV5073N	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, SHH	3
+BS_G6RKBJEY	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, MYC	3
+BS_BGFDW0VM	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, SHH	3
+BS_REVS37G8	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, SHH	3
+BS_HX8XJ18H	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, SHH	3
+BS_1Z3KSZQZ	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, SHH	3
+BS_E0ZEECZ6	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, MYC	3
+BS_DS1HY9A0	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, MYC	3
+BS_AKNF1CJX	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, To be classified	3
+BS_SYC1C6GN	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, SHH	3
+BS_K7WBFK5T	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, SHH	3
+BS_F6XHX6Q0	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, SHH	3
+BS_A11G4PKZ	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, MYC	3
+BS_SAQGQ09J	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, To be classified	3
+BS_QYP4GD7N	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, SHH	3
+BS_AKPB1RZ3	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, To be classified	3
+BS_G5TXDQJ3	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, MYC	3
+BS_JX7S9MY7	Craniopharyngioma	stranded	CRANIO, To be classified	3
+BS_GMDQK06Q	Craniopharyngioma	stranded	CRANIO, To be classified	3
+BS_GMJBGBWB	Craniopharyngioma	stranded	CRANIO, ADAM	3
+BS_S6NJRR5W	Craniopharyngioma	stranded	CRANIO, To be classified	3
+BS_E7NVYA6G	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	3
+BS_4KNBXM3C	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	3
+BS_G3NN392N	DIPG or DMG	poly-A	DMG, H3 K28, TP53	3
+BS_D7XRFE0R	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_2HNXVFAS	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_XM1AHBDJ	DIPG or DMG	poly-A	DMG, H3 K28, TP53	3
+BS_B1C6GZ84	DIPG or DMG	stranded	DMG, H3 K28	3
+BS_PJC6FH4Y	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_B57327NA	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_VKYEM67A	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_2853394H	DIPG or DMG	exome_capture	DMG, H3 K28	3
+BS_S3MET0JZ	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_2JP7RBMB	DIPG or DMG	poly-A	DMG, H3 K28, TP53	3
+BS_CZPQ493E	DIPG or DMG	exome_capture	DMG, H3 K28	3
+BS_49CJNZ06	DIPG or DMG	poly-A	DMG, H3 K28, TP53	3
+BS_DSPVSM7D	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_TR2P8KRF	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_4C6B11E4	DIPG or DMG	stranded	DMG, H3 K28	3
+BS_862NMAR7	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_51RA1PGE	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_X4DD4KSZ	DIPG or DMG	poly-A	DMG, H3 K28, TP53	3
+BS_MDBT7S5Z	DIPG or DMG	stranded	DMG, H3 K28	3
+BS_30VC3R2Q	DIPG or DMG	stranded	DMG, H3 K28	3
+BS_4QW2S1Q8	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_ZVWE73JZ	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_GW0GKWMS	DIPG or DMG	stranded	DMG, H3 K28	3
+BS_4B0BAVTX	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_0VXZCRJS	DIPG or DMG	poly-A stranded	DMG, H3 K28	3
+BS_KBEX4RT2	DIPG or DMG	poly-A stranded	DMG, H3 K28	3
+BS_2A5R9MEJ	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_399RPKC9	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_RXN5T5YT	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_VF5XWFXD	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_9ZJT0CP0	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_XG0DBWVT	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_TGS109T3	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_NR3P3GN2	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_6WP1FHTE	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_5965SFPZ	DIPG or DMG	stranded	DMG, H3 K28	3
+BS_2K01T8K6	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	3
+BS_T3DGY9J9	DIPG or DMG	poly-A stranded	DMG, H3 K28	3
+BS_RN0VAY51	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	3
+BS_AZQM1JJH	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	3
+BS_30F3Z9FS	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	3
+BS_BMMY0H73	DIPG or DMG	poly-A stranded	DMG, H3 K28, TP53	3
+BS_MB7WN0ZB	DIPG or DMG	stranded	DMG, H3 K28	3
+BS_NEFAASTR	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	3
+BS_QY2G1JZJ	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	3
+BS_YR12D1ZY	DIPG or DMG	exome_capture	DMG, H3 K28	3
+BS_6H4Q24WA	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	3
+BS_XZM79E42	DIPG or DMG	poly-A stranded	DMG, H3 K28, TP53	3
+BS_9GJ3DB1H	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	3
+BS_RHAWQJ48	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	3
+BS_KS8HMGA6	DIPG or DMG	exome_capture	DMG, H3 K28	3
+BS_X20JCR4H	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	3
+BS_0S8E7590	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	3
+BS_333KCNDP	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	3
+BS_JQGJQ2QZ	DIPG or DMG	exome_capture	DMG, H3 K28	3
+BS_30YWQ3FY	DIPG or DMG	exome_capture	DMG, H3 K28	3
+BS_JP95KMRD	DIPG or DMG	exome_capture	DMG, H3 K28	3
+BS_K74N1BXQ	DIPG or DMG	exome_capture	DMG, H3 K28	3
+BS_Z0ZPD9S9	DIPG or DMG	poly-A stranded	DMG, H3 K28, TP53	3
+BS_WVRX4C9Z	DIPG or DMG	exome_capture	DIPG, H3 wildtype, TP53	3
+BS_RX1YTZ7F	DIPG or DMG	poly-A stranded	DMG, H3 K28, TP53	3
+BS_TXZ7KHTQ	DIPG or DMG	stranded	DMG, H3 K28, TP53	3
+BS_YTWEM5SG	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	3
+BS_V558NW3Q	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	3
+BS_VBMRQK4F	DIPG or DMG	exome_capture	DMG, H3 K28	3
+BS_TTE04ZP8	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	3
+BS_9A1YTHFF	DIPG or DMG	exome_capture	DMG, H3 K28, TP53	3
+BS_2ARXK0TD	DIPG or DMG	exome_capture	DMG, H3 K28	3
+BS_KVPWHDR4	DIPG or DMG	poly-A stranded	DMG, H3 K28, TP53	3
+BS_25KYGJ71	DIPG or DMG	poly-A stranded	DMG, H3 K28, TP53	3
+BS_MFGZH8FK	DIPG or DMG	poly-A stranded	DMG, H3 K28	3
+BS_G8TXTX0H	DIPG or DMG	poly-A stranded	DMG, H3 K28	3
+BS_K81PZXP2	DIPG or DMG	poly-A stranded	DMG, H3 K28, TP53	3
+BS_P4PMWFMV	DIPG or DMG	poly-A stranded	DMG, H3 K28, TP53	3
+BS_SW9Z10F9	DIPG or DMG	poly-A stranded	DMG, H3 K28, TP53	3
+BS_GWHYM3R4	DIPG or DMG	poly-A stranded	DMG, H3 K28	3
+BS_DZNXFPH1	DIPG or DMG	poly-A stranded	DMG, H3 K28, TP53	3
+BS_297H8BT4	DIPG or DMG	poly-A stranded	DMG, H3 K28	3
+BS_1D93Z575	DIPG or DMG	poly-A stranded	DMG, H3 K28	3
+BS_B1HF89ES	DIPG or DMG	poly-A stranded	DMG, H3 K28	3
+BS_ZM97KKXE	DIPG or DMG	poly-A stranded	DMG, H3 K28, TP53	3
+BS_SJVTZ5TH	DIPG or DMG	poly-A stranded	DMG, H3 K28	3
+BS_8VD670NP	DIPG or DMG	poly-A stranded	DMG, H3 K28	3
+BS_956G6QPJ	DIPG or DMG	poly-A stranded	DMG, H3 K28	3
+BS_XQXXBWPD	DIPG or DMG	poly-A stranded	DMG, H3 K28	3
+BS_EMQM7HTA	DIPG or DMG	poly-A stranded	DMG, H3 K28	3
+BS_J6W1RB7A	DIPG or DMG	poly-A stranded	DMG, H3 K28	3
+BS_CXVJK2FY	Ependymoma	stranded	EPN, ST ZFTA	3
+BS_C05FKR8X	Ependymoma	stranded	EPN, ST ZFTA	3
+BS_KDSTG5YY	Ependymoma	stranded	EPN, To be classified	3
+BS_KXMYBQ6N	Ependymoma	stranded	EPN, To be classified	3
+BS_0QYS36NR	Ependymoma	stranded	EPN, To be classified	3
+BS_4SCWT0FX	Ependymoma	stranded	EPN, PF A	3
+BS_1J2WQ08M	Ependymoma	stranded	EPN, ST YAP1	3
+BS_VJ2S5DVS	Ependymoma	stranded	EPN, To be classified	3
+BS_EVCAC3NH	Ependymoma	stranded	EPN, To be classified	3
+BS_6AFD49QR	Ependymoma	poly-A stranded	EPN, ST ZFTA	3
+BS_975AWWJE	Ependymoma	poly-A stranded	EPN, To be classified	3
+BS_YTTMKCBX	Ependymoma	poly-A stranded	EPN, PF A	3
+BS_1XFFNFY0	Ependymoma	poly-A stranded	EPN, PF A	3
+BS_X1S67ZEA	Ependymoma	poly-A stranded	EPN, PF A	3
+BS_18M3RHYN	Ependymoma	poly-A stranded	EPN, PF A	3
+BS_6AQ5RR83	Ependymoma	poly-A stranded	EPN, PF A	3
+BS_ZC1194Z8	Ependymoma	poly-A stranded	EPN, PF A	3
+BS_8Q7W9NSR	Ependymoma	poly-A stranded	EPN, ST ZFTA	3
+BS_WFQT9J8Q	Ependymoma	poly-A stranded	EPN, To be classified	3
+BS_NWNTY3FZ	Ependymoma	poly-A stranded	EPN, PF A	3
+BS_GS7Q2JHA	Ependymoma	poly-A stranded	EPN, To be classified	3
+BS_3ZBQX151	Germ cell tumor	poly-A stranded	NA	3
+BS_AG3D3435	Low-grade glioma	stranded	SEGA, wildtype	3
+BS_C51RB0YR	Low-grade glioma	stranded	LGG, BRAF V600E	3
+BS_D3YBV7KB	Low-grade glioma	stranded	LGG, RTK	3
+BS_B6M763JS	Low-grade glioma	stranded	SEGA, To be classified	3
+BS_AVYNZHSB	Low-grade glioma	stranded	SEGA, wildtype	3
+BS_B3M5SGPA	Low-grade glioma	stranded	LGG, BRAF V600E, CDKN2A/B	3
+BS_JG9JZTA9	Low-grade glioma	stranded	SEGA, To be classified	3
+BS_2YCJV2VV	Low-grade glioma	stranded	LGG, BRAF V600E	3
+BS_3TQSE8HF	Low-grade glioma	stranded	SEGA, wildtype	3
+BS_ZVZDDW2G	Low-grade glioma	stranded	LGG, wildtype	3
+BS_EYYMKWB7	Low-grade glioma	stranded	SEGA, To be classified	3
+BS_GR46VD0Q	Low-grade glioma	stranded	LGG, wildtype	3
+BS_9BJARSX3	Low-grade glioma	stranded	LGG, BRAF V600E, CDKN2A/B	3
+BS_HX0S30NE	Low-grade glioma	stranded	LGG, other MAPK	3
+BS_1JDG6JV5	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	3
+BS_3EVSN5QD	Low-grade glioma	stranded	SEGA, To be classified	3
+BS_29CPJ040	Low-grade glioma	stranded	SEGA, To be classified	3
+BS_E3EJHXQV	Low-grade glioma	stranded	LGG, BRAF V600E, CDKN2A/B	3
+BS_2EMW8ZG3	Low-grade glioma	stranded	LGG, BRAF V600E	3
+BS_DEHJF4C7	Low-grade glioma	stranded	LGG, BRAF V600E, CDKN2A/B	3
+BS_3W07B2TG	Low-grade glioma	stranded	SEGA, RTK	3
+BS_HC5M8JTC	Low-grade glioma	stranded	LGG, BRAF V600E	3
+BS_YCREDZTJ	Low-grade glioma	stranded	LGG, BRAF V600E	3
+BS_9755PSCS	Low-grade glioma	stranded	LGG, IDH	3
+BS_N5B2CZMH	Low-grade glioma	stranded	LGG, wildtype	3
+BS_R244Z0WX	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	3
+BS_T3H5AY8A	Low-grade glioma	stranded	LGG, RTK, BRAF V600E	3
+BS_PN2CE34A	Low-grade glioma	stranded	LGG, wildtype	3
+BS_8Z3SCKB5	Low-grade glioma	stranded	SEGA, To be classified	3
+BS_4Z2F4P9N	Low-grade glioma	stranded	LGG, BRAF V600E	3
+BS_R634WKN7	Low-grade glioma	stranded	SEGA, To be classified	3
+BS_E1B3BKYA	Low-grade glioma	stranded	LGG, NF1-germline	3
+BS_7H4RFCW9	Low-grade glioma	stranded	LGG, BRAF V600E	3
+BS_X91K8KMG	Low-grade glioma	stranded	LGG, BRAF V600E	3
+BS_PWDRF91N	Low-grade glioma	exome_capture	LGG, MYB/MYBL1	3
+BS_Q7WNW1AS	Low-grade glioma	poly-A stranded	LGG, wildtype	3
+BS_F77MGAQT	Low-grade glioma	exome_capture	LGG, BRAF V600E	3
+BS_54H90JW2	Low-grade glioma	poly-A stranded	LGG, other MAPK	3
+BS_7ARDVFCP	Low-grade glioma	poly-A stranded	SEGA, wildtype	3
+BS_NBZNAG7Q	Low-grade glioma	exome_capture	LGG, BRAF V600E	3
+BS_PRCG6W20	Low-grade glioma	poly-A stranded	LGG, BRAF V600E, CDKN2A/B	3
+BS_FGQA2S06	Low-grade glioma	poly-A stranded	SEGA, wildtype	3
+BS_K8ZGHV4D	Low-grade glioma	poly-A stranded	LGG, wildtype	3
+BS_CH8Q6FCN	Low-grade glioma	poly-A stranded	LGG, To be classified	3
+BS_Y274AC0H	Low-grade glioma	poly-A stranded	LGG, BRAF V600E, CDKN2A/B	3
+BS_8QJ43WKW	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	3
+BS_8BF616QR	Low-grade glioma	poly-A stranded	LGG, FGFR	3
+BS_SJ0HXCD0	Low-grade glioma	poly-A stranded	LGG, FGFR	3
+BS_4TZQY7TT	Low-grade glioma	poly-A stranded	LGG, BRAF V600E	3
+BS_J5H5VXWY	Low-grade glioma	poly-A stranded	LGG, other MAPK, CDKN2A/B	3
+BS_T11NFKSD	Low-grade glioma	poly-A stranded	SEGA, wildtype	3
+BS_W6AC5J3C	Meningioma	stranded	NA	3
+BS_NS1SD7XM	Meningioma	poly-A stranded	NA	3
+BS_W41S7B55	Mesenchymal tumor	stranded	NA	3
+BS_XZTV0J8W	Mesenchymal tumor	stranded	EWS	3
+BS_R03J6WRV	Mesenchymal tumor	poly-A stranded	NA	3
+BS_N8K234V2	Mesenchymal tumor	poly-A stranded	NA	3
+BS_6NTXGQAC	Mixed neuronal-glial tumor	stranded	GNG, wildtype	3
+BS_KVV7001W	Mixed neuronal-glial tumor	stranded	GNG, BRAF V600E	3
+BS_FAQQ0GCQ	Mixed neuronal-glial tumor	stranded	GNG, other MAPK, BRAF V600E	3
+BS_F4E8R9VY	Mixed neuronal-glial tumor	stranded	GNG, FGFR	3
+BS_WRQHPSXQ	Mixed neuronal-glial tumor	stranded	GNG, BRAF V600E, CDKN2A/B	3
+BS_FZ62GZGV	Mixed neuronal-glial tumor	exome_capture	GNT, KIAA1549-BRAF	3
+BS_J9M83K8T	Mixed neuronal-glial tumor	poly-A stranded	GNG, BRAF V600E	3
+BS_Y7H24JZG	Mixed neuronal-glial tumor	poly-A stranded	GNG, BRAF V600E	3
+BS_0HW7W7SD	Other CNS embryonal tumor	stranded	ETMR, NOS	3
+BS_KSKZ9J7J	Other CNS embryonal tumor	stranded	CNS HGNET-MN1	3
+BS_7BW0YRPY	Other CNS embryonal tumor	stranded	CNS Embryonal, NOS	3
+BS_QKT3TJVK	Other CNS embryonal tumor	poly-A stranded	CNS Embryonal, NOS	3
+BS_PENM28KT	Other high-grade glioma	stranded	HGG, H3 wildtype	3
+BS_SY3J3XR9	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	3
+BS_KFD5128N	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	3
+BS_FYRDYBMZ	Other high-grade glioma	stranded	HGG, PXA	3
+BS_A6NXR7RC	Other high-grade glioma	stranded	HGG, H3 wildtype	3
+BS_B4R7X1KE	Other high-grade glioma	stranded	DHG, H3 G35, TP53	3
+BS_C41DJZ1F	Other high-grade glioma	stranded	HGG, To be classified	3
+BS_S6B9DVNS	Other high-grade glioma	stranded	DHG, H3 G35, TP53	3
+BS_F21R36MM	Other high-grade glioma	exome_capture	HGG, H3 wildtype	3
+BS_FGJH1X0S	Other high-grade glioma	stranded	DHG, H3 G35, TP53	3
+BS_KKDTW11T	Other high-grade glioma	exome_capture	DHG, H3 G35, TP53	3
+BS_TVH33J9Q	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	3
+BS_JJVH7WR0	Other high-grade glioma	stranded	DHG, H3 G35, TP53	3
+BS_YA0KMBRT	Other high-grade glioma	stranded	HGG, H3 wildtype	3
+BS_D6J2BGDJ	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	3
+BS_BBAEMXRD	Other high-grade glioma	stranded	DHG, H3 G35, TP53	3
+BS_H9JYKFTV	Other high-grade glioma	stranded	HGG, H3 wildtype	3
+BS_A7Y1Y314	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	3
+BS_ENX83H9Z	Other high-grade glioma	stranded	HGG, IDH, TP53	3
+BS_EXPJQZTH	Other high-grade glioma	stranded	DHG, H3 G35, TP53	3
+BS_8ZE4Z9G5	Other high-grade glioma	exome_capture	DHG, H3 G35, TP53	3
+BS_HRJ9145M	Other high-grade glioma	exome_capture	HGG, H3 wildtype	3
+BS_MD0937XT	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	3
+BS_G5NHSFD4	Other high-grade glioma	stranded	HGG, H3 wildtype	3
+BS_M0XGZ53Z	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	3
+BS_KRS4EV4X	Other high-grade glioma	exome_capture	HGG, H3 wildtype	3
+BS_FKASA3MN	Other high-grade glioma	stranded	DHG, H3 G35, TP53	3
+BS_T9A8JJW5	Other high-grade glioma	stranded	DHG, H3 G35, TP53	3
+BS_ECNBQ2RA	Other high-grade glioma	stranded	IHG, ALK-altered	3
+BS_WBVSK3MP	Other high-grade glioma	stranded	DHG, H3 G35, TP53	3
+BS_KP735TJ6	Other high-grade glioma	stranded	IHG, NTRK-altered	3
+BS_GG9W3J9Y	Other high-grade glioma	stranded	HGG, H3 wildtype	3
+BS_JVW2JJ39	Other high-grade glioma	stranded	HGG, H3 wildtype	3
+BS_29X4ZX6Q	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	3
+BS_M0QYNVK8	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	3
+BS_052PZFMK	Other high-grade glioma	stranded	DHG, H3 G35, TP53	3
+BS_K17VQECG	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	3
+BS_DS438CXE	Other high-grade glioma	stranded	HGG, H3 wildtype	3
+BS_6BGES4ZG	Other high-grade glioma	exome_capture	HGG, H3 wildtype	3
+BS_45J79YTF	Other high-grade glioma	stranded	HGG, H3 wildtype	3
+BS_0XHT9W4Q	Other high-grade glioma	stranded	HGG, H3 wildtype	3
+BS_84XCR9GG	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	3
+BS_9XVACXP0	Other high-grade glioma	stranded	IHG, NTRK-altered	3
+BS_Z8YZ6QGS	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	3
+BS_SB12W1XT	Other high-grade glioma	stranded	HGG, PXA	3
+BS_WHBEXD5H	Other high-grade glioma	stranded	HGG, H3 wildtype	3
+BS_W9N9844Q	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	3
+BS_FYP2B298	Other high-grade glioma	stranded	DHG, H3 G35, TP53	3
+BS_T2F48Z4E	Other high-grade glioma	stranded	HGG, H3 wildtype	3
+BS_YEW22W35	Other high-grade glioma	stranded	HGG, To be classified	3
+BS_8PNA0V6R	Other high-grade glioma	stranded	HGG, IDH, TP53	3
+BS_SD8YBRBR	Other high-grade glioma	stranded	HGG, H3 wildtype	3
+BS_1BJNPHMD	Other high-grade glioma	stranded	HGG, PXA	3
+BS_PQVTB6BB	Other high-grade glioma	stranded	HGG, To be classified	3
+BS_TRPXB3AV	Other high-grade glioma	stranded	DHG, H3 G35, TP53	3
+BS_52C576HH	Other high-grade glioma	stranded	IHG, ROS1-altered	3
+BS_7327SDAQ	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	3
+BS_Z8F3GM85	Other high-grade glioma	stranded	DHG, H3 G35	3
+BS_8E8JKP01	Other high-grade glioma	stranded	DHG, H3 G35, TP53	3
+BS_PXCPK5XS	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype, TP53	3
+BS_CG1RG607	Other high-grade glioma	exome_capture	HGG, H3 wildtype, TP53	3
+BS_31MBRWC4	Other high-grade glioma	exome_capture	HGG, H3 wildtype	3
+BS_4PWDGEB0	Other high-grade glioma	poly-A stranded	HGG, To be classified	3
+BS_VKHJG2B8	Other high-grade glioma	exome_capture	HGG, H3 wildtype, TP53	3
+BS_X0XXN9BK	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype, TP53	3
+BS_Q06J3RYW	Other high-grade glioma	exome_capture	HGG, H3 wildtype	3
+BS_TV5B86ZD	Other high-grade glioma	stranded	DHG, H3 G35	3
+BS_SNVM7CZT	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype	3
+BS_PS0P3QJ3	Other high-grade glioma	poly-A stranded	IHG, ROS1-altered	3
+BS_17ZSMXFH	Other high-grade glioma	exome_capture	HGG, H3 wildtype	3
+BS_S8K878T3	Other high-grade glioma	exome_capture	HGG, H3 wildtype, TP53	3
+BS_65WPD3DA	Other high-grade glioma	exome_capture	HGG, H3 wildtype, TP53	3
+BS_NX1R0BC3	Other high-grade glioma	exome_capture	HGG, H3 wildtype	3
+BS_4BM3F6XJ	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype, TP53	3
+BS_S20SP0WW	Other high-grade glioma	exome_capture	HGG, PXA, TP53	3
+BS_5K95FX4C	Other high-grade glioma	exome_capture	HGG, H3 wildtype	3
+BS_2EN3X6HB	Other high-grade glioma	stranded	HGG, H3 wildtype	3
+BS_W4H1D4Y6	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype	3
+BS_HWGWYCY7	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype, TP53	3
+BS_K0X3PZGN	Other high-grade glioma	exome_capture	HGG, H3 wildtype	3
+BS_NFKKDYSV	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype	3
+BS_WBPTY8NH	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype, TP53	3
+BS_YZ2QFDAN	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype	3
+BS_T289QKBV	Other high-grade glioma	poly-A stranded	HGG, PXA	3
+BS_08TWG4K0	Other high-grade glioma	poly-A stranded	HGG, PXA	3
+BS_0R12SD1M	Other high-grade glioma	poly-A stranded	HGG, To be classified	3
+BS_2A5R9D97	Other high-grade glioma	poly-A stranded	HGG, PXA	3
+BS_JXTZSFX3	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype	3
+BS_6VRG1XFB	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype	3
+BS_HDPCQETG	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype	3
+BS_C3NW374Q	Other high-grade glioma	poly-A stranded	HGG, IDH, TP53	3
+BS_24AK5EEP	Other high-grade glioma	poly-A stranded	HGG, To be classified	3
+BS_8ERBDF7D	Other high-grade glioma	poly-A stranded	DHG, H3 G35, TP53	3
+BS_N6TQBQ8M	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype	3
+BS_DB75RPCD	Other high-grade glioma	poly-A stranded	HGG, To be classified	3
+BS_YSZRQ95C	Other high-grade glioma	poly-A stranded	IHG, NTRK-altered	3
+BS_WTJEDTZC	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype, TP53	3
+BS_Y6D7QZM4	Other high-grade glioma	poly-A stranded	HGG, IDH, TP53	3
+BS_2ZKB9B81	Other high-grade glioma	poly-A stranded	HGG, To be classified	3
+BS_9Y1K14Q5	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype	3
+BS_9FHEFJNP	Other high-grade glioma	poly-A stranded	DHG, H3 G35, TP53	3
+BS_891HPNKY	Other high-grade glioma	poly-A stranded	HGG, To be classified	3
+BS_QH0VYVJK	Other high-grade glioma	poly-A stranded	DHG, H3 G35	3
+BS_FCX6DZ0J	Other high-grade glioma	poly-A stranded	HGG, PXA	3
+BS_KDHG76E1	Other high-grade glioma	poly-A stranded	HGG, To be classified	3
+BS_QHY302E8	Other high-grade glioma	poly-A stranded	HGG, To be classified	3
+BS_KFSQ144Y	Other high-grade glioma	poly-A stranded	HGG, To be classified	3
+BS_Z4WYV1GP	Other high-grade glioma	poly-A stranded	HGG, To be classified	3
+BS_RJMJ935A	Other high-grade glioma	poly-A stranded	HGG, PXA	3
+BS_9JPQZQNG	Other high-grade glioma	poly-A stranded	DHG, H3 G35	3
+BS_ZVM8CAB0	Other high-grade glioma	poly-A stranded	HGG, To be classified	3
+BS_NPMEGFW8	Other high-grade glioma	poly-A stranded	HGG, To be classified	3
+BS_GC2J7SWH	Other high-grade glioma	poly-A stranded	HGG, To be classified	3
+BS_AP6MTYBF	Other high-grade glioma	poly-A stranded	HGG, To be classified	3
+BS_GZFRDTV7	Other high-grade glioma	poly-A stranded	HGG, To be classified	3
+BS_CQEETJ66	Schwannoma	stranded	NA	3
+BS_BXXJ9P8C	Schwannoma	stranded	NA	3
+BS_D5P6EZ1M	Schwannoma	stranded	NA	3
+BS_M9C4RY4P	Schwannoma	stranded	NA	3
+BS_2HN96129	Schwannoma	stranded	NA	3
+BS_HBJZR69P	Schwannoma	stranded	NA	3
+BS_1SVVER1H	Schwannoma	stranded	NA	3
+BS_479S95Q6	Schwannoma	stranded	NA	3
+BS_J4GQPZS0	Schwannoma	stranded	NA	3
+BS_H3Y8FWHV	Schwannoma	stranded	NA	3
+BS_8J09S6MZ	Schwannoma	stranded	NA	3
+BS_NR9FRY5T	Schwannoma	stranded	NA	3
+BS_VJAC9H58	Schwannoma	stranded	NA	3
+BS_T5AP9EEQ	Schwannoma	poly-A stranded	NA	3
+BS_HQER7QQD	Schwannoma	poly-A stranded	NA	3
+BS_CFK707H0	Schwannoma	poly-A stranded	NA	3
+BS_QHRJ66M0	Schwannoma	poly-A stranded	NA	3
+BS_YMN2NJ0Y	Schwannoma	poly-A stranded	NA	3
+BS_YENTYVBV	Schwannoma	poly-A stranded	NA	3
+BS_REF8ARH1	Schwannoma	poly-A stranded	NA	3
+BS_WE4E4GEX	Schwannoma	poly-A stranded	NA	3
+BS_6G6C7VPX	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, TYR	4
+BS_KXCY5BN5	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, TYR	4
+BS_1QNTEZPS	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, TYR	4
+BS_WV0S8N4M	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, To be classified	4
+BS_65A41ZQJ	Atypical Teratoid Rhabdoid Tumor	exome_capture	ATRT, To be classified	4
+BS_GKDWPV3K	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, To be classified	4
+BS_HYYWQVTD	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, TYR	4
+BS_6KBHF52X	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, TYR	4
+BS_ZEV0M416	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, To be classified	4
+BS_6XZJNNYY	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, TYR	4
+BS_53KFK3G0	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, To be classified	4
+BS_MC6JB7F8	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, TYR	4
+BS_EN58Q2DK	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, To be classified	4
+BS_DPMRSF90	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, TYR	4
+BS_ZKCGX84F	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, TYR	4
+BS_NMC4RW21	Atypical Teratoid Rhabdoid Tumor	poly-A stranded	ATRT, TYR	4
+BS_B741RZY9	Choroid plexus tumor	stranded	NA	4
+BS_AGS1HHGF	Choroid plexus tumor	stranded	NA	4
+BS_JX449BF5	Choroid plexus tumor	stranded	NA	4
+BS_GSVCN2XC	Choroid plexus tumor	stranded	NA	4
+BS_KK5C8VCK	Choroid plexus tumor	stranded	NA	4
+BS_0VRSD9V3	Choroid plexus tumor	stranded	NA	4
+BS_0GDJQANN	Choroid plexus tumor	stranded	NA	4
+BS_F9WKPDFG	Choroid plexus tumor	stranded	NA	4
+BS_FEYMKEK8	Choroid plexus tumor	stranded	NA	4
+BS_W36RZSFA	Choroid plexus tumor	stranded	NA	4
+BS_FAVRBEW7	Choroid plexus tumor	stranded	NA	4
+BS_8Q77HZ4R	Choroid plexus tumor	stranded	NA	4
+BS_SES41DAX	Choroid plexus tumor	stranded	NA	4
+BS_WE3Q8A73	Choroid plexus tumor	stranded	NA	4
+BS_NQFH3GZH	Choroid plexus tumor	stranded	NA	4
+BS_Z85M2R3N	Choroid plexus tumor	stranded	NA	4
+BS_PKK3BZRG	Choroid plexus tumor	stranded	NA	4
+BS_64HCD9K3	Choroid plexus tumor	stranded	NA	4
+BS_ZN8136D9	Choroid plexus tumor	stranded	NA	4
+BS_S2Z0KJSX	Choroid plexus tumor	exome_capture	NA	4
+BS_ZW4HD9ZS	Choroid plexus tumor	poly-A stranded	NA	4
+BS_GN80ZQ39	Choroid plexus tumor	poly-A stranded	NA	4
+BS_Y51PG31P	Choroid plexus tumor	poly-A stranded	NA	4
+BS_RPMPW9QA	Choroid plexus tumor	poly-A stranded	NA	4
+BS_JFVB9KXB	Choroid plexus tumor	poly-A stranded	NA	4
+BS_8C885SQR	Choroid plexus tumor	poly-A stranded	NA	4
+BS_AWH4X3Q3	Choroid plexus tumor	poly-A stranded	NA	4
+BS_4SM4CG1E	Choroid plexus tumor	poly-A stranded	NA	4
+BS_123NZXAQ	Choroid plexus tumor	poly-A stranded	NA	4
+BS_6W8E9283	Choroid plexus tumor	poly-A stranded	NA	4
+BS_C2P690E3	Choroid plexus tumor	poly-A stranded	NA	4
+BS_N8J1DP02	Ependymoma	stranded	EPN, To be classified	4
+BS_T1DVKKJB	Ependymoma	stranded	EPN, ST ZFTA	4
+BS_PJPGVD62	Ependymoma	stranded	EPN, To be classified	4
+BS_KBT7MQ6H	Ependymoma	stranded	EPN, ST ZFTA	4
+BS_P78SMRBS	Ependymoma	stranded	EPN, SP	4
+BS_AGTPCRR4	Ependymoma	stranded	EPN, PF A	4
+BS_C80S5N37	Ependymoma	stranded	EPN, PF A	4
+BS_J8VX4D17	Ependymoma	stranded	EPN, To be classified	4
+BS_BJDNWMJH	Ependymoma	stranded	EPN, MPE	4
+BS_V4W81SFC	Ependymoma	stranded	EPN, ST YAP1	4
+BS_0XEG6SNV	Ependymoma	stranded	EPN, ST ZFTA	4
+BS_34201DKZ	Ependymoma	stranded	EPN, PF A	4
+BS_MA2T7ET1	Ependymoma	stranded	EPN, MPE	4
+BS_EMYET8F4	Ependymoma	stranded	EPN, To be classified	4
+BS_JHGW42S6	Ependymoma	stranded	EPN, PF A	4
+BS_4T0HPZDC	Ependymoma	stranded	EPN, To be classified	4
+BS_4NWHYH53	Ependymoma	stranded	EPN, ST ZFTA	4
+BS_196BBNEJ	Ependymoma	stranded	EPN, PF A	4
+BS_3F4FQJMR	Ependymoma	stranded	EPN, To be classified	4
+BS_7BTZQKYY	Ependymoma	stranded	EPN, PF A	4
+BS_0BXY0F9N	Ependymoma	stranded	EPN, PF A	4
+BS_E4F1D721	Ependymoma	stranded	EPN, MPE	4
+BS_GV3NZ9QD	Ependymoma	stranded	EPN, To be classified	4
+BS_CZ3NA7KV	Ependymoma	stranded	EPN, ST ZFTA	4
+BS_3X9WMZGJ	Ependymoma	stranded	EPN, SP-MYCN	4
+BS_8RHPJ740	Ependymoma	stranded	EPN, PF A	4
+BS_RGPSEMHC	Ependymoma	stranded	EPN, PF A	4
+BS_SAA624A4	Ependymoma	stranded	EPN, SP	4
+BS_Q5WZYWCT	Ependymoma	stranded	EPN, To be classified	4
+BS_PSW27ZTE	Ependymoma	stranded	EPN, PF A	4
+BS_RCFQ31XF	Ependymoma	stranded	EPN, PF A	4
+BS_T4P3J13C	Ependymoma	stranded	EPN, PF A	4
+BS_4FZS7TX4	Ependymoma	stranded	EPN, PF A	4
+BS_X67GTEM6	Ependymoma	stranded	EPN, PF A	4
+BS_WRHDP7WF	Ependymoma	stranded	EPN, PF A	4
+BS_N5DVEJXT	Ependymoma	stranded	EPN, ST ZFTA	4
+BS_XQYHPBFS	Ependymoma	stranded	EPN, PF A	4
+BS_6H1C1ME9	Ependymoma	stranded	EPN, PF A	4
+BS_KT3C0XCA	Ependymoma	stranded	EPN, To be classified	4
+BS_8ZP3CBQA	Ependymoma	stranded	EPN, PF A	4
+BS_TNRHHYNC	Ependymoma	stranded	EPN, SP	4
+BS_NGHK9RZP	Ependymoma	stranded	EPN, ST ZFTA	4
+BS_TBWYAFSM	Ependymoma	stranded	EPN, MPE	4
+BS_RHD7XPNP	Ependymoma	stranded	EPN, PF A	4
+BS_WFD0GE5X	Ependymoma	stranded	EPN, PF A	4
+BS_PRAEF32W	Ependymoma	stranded	EPN, PF A	4
+BS_TXY8QYWA	Ependymoma	stranded	EPN, PF A	4
+BS_SDCNP7MW	Ependymoma	stranded	EPN, PF B	4
+BS_S56VRTCE	Ependymoma	exome_capture	EPN, To be classified	4
+BS_CN797XGY	Ependymoma	poly-A stranded	EPN, MPE	4
+BS_XF0ZX2B3	Ependymoma	stranded	EPN, ST ZFTA	4
+BS_MT15SGJN	Ependymoma	stranded	EPN, ST ZFTA	4
+BS_W568T9CS	Ependymoma	poly-A stranded	EPN, PF A	4
+BS_74G5K7JF	Ependymoma	stranded	EPN, ST ZFTA	4
+BS_H4NXBD2D	Ependymoma	stranded	EPN, ST ZFTA	4
+BS_3NQB12XN	Ependymoma	poly-A stranded	EPN, To be classified	4
+BS_WYERXS4G	Ependymoma	stranded	EPN, ST YAP1	4
+BS_G23JJAZY	Ependymoma	stranded	EPN, ST ZFTA	4
+BS_7G42J2SK	Ependymoma	stranded	EPN, ST ZFTA	4
+BS_W80TJC27	Ependymoma	stranded	EPN, ST ZFTA	4
+BS_CZ3ER8DY	Ependymoma	stranded	EPN, ST ZFTA	4
+BS_7FKE2YPB	Ependymoma	poly-A stranded	EPN, PF B	4
+BS_QXKRN6CR	Ependymoma	stranded	EPN, ST ZFTA	4
+BS_EK5PCKY0	Ependymoma	stranded	EPN, ST ZFTA	4
+BS_K1024ZPM	Ependymoma	poly-A stranded	EPN, MPE	4
+BS_ETM3DW4J	Ependymoma	poly-A stranded	EPN, To be classified	4
+BS_G0RPJHA9	Ependymoma	poly-A stranded	EPN, MPE	4
+BS_50S6TFFE	Ependymoma	poly-A stranded	EPN, PF B	4
+BS_238MGRTM	Ependymoma	poly-A stranded	EPN, PF B	4
+BS_YQFX2Y00	Ependymoma	poly-A stranded	EPN, MPE	4
+BS_418N847Z	Ependymoma	poly-A stranded	EPN, To be classified	4
+BS_BYBG9F2X	Ependymoma	poly-A stranded	EPN, PF A	4
+BS_TF8R864V	Ependymoma	poly-A stranded	EPN, PF A	4
+BS_5SWXR2QQ	Ependymoma	poly-A stranded	EPN, PF A	4
+BS_D48301X5	Ependymoma	poly-A stranded	EPN, MPE	4
+BS_ZJC7VQNA	Ependymoma	poly-A stranded	EPN, PF B	4
+BS_NFJPYMET	Ependymoma	poly-A stranded	EPN, To be classified	4
+BS_613KQVAE	Ependymoma	poly-A stranded	EPN, MPE	4
+BS_KWVZXEDS	Ependymoma	poly-A stranded	EPN, PF B	4
+BS_ADEE1SN5	Ependymoma	poly-A stranded	EPN, ST YAP1	4
+BS_BW1Z7QQY	Ependymoma	poly-A stranded	EPN, SP	4
+BS_SV3YAAC1	Ependymoma	poly-A stranded	EPN, SP	4
+BS_WQ0K79EA	Ependymoma	poly-A stranded	EPN, ST YAP1	4
+BS_M3C0MZC9	Ependymoma	poly-A stranded	EPN, ST ZFTA	4
+BS_HYASKY2Z	Ependymoma	poly-A stranded	EPN, To be classified	4
+BS_E1CGF3KV	Low-grade glioma	stranded	LGG, MYB/MYBL1	4
+BS_W4HGV6E7	Low-grade glioma	stranded	LGG, MYB/MYBL1	4
+BS_N0877CX1	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, MYC	5
+BS_MMNRZ1EQ	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, MYC	5
+BS_31TF0P1N	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, To be classified	5
+BS_GAGRGSSX	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, To be classified	5
+BS_DHA5FMVW	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, MYC	5
+BS_15ETQ0E4	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, MYC	5
+BS_850BAHH9	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, SHH	5
+BS_S71RJ8DH	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, MYC	5
+BS_QX12J6W1	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, MYC	5
+BS_F6Z5HFWH	Choroid plexus tumor	stranded	NA	5
+BS_EMMF4PZX	Craniopharyngioma	stranded	CRANIO, To be classified	5
+BS_FRZ76GEG	Craniopharyngioma	stranded	CRANIO, ADAM	5
+BS_C3P5BC92	Craniopharyngioma	stranded	CRANIO, ADAM	5
+BS_T1QMEH1N	Craniopharyngioma	stranded	CRANIO, To be classified	5
+BS_B53Z0T1Q	Craniopharyngioma	stranded	CRANIO, ADAM	5
+BS_JCPKYHKY	Craniopharyngioma	stranded	CRANIO, ADAM	5
+BS_BHR08WGW	Craniopharyngioma	stranded	CRANIO, ADAM	5
+BS_ZWR9W4FX	Craniopharyngioma	stranded	CRANIO, To be classified	5
+BS_7T1J3KET	Craniopharyngioma	stranded	CRANIO, ADAM	5
+BS_1HFK0SXV	Craniopharyngioma	stranded	CRANIO, ADAM	5
+BS_DRD9QXR5	Craniopharyngioma	stranded	CRANIO, To be classified	5
+BS_E054DFJN	Craniopharyngioma	stranded	CRANIO, To be classified	5
+BS_YH05F9DB	Craniopharyngioma	stranded	CRANIO, ADAM	5
+BS_03FT4S8B	Craniopharyngioma	stranded	CRANIO, ADAM	5
+BS_D5NQV7N5	Craniopharyngioma	stranded	CRANIO, ADAM	5
+BS_ABYF92Z9	Craniopharyngioma	stranded	CRANIO, ADAM	5
+BS_ZF34SJGN	Craniopharyngioma	stranded	CRANIO, ADAM	5
+BS_VNK9XYV9	Craniopharyngioma	stranded	CRANIO, ADAM	5
+BS_8D0NYM46	Craniopharyngioma	stranded	CRANIO, ADAM	5
+BS_XHCYEE2S	Craniopharyngioma	stranded	CRANIO, ADAM	5
+BS_PRR8K9GE	Craniopharyngioma	stranded	CRANIO, ADAM	5
+BS_78QX3XDF	Craniopharyngioma	stranded	CRANIO, ADAM	5
+BS_NGY0TE6S	Craniopharyngioma	stranded	CRANIO, ADAM	5
+BS_HPV4F6VR	Craniopharyngioma	poly-A stranded	CRANIO, ADAM	5
+BS_ETDCPRAM	Craniopharyngioma	poly-A stranded	CRANIO, ADAM	5
+BS_A7MC2KR2	Craniopharyngioma	stranded	CRANIO, ADAM	5
+BS_3GDARCHK	Craniopharyngioma	exome_capture	CRANIO, ADAM	5
+BS_EJSWEM34	Craniopharyngioma	poly-A stranded	CRANIO, ADAM	5
+BS_BSMKSA87	Craniopharyngioma	poly-A stranded	CRANIO, ADAM	5
+BS_S1W53RNW	Craniopharyngioma	poly-A stranded	CRANIO, ADAM	5
+BS_TNDYEP8Z	Craniopharyngioma	poly-A stranded	CRANIO, ADAM	5
+BS_NVYZW8RR	Craniopharyngioma	poly-A stranded	CRANIO, ADAM	5
+BS_X31DBRN7	Craniopharyngioma	poly-A stranded	CRANIO, ADAM	5
+BS_41YS708B	Craniopharyngioma	poly-A stranded	CRANIO, ADAM	5
+BS_6NBTFA33	Craniopharyngioma	poly-A stranded	CRANIO, ADAM	5
+BS_C8ME4RZA	Craniopharyngioma	poly-A stranded	CRANIO, To be classified	5
+BS_TX31A8Z9	Craniopharyngioma	poly-A stranded	CRANIO, ADAM	5
+BS_3HGBZBGA	Craniopharyngioma	poly-A stranded	CRANIO, ADAM	5
+BS_J4QMPCS6	Craniopharyngioma	poly-A stranded	CRANIO, ADAM	5
+BS_9H1684FJ	Craniopharyngioma	poly-A stranded	CRANIO, ADAM	5
+BS_TA4657N3	Craniopharyngioma	poly-A stranded	CRANIO, To be classified	5
+BS_MJKKGY95	Craniopharyngioma	poly-A stranded	CRANIO, ADAM	5
+BS_22078RXH	Craniopharyngioma	poly-A stranded	CRANIO, ADAM	5
+BS_JJNRHMKM	Craniopharyngioma	poly-A stranded	CRANIO, ADAM	5
+BS_FEKM7X6Z	Craniopharyngioma	poly-A stranded	CRANIO, ADAM	5
+BS_VXHWZJDC	Germ cell tumor	stranded	NA	5
+BS_46BZ2NNN	Germ cell tumor	stranded	NA	5
+BS_29006KEX	Germ cell tumor	stranded	NA	5
+BS_WSQMAA33	Germ cell tumor	stranded	NA	5
+BS_6HTK4YJP	Germ cell tumor	stranded	NA	5
+BS_742RHK1M	Germ cell tumor	stranded	NA	5
+BS_Z30J2YJV	Germ cell tumor	exome_capture	NA	5
+BS_A89VAPVV	Germ cell tumor	stranded	NA	5
+BS_BYA64S6C	Germ cell tumor	poly-A stranded	NA	5
+BS_4SKWCEDV	Germ cell tumor	poly-A stranded	NA	5
+BS_312K12XX	Germ cell tumor	poly-A stranded	NA	5
+BS_4XZH52X8	Germ cell tumor	poly-A stranded	NA	5
+BS_RX8WXX35	Low-grade glioma	poly-A stranded	LGG, NF1-somatic	5
+BS_Z5ATH1YR	Low-grade glioma	poly-A stranded	LGG, wildtype	5
+BS_8T7DZV2F	Medulloblastoma	stranded	MB, SHH	5
+BS_JGPR9SR2	Meningioma	stranded	NA	5
+BS_3DCBDJAT	Meningioma	stranded	NA	5
+BS_KF0ZXDER	Meningioma	stranded	NA	5
+BS_K2FHZGTK	Meningioma	stranded	NA	5
+BS_23M72ABG	Meningioma	stranded	NA	5
+BS_M026T44Q	Meningioma	stranded	NA	5
+BS_E2Z940S4	Meningioma	stranded	NA	5
+BS_Q2T9ZRM0	Meningioma	stranded	NA	5
+BS_70FFPA51	Meningioma	stranded	NA	5
+BS_5AF6ZNJF	Meningioma	stranded	NA	5
+BS_THSPSG2Z	Meningioma	stranded	NA	5
+BS_QW60M0FE	Meningioma	stranded	NA	5
+BS_6YMJ621P	Meningioma	stranded	NA	5
+BS_WHAW7FQM	Meningioma	poly-A stranded	NA	5
+BS_06D4QTM6	Meningioma	poly-A stranded	NA	5
+BS_KJ13ZTP4	Meningioma	exome_capture	NA	5
+BS_X9QAGVB9	Meningioma	exome_capture	NA	5
+BS_ZE4Y0X18	Meningioma	poly-A stranded	NA	5
+BS_Y26EQ3QJ	Meningioma	poly-A stranded	NA	5
+BS_HJBVSPH7	Meningioma	poly-A stranded	NA	5
+BS_WCVVAHS9	Meningioma	poly-A stranded	NA	5
+BS_EAHR4JSD	Meningioma	poly-A stranded	NA	5
+BS_AZN38B7V	Mesenchymal tumor	stranded	NA	5
+BS_JFEZA9KE	Mesenchymal tumor	stranded	EWS	5
+BS_1N9XZXGE	Mesenchymal tumor	stranded	EWS	5
+BS_67PX06P3	Mesenchymal tumor	stranded	CHDM, conventional	5
+BS_1XJ73KBQ	Mesenchymal tumor	stranded	NA	5
+BS_DBEX7AG2	Mesenchymal tumor	stranded	EWS	5
+BS_0448A413	Mesenchymal tumor	stranded	EWS	5
+BS_WJGFDRWK	Mesenchymal tumor	stranded	EWS	5
+BS_R4Y180DM	Mesenchymal tumor	stranded	EWS	5
+BS_P4D8Y3S8	Mesenchymal tumor	stranded	CHDM, poorly differentiated	5
+BS_9GJ23RHH	Mesenchymal tumor	stranded	NA	5
+BS_Y5MKCBD1	Mesenchymal tumor	poly-A stranded	EWS	5
+BS_B47VJXKV	Mesenchymal tumor	poly-A stranded	NA	5
+BS_36T79XQZ	Mesenchymal tumor	poly-A stranded	NA	5
+BS_7PER3D69	Mesenchymal tumor	poly-A stranded	NA	5
+BS_2F5CPC8C	Mesenchymal tumor	poly-A stranded	EWS	5
+BS_7B9FZM3M	Mesenchymal tumor	poly-A stranded	NA	5
+BS_M7TWXKXB	Mesenchymal tumor	poly-A stranded	CHDM, To be classified	5
+BS_5JM573JC	Mixed neuronal-glial tumor	stranded	GNG, H3	5
+BS_2W3NC4K1	Neurofibroma plexiform	stranded	NA	5
+BS_FRM9TG02	Neurofibroma plexiform	stranded	NA	5
+BS_ENKG5GF3	Neurofibroma plexiform	stranded	NA	5
+BS_GDHH6T5A	Neurofibroma plexiform	stranded	NA	5
+BS_0RF0EZTV	Neurofibroma plexiform	stranded	NA	5
+BS_49VCQD19	Neurofibroma plexiform	stranded	NA	5
+BS_JSPR854S	Neurofibroma plexiform	stranded	NA	5
+BS_Z28VKGNS	Neurofibroma plexiform	stranded	NA	5
+BS_NDRDM2A9	Neurofibroma plexiform	stranded	NA	5
+BS_TQ5QHR17	Neurofibroma plexiform	stranded	NA	5
+BS_0K69QMK6	Neurofibroma plexiform	poly-A stranded	NA	5
+BS_D5G5D9ZM	Neurofibroma plexiform	poly-A stranded	NA	5
+BS_06XH7EVF	Non-neoplastic tumor	stranded	NA	5
+BS_MA1A3GY0	Non-neoplastic tumor	stranded	NA	5
+BS_9XWJ88Q1	Non-neoplastic tumor	stranded	NA	5
+BS_Z9ZS6ZS2	Non-neoplastic tumor	stranded	NA	5
+BS_Z72QAZC7	Non-neoplastic tumor	stranded	NA	5
+BS_9G69F50J	Non-neoplastic tumor	stranded	NA	5
+BS_AA164D3A	Non-neoplastic tumor	stranded	NA	5
+BS_SN3HBR1A	Non-neoplastic tumor	poly-A stranded	NA	5
+BS_27Q04NAT	Non-neoplastic tumor	poly-A stranded	NA	5
+BS_QWNNFXHA	Non-neoplastic tumor	poly-A stranded	NA	5
+BS_GGJ3SQ51	Non-neoplastic tumor	poly-A stranded	NA	5
+BS_AKM1XC5Q	Non-neoplastic tumor	poly-A stranded	NA	5
+BS_3ZGXMCJS	Non-neoplastic tumor	poly-A stranded	NA	5
+BS_XRWAC56Q	Non-neoplastic tumor	poly-A stranded	NA	5
+BS_4X5GB9K0	Non-neoplastic tumor	poly-A stranded	NA	5
+BS_ST8N3JBX	Non-neoplastic tumor	poly-A stranded	NA	5
+BS_730EYWFA	Non-neoplastic tumor	poly-A stranded	NA	5
+BS_ZN5A4MJ2	Non-neoplastic tumor	poly-A stranded	NA	5
+BS_R5SNFB5B	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	5
+BS_DNZVP92S	Other high-grade glioma	exome_capture	HGG, H3 wildtype	5
+BS_B61168DE	Other tumor	stranded	NA	5
+BS_1607397Q	Other tumor	stranded	NA	5
+BS_JWCX8R17	Other tumor	stranded	NA	5
+BS_49F4RAA4	Other tumor	stranded	NA	5
+BS_MGAMKKBD	Other tumor	stranded	NA	5
+BS_0SPCTBZY	Other tumor	stranded	NA	5
+BS_9E7YVFJM	Other tumor	stranded	NA	5
+BS_8WPNFT03	Other tumor	stranded	NA	5
+BS_2SHWPB5P	Other tumor	stranded	NBL, MYCN non-amplified	5
+BS_QBR4WCQ2	Other tumor	stranded	NA	5
+BS_6R7SFVV2	Other tumor	stranded	NA	5
+BS_PBTQS0F6	Other tumor	poly-A stranded	NA	5
+BS_4RAHHT12	Other tumor	poly-A stranded	NA	5
+BS_7ZFVVZ2G	Other tumor	poly-A stranded	NA	5
+BS_90B22NGP	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, To be classified	6
+BS_R7HZCZ8B	Craniopharyngioma	stranded	CRANIO, To be classified	6
+BS_7PVJ6Q3D	DIPG or DMG	poly-A stranded	DMG, H3 K28	6
+BS_07ANYSYQ	Ependymoma	stranded	EPN, ST ZFTA	6
+BS_PJTQHTRA	Ependymoma	poly-A stranded	EPN, To be classified	6
+BS_CVGFNCBJ	Low-grade glioma	stranded	LGG, BRAF V600E	6
+BS_N6NE6B3W	Low-grade glioma	stranded	LGG, KIAA1549-BRAF	6
+BS_0X9EGHY2	Low-grade glioma	stranded	LGG, other MAPK	6
+BS_1G3WYEN3	Low-grade glioma	stranded	LGG, BRAF V600E	6
+BS_7XRN3CFX	Low-grade glioma	stranded	LGG, BRAF V600E, CDKN2A/B	6
+BS_K5802F84	Low-grade glioma	stranded	LGG, other MAPK	6
+BS_YEQVW4ND	Low-grade glioma	stranded	LGG, RTK, CDKN2A/B	6
+BS_QC3XCE6X	Low-grade glioma	stranded	LGG, IDH	6
+BS_ZRM0W01M	Low-grade glioma	stranded	LGG, BRAF/MAPK	6
+BS_WCRKYV0T	Low-grade glioma	stranded	LGG, wildtype	6
+BS_7MGXMG6S	Low-grade glioma	exome_capture	LGG, RTK	6
+BS_2R9HK6YY	Low-grade glioma	poly-A stranded	LGG, wildtype	6
+BS_SQERZ97M	Low-grade glioma	poly-A stranded	LGG, wildtype	6
+BS_QF1FGWVF	Low-grade glioma	poly-A stranded	LGG, IDH	6
+BS_Q6VH5GJ8	Low-grade glioma	poly-A stranded	LGG, BRAF V600E	6
+BS_BPM1MRGT	Low-grade glioma	poly-A stranded	LGG, IDH	6
+BS_C8KEG501	Low-grade glioma	poly-A stranded	LGG, wildtype	6
+BS_J71N7D09	Medulloblastoma	stranded	MB, Group4	6
+BS_398KYV92	Meningioma	stranded	NA	6
+BS_HCP5C912	Meningioma	stranded	NA	6
+BS_DVCQ8XDZ	Meningioma	stranded	NA	6
+BS_32FYKNRN	Meningioma	poly-A stranded	NA	6
+BS_7XKVHKMR	Meningioma	poly-A stranded	NA	6
+BS_B7X8VXQ3	Mixed neuronal-glial tumor	stranded	GNG, KIAA1549-BRAF	6
+BS_7N0B2CY1	Mixed neuronal-glial tumor	stranded	GNG, KIAA1549-BRAF	6
+BS_CREQ97QC	Mixed neuronal-glial tumor	stranded	NA	6
+BS_CQSAJ7BF	Mixed neuronal-glial tumor	stranded	NA	6
+BS_258RRGDM	Mixed neuronal-glial tumor	stranded	GNG, MAPK	6
+BS_3PYESPHA	Mixed neuronal-glial tumor	stranded	GNG, other MAPK	6
+BS_3T6X4BPC	Mixed neuronal-glial tumor	stranded	NA	6
+BS_KPT2WPHW	Mixed neuronal-glial tumor	stranded	GNG, wildtype	6
+BS_DMZP9G1H	Mixed neuronal-glial tumor	stranded	GNG, BRAF V600E	6
+BS_M4NVX721	Mixed neuronal-glial tumor	stranded	GNG, BRAF V600E	6
+BS_MF47B9ZW	Mixed neuronal-glial tumor	stranded	GNG, wildtype	6
+BS_2AR3AP0N	Mixed neuronal-glial tumor	stranded	GNG, RTK	6
+BS_680K119G	Mixed neuronal-glial tumor	stranded	GNG, BRAF V600E	6
+BS_3XY76V8T	Mixed neuronal-glial tumor	stranded	GNG, BRAF V600E	6
+BS_QV51J756	Mixed neuronal-glial tumor	stranded	GNG, other MAPK	6
+BS_6MY8W3H0	Mixed neuronal-glial tumor	stranded	NA	6
+BS_VMMJYN8Z	Mixed neuronal-glial tumor	stranded	GNG, BRAF V600E	6
+BS_PQ7CQFYR	Mixed neuronal-glial tumor	stranded	GNG, KIAA1549-BRAF	6
+BS_Z1A875MW	Mixed neuronal-glial tumor	stranded	GNT, other MAPK, CDKN2A/B	6
+BS_ZR96A4FH	Mixed neuronal-glial tumor	stranded	NA	6
+BS_QF5VVZX5	Mixed neuronal-glial tumor	stranded	GNG, wildtype	6
+BS_TG93XC55	Mixed neuronal-glial tumor	stranded	GNG, other MAPK	6
+BS_SM8VQFPD	Mixed neuronal-glial tumor	stranded	NA	6
+BS_AKRHBPNZ	Mixed neuronal-glial tumor	stranded	GNG, RTK, FGFR	6
+BS_X2EDW2ZB	Mixed neuronal-glial tumor	poly-A stranded	GNG, BRAF V600E	6
+BS_AJ6X83G5	Mixed neuronal-glial tumor	stranded	NA	6
+BS_4Y2JAQTS	Mixed neuronal-glial tumor	poly-A stranded	GNG, wildtype	6
+BS_K57A4A9D	Mixed neuronal-glial tumor	poly-A stranded	GNG, BRAF V600E	6
+BS_RPKA4GF9	Mixed neuronal-glial tumor	poly-A stranded	GNG, RTK	6
+BS_ZJY7Y34M	Mixed neuronal-glial tumor	poly-A stranded	GNG, BRAF V600E	6
+BS_CKM16AHA	Mixed neuronal-glial tumor	poly-A stranded	GNT, wildtype	6
+BS_V4XCTG09	Mixed neuronal-glial tumor	poly-A stranded	GNG, To be classified	6
+BS_7JTW85T5	Mixed neuronal-glial tumor	poly-A stranded	NA	6
+BS_FX4WKR2R	Mixed neuronal-glial tumor	poly-A stranded	GNT, BRAF V600E	6
+BS_CM14SRVX	Mixed neuronal-glial tumor	poly-A stranded	GNG, wildtype	6
+BS_JX4QBM9G	Mixed neuronal-glial tumor	poly-A stranded	GNG, wildtype	6
+BS_ZHRGDRBW	Mixed neuronal-glial tumor	poly-A stranded	GNG, BRAF V600E	6
+BS_9H7A00PV	Mixed neuronal-glial tumor	poly-A stranded	GNG, wildtype	6
+BS_GMF4ABXJ	Mixed neuronal-glial tumor	poly-A stranded	GNG, wildtype	6
+BS_DGWXNSPK	Mixed neuronal-glial tumor	poly-A stranded	GNG, RTK	6
+BS_6HXD39AM	Mixed neuronal-glial tumor	poly-A stranded	GNG, BRAF V600E	6
+BS_EF775B3K	Non-neoplastic tumor	stranded	NA	6
+BS_4W1DBAN4	Non-neoplastic tumor	stranded	NA	6
+BS_P44PE00R	Non-neoplastic tumor	stranded	NA	6
+BS_XJTW0P8P	Non-neoplastic tumor	stranded	NA	6
+BS_SBFNFZ8B	Non-neoplastic tumor	stranded	NA	6
+BS_NVKGSMXS	Non-neoplastic tumor	stranded	NA	6
+BS_VNE0ZPBS	Non-neoplastic tumor	stranded	NA	6
+BS_VFDXFG3N	Non-neoplastic tumor	poly-A stranded	NA	6
+BS_AMQGM1V9	Non-neoplastic tumor	stranded	NA	6
+BS_0XEBS3PG	Non-neoplastic tumor	poly-A stranded	NA	6
+BS_JQXHHK0K	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	6
+BS_F9Y4Z92G	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	6
+BS_9TXEDSWB	Other high-grade glioma	stranded	HGG, H3 wildtype	6
+BS_AWH9757B	Other high-grade glioma	stranded	HGG, H3 wildtype	6
+BS_KQ6ZW085	Other high-grade glioma	stranded	HGG, H3 wildtype	6
+BS_PJ1T8CQR	Other high-grade glioma	stranded	HGG, IDH, TP53	6
+BS_52MPKTJH	Other high-grade glioma	stranded	HGG, To be classified	6
+BS_0C00AYTE	Other high-grade glioma	stranded	HGG, H3 wildtype, TP53	6
+BS_D5MT05YK	Other high-grade glioma	stranded	NA	6
+BS_P1AZ9H9A	Other high-grade glioma	stranded	NA	6
+BS_X4X1SFSE	Other high-grade glioma	stranded	HGG, H3 wildtype	6
+BS_1DNQ1R02	Other high-grade glioma	exome_capture	HGG, IDH, TP53	6
+BS_8ZTEXH90	Other high-grade glioma	stranded	NA	6
+BS_AYAMBZHS	Other high-grade glioma	stranded	NA	6
+BS_TYQ0N4YP	Other high-grade glioma	stranded	NA	6
+BS_PQY28YXA	Other high-grade glioma	stranded	NA	6
+BS_G257VSS9	Other high-grade glioma	poly-A stranded	DHG, H3 G35, TP53	6
+BS_YFRB2HJJ	Other high-grade glioma	poly-A stranded	HGG, To be classified	6
+BS_E9CYN4NP	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype	6
+BS_QRJX9QWS	Germ cell tumor	poly-A stranded	NA	7
+BS_V72H4RQS	Medulloblastoma	stranded	MB, Group3	7
+BS_N4B1SZZH	Medulloblastoma	stranded	MB, WNT	7
+BS_BPWEFR89	Medulloblastoma	stranded	MB, SHH	7
+BS_K81DR8XG	Medulloblastoma	stranded	MB, SHH	7
+BS_K3ER45RV	Medulloblastoma	stranded	MB, WNT	7
+BS_BVSW4GTG	Medulloblastoma	stranded	MB, SHH	7
+BS_RSRPX3S8	Medulloblastoma	stranded	MB, SHH	7
+BS_D144EJRQ	Medulloblastoma	stranded	MB, Group3	7
+BS_M15PW2N0	Medulloblastoma	stranded	MB, SHH	7
+BS_FKDQJJB5	Medulloblastoma	stranded	MB, Group3	7
+BS_M84H3KXA	Medulloblastoma	stranded	MB, WNT	7
+BS_JZRM1S3T	Medulloblastoma	stranded	MB, WNT	7
+BS_3F5PR9GS	Medulloblastoma	stranded	MB, SHH	7
+BS_J1AB8PMA	Medulloblastoma	stranded	MB, SHH	7
+BS_HB03GSHF	Medulloblastoma	stranded	MB, WNT	7
+BS_JTMXAMB7	Medulloblastoma	stranded	MB, WNT	7
+BS_2Z1MKS84	Medulloblastoma	stranded	MB, WNT	7
+BS_HE57E1RP	Medulloblastoma	stranded	MB, Group3	7
+BS_4D9DD103	Medulloblastoma	stranded	MB, WNT	7
+BS_YETBN0RQ	Medulloblastoma	stranded	MB, WNT	7
+BS_VT6C6N6K	Medulloblastoma	stranded	MB, SHH	7
+BS_77317DY4	Medulloblastoma	stranded	MB, WNT	7
+BS_9V633J1X	Medulloblastoma	stranded	MB, Group3	7
+BS_TZVFR600	Medulloblastoma	stranded	MB, Group3	7
+BS_R6WNEEE4	Medulloblastoma	stranded	MB, SHH	7
+BS_81SP2HX4	Medulloblastoma	stranded	MB, SHH	7
+BS_RD4D5F9F	Medulloblastoma	stranded	MB, SHH	7
+BS_VPBMDMQX	Medulloblastoma	stranded	MB, SHH	7
+BS_5VQP0E6K	Medulloblastoma	stranded	MB, WNT	7
+BS_R439VVPK	Medulloblastoma	stranded	MB, Group3	7
+BS_BE6EZQHP	Medulloblastoma	poly-A stranded	MB, SHH	7
+BS_5ZD8FRPJ	Medulloblastoma	exome_capture	MB, WNT	7
+BS_HVGKX0WY	Medulloblastoma	exome_capture	MB, Group3	7
+BS_YTMHB7J1	Medulloblastoma	exome_capture	MB, SHH	7
+BS_VQCCYTM5	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_E67QTP84	Medulloblastoma	poly-A stranded	MB, SHH	7
+BS_0HKNEFQC	Medulloblastoma	poly-A stranded	MB, Group4	7
+BS_29YQ60CP	Medulloblastoma	exome_capture	MB, SHH	7
+BS_3N2YFZFB	Medulloblastoma	exome_capture	MB, Group3	7
+BS_10Z9BMZ7	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_N1R1VSAG	Medulloblastoma	poly-A stranded	MB, SHH	7
+BS_9294WMET	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_HY2GHM23	Medulloblastoma	exome_capture	MB, Group3	7
+BS_RN36XFYH	Medulloblastoma	poly-A stranded	MB, SHH	7
+BS_6RX2743N	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_TW8DQH8J	Medulloblastoma	stranded	MB, SHH	7
+BS_2M4174KG	Medulloblastoma	poly-A stranded	MB, WNT	7
+BS_6PWHC64Y	Medulloblastoma	poly-A stranded	MB, Group4	7
+BS_W7379M7V	Medulloblastoma	exome_capture	MB, SHH	7
+BS_CG6R2RED	Medulloblastoma	exome_capture	MB, SHH	7
+BS_CCBW38BM	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_WZZN982T	Medulloblastoma	poly-A stranded	MB, WNT	7
+BS_XC0PNBG2	Medulloblastoma	poly-A stranded	MB, WNT	7
+BS_SA8BT7AR	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_6EW6X0J0	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_0EB67GB4	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_BE1WV2B2	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_PC107GE3	Medulloblastoma	poly-A stranded	MB, WNT	7
+BS_RPF3Z9P9	Medulloblastoma	poly-A stranded	MB, Group4	7
+BS_WF04GGTX	Medulloblastoma	poly-A stranded	MB, SHH	7
+BS_CN0GW92K	Medulloblastoma	poly-A stranded	MB, SHH	7
+BS_58N4Y4ZJ	Medulloblastoma	poly-A stranded	MB, SHH	7
+BS_FBRNNYCA	Medulloblastoma	poly-A stranded	MB, WNT	7
+BS_9K1H3RPM	Medulloblastoma	poly-A stranded	MB, WNT	7
+BS_08B376A6	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_1DMAMKFZ	Medulloblastoma	poly-A stranded	MB, SHH	7
+BS_2G4EH95X	Medulloblastoma	poly-A stranded	MB, WNT	7
+BS_3SZZ50WB	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_PPGGE3AN	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_JPHWQ1TV	Medulloblastoma	poly-A stranded	MB, SHH	7
+BS_0BTXD5M6	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_C0GQVFWA	Medulloblastoma	poly-A stranded	MB, SHH	7
+BS_D46WVFCP	Medulloblastoma	poly-A stranded	MB, SHH	7
+BS_HD33RVPJ	Medulloblastoma	poly-A stranded	MB, WNT	7
+BS_3RAM3K7B	Medulloblastoma	poly-A stranded	MB, SHH	7
+BS_SWRH6FKE	Medulloblastoma	poly-A stranded	MB, SHH	7
+BS_QE6F8DQW	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_CKKY5S4M	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_ZDJEXPYG	Medulloblastoma	poly-A stranded	MB, SHH	7
+BS_ECP485VV	Medulloblastoma	poly-A stranded	MB, Group4	7
+BS_22QMSCFR	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_1Z2CNQEC	Medulloblastoma	poly-A stranded	MB, WNT	7
+BS_397XFJY9	Medulloblastoma	poly-A stranded	MB, SHH	7
+BS_YMKX1VP4	Medulloblastoma	poly-A stranded	MB, Group4	7
+BS_KJJZ48WS	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_N9C2500H	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_4PBXY1E3	Medulloblastoma	poly-A stranded	MB, WNT	7
+BS_JJW609CE	Medulloblastoma	poly-A stranded	MB, Group4	7
+BS_JMMPW4G3	Medulloblastoma	poly-A stranded	MB, SHH	7
+BS_W0FZ9YCY	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_ZYBZRQRC	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_6AB299R2	Medulloblastoma	poly-A stranded	MB, Group3	7
+BS_Q9V7A95C	Mesenchymal tumor	stranded	NA	7
+BS_4JWBB28H	Mesenchymal tumor	stranded	NA	7
+BS_NDN62H0S	Non-neoplastic tumor	stranded	NA	7
+BS_D0BGESQF	Non-neoplastic tumor	stranded	NA	7
+BS_DY9NTFQR	Non-neoplastic tumor	stranded	NA	7
+BS_JPCHZM29	Non-neoplastic tumor	poly-A stranded	NA	7
+BS_Y35M458E	Non-neoplastic tumor	poly-A stranded	NA	7
+BS_YNG08H1N	Non-neoplastic tumor	poly-A stranded	NA	7
+BS_KMVKBZNM	Non-neoplastic tumor	poly-A stranded	NA	7
+BS_TVH2VMKK	Non-neoplastic tumor	poly-A stranded	NA	7
+BS_D0RDN4K5	Other CNS embryonal tumor	stranded	CNS Embryonal, NOS	7
+BS_685DACMS	Other CNS embryonal tumor	poly-A stranded	ETMR, C19MC-altered	7
+BS_CYEY58NY	Other tumor	stranded	PB, To be classified	7
+BS_M7QJ8VF0	Other tumor	stranded	PB, Group 1	7
+BS_DY88N5ZT	Other tumor	stranded	NBL, MYCN amplified	7
+BS_6NRTJSYK	Other tumor	stranded	PB, Group 1	7
+BS_4BGSTBN0	Other tumor	exome_capture	PB, To be classified	7
+BS_E2W0TCTA	Other tumor	exome_capture	PB, To be classified	7
+BS_T3ZJ9R2G	Other tumor	poly-A stranded	PB, Group 2	7
+BS_269X6Y6G	Other tumor	poly-A stranded	PB, Group 2	7
+BS_8MN11EC7	Other tumor	poly-A stranded	PB, Group 1	7
+BS_B1HVNV0T	Atypical Teratoid Rhabdoid Tumor	stranded	ATRT, SHH	8
+BS_3KASVCSQ	Germ cell tumor	stranded	NA	8
+BS_BSV07M7Z	Medulloblastoma	stranded	MB, Group4	8
+BS_AHEFXG7W	Medulloblastoma	stranded	MB, Group4	8
+BS_QPPPGYP4	Medulloblastoma	stranded	MB, Group4	8
+BS_J8G4SH4Z	Medulloblastoma	stranded	MB, Group4	8
+BS_W311713R	Medulloblastoma	stranded	MB, Group4	8
+BS_JFB984RG	Medulloblastoma	stranded	MB, Group4	8
+BS_G00FHF3Q	Medulloblastoma	stranded	MB, Group4	8
+BS_QRDT19KS	Medulloblastoma	stranded	MB, Group4	8
+BS_K74PZET7	Medulloblastoma	stranded	MB, Group4	8
+BS_BA6AZWB3	Medulloblastoma	stranded	MB, SHH	8
+BS_3NWQXPQV	Medulloblastoma	stranded	MB, Group4	8
+BS_JT82QGXF	Medulloblastoma	stranded	MB, Group4	8
+BS_HZE3KYZ1	Medulloblastoma	stranded	MB, Group4	8
+BS_HHPA8NJ2	Medulloblastoma	stranded	MB, Group4	8
+BS_1TWCV047	Medulloblastoma	stranded	MB, Group3	8
+BS_HZRM07TW	Medulloblastoma	stranded	MB, Group4	8
+BS_1AYRM596	Medulloblastoma	stranded	MB, Group4	8
+BS_HTEPAKCM	Medulloblastoma	stranded	MB, Group4	8
+BS_KVNGNETA	Medulloblastoma	stranded	MB, Group3	8
+BS_1BWP5MCT	Medulloblastoma	stranded	MB, Group3	8
+BS_HF3RNN2T	Medulloblastoma	stranded	MB, Group4	8
+BS_4PH1MBGR	Medulloblastoma	stranded	MB, Group4	8
+BS_4W68NV3M	Medulloblastoma	stranded	MB, Group4	8
+BS_ERWT0ZWE	Medulloblastoma	stranded	MB, Group4	8
+BS_HKZENFDA	Medulloblastoma	stranded	MB, Group4	8
+BS_GNV89A5P	Medulloblastoma	stranded	MB, Group4	8
+BS_DFWFBYSN	Medulloblastoma	stranded	MB, Group4	8
+BS_7XQRH69M	Medulloblastoma	stranded	MB, SHH	8
+BS_3MYEMXPQ	Medulloblastoma	stranded	MB, Group4	8
+BS_44A3ES23	Medulloblastoma	stranded	MB, SHH	8
+BS_E3BAT4C1	Medulloblastoma	stranded	MB, Group4	8
+BS_2SFTWNVE	Medulloblastoma	stranded	MB, Group4	8
+BS_HD4EJYE3	Medulloblastoma	stranded	MB, Group4	8
+BS_KYF0Q0E7	Medulloblastoma	stranded	MB, Group4	8
+BS_KN92S7YQ	Medulloblastoma	stranded	MB, Group4	8
+BS_ZXYDSBM9	Medulloblastoma	stranded	MB, Group4	8
+BS_9M5XJ10G	Medulloblastoma	stranded	MB, Group4	8
+BS_7FWZ518S	Medulloblastoma	stranded	MB, Group4	8
+BS_S1M423AB	Medulloblastoma	stranded	MB, Group4	8
+BS_4CP4T22V	Medulloblastoma	stranded	MB, Group4	8
+BS_W9AT0MR7	Medulloblastoma	stranded	MB, Group4	8
+BS_9NZ2D6AD	Medulloblastoma	stranded	MB, Group4	8
+BS_A14Z8BBK	Medulloblastoma	stranded	MB, Group4	8
+BS_9NJHQE9F	Medulloblastoma	stranded	MB, Group3	8
+BS_7C40TRCY	Medulloblastoma	stranded	MB, SHH	8
+BS_TYAYZ9ZW	Medulloblastoma	stranded	MB, Group4	8
+BS_QEYPFYHD	Medulloblastoma	stranded	MB, Group4	8
+BS_ZV68CES9	Medulloblastoma	stranded	MB, Group3	8
+BS_NKEAAFMW	Medulloblastoma	stranded	MB, Group4	8
+BS_V9HVBBDW	Medulloblastoma	stranded	MB, Group3	8
+BS_VJVDJABP	Medulloblastoma	stranded	MB, Group3	8
+BS_VA5T4KAA	Medulloblastoma	stranded	MB, Group3	8
+BS_TE0GVDNG	Medulloblastoma	stranded	MB, Group4	8
+BS_YEB88D32	Medulloblastoma	stranded	MB, Group3	8
+BS_VMEX27TN	Medulloblastoma	stranded	MB, Group4	8
+BS_VVFBW0YH	Medulloblastoma	stranded	MB, Group4	8
+BS_WH5HDE0A	Medulloblastoma	stranded	MB, SHH	8
+BS_Z45HD492	Medulloblastoma	stranded	MB, Group3	8
+BS_RCC8BXVE	Medulloblastoma	stranded	MB, SHH	8
+BS_NZ71XCG3	Medulloblastoma	stranded	MB, Group4	8
+BS_NKRYMHEP	Medulloblastoma	stranded	MB, Group4	8
+BS_5PJCHF6V	Medulloblastoma	stranded	MB, Group4	8
+BS_EFE4YEK3	Medulloblastoma	stranded	MB, Group4	8
+BS_61E80SD6	Medulloblastoma	stranded	MB, Group4	8
+BS_9PB3XH5D	Medulloblastoma	stranded	MB, Group3	8
+BS_SKGJ5SY9	Medulloblastoma	stranded	MB, Group3	8
+BS_TA9WP4TH	Medulloblastoma	stranded	MB, Group4	8
+BS_AM70R8RG	Medulloblastoma	stranded	MB, SHH	8
+BS_A87NPZAP	Medulloblastoma	stranded	MB, Group4	8
+BS_22B80N9T	Medulloblastoma	exome_capture	MB, Group3	8
+BS_Z9BBQBA7	Medulloblastoma	exome_capture	MB, Group4	8
+BS_H4B5Y6S0	Medulloblastoma	stranded	MB, Group4	8
+BS_8TTMM7FE	Medulloblastoma	exome_capture	MB, Group4	8
+BS_XVX21VNP	Medulloblastoma	exome_capture	MB, Group4	8
+BS_A52V3XJM	Medulloblastoma	exome_capture	MB, Group4	8
+BS_XNWNXKAD	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_FV820J38	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_516X056B	Medulloblastoma	exome_capture	MB, Group4	8
+BS_JE6RR750	Medulloblastoma	exome_capture	MB, Group4	8
+BS_CHDGRYHJ	Medulloblastoma	stranded	MB, Group3	8
+BS_KX9ECQZW	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_AMZ70B6F	Medulloblastoma	stranded	MB, SHH	8
+BS_PAK40AMT	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_BEKKNDWB	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_RCX5628Q	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_78SCX2N9	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_AWJFW3W5	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_NXC3W5MZ	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_19Z0ERYF	Medulloblastoma	poly-A stranded	MB, SHH	8
+BS_K19586VM	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_8K9YVM5G	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_F5QBVPP0	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_SR2M85RQ	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_KGXP2KJE	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_RGQH7K0C	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_RYRWBV7K	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_1ZWSD3YQ	Medulloblastoma	poly-A stranded	MB, Group3	8
+BS_RSTH763S	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_6XHRA95C	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_YXP55JEG	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_46MF83WA	Medulloblastoma	poly-A stranded	MB, Group3	8
+BS_26H7DZD4	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_VXMYES3W	Medulloblastoma	poly-A stranded	MB, Group4	8
+BS_6W0VHGQE	Medulloblastoma	poly-A stranded	MB, SHH	8
+BS_EQKYB3JB	Medulloblastoma	poly-A stranded	MB, SHH	8
+BS_8S86CM61	Mesenchymal tumor	stranded	EWS	8
+BS_27QE6BV7	Mixed neuronal-glial tumor	stranded	GNG, wildtype	8
+BS_KVAJYZ6F	Mixed neuronal-glial tumor	stranded	GNT, To be classified	8
+BS_KZPR01BD	Mixed neuronal-glial tumor	stranded	NA	8
+BS_8F9BDWY4	Mixed neuronal-glial tumor	stranded	EVN	8
+BS_TGW6HC4X	Mixed neuronal-glial tumor	stranded	CNC	8
+BS_TDEFAPNH	Mixed neuronal-glial tumor	stranded	NA	8
+BS_MN8EP9AF	Mixed neuronal-glial tumor	exome_capture	CNC	8
+BS_8VYC685V	Mixed neuronal-glial tumor	poly-A stranded	EVN	8
+BS_52TQWRJN	Mixed neuronal-glial tumor	poly-A stranded	GNT, To be classified	8
+BS_YBGZ4BRP	Mixed neuronal-glial tumor	poly-A stranded	GNG, RTK	8
+BS_37GTVG4N	Other CNS embryonal tumor	stranded	ETMR, C19MC-altered	8
+BS_1HQ76V6D	Other CNS embryonal tumor	stranded	CNS Embryonal, NOS	8
+BS_QT3NZ2YZ	Other CNS embryonal tumor	stranded	CNS NB-FOXR2	8
+BS_QWNBZ9RJ	Other CNS embryonal tumor	stranded	ETMR, C19MC-altered	8
+BS_8FVF27TH	Other CNS embryonal tumor	exome_capture	ETMR, NOS	8
+BS_HTV7WWZJ	Other CNS embryonal tumor	exome_capture	ETMR, NOS	8
+BS_K7S00RTR	Other CNS embryonal tumor	exome_capture	ETMR, NOS	8
+BS_ZQ76ZBEX	Other CNS embryonal tumor	poly-A stranded	CNS Embryonal, NOS	8
+BS_HVB0N4A3	Other CNS embryonal tumor	exome_capture	CNS NB-FOXR2	8
+BS_ZQKGJD70	Other CNS embryonal tumor	poly-A stranded	CNS Embryonal, NOS	8
+BS_00FD2KMP	Other high-grade glioma	exome_capture	HGG, H3 wildtype, TP53	8
+BS_WQ1YRTAT	Other high-grade glioma	stranded	HGG, H3 wildtype	8
+BS_JTWNJ8T7	Other high-grade glioma	stranded	HGG, H3 wildtype	8
+BS_MG78HQDM	Other high-grade glioma	stranded	HGG, H3 wildtype	8
+BS_FEV5A0HN	Other high-grade glioma	stranded	HGG, H3 wildtype	8
+BS_P7W3AYKV	Other high-grade glioma	exome_capture	HGG, H3 wildtype	8
+BS_CBDQZ8PP	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype	8
+BS_3NNQ6PSB	Other tumor	stranded	PB, To be classified	8
+BS_WMEHNDSK	Other tumor	stranded	PB, MYC/FOXR2	8
+BS_VBFKFYAP	Craniopharyngioma	poly-A stranded	CRANIO, To be classified	9
+BS_B3MQFFYP	DIPG or DMG	poly-A stranded	DMG, H3 K28, TP53	9
+BS_M7XB258E	DIPG or DMG	poly-A stranded	DMG, H3 K28, TP53	9
+BS_1VNMJHMN	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_63JT39PX	Low-grade glioma	poly-A stranded	LGG, wildtype	9
+BS_BJBM0BN7	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_5J5D3QTD	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_2XM08BFY	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_RARBBY7C	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_DMJHAG9X	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_YASWHXJC	Low-grade glioma	poly-A stranded	LGG, NF1-germline, other MAPK	9
+BS_QQE8MWWV	Low-grade glioma	poly-A stranded	LGG, wildtype	9
+BS_TV80600R	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_29TRQXWM	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_HM0R6SXQ	Low-grade glioma	poly-A stranded	LGG, other MAPK	9
+BS_V33RCK1Y	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_AKT8HK8J	Low-grade glioma	poly-A stranded	LGG, NF1-germline	9
+BS_V7BZ049H	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_YWJKHMXV	Low-grade glioma	poly-A stranded	LGG, BRAF V600E	9
+BS_5YYCP891	Low-grade glioma	poly-A stranded	LGG, BRAF V600E	9
+BS_YVEEXAAT	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_HK9P0Q4G	Low-grade glioma	poly-A stranded	LGG, wildtype	9
+BS_Q2PBFNDF	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_A1V3BH0Z	Low-grade glioma	poly-A stranded	LGG, wildtype	9
+BS_A96FKXN5	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_TWFDEMBZ	Low-grade glioma	poly-A stranded	LGG, RTK	9
+BS_RYZG8SPC	Low-grade glioma	poly-A stranded	LGG, To be classified	9
+BS_BAG042V5	Low-grade glioma	poly-A stranded	LGG, NF1-germline	9
+BS_JKDKZSX8	Low-grade glioma	poly-A stranded	LGG, wildtype	9
+BS_BNECCX4D	Low-grade glioma	poly-A stranded	LGG, BRAF V600E	9
+BS_0JAKSXQP	Low-grade glioma	poly-A stranded	LGG, wildtype	9
+BS_PDVD0GCM	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_E2DEWCSK	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_RMT7ABN6	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_534XRSNB	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_CPWBFHAC	Low-grade glioma	poly-A stranded	LGG, RTK	9
+BS_ECGQWHNQ	Low-grade glioma	poly-A stranded	LGG, wildtype	9
+BS_T0MXH2CA	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_CKX8RW1J	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_7M3FNSYK	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_B5JM6T8K	Low-grade glioma	poly-A stranded	LGG, BRAF V600E, other MAPK	9
+BS_0D5VRAKC	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_QBMW69AM	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF, CDKN2A/B	9
+BS_HQYGYPCV	Low-grade glioma	poly-A stranded	LGG, wildtype	9
+BS_P2Y2NANM	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_N87X1T8T	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_V2G1YE8R	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_RPJ1EPHA	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_1DECYC4K	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_Y7W8BR6B	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF, RTK	9
+BS_JGKZ54SA	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_1HYS8CSC	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_166N7SZQ	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_HNMQ7488	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_3GAN6Q43	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_CMDJJQ7K	Low-grade glioma	poly-A stranded	LGG, BRAF V600E	9
+BS_9JBX2E8G	Low-grade glioma	poly-A stranded	LGG, FGFR	9
+BS_AW7J9F9R	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF, RTK	9
+BS_H9EX5WX3	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_R81XA0F9	Low-grade glioma	poly-A stranded	LGG, wildtype	9
+BS_ZRF3A49T	Low-grade glioma	poly-A stranded	LGG, wildtype	9
+BS_V11VZZH8	Low-grade glioma	poly-A stranded	LGG, wildtype	9
+BS_33AQSPRP	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_3Y2X2RBJ	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_VSSBS981	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_TDJXQBVY	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_KSC2H2HV	Low-grade glioma	poly-A stranded	LGG, wildtype	9
+BS_92HCM7BN	Low-grade glioma	poly-A stranded	LGG, other MAPK	9
+BS_AM0BZ61K	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_NY5T05AK	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_X6GFVDVA	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_T5P5ME9M	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_97GBG8T6	Low-grade glioma	poly-A stranded	LGG, wildtype	9
+BS_0Y5J2AQ4	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_RC8E5TVQ	Low-grade glioma	poly-A stranded	LGG, wildtype	9
+BS_RNANA568	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_6VW8FC7Z	Low-grade glioma	poly-A stranded	LGG, To be classified	9
+BS_K838XW6V	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_HSTNFPKW	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_8Q4JWFKK	Low-grade glioma	poly-A stranded	LGG, wildtype	9
+BS_RPZQQM2D	Low-grade glioma	poly-A stranded	LGG, wildtype	9
+BS_CX7NH77G	Low-grade glioma	poly-A stranded	LGG, wildtype	9
+BS_VZWXGYT2	Low-grade glioma	poly-A stranded	LGG, BRAF V600E	9
+BS_QTMN8HYC	Low-grade glioma	poly-A stranded	LGG, NF1-germline, CDKN2A/B	9
+BS_TRZZRYKF	Low-grade glioma	poly-A stranded	LGG, FGFR	9
+BS_X5DFR216	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_B6JKQFKA	Low-grade glioma	poly-A stranded	LGG, other MAPK	9
+BS_304SPN6B	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_4CXE5XEP	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_F1K9QTBS	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_R9CKW9DY	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF, RTK	9
+BS_NWNB68G0	Low-grade glioma	poly-A stranded	LGG, wildtype	9
+BS_6TSAVMT9	Low-grade glioma	poly-A stranded	LGG, other MAPK	9
+BS_3VJ0CA6A	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_4XH092HE	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF, BRAF V600E	9
+BS_HWVD3RH0	Low-grade glioma	poly-A stranded	LGG, wildtype	9
+BS_9YXH2CZ0	Low-grade glioma	poly-A stranded	LGG, KIAA1549-BRAF	9
+BS_21XGYWWV	Low-grade glioma	poly-A stranded	LGG, wildtype	9
+BS_RZMRE785	Mixed neuronal-glial tumor	poly-A stranded	GNT, FGFR	9
+BS_27FYYPJG	Mixed neuronal-glial tumor	poly-A stranded	GNG, BRAF V600E	9
+BS_MKV494VY	Mixed neuronal-glial tumor	poly-A stranded	NA	9
+BS_C0NEVC2B	Mixed neuronal-glial tumor	poly-A stranded	GNG, KIAA1549-BRAF	9
+BS_CC6RREE4	Mixed neuronal-glial tumor	poly-A stranded	GNG, BRAF V600E	9
+BS_H0TJS3RZ	Mixed neuronal-glial tumor	poly-A stranded	GNG, MYB/MYBL1	9
+BS_3TJHY996	Mixed neuronal-glial tumor	poly-A stranded	GNG, BRAF V600E	9
+BS_AGVWD5K8	Mixed neuronal-glial tumor	poly-A stranded	GNT, other MAPK	9
+BS_ZZ87PZ8R	Mixed neuronal-glial tumor	poly-A stranded	NA	9
+BS_YBCQ2NMN	Mixed neuronal-glial tumor	poly-A stranded	NA	9
+BS_WXT1VK25	Mixed neuronal-glial tumor	poly-A stranded	GNT, RTK	9
+BS_0TDWG2CV	Mixed neuronal-glial tumor	poly-A stranded	GNT, other MAPK	9
+BS_TTDNZTZ0	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype	9
+BS_5G5BD2MD	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype	9
+BS_YR1XY6SF	Other high-grade glioma	poly-A stranded	HGG, PXA	9
+BS_N7VQ1GQB	Other high-grade glioma	poly-A stranded	HGG, H3 wildtype	9
+BS_G2W3D5M2	Other high-grade glioma	poly-A stranded	HGG, To be classified	9
+BS_Y19MMT7Z	Other tumor	poly-A stranded	NA	9
