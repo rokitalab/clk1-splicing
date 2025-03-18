@@ -57,7 +57,19 @@ bash run-module.sh
 │   ├── sample-psi-heatmap-top-5000-events-poly-A stranded.pdf
 │   └── sample-psi-heatmap-top-5000-events-stranded.pdf
 ├── results
-│   └── pbta-splice-event-psis.RDS
+│   ├── pbta-splice-event-psis.RDS
+│   ├── psi-matrix-top-1000-events-all libraries.rds
+│   ├── psi-matrix-top-1000-events-poly-A stranded.rds
+│   ├── psi-matrix-top-1000-events-stranded.rds
+│   ├── psi-matrix-top-5000-events-all libraries.rds
+│   ├── psi-matrix-top-5000-events-poly-A stranded.rds
+│   ├── psi-matrix-top-5000-events-stranded.rds
+│   ├── sample-cluster-metadata-top-1000-events-all libraries.tsv
+│   ├── sample-cluster-metadata-top-1000-events-poly-A stranded.tsv
+│   ├── sample-cluster-metadata-top-1000-events-stranded.tsv
+│   ├── sample-cluster-metadata-top-5000-events-all libraries.tsv
+│   ├── sample-cluster-metadata-top-5000-events-poly-A stranded.tsv
+│   └── sample-cluster-metadata-top-5000-events-stranded.tsv
 ├── run-module.sh
 └── util
     └── heatmap_function.R
