@@ -20,12 +20,20 @@ bash run-module.sh
 .
 ├── 00-create-psi-matrix.R
 ├── 01-sample_clustering.R
+├── 02-plot-histology-distr-across-clusters.R
+├── README.md
+├── input
+│   └── subtype_hex.tsv
 ├── plots
 │   ├── atrt-sample-cluster-subtype-enr-top-1000-events-all libraries.pdf
 │   ├── atrt-sample-cluster-subtype-enr-top-1000-events-poly-A stranded.pdf
 │   ├── atrt-sample-cluster-subtype-enr-top-1000-events-stranded.pdf
 │   ├── atrt-sample-cluster-subtype-enr-top-5000-events-all libraries.pdf
 │   ├── atrt-sample-cluster-subtype-enr-top-5000-events-stranded.pdf
+│   ├── cluster_membership-subtypes_poly-A-stranded.pdf
+│   ├── cluster_membership-subtypes_stranded.pdf
+│   ├── cluster_membership_poly-A-stranded.pdf
+│   ├── cluster_membership_stranded.pdf
 │   ├── hgg-dmg-sample-cluster-subtype-enr-top-1000-events-all libraries.pdf
 │   ├── hgg-dmg-sample-cluster-subtype-enr-top-1000-events-poly-A stranded.pdf
 │   ├── hgg-dmg-sample-cluster-subtype-enr-top-1000-events-stranded.pdf
