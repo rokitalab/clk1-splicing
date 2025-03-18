@@ -107,11 +107,28 @@ for (library in names(library_type)){
     cluster_df <- data.frame(sample_id = colnames(cluster_mat)) %>%
       left_join(histologies %>% dplyr::select(Kids_First_Biospecimen_ID,
                                               plot_group,
+                                              plot_group_hex,
                                               RNA_library,
                                               molecular_subtype),
                 by = c("sample_id" = "Kids_First_Biospecimen_ID")) %>%
       left_join(cluster_assignment_df) %>%
+      dplyr::mutate(cluster = factor(cluster,
+                                     levels = sort(unique(cluster)))) %>%
       dplyr::arrange(cluster, plot_group)
+    
+    hist_ct <- cluster_df %>%
+      dplyr::count(plot_group) %>%
+      dplyr::rename(group_n = n)
+    
+    cluster_df <- cluster_df %>%
+      left_join(hist_ct) %>%
+      dplyr::mutate(plot_group_n = glue::glue("{plot_group} (n = {group_n})")) %>%
+      dplyr::mutate(plot_group_n = str_replace(plot_group_n, "Atypical Teratoid Rhabdoid Tumor",
+                                               "ATRT"))
+    
+    # define plot group palette
+    plotgroup_palette <- unique(cluster_df$plot_group_hex)
+    names(plotgroup_palette) <- unique(cluster_df$plot_group_n)
     
     # define colors for clusters
     cluster_cols <- c("#B2DF8A","#E31A1C","#33A02C","#A6CEE3","#FB9A99","#FDBF6F",
@@ -122,7 +139,7 @@ for (library in names(library_type)){
     
     # define sample annotation 
     ha = HeatmapAnnotation(
-      Histology = cluster_df$plot_group,
+      Histology = cluster_df$plot_group_n,
       Cluster = cluster_df$cluster,
       `RNA library type` = cluster_df$RNA_library,
       col = list("Histology" = plotgroup_palette,
@@ -134,7 +151,7 @@ for (library in names(library_type)){
       annotation_name_gp= gpar(fontsize = 10))
     
     # define psi color scale
-    col_fun = colorRamp2(c(0, 1), c("whitesmoke", "orangered"))
+    col_fun = colorRamp2(c(0, 0.5, 1), c("blue3", "whitesmoke", "orangered"))
     
     # reorder matrix to match cluster df
     cluster_mat <- cluster_mat[,cluster_df$sample_id]
@@ -156,15 +173,15 @@ for (library in names(library_type)){
                   use_raster = FALSE,
                   heatmap_legend_param = list(legend_gp = gpar(fontsize = 10),
                                               labels_gp = gpar(fontsize = 10)))
-    
+
     pdf(NULL)
-    
-    pdf(file.path(plot_dir, 
+
+    pdf(file.path(plot_dir,
                   glue::glue("sample-psi-heatmap-top-{n}-events-{library}.pdf")),
-        width = 7, height = 7)    
-    
+        width = 7, height = 7)
+
     print(ht)
-    
+
     dev.off()
     
     # plot enrichment of tumor histologies within clusters
@@ -176,7 +193,7 @@ for (library in names(library_type)){
     
     pdf(file.path(plot_dir, 
                   glue::glue("sample-cluster-histology-enr-top-{n}-events-{library}.pdf")),
-        width = 9, height = 8)
+        width = 11, height = 8)
     
     print(histology_enr)
     
@@ -188,17 +205,23 @@ for (library in names(library_type)){
     hgg_df <- cluster_df %>%
       dplyr::filter(plot_group %in% c("Other high-grade glioma",
                                       "DIPG or DMG"),
-                    !is.na(molecular_subtype))
+                    !is.na(molecular_subtype),
+                    !grepl("To be classified", molecular_subtype)) %>%
+      dplyr::mutate(molecular_subtype = str_replace(molecular_subtype, ", TP53", "")) %>%
+      dplyr::mutate(mol_sub_group = case_when(
+        grepl("IHG", molecular_subtype) ~ "IHG",
+        TRUE ~ molecular_subtype
+      ))
     
     hgg_enr <- plot_enr(hgg_df, 
-                              "molecular_subtype", "cluster",
-                              sort(unique(hgg_df$molecular_subtype)),
+                              "mol_sub_group", "cluster",
+                              sort(unique(hgg_df$mol_sub_group)),
                               unique(hgg_df$cluster),
                               padjust = TRUE)
     
     pdf(file.path(plot_dir, 
                   glue::glue("hgg-dmg-sample-cluster-subtype-enr-top-{n}-events-{library}.pdf")),
-        width = 9, height = 8)
+        width = 8, height = 6)
     
     print(hgg_enr)
     
@@ -207,11 +230,13 @@ for (library in names(library_type)){
     # LGG
     lgg_df <- cluster_df %>%
       dplyr::filter(plot_group %in% c("Low-grade glioma"),
-                    !is.na(molecular_subtype)) %>%
+                    !is.na(molecular_subtype),
+                    !grepl("To be classified", molecular_subtype)) %>%
       dplyr::mutate(mol_sub_group = case_when(
         grepl("V600E", molecular_subtype) ~ "LGG, BRAF V600E",
         grepl("-BRAF", molecular_subtype) ~ "LGG, BRAF fusion",
         grepl("SEGA", molecular_subtype) ~ "SEGA",
+        grepl("wildtype", molecular_subtype) ~ "LGG, wildtype",
         !grepl("classified", molecular_subtype) ~ "LGG, Other alteration",
         TRUE ~ molecular_subtype
       ))
@@ -224,7 +249,7 @@ for (library in names(library_type)){
     
     pdf(file.path(plot_dir, 
                   glue::glue("lgg-sample-cluster-subtype-enr-top-{n}-events-{library}.pdf")),
-        width = 9, height = 5)
+        width = 7, height = 4)
     
     print(lgg_enr)
     
@@ -243,7 +268,7 @@ for (library in names(library_type)){
     
     pdf(file.path(plot_dir, 
                   glue::glue("mb-sample-cluster-subtype-enr-top-{n}-events-{library}.pdf")),
-        width = 9, height = 8)
+        width = 5, height = 3)
     
     print(mb_enr)
     
@@ -252,7 +277,8 @@ for (library in names(library_type)){
     # ATRT
     atrt_df <- cluster_df %>%
       dplyr::filter(plot_group %in% c("Atypical Teratoid Rhabdoid Tumor"),
-                    !is.na(molecular_subtype))
+                    !is.na(molecular_subtype),
+                    !grepl("To be classified", molecular_subtype))
     
     if (library != "poly-A stranded"){
     
@@ -264,7 +290,7 @@ for (library in names(library_type)){
       
       pdf(file.path(plot_dir, 
                     glue::glue("atrt-sample-cluster-subtype-enr-top-{n}-events-{library}.pdf")),
-          width = 9, height = 8)
+          width = 6, height = 3)
       
       print(atrt_enr)
       
