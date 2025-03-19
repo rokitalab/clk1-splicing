@@ -35,7 +35,7 @@ source(file.path(figures_dir, "theme_for_plots.R"))
 
 ## filepaths 
 stranded_cluster_file <- file.path(results_dir, "sample-cluster-metadata-top-5000-events-stranded.tsv")
-polyA_cluster_file <- file.path(results_dir, "sample-cluster-metadata-top-5000-events-poly-A stranded.tsv")
+polyA_cluster_file <- file.path(results_dir, "sample-cluster-metadata-top-5000-events-poly-A_stranded.tsv")
 
 subtype_hex <- file.path(input_dir, "subtype_hex.tsv")
 
