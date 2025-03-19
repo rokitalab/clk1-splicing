@@ -20,7 +20,7 @@ analysis_dir <- file.path(root_dir, "analyses", "clustering_analysis")
 
 plots_dir <- file.path(analysis_dir, "plots")
 input_dir <- file.path(analysis_dir, "input")
-output_dir <- file.path(analysis_dir, "output")
+results_dir <- file.path(analysis_dir, "output")
 
 plots_dir <- file.path(analysis_dir, "plots")
 if(!dir.exists(plots_dir)){
