@@ -15,3 +15,6 @@ Rscript --vanilla 01-sample_clustering.R
 
 # assess hist and subtype distribution across clusters
 Rscript --vanilla 02-plot-histology-distr-across-clusters.R
+
+# assess SBI group distribution across clusters
+Rscript --vanilla 03-plot-sbi-with-cluster-mem.R
