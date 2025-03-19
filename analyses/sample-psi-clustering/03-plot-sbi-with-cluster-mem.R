@@ -34,7 +34,7 @@ source(file.path(figures_dir, "theme_for_plots.R"))
 
 ## filepaths 
 stranded_cluster_file <- file.path(results_dir, "sample-cluster-metadata-top-5000-events-stranded.tsv")
-polyA_cluster_file <- file.path(results_dir, "sample-cluster-metadata-top-5000-events-poly-A stranded.tsv")
+polyA_cluster_file <- file.path(results_dir, "sample-cluster-metadata-top-5000-events-poly-A_stranded.tsv")
 
 sbi_file <- file.path(root_dir, "analyses", "clustering_analysis",
                       "input", "splicing_index.total.txt")
@@ -101,7 +101,7 @@ for (type in names(cluster_files)){
     theme_Publication() + 
     scale_fill_manual(values= c("Low" = "#FFC20A", "High"="#0C7BDC"), name = "SBI Level")
   
-  pdf(paste0(plot_dir, "/cluster_membership_sbi_group_", type, ".pdf"), 
+  pdf(paste0(plots_dir, "/cluster_membership_sbi_group_", type, ".pdf"), 
       height = 3, width = 8)
   
   print(sbi_vs_cl_barplot)
