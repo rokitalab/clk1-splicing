@@ -22,6 +22,7 @@ bash run-module.sh
 ├── 01-sample_clustering.R
 ├── 02-plot-histology-distr-across-clusters.R
 ├── 03-plot-sbi-with-cluster-mem.R
+├── 04-diff_pathways_per_cluster.R
 ├── README.md
 ├── input
 │   └── subtype_hex.tsv
@@ -65,8 +66,32 @@ bash run-module.sh
 │   ├── sample-psi-heatmap-top-1000-events-stranded.pdf
 │   ├── sample-psi-heatmap-top-5000-events-all libraries.pdf
 │   ├── sample-psi-heatmap-top-5000-events-poly-A stranded.pdf
-│   └── sample-psi-heatmap-top-5000-events-stranded.pdf
+│   ├── sample-psi-heatmap-top-5000-events-stranded.pdf
+│   ├── top5_pathways_poly-A-stranded.pdf
+│   └── top5_pathways_stranded.pdf
 ├── results
+│   ├── cluster_10_pathway_stranded.tsv
+│   ├── cluster_11_pathway_stranded.tsv
+│   ├── cluster_1_pathway_poly-A-stranded.tsv
+│   ├── cluster_1_pathway_stranded.tsv
+│   ├── cluster_2_pathway_poly-A-stranded.tsv
+│   ├── cluster_2_pathway_stranded.tsv
+│   ├── cluster_3_pathway_poly-A-stranded.tsv
+│   ├── cluster_3_pathway_stranded.tsv
+│   ├── cluster_4_pathway_poly-A-stranded.tsv
+│   ├── cluster_4_pathway_stranded.tsv
+│   ├── cluster_5_pathway_poly-A-stranded.tsv
+│   ├── cluster_5_pathway_stranded.tsv
+│   ├── cluster_6_pathway_poly-A-stranded.tsv
+│   ├── cluster_6_pathway_stranded.tsv
+│   ├── cluster_7_pathway_poly-A-stranded.tsv
+│   ├── cluster_7_pathway_stranded.tsv
+│   ├── cluster_8_pathway_poly-A-stranded.tsv
+│   ├── cluster_8_pathway_stranded.tsv
+│   ├── cluster_9_pathway_poly-A-stranded.tsv
+│   ├── cluster_9_pathway_stranded.tsv
+│   ├── gsva_output_poly-A-stranded.tsv
+│   ├── gsva_output_stranded.tsv
 │   ├── pbta-splice-event-psis.RDS
 │   ├── psi-matrix-top-1000-events-all libraries.rds
 │   ├── psi-matrix-top-1000-events-poly-A stranded.rds
