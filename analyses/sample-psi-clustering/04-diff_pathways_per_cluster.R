@@ -19,7 +19,7 @@ expr_file <- file.path(data_dir,
                        "gene-expression-rsem-tpm-collapsed.rds")
 
 stranded_cluster_file <- file.path(results_dir, "sample-cluster-metadata-top-5000-events-stranded.tsv")
-polyA_cluster_file <- file.path(results_dir, "sample-cluster-metadata-top-5000-events-poly-A stranded.tsv")
+polyA_cluster_file <- file.path(results_dir, "sample-cluster-metadata-top-5000-events-poly-A_stranded.tsv")
 
 geneSet_file <- file.path(root_dir, "analyses", "clustering_analysis",
                           "input", "hallmark_splice_geneset_mrna.rds")
