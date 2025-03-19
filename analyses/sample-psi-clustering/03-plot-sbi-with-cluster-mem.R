@@ -16,11 +16,11 @@ library("tidyverse")
 ##directory setup
 root_dir <- rprojroot::find_root(rprojroot::has_dir(".git"))
 data_dir <- file.path(root_dir, "data")
-analysis_dir <- file.path(root_dir, "analyses", "clustering_analysis")
+analysis_dir <- file.path(root_dir, "analyses", "sample-psi-clustering")
 
 plots_dir <- file.path(analysis_dir, "plots")
 input_dir <- file.path(analysis_dir, "input")
-output_dir <- file.path(analysis_dir, "output")
+results_dir <- file.path(analysis_dir, "results")
 
 plots_dir <- file.path(analysis_dir, "plots")
 if(!dir.exists(plots_dir)){
@@ -34,7 +34,7 @@ source(file.path(figures_dir, "theme_for_plots.R"))
 
 ## filepaths 
 stranded_cluster_file <- file.path(results_dir, "sample-cluster-metadata-top-5000-events-stranded.tsv")
-polyA_cluster_file <- file.path(results_dir, "sample-cluster-metadata-top-5000-events-poly-A stranded.tsv")
+polyA_cluster_file <- file.path(results_dir, "sample-cluster-metadata-top-5000-events-poly-A_stranded.tsv")
 
 sbi_file <- file.path(root_dir, "analyses", "clustering_analysis",
                       "input", "splicing_index.total.txt")
@@ -101,7 +101,7 @@ for (type in names(cluster_files)){
     theme_Publication() + 
     scale_fill_manual(values= c("Low" = "#FFC20A", "High"="#0C7BDC"), name = "SBI Level")
   
-  pdf(paste0(plot_dir, "/cluster_membership_sbi_group_", type, ".pdf"), 
+  pdf(paste0(plots_dir, "/cluster_membership_sbi_group_", type, ".pdf"), 
       height = 3, width = 8)
   
   print(sbi_vs_cl_barplot)

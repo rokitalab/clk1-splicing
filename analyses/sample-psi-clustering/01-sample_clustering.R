@@ -62,8 +62,8 @@ all_samples <- histologies %>%
   pull(Kids_First_Biospecimen_ID)
 
 library_type <- list("stranded" = stranded_samples,
-                     "poly-A stranded" = polya_stranded_samples,
-                     "all libraries" = all_samples)
+                     "poly-A_stranded" = polya_stranded_samples,
+                     "all_libraries" = all_samples)
 
 pdf(NULL)
 
@@ -280,7 +280,7 @@ for (library in names(library_type)){
                     !is.na(molecular_subtype),
                     !grepl("To be classified", molecular_subtype))
     
-    if (library != "poly-A stranded"){
+    if (library != "poly-A_stranded"){
     
       atrt_enr <- plot_enr(atrt_df, 
                          "molecular_subtype", "cluster",
