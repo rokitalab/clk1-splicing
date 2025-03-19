@@ -16,7 +16,7 @@ library("tidyverse")
 ##directory setup
 root_dir <- rprojroot::find_root(rprojroot::has_dir(".git"))
 data_dir <- file.path(root_dir, "data")
-analysis_dir <- file.path(root_dir, "analyses", "clustering_analysis")
+analysis_dir <- file.path(root_dir, "analyses", "sample-psi-clustering")
 
 plots_dir <- file.path(analysis_dir, "plots")
 input_dir <- file.path(analysis_dir, "input")
