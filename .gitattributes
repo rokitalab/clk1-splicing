@@ -1,2 +1,3 @@
 analyses/clustering_analysis/output/ccp_output/functional_non_expr_pan_cancer_splice_subset_pam_canberra_0_ccp.rds filter=lfs diff=lfs merge=lfs -text
 analyses/splicing_index/results/splice_events.diff.SE.txt filter=lfs diff=lfs merge=lfs -text
+analyses/clustering_analysis/plots/non_expr_pan_cancer_splice_subset_ccp_heatmap.tiff filter=lfs diff=lfs merge=lfs -text
