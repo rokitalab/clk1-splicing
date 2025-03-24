@@ -1,3 +1,5 @@
+## NOTE: This module is no longer being utilized for publication. Please see `sample-psi-clustering` module.
+
 ### Author: Komal S. Rathi, Ammar S. Naqvi, Jo Lynne Rokita
 
 ### Purpose
