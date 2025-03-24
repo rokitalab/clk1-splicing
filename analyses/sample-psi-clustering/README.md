@@ -15,6 +15,10 @@ bash run-module.sh
 * 00-create-psi-matrix.R; create PSI matrix across primary tumors
 * 01-sample_clustering.R; cluster samples by most variable PSIs and by RNA-seq library type
 
+# Input files
+* lgg-braf-fusion-breakpoint-annotation.tsv; LGG BRAF fusion-positive BS IDs annotated with KIAA1549::BRAF fusion breakpoint group. Pulled from [pbta-germline-somatic repo](https://github.com/diskin-lab-chop/pbta-germline-somatic/blob/main/analyses/survival/input/lgg-braf-fusion-breakpoint-annotation.tsv)
+* mb_shh_molecular_subtypes.tsv; molecularly-defined SHH-MB subgroups. Pulled from [OpenPedCan repo](https://github.com/rokitalab/OpenPedCan-Project-CNH/blob/dev/analyses/molecular-subtyping-MB/results/MB_molecular_subtype.tsv)
+
 ## Directory structure
 ```
 .
@@ -25,11 +29,14 @@ bash run-module.sh
 ├── 04-diff_pathways_per_cluster.R
 ├── README.md
 ├── input
+│   ├── lgg-braf-fusion-breakpoint-annotation.tsv
+│   ├── mb_shh_molecular_subtypes.tsv
 │   └── subtype_hex.tsv
 ├── plots
-│   ├── atrt-sample-cluster-subtype-enr-top-1000-events-all libraries.pdf
+│   ├── atrt-sample-cluster-subtype-enr-top-1000-events-all_libraries.pdf
+│   ├── atrt-sample-cluster-subtype-enr-top-1000-events-poly-A_stranded.pdf
 │   ├── atrt-sample-cluster-subtype-enr-top-1000-events-stranded.pdf
-│   ├── atrt-sample-cluster-subtype-enr-top-5000-events-all libraries.pdf
+│   ├── atrt-sample-cluster-subtype-enr-top-5000-events-all_libraries.pdf
 │   ├── atrt-sample-cluster-subtype-enr-top-5000-events-stranded.pdf
 │   ├── cluster_membership-subtypes_poly-A-stranded.pdf
 │   ├── cluster_membership-subtypes_stranded.pdf
@@ -37,35 +44,40 @@ bash run-module.sh
 │   ├── cluster_membership_sbi_group_poly-A-stranded.pdf
 │   ├── cluster_membership_sbi_group_stranded.pdf
 │   ├── cluster_membership_stranded.pdf
-│   ├── hgg-dmg-sample-cluster-subtype-enr-top-1000-events-all libraries.pdf
-│   ├── hgg-dmg-sample-cluster-subtype-enr-top-1000-events-poly-A stranded.pdf
+│   ├── hgg-dmg-sample-cluster-subtype-enr-top-1000-events-all_libraries.pdf
+│   ├── hgg-dmg-sample-cluster-subtype-enr-top-1000-events-poly-A_stranded.pdf
 │   ├── hgg-dmg-sample-cluster-subtype-enr-top-1000-events-stranded.pdf
-│   ├── hgg-dmg-sample-cluster-subtype-enr-top-5000-events-all libraries.pdf
-│   ├── hgg-dmg-sample-cluster-subtype-enr-top-5000-events-poly-A stranded.pdf
+│   ├── hgg-dmg-sample-cluster-subtype-enr-top-5000-events-all_libraries.pdf
+│   ├── hgg-dmg-sample-cluster-subtype-enr-top-5000-events-poly-A_stranded.pdf
 │   ├── hgg-dmg-sample-cluster-subtype-enr-top-5000-events-stranded.pdf
-│   ├── lgg-sample-cluster-subtype-enr-top-1000-events-all libraries.pdf
-│   ├── lgg-sample-cluster-subtype-enr-top-1000-events-poly-A stranded.pdf
+│   ├── lgg-braf-fusion-breakpoint-cluster-enr-top-5000-events-poly-A-stranded.pdf
+│   ├── lgg-braf-fusion-breakpoint-cluster-enr-top-5000-events-stranded.pdf
+│   ├── lgg-sample-cluster-subtype-enr-top-1000-events-all_libraries.pdf
+│   ├── lgg-sample-cluster-subtype-enr-top-1000-events-poly-A_stranded.pdf
 │   ├── lgg-sample-cluster-subtype-enr-top-1000-events-stranded.pdf
-│   ├── lgg-sample-cluster-subtype-enr-top-5000-events-all libraries.pdf
-│   ├── lgg-sample-cluster-subtype-enr-top-5000-events-poly-A stranded.pdf
+│   ├── lgg-sample-cluster-subtype-enr-top-5000-events-all_libraries.pdf
+│   ├── lgg-sample-cluster-subtype-enr-top-5000-events-poly-A_stranded.pdf
 │   ├── lgg-sample-cluster-subtype-enr-top-5000-events-stranded.pdf
-│   ├── mb-sample-cluster-subtype-enr-top-1000-events-all libraries.pdf
-│   ├── mb-sample-cluster-subtype-enr-top-1000-events-poly-A stranded.pdf
+│   ├── mb-group34-subgroup-cluster-enr-top-5000-events-poly-A-stranded.pdf
+│   ├── mb-group34-subgroup-cluster-enr-top-5000-events-stranded.pdf
+│   ├── mb-sample-cluster-subtype-enr-top-1000-events-all_libraries.pdf
+│   ├── mb-sample-cluster-subtype-enr-top-1000-events-poly-A_stranded.pdf
 │   ├── mb-sample-cluster-subtype-enr-top-1000-events-stranded.pdf
-│   ├── mb-sample-cluster-subtype-enr-top-5000-events-all libraries.pdf
-│   ├── mb-sample-cluster-subtype-enr-top-5000-events-poly-A stranded.pdf
+│   ├── mb-sample-cluster-subtype-enr-top-5000-events-all_libraries.pdf
+│   ├── mb-sample-cluster-subtype-enr-top-5000-events-poly-A_stranded.pdf
 │   ├── mb-sample-cluster-subtype-enr-top-5000-events-stranded.pdf
-│   ├── sample-cluster-histology-enr-top-1000-events-all libraries.pdf
-│   ├── sample-cluster-histology-enr-top-1000-events-poly-A stranded.pdf
+│   ├── mb-shh-subgroup-cluster-enr-top-5000-events-stranded.pdf
+│   ├── sample-cluster-histology-enr-top-1000-events-all_libraries.pdf
+│   ├── sample-cluster-histology-enr-top-1000-events-poly-A_stranded.pdf
 │   ├── sample-cluster-histology-enr-top-1000-events-stranded.pdf
-│   ├── sample-cluster-histology-enr-top-5000-events-all libraries.pdf
-│   ├── sample-cluster-histology-enr-top-5000-events-poly-A stranded.pdf
+│   ├── sample-cluster-histology-enr-top-5000-events-all_libraries.pdf
+│   ├── sample-cluster-histology-enr-top-5000-events-poly-A_stranded.pdf
 │   ├── sample-cluster-histology-enr-top-5000-events-stranded.pdf
-│   ├── sample-psi-heatmap-top-1000-events-all libraries.pdf
-│   ├── sample-psi-heatmap-top-1000-events-poly-A stranded.pdf
+│   ├── sample-psi-heatmap-top-1000-events-all_libraries.pdf
+│   ├── sample-psi-heatmap-top-1000-events-poly-A_stranded.pdf
 │   ├── sample-psi-heatmap-top-1000-events-stranded.pdf
-│   ├── sample-psi-heatmap-top-5000-events-all libraries.pdf
-│   ├── sample-psi-heatmap-top-5000-events-poly-A stranded.pdf
+│   ├── sample-psi-heatmap-top-5000-events-all_libraries.pdf
+│   ├── sample-psi-heatmap-top-5000-events-poly-A_stranded.pdf
 │   ├── sample-psi-heatmap-top-5000-events-stranded.pdf
 │   ├── top5_pathways_poly-A-stranded.pdf
 │   └── top5_pathways_stranded.pdf
@@ -92,18 +104,21 @@ bash run-module.sh
 │   ├── cluster_9_pathway_stranded.tsv
 │   ├── gsva_output_poly-A-stranded.tsv
 │   ├── gsva_output_stranded.tsv
-│   ├── pbta-splice-event-psis.RDS
-│   ├── psi-matrix-top-1000-events-all libraries.rds
-│   ├── psi-matrix-top-1000-events-poly-A stranded.rds
+│   ├── lgg-braf-fusion-cluster-membership-poly-A-stranded.tsv
+│   ├── lgg-braf-fusion-cluster-membership-stranded.tsv
+│   ├── mb-subgroup-cluster-membership-poly-A-stranded.tsv
+│   ├── mb-subgroup-cluster-membership-stranded.tsv
+│   ├── psi-matrix-top-1000-events-all_libraries.rds
+│   ├── psi-matrix-top-1000-events-poly-A_stranded.rds
 │   ├── psi-matrix-top-1000-events-stranded.rds
-│   ├── psi-matrix-top-5000-events-all libraries.rds
-│   ├── psi-matrix-top-5000-events-poly-A stranded.rds
+│   ├── psi-matrix-top-5000-events-all_libraries.rds
+│   ├── psi-matrix-top-5000-events-poly-A_stranded.rds
 │   ├── psi-matrix-top-5000-events-stranded.rds
-│   ├── sample-cluster-metadata-top-1000-events-all libraries.tsv
-│   ├── sample-cluster-metadata-top-1000-events-poly-A stranded.tsv
+│   ├── sample-cluster-metadata-top-1000-events-all_libraries.tsv
+│   ├── sample-cluster-metadata-top-1000-events-poly-A_stranded.tsv
 │   ├── sample-cluster-metadata-top-1000-events-stranded.tsv
-│   ├── sample-cluster-metadata-top-5000-events-all libraries.tsv
-│   ├── sample-cluster-metadata-top-5000-events-poly-A stranded.tsv
+│   ├── sample-cluster-metadata-top-5000-events-all_libraries.tsv
+│   ├── sample-cluster-metadata-top-5000-events-poly-A_stranded.tsv
 │   └── sample-cluster-metadata-top-5000-events-stranded.tsv
 ├── run-module.sh
 └── util
