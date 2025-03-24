@@ -10,8 +10,8 @@ plot_enr <- function(df, var1, var2,
                      var1_names, var2_names,
                      padjust = FALSE) {
   
-  enr <- matrix(0, length(unique(df[,var1])),
-                length(unique(df[,var2])),
+  enr <- matrix(0, length(unique(df[[var1]])),
+                length(unique(df[[var2]])),
                 dimnames = list(var1_names,
                                 var2_names))
   pval <- enr
