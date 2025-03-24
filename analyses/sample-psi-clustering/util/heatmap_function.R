@@ -53,8 +53,7 @@ plot_enr <- function(df, var1, var2,
                      nrow(enr), ncol(enr))
   
   enr <- ifelse(is.infinite(enr), 0, enr)
-  enr <- ifelse(enr > 10, 10, enr)
-  
+
   ct_enr_mat <- matrix(glue::glue("{ct}\n({fill_mat})"),
                        nrow(ct), ncol(ct))
   
