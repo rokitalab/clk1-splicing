@@ -46,6 +46,12 @@ echo "splicing index"
 cd ${analyses_dir}/splicing_index
 bash run_module.sh
 
+## psi clustering
+echo "----------------------------------"
+echo "psi clustering"
+cd ${analyses_dir}/sample-psi-clustering
+bash run_module.sh
+
 ## survival
 echo "----------------------------------"
 echo "survival"
