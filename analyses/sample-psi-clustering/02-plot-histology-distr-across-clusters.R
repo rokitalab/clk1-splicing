@@ -2,7 +2,7 @@
 # 02-plot-histology-distr-across-clusters.R
 # Plot the distribution of histologies across clusters
 #
-# Author: Ammar Naqvi, Ryan Corbett
+# Author: Ammar Naqvi, Jo Lynne Rokita, Ryan Corbett
 ################################################################################
 
 ## libraries 
@@ -65,13 +65,13 @@ for (type in names(cluster_files)){
     mutate(molecular_subtype_display = case_when(grepl("KIAA", molecular_subtype) ~ "KIAA1549--BRAF",
                                                  grepl("LGG, BRAF V600|LGG, RTK, BRAF V600E", molecular_subtype) ~ "BRAF V600E",
                                                  grepl("LGG, IDH|LGG, other MAPK, IDH", molecular_subtype) ~ "IDH",
-                                                 molecular_subtype %in% c("LGG, wildtype") ~ "LGG, Wildtype",
+                                                 molecular_subtype %in% c("LGG, wildtype") ~ "To be classified",
                                                  grepl("SEGA", molecular_subtype) ~ "SEGA",
                                                  grepl("To be classified", molecular_subtype) ~ "To be classified",
                                                  grepl("LGG", molecular_subtype) & grepl("other MAPK", molecular_subtype) ~ "Other MAPK",
                                                  grepl("LGG", molecular_subtype) ~ "Other alteration",
                                                  grepl("HGG, IDH", molecular_subtype) ~ "IDH",
-                                                 grepl("HGG, H3 wildtype", molecular_subtype) ~ "H3 wildtype",
+                                                 grepl("HGG, H3 wildtype|DIPG, H3 wildtype", molecular_subtype) ~ "H3 wildtype",
                                                  grepl("HGG, PXA", molecular_subtype) ~ "PXA",
                                                  grepl("IHG", molecular_subtype) ~ "IHG",
                                                  grepl("H3 G35", molecular_subtype) ~ "H3 G35",
@@ -254,3 +254,4 @@ for (type in names(cluster_files)){
 
 # Session info
 sessionInfo()
+
