@@ -23,8 +23,7 @@ if(!dir.exists(supp_tables_dir)){
 histology_file <- file.path(data_dir, "histologies.tsv")
 histology_ei_splice_events <- file.path(analysis_dir, "histology-specific-splicing", "results", "unique_events-ei.tsv")
 histology_es_splice_events <- file.path(analysis_dir, "histology-specific-splicing", "results", "unique_events-es.tsv")
-optimal_cluster_tsv <- file.path(analysis_dir, "clustering_analysis", "output", "optimal_clustering", "lspline_output.tsv")
-cluster_membership <- file.path(analysis_dir, "clustering_analysis", "output", "cluster_members_by_cancer_group_subtype.tsv")
+cluster_membership <- file.path(analysis_dir, "sample-psi-clustering", "results", "sample-cluster-metadata-top-5000-events-stranded.tsv")
 CNS_match_json <- file.path(table_dir, "input", "CNS_primary_site_match.json")
 sf_list_file <- file.path(root_dir, "analyses","splicing-factor_dysregulation", "input","splicing_factors.txt")
 hugo_file <- file.path(root_dir, "analyses", "oncoprint", "input", "hgnc-symbol-check.csv")
@@ -150,34 +149,23 @@ ei_events_df <- vroom(histology_ei_splice_events)
 ## sheet 2, exon inclusion splicing
 es_events_df <- vroom(histology_es_splice_events)
 
-## sheet 3, optimal clustering output/lspline
-opt_cluster_df <- read_tsv(optimal_cluster_tsv)
 
-# subset columns used for scoring methods
-opt_cluster_df <- opt_cluster_df %>%
-  dplyr::select(algorithm,
-                distance,
-                feature_selection,
-                k,
-                stretch,
-                delta_auc,
-                p_val,
-                average.between,
-                average.within,
-                within.cluster.ss,
-                dunn,
-                entropy,
-                avg_sil,
-                cluster_qual,
-                rank)
-
-## sheet 4, cluster membership
-cluster_membership_df <- read_tsv(cluster_membership)
+## sheet 3, cluster membership
+cluster_membership_df <- read_tsv(cluster_membership) %>%
+  dplyr::select(sample_id, plot_group,
+                RNA_library, molecular_subtype,
+                cluster) %>%
+  dplyr::rename(Kids_First_Biospecimen_ID = sample_id,
+                Histology = plot_group) %>%
+  # clean up NAs for excel output
+  dplyr::mutate(molecular_subtype = case_when(
+    is.na(molecular_subtype) ~ "N/A",
+    TRUE ~ molecular_subtype
+  ))
 
 # Combine and output
 list_s2_table <- list(exon_inclusion = ei_events_df,
                       exon_skipping = es_events_df,
-                      opt_cluster = opt_cluster_df,
                       clust_memb = cluster_membership_df)
 
 write.xlsx(list_s2_table,
