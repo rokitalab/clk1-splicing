@@ -7,6 +7,7 @@
 
 # Attach this package
 library(survminer)
+library(gtools)
 
 # set locale to system default UTF-8 to print "±" in plots
 Sys.setlocale("LC_ALL","en_US.UTF-8")
@@ -14,9 +15,17 @@ Sys.setlocale("LC_ALL","en_US.UTF-8")
 # Magrittr pipe
 `%>%` <- dplyr::`%>%`
 
-efs_palette <- c("#E69F01", "#56B4E8", "#009E74", "#F0E442",
-                 "#0072B3", "#D55E01", "#CC79A6", "#999998",
-                 "black", "#b08ccf", "#a340ff", "#685815")
+# Function to adjust hex colors (for OS to EFS color palette)
+adjust_hex <- function(hex_color, adjustment = 1) {
+  # Convert hex to RGB
+  rgb_values <- col2rgb(hex_color)
+  
+  # Adjust RGB values (ensure within 0-255)
+  new_rgb <- pmin(rgb_values + adjustment, 255)
+  
+  # Convert back to hex
+  return(rgb(new_rgb[1,], new_rgb[2,], new_rgb[3,], maxColorValue = 255))
+}
 
 survival_analysis <- function(metadata,
                               ind_var,
@@ -318,7 +327,8 @@ fit_save_model <- function(df,
 plotKM <- function(model,
                    variable,
                    combined = FALSE, 
-                   title) {
+                   title,
+                   palette = "okabe_ito") {
   
   if (combined == FALSE){
     
@@ -345,7 +355,7 @@ plotKM <- function(model,
         unique()
       
       levels <- levels[!is.na(levels)]
-      levels <- levels[order(levels)]
+      levels <- mixedsort(levels(levels))
     }
     
     if ("EFS_days" %in% names(model$original_data)){
@@ -368,17 +378,28 @@ plotKM <- function(model,
         unique()
       
       levels <- levels[!is.na(levels)]
-      levels <- levels[order(levels)]
+      levels <- mixedsort(levels(levels))
       
     }
     
-    colors <- c(colorblindr::palette_OkabeIto,
-                "black", "#b08ccf", "#a340ff", "#685815")[1:(length(levels)+1)]
+    # Define color palette for plotting (default okabe_ito)
+    if (is.character(palette) && length(palette) == 1 && palette == "okabe_ito"){
+      
+      colors <- c(colorblindr::palette_OkabeIto,
+                   "black", "#b08ccf", "#a340ff", "#685815")[1:(length(levels))]
+      names(colors) <- glue::glue("{event_type}:{levels}")
+      
+    } else {
+      
+      colors <- palette
+      names(colors) <- glue::glue("{event_type}:{levels}")
+      
+    }
+
     lines <- c(rep("solid", length(levels)), 
                rep("dashed", length(levels)))
     labels <- glue::glue("{event_type}:{levels}")
-    
-    
+
     km_plot <- survminer::ggsurvplot(fit = model$model, 
                                      data = model$original_data,
                                      palette = colors,
@@ -428,8 +449,21 @@ plotKM <- function(model,
     levels_os <- unique(variable_os[!is.na(data_os$OS_days)][order(variable_os[!is.na(data_os$OS_days)])])
     levels_os <- levels_os[!is.na(levels_os)]
     
-    os_palette <- c(colorblindr::palette_OkabeIto,
-                    "black", "#b08ccf", "#a340ff", "#685815")[1:(length(levels)+1)]
+    # Define color palette for plotting (default okabe_ito)
+    if (is.character(palette) && length(palette) == 1 && palette == "okabe_ito"){
+      
+      colors_os <- c(colorblindr::palette_OkabeIto,
+                  "black", "#b08ccf", "#a340ff", "#685815")[1:(length(levels_os))]
+      
+    } else {
+      
+      colors_os <- palette
+      
+    }
+    
+    # define EFS color palette by adjusting OS color palette by 1 (colors cannot be the same in combined plot)
+    
+    colors_efs <- sapply(colors_os, adjust_hex)
 
     variable_efs <- data_efs %>%
       pull(variable)
@@ -437,8 +471,10 @@ plotKM <- function(model,
     levels_efs <- unique(variable_efs[!is.na(data_efs$EFS_days)][order(variable_efs[!is.na(data_efs$EFS_days)])])
     levels_efs <- levels_efs[!is.na(levels_efs)]
     
-    colors <- c(os_palette[1:length(levels_os)],
-                efs_palette[1:length(levels_efs)])
+    colors <- c(colors_os[1:length(levels_os)],
+                colors_efs[1:length(levels_efs)])
+     names(colors) <- c(glue::glue("OS:{levels_os}"),
+                        glue::glue("EFS:{levels_efs}"))
     
     lines <- c(rep("solid", length(levels_os)), 
                rep("dashed", length(levels_efs)))
