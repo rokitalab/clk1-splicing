@@ -118,7 +118,7 @@ for (type in names(cluster_files)){
   names(cols) <- subtype_hex_codes$molecular_subtype_display
   
   pdf(file.path(paste0(plots_dir, "/cluster_membership-subtypes_", type, ".pdf")),
-      height = 6, width = 9)
+      height = 6, width = 9.5)
   
   subtype_plot <- hist_subset %>% 
     ggplot(aes(fill=molecular_subtype_display, x= factor(cluster))) +
