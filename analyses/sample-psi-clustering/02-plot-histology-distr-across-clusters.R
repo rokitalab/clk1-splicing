@@ -2,7 +2,7 @@
 # 02-plot-histology-distr-across-clusters.R
 # Plot the distribution of histologies across clusters
 #
-# Author: Ammar Naqvi, Ryan Corbett
+# Author: Ammar Naqvi, Jo Lynne Rokita, Ryan Corbett
 ################################################################################
 
 ## libraries 
@@ -62,16 +62,16 @@ for (type in names(cluster_files)){
     dplyr::rename(Kids_First_Biospecimen_ID = sample_id)
   
   histologies_df <- cluster_df %>%
-    mutate(molecular_subtype_display = case_when(grepl("KIAA", molecular_subtype) ~ "KIAA1549--BRAF",
+    mutate(molecular_subtype_display = case_when(grepl("KIAA", molecular_subtype) ~ "KIAA1549::BRAF",
                                                  grepl("LGG, BRAF V600|LGG, RTK, BRAF V600E", molecular_subtype) ~ "BRAF V600E",
                                                  grepl("LGG, IDH|LGG, other MAPK, IDH", molecular_subtype) ~ "IDH",
-                                                 molecular_subtype %in% c("LGG, wildtype") ~ "LGG, Wildtype",
+                                                 molecular_subtype %in% c("LGG, wildtype") ~ "LGG, WT",
                                                  grepl("SEGA", molecular_subtype) ~ "SEGA",
                                                  grepl("To be classified", molecular_subtype) ~ "To be classified",
                                                  grepl("LGG", molecular_subtype) & grepl("other MAPK", molecular_subtype) ~ "Other MAPK",
                                                  grepl("LGG", molecular_subtype) ~ "Other alteration",
                                                  grepl("HGG, IDH", molecular_subtype) ~ "IDH",
-                                                 grepl("HGG, H3 wildtype", molecular_subtype) ~ "H3 wildtype",
+                                                 grepl("HGG, H3 wildtype|DIPG, H3 wildtype", molecular_subtype) ~ "H3 wildtype",
                                                  grepl("HGG, PXA", molecular_subtype) ~ "PXA",
                                                  grepl("IHG", molecular_subtype) ~ "IHG",
                                                  grepl("H3 G35", molecular_subtype) ~ "H3 G35",
@@ -118,7 +118,7 @@ for (type in names(cluster_files)){
   names(cols) <- subtype_hex_codes$molecular_subtype_display
   
   pdf(file.path(paste0(plots_dir, "/cluster_membership-subtypes_", type, ".pdf")),
-      height = 6, width = 11)
+      height = 6, width = 9.5)
   
   subtype_plot <- hist_subset %>% 
     ggplot(aes(fill=molecular_subtype_display, x= factor(cluster))) +
@@ -127,7 +127,8 @@ for (type in names(cluster_files)){
     xlab("Cluster") + 
     ylab("Frequency") +
     theme_Publication() +
-    scale_fill_manual(name = "Molecular Subtype", values = cols) 
+    scale_fill_manual(name = "Molecular Subtype", values = cols) +
+    guides(fill = guide_legend(ncol = 1))
   
   print(subtype_plot)
   
@@ -254,3 +255,4 @@ for (type in names(cluster_files)){
 
 # Session info
 sessionInfo()
+
