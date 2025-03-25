@@ -62,10 +62,10 @@ for (type in names(cluster_files)){
     dplyr::rename(Kids_First_Biospecimen_ID = sample_id)
   
   histologies_df <- cluster_df %>%
-    mutate(molecular_subtype_display = case_when(grepl("KIAA", molecular_subtype) ~ "KIAA1549--BRAF",
+    mutate(molecular_subtype_display = case_when(grepl("KIAA", molecular_subtype) ~ "KIAA1549::BRAF",
                                                  grepl("LGG, BRAF V600|LGG, RTK, BRAF V600E", molecular_subtype) ~ "BRAF V600E",
                                                  grepl("LGG, IDH|LGG, other MAPK, IDH", molecular_subtype) ~ "IDH",
-                                                 molecular_subtype %in% c("LGG, wildtype") ~ "To be classified",
+                                                 molecular_subtype %in% c("LGG, wildtype") ~ "LGG, WT",
                                                  grepl("SEGA", molecular_subtype) ~ "SEGA",
                                                  grepl("To be classified", molecular_subtype) ~ "To be classified",
                                                  grepl("LGG", molecular_subtype) & grepl("other MAPK", molecular_subtype) ~ "Other MAPK",
