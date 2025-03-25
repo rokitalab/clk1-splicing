@@ -74,11 +74,20 @@ metadata <- metadata %>%
                                        cluster)) %>%
   dplyr::mutate(cluster = glue::glue("Cluster {cluster}")) %>%
   dplyr::mutate(cluster = fct_relevel(cluster,
-                                               paste0("cluster", 1:n_clust))) %>%
+                                               paste0("Cluster ", 1:n_clust))) %>%
   dplyr::mutate(lgg_group = case_when(
     Histology == "Low-grade glioma" ~ "LGG",
     TRUE ~ "non-LGG"
   ))
+```
+
+Define colors for clusters
+
+```{r}
+# define colors for clusters
+cluster_cols <- c("#B2DF8A","#E31A1C","#33A02C","#A6CEE3","#FB9A99","#FDBF6F",
+                    "#CAB2D6","#FFFF99","#1F78B4","#B15928","#6A3D9A")
+names(cluster_cols) <- glue::glue("Cluster {1:length(cluster_cols)}")
 ```
 
 Generate log rank OS and EFS models with cluster assignment as predictor
@@ -116,7 +125,8 @@ Generate KM plots
 km_os_plot <- plotKM(model = kap_os,
                     variable = "cluster",
                     combined = F, 
-                    title = "cluster")
+                    title = "cluster",
+                    palette = cluster_cols)
 
 ggsave(file.path(plot_dir, "km_OS_cluster_assignment.pdf"),
        km_os_plot,
@@ -126,7 +136,8 @@ ggsave(file.path(plot_dir, "km_OS_cluster_assignment.pdf"),
 km_efs_plot <- plotKM(model = kap_efs,
                     variable = "cluster",
                     combined = F, 
-                    title = "cluster")
+                    title = "cluster",
+                    palette = cluster_cols)
 
 ggsave(file.path(plot_dir, "km_EFS_cluster_assignment.pdf"),
        km_efs_plot,
@@ -225,7 +236,8 @@ Generate LGG KM plots
 km_lgg_os_plot <- plotKM(model = lgg_kap_os,
                     variable = "cluster",
                     combined = F, 
-                    title = "cluster")
+                    title = "cluster",
+                    palette = cluster_cols[names(cluster_cols) %in% retain_clusters_lgg])
 
 ggsave(file.path(plot_dir, "km_lgg_OS_cluster_assignment.pdf"),
        km_lgg_os_plot,
@@ -235,7 +247,8 @@ ggsave(file.path(plot_dir, "km_lgg_OS_cluster_assignment.pdf"),
 km_lgg_efs_plot <- plotKM(model = lgg_kap_efs,
                     variable = "cluster",
                     combined = F, 
-                    title = "cluster")
+                    title = "cluster",
+                    palette = cluster_cols[names(cluster_cols) %in% retain_clusters_lgg])
 
 ggsave(file.path(plot_dir, "km_lgg_EFS_cluster_assignment.pdf"),
        km_lgg_efs_plot,
@@ -348,7 +361,8 @@ Generate HGG KM plots
 km_hgg_os_plot <- plotKM(model = hgg_kap_os,
                     variable = "cluster",
                     combined = F, 
-                    title = "cluster")
+                    title = "cluster",
+                    palette = cluster_cols[names(cluster_cols) %in% retain_clusters_hgg])
 
 ggsave(file.path(plot_dir, "km_hgg_OS_cluster_assignment.pdf"),
        km_hgg_os_plot,
@@ -358,7 +372,8 @@ ggsave(file.path(plot_dir, "km_hgg_OS_cluster_assignment.pdf"),
 km_hgg_efs_plot <- plotKM(model = hgg_kap_efs,
                     variable = "cluster",
                     combined = F, 
-                    title = "cluster")
+                    title = "cluster",
+                    palette = cluster_cols[names(cluster_cols) %in% retain_clusters_hgg])
 
 ggsave(file.path(plot_dir, "km_hgg_EFS_cluster_assignment.pdf"), 
        km_hgg_efs_plot,
