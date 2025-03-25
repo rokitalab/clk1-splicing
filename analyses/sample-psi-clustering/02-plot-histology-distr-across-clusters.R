@@ -118,7 +118,7 @@ for (type in names(cluster_files)){
   names(cols) <- subtype_hex_codes$molecular_subtype_display
   
   pdf(file.path(paste0(plots_dir, "/cluster_membership-subtypes_", type, ".pdf")),
-      height = 6, width = 11)
+      height = 6, width = 9)
   
   subtype_plot <- hist_subset %>% 
     ggplot(aes(fill=molecular_subtype_display, x= factor(cluster))) +
@@ -127,7 +127,8 @@ for (type in names(cluster_files)){
     xlab("Cluster") + 
     ylab("Frequency") +
     theme_Publication() +
-    scale_fill_manual(name = "Molecular Subtype", values = cols) 
+    scale_fill_manual(name = "Molecular Subtype", values = cols) +
+    guides(fill = guide_legend(ncol = 1))
   
   print(subtype_plot)
   
