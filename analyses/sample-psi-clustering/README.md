@@ -14,6 +14,10 @@ bash run-module.sh
 ## Folder content
 * 00-create-psi-matrix.R; create PSI matrix across primary tumors
 * 01-sample_clustering.R; cluster samples by most variable PSIs and by RNA-seq library type
+* 02-plot-histology-distr-across-clusters.R; assess hist and subtype distribution across clusters
+* 03-plot-sbi-with-cluster-mem.R; assess SBI group distribution across clusters
+* 04-diff_pathways_per_cluster.R; assess SBI group distribution across clusters
+* 05-generate-spliceosome-summary-file.sh; collate spliceosome GSVA data
 
 # Input files
 * lgg-braf-fusion-breakpoint-annotation.tsv; LGG BRAF fusion-positive BS IDs annotated with KIAA1549::BRAF fusion breakpoint group. Pulled from [pbta-germline-somatic repo](https://github.com/diskin-lab-chop/pbta-germline-somatic/blob/main/analyses/survival/input/lgg-braf-fusion-breakpoint-annotation.tsv)
@@ -27,6 +31,7 @@ bash run-module.sh
 ├── 02-plot-histology-distr-across-clusters.R
 ├── 03-plot-sbi-with-cluster-mem.R
 ├── 04-diff_pathways_per_cluster.R
+├── 05-generate-spliceosome-summary-file.sh
 ├── README.md
 ├── input
 │   ├── lgg-braf-fusion-breakpoint-annotation.tsv
@@ -104,6 +109,7 @@ bash run-module.sh
 │   ├── cluster_9_pathway_stranded.tsv
 │   ├── gsva_output_poly-A-stranded.tsv
 │   ├── gsva_output_stranded.tsv
+│   ├── kegg_spliceosome_summary.tsv
 │   ├── lgg-braf-fusion-cluster-membership-poly-A-stranded.tsv
 │   ├── lgg-braf-fusion-cluster-membership-stranded.tsv
 │   ├── mb-subgroup-cluster-membership-poly-A-stranded.tsv
