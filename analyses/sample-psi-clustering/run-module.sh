@@ -19,7 +19,7 @@ Rscript --vanilla 02-plot-histology-distr-across-clusters.R
 # assess SBI group distribution across clusters
 Rscript --vanilla 03-plot-sbi-with-cluster-mem.R
 
-# assess SBI group distribution across clusters
+# assess pathway enrichment across clusters
 Rscript --vanilla 04-diff_pathways_per_cluster.R
 
 # collate spliceosome GSVA data
