@@ -24,3 +24,6 @@ Rscript -e "rmarkdown::render('07-run-survival-clk1-status-all.Rmd')"
 
 # plot survival by CLK1 status
 Rscript --vanilla 08-plot-survival-clk1-status-all.R
+
+# run survival by cluster assignment and SBI or KEGG spliceosome GSVA
+Rscript -e "rmarkdown::render('09-survival_by_cluster_sbi_spliceosome_gsva.Rmd')"
