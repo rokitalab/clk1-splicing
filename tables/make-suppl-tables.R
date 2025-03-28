@@ -24,6 +24,7 @@ histology_file <- file.path(data_dir, "histologies.tsv")
 histology_ei_splice_events <- file.path(analysis_dir, "histology-specific-splicing", "results", "unique_events-ei.tsv")
 histology_es_splice_events <- file.path(analysis_dir, "histology-specific-splicing", "results", "unique_events-es.tsv")
 cluster_membership <- file.path(analysis_dir, "sample-psi-clustering", "results", "sample-cluster-metadata-top-5000-events-stranded.tsv")
+gsva <- file.path(analysis_dir, "sample-psi-clustering", "results", "all_gsva_de_results_stranded.tsv")
 CNS_match_json <- file.path(table_dir, "input", "CNS_primary_site_match.json")
 sf_list_file <- file.path(root_dir, "analyses","splicing-factor_dysregulation", "input","splicing_factors.txt")
 hugo_file <- file.path(root_dir, "analyses", "oncoprint", "input", "hgnc-symbol-check.csv")
@@ -163,10 +164,17 @@ cluster_membership_df <- read_tsv(cluster_membership) %>%
     TRUE ~ molecular_subtype
   ))
 
+## sheet 4, gsva scores
+gsva_df <- read_tsv(gsva) %>%
+  dplyr::mutate(Filename = as.numeric(stringr::str_extract(Filename, "\\d+"))) %>%
+  dplyr::rename(Cluster = Filename) %>%
+  arrange(Cluster)
+          
 # Combine and output
 list_s2_table <- list(exon_inclusion = ei_events_df,
                       exon_skipping = es_events_df,
-                      clust_memb = cluster_membership_df)
+                      clust_memb = cluster_membership_df,
+                      gsva_scores = gsva_df)
 
 write.xlsx(list_s2_table,
            table_s2_file,
