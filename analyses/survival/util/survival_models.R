@@ -379,7 +379,7 @@ plotKM <- function(model,
         unique()
       
       levels <- levels[!is.na(levels)]
-      levels <- mixedsort(levels(levels))
+      levels <- levels(levels)
       
     }
     
