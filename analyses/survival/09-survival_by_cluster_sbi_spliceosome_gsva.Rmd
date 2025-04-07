@@ -369,7 +369,7 @@ forest_hgg_os
 
 ggsave(file.path(plot_dir, "forest_add_OS_HGG_subtype_cluster_assignment_SBI.pdf"),
        forest_hgg_os,
-       width = 10, height = 6, units = "in",
+       width = 9, height = 5, units = "in",
        device = "pdf")
 
 add_model_hgg_efs <- fit_save_model(hgg,
@@ -383,7 +383,7 @@ forest_hgg_efs <- plotForest(readRDS(file.path(results_dir, "cox_hgg_EFS_additiv
 
 ggsave(file.path(plot_dir, "forest_add_EFS_HGG_subtype_cluster_assignment_SBI.pdf"),
        forest_hgg_efs,
-       width = 10, height = 6, units = "in",
+       width = 9, height = 5, units = "in",
        device = "pdf")
 ```
 
@@ -403,7 +403,7 @@ forest_hgg_os
 
 ggsave(file.path(plot_dir, "forest_add_OS_HGG_subtype_cluster_assignment_spliceosome_score.pdf"),
        forest_hgg_os,
-       width = 10, height = 6, units = "in",
+       width = 9, height = 5, units = "in",
        device = "pdf")
 
 add_model_hgg_efs <- fit_save_model(hgg,
@@ -417,7 +417,7 @@ forest_hgg_efs <- plotForest(readRDS(file.path(results_dir, "cox_hgg_EFS_additiv
 
 ggsave(file.path(plot_dir, "forest_add_EFS_HGG_subtype_cluster_assignment_spliceosome_score.pdf"),
        forest_hgg_efs,
-       width = 10, height = 6, units = "in",
+       width = 9, height = 5, units = "in",
        device = "pdf")
 ```
 Filter for cluster 6
@@ -450,7 +450,7 @@ Generate KM models with `SI_group` as covariate
 
 ```{r}
 # Generate kaplan meier survival models for OS and EFS, and save outputs
-hgg_kap_os <- survival_analysis(
+c6_si_kap_os <- survival_analysis(
   metadata  = cluster6_df %>% dplyr::filter(!is.na(SI_group)),
   ind_var = "SI_group",
   test = "kap.meier",
@@ -459,10 +459,10 @@ hgg_kap_os <- survival_analysis(
   status_col = "OS_status"
 )
 
-readr::write_rds(hgg_kap_os,
+readr::write_rds(c6_si_kap_os,
                  file.path(results_dir, "logrank_cluster6_OS_SBI.RDS"))
 
-hgg_kap_efs <- survival_analysis(
+c6_si_kap_efs <- survival_analysis(
   metadata  = cluster6_df %>% dplyr::filter(!is.na(SI_group)),
   ind_var = "SI_group",
   test = "kap.meier",
@@ -471,32 +471,32 @@ hgg_kap_efs <- survival_analysis(
   status_col = "EFS_status"
 )
 
-readr::write_rds(hgg_kap_efs,
+readr::write_rds(c6_si_kap_efs,
                  file.path(results_dir, "logrank_cluster6_EFS_SBI.RDS"))
 ```
 
 Generate Cluster 6 KM SI_group plots
 
 ```{r}
-km_hgg_os_plot <- plotKM(model = hgg_kap_os,
+km_c6_si_os_plot <- plotKM(model = c6_si_kap_os,
                     variable = "SI_group",
                     combined = F, 
                     title = "Cluster 6, overall survival",
                     p_pos = "topright")
 
 ggsave(file.path(plot_dir, "km_cluster6_OS_sbi_group.pdf"),
-       km_hgg_os_plot,
+       km_c6_si_os_plot,
        width = 9, height = 5, units = "in",
        device = "pdf")
 
-km_hgg_efs_plot <- plotKM(model = hgg_kap_efs,
+km_c6_si_efs_plot <- plotKM(model = c6_si_kap_efs,
                     variable = "SI_group",
                     combined = F, 
                     title = "Cluster 6, event-free survival",
                     p_pos = "topright")
 
 ggsave(file.path(plot_dir, "km_cluster6_EFS_sbi_group.pdf"), 
-       km_hgg_efs_plot,
+       km_c6_si_efs_plot,
        width = 9, height = 5, units = "in",
        device = "pdf")
 
@@ -507,7 +507,7 @@ Generate KM models with `spliceosome_group` as covariate
 
 ```{r}
 # Generate kaplan meier survival models for OS and EFS, and save outputs
-hgg_kap_os <- survival_analysis(
+c6_splice_kap_os <- survival_analysis(
   metadata  = cluster6_df %>% dplyr::filter(!is.na(spliceosome_group)),
   ind_var = "spliceosome_group",
   test = "kap.meier",
@@ -516,10 +516,10 @@ hgg_kap_os <- survival_analysis(
   status_col = "OS_status"
 )
 
-readr::write_rds(hgg_kap_os,
+readr::write_rds(c6_splice_kap_os,
                  file.path(results_dir, "logrank_cluster6_OS_splice_group.RDS"))
 
-hgg_kap_efs <- survival_analysis(
+c6_splice_kap_efs <- survival_analysis(
   metadata  = cluster6_df %>% dplyr::filter(!is.na(spliceosome_group)),
   ind_var = "spliceosome_group",
   test = "kap.meier",
@@ -528,32 +528,32 @@ hgg_kap_efs <- survival_analysis(
   status_col = "EFS_status"
 )
 
-readr::write_rds(hgg_kap_efs,
+readr::write_rds(c6_splice_kap_efs,
                  file.path(results_dir, "logrank_cluster6_EFS_splice_group.RDS"))
 ```
 
 Generate Cluster 6 KM spliceosome_group plots
 
 ```{r}
-km_hgg_os_plot <- plotKM(model = hgg_kap_os,
+km_c6_splice_os_plot <- plotKM(model = c6_splice_kap_os,
                     variable = "spliceosome_group",
                     combined = F, 
                     title = "Cluster 6, overall survival",
                     p_pos = "topright")
 
 ggsave(file.path(plot_dir, "km_cluster6_OS_splice_group.pdf"),
-       km_hgg_os_plot,
+       km_c6_splice_os_plot,
        width = 9, height = 5, units = "in",
        device = "pdf")
 
-km_hgg_efs_plot <- plotKM(model = hgg_kap_efs,
+km_c6_splice_efs_plot <- plotKM(model = c6_splice_kap_efs,
                     variable = "spliceosome_group",
                     combined = F, 
                     title = "Cluster 6, event-free survival",
                     p_pos = "topright")
 
 ggsave(file.path(plot_dir, "km_cluster6_EFS_splice_group.pdf"), 
-       km_hgg_efs_plot,
+       km_c6_splice_efs_plot,
        width = 9, height = 5, units = "in",
        device = "pdf")
 
