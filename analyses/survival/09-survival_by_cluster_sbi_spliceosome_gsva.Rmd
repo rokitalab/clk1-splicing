@@ -266,7 +266,8 @@ hgg <- metadata %>%
                                                                 "HGG, IDH, TP53", "HGG, PXA", "HGG, PXA, TP53", 
                                                                 "IHG, ALK-altered", "IHG, NTRK-altered",
                                                                 "IHG, ROS1-altered"
-                                                                )))
+                                                                ))) %>%
+  dplyr::filter(!is.na(OS_days) & !is.na(EFS_days))
 
 retain_clusters_hgg <- hgg %>%
   count(cluster) %>%
@@ -275,7 +276,81 @@ retain_clusters_hgg <- hgg %>%
 
 hgg <- hgg %>%
   filter(cluster %in% retain_clusters_hgg) %>%
-  dplyr::mutate(cluster = factor(cluster))
+  dplyr::mutate(cluster = factor(cluster)) %>%
+    dplyr::mutate(SI_group = case_when(
+      SI_SE > summary(SI_SE)["3rd Qu."] ~ "High SBI",
+      SI_SE < summary(SI_SE)["1st Qu."] ~ "Low SBI",
+      TRUE ~ NA_character_
+    )) %>%
+  dplyr::mutate(spliceosome_group = case_when(
+      spliceosome_gsva_score > summary(spliceosome_gsva_score)["3rd Qu."] ~ "Splice GSVA 4th Q",
+      spliceosome_gsva_score > summary(spliceosome_gsva_score)["Median"] ~ "Splice GSVA 3rd Q",
+      spliceosome_gsva_score > summary(spliceosome_gsva_score)["1st Qu."] ~ "Splice GSVA 2nd Q",
+      TRUE ~ "Splice GSVA 1st Q"
+    )) %>%
+  dplyr::mutate(SI_group = fct_relevel(SI_group,
+                                                 c("Low SBI", "High SBI"))) %>%
+  dplyr::mutate(spliceosome_group = fct_relevel(spliceosome_group,
+                                                 c("Splice GSVA 1st Q", 
+                                                   "Splice GSVA 2nd Q", 
+                                                   "Splice GSVA 3rd Q",
+                                                   "Splice GSVA 4th Q")))
+```
+
+
+Generate HGG KM models with `spliceosome_group` as covariate
+
+```{r}
+# Generate kaplan meier survival models for OS and EFS, and save outputs
+hgg_kap_os <- survival_analysis(
+  metadata  = hgg %>% dplyr::filter(!is.na(spliceosome_group)),
+  ind_var = "spliceosome_group",
+  test = "kap.meier",
+  metadata_sample_col = "Kids_First_Biospecimen_ID",
+  days_col = "OS_days",
+  status_col = "OS_status"
+)
+
+readr::write_rds(hgg_kap_os,
+                 file.path(results_dir, "logrank_hgg_OS_splice_group.RDS"))
+
+hgg_kap_efs <- survival_analysis(
+  metadata  = hgg %>% dplyr::filter(!is.na(spliceosome_group)),
+  ind_var = "spliceosome_group",
+  test = "kap.meier",
+  metadata_sample_col = "Kids_First_Biospecimen_ID",
+  days_col = "EFS_days",
+  status_col = "EFS_status"
+)
+
+readr::write_rds(hgg_kap_efs,
+                 file.path(results_dir, "logrank_hgg_EFS_splice_group.RDS"))
+```
+
+Generate KM plots
+
+```{r}
+km_hgg_os_plot <- plotKM(model = hgg_kap_os,
+                    variable = "spliceosome_group",
+                    combined = F, 
+                    title = "HGG, overall survival",
+                    p_pos = "topright")
+
+ggsave(file.path(plot_dir, "km_hgg_OS_spliceosome_score.pdf"),
+       km_hgg_os_plot,
+       width = 9, height = 5, units = "in",
+       device = "pdf")
+
+km_hgg_efs_plot <- plotKM(model = hgg_kap_efs,
+                    variable = "spliceosome_group",
+                    combined = F, 
+                    title = "HGG, event-free survival",
+                    p_pos = "topright")
+
+ggsave(file.path(plot_dir, "km_hgg_EFS_spliceosome_score.pdf"), 
+       km_hgg_efs_plot,
+       width = 9, height = 5, units = "in",
+       device = "pdf")
 ```
 
 Generate coxph models for HGG including covariates `mol_sub_group` `cluster`, and `SI_SE`, and plot
@@ -357,15 +432,18 @@ cluster6_df <- metadata %>%
       TRUE ~ NA_character_
     )) %>%
   dplyr::mutate(spliceosome_group = case_when(
-      spliceosome_gsva_score > summary(spliceosome_gsva_score)["3rd Qu."] ~ "High Spliceosome Score",
-      spliceosome_gsva_score < summary(spliceosome_gsva_score)["1st Qu."] ~ "Low Spliceosome Score",
-      TRUE ~ NA_character_
+      spliceosome_gsva_score > summary(spliceosome_gsva_score)["3rd Qu."] ~ "Splice GSVA 4th Q",
+      spliceosome_gsva_score > summary(spliceosome_gsva_score)["Median"] ~ "Splice GSVA 3rd Q",
+      spliceosome_gsva_score > summary(spliceosome_gsva_score)["1st Qu."] ~ "Splice GSVA 2nd Q",
+      TRUE ~ "Splice GSVA 1st Q"
     )) %>%
   dplyr::mutate(SI_group = fct_relevel(SI_group,
                                                  c("Low SBI", "High SBI"))) %>%
   dplyr::mutate(spliceosome_group = fct_relevel(spliceosome_group,
-                                                 c("Low Spliceosome Score", 
-                                                   "High Spliceosome Score")))
+                                                 c("Splice GSVA 1st Q", 
+                                                   "Splice GSVA 2nd Q", 
+                                                   "Splice GSVA 3rd Q",
+                                                   "Splice GSVA 4th Q")))
 ```
 
 Generate KM models with `SI_group` as covariate
@@ -403,21 +481,23 @@ Generate Cluster 6 KM SI_group plots
 km_hgg_os_plot <- plotKM(model = hgg_kap_os,
                     variable = "SI_group",
                     combined = F, 
-                    title = "Splicing Burden Index group")
+                    title = "Cluster 6, overall survival",
+                    p_pos = "topright")
 
 ggsave(file.path(plot_dir, "km_cluster6_OS_sbi_group.pdf"),
        km_hgg_os_plot,
-       width = 10, height = 6, units = "in",
+       width = 9, height = 5, units = "in",
        device = "pdf")
 
 km_hgg_efs_plot <- plotKM(model = hgg_kap_efs,
                     variable = "SI_group",
                     combined = F, 
-                    title = "Splicing Burden Index group")
+                    title = "Cluster 6, event-free survival",
+                    p_pos = "topright")
 
 ggsave(file.path(plot_dir, "km_cluster6_EFS_sbi_group.pdf"), 
        km_hgg_efs_plot,
-       width = 10, height = 6, units = "in",
+       width = 9, height = 5, units = "in",
        device = "pdf")
 
 ```
@@ -458,21 +538,23 @@ Generate Cluster 6 KM spliceosome_group plots
 km_hgg_os_plot <- plotKM(model = hgg_kap_os,
                     variable = "spliceosome_group",
                     combined = F, 
-                    title = "Spliceosome GSVA score group")
+                    title = "Cluster 6, overall survival",
+                    p_pos = "topright")
 
 ggsave(file.path(plot_dir, "km_cluster6_OS_splice_group.pdf"),
        km_hgg_os_plot,
-       width = 10, height = 6, units = "in",
+       width = 9, height = 5, units = "in",
        device = "pdf")
 
 km_hgg_efs_plot <- plotKM(model = hgg_kap_efs,
                     variable = "spliceosome_group",
                     combined = F, 
-                    title = "Spliceosome GSVA score group")
+                    title = "Cluster 6, event-free survival",
+                    p_pos = "topright")
 
 ggsave(file.path(plot_dir, "km_cluster6_EFS_splice_group.pdf"), 
        km_hgg_efs_plot,
-       width = 10, height = 6, units = "in",
+       width = 9, height = 5, units = "in",
        device = "pdf")
 
 ```
