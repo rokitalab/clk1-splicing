@@ -356,7 +356,7 @@ plotKM <- function(model,
         unique()
       
       levels <- levels[!is.na(levels)]
-      levels <- mixedsort(levels(levels))
+      levels <- levels(levels)
     }
     
     if ("EFS_days" %in% names(model$original_data)){
