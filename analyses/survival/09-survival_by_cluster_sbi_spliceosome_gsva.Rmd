@@ -149,22 +149,43 @@ ggsave(file.path(plot_dir, "forest_add_OS_resection_lgg_group_cluster_assignment
 ```
 
 
-```{r}
-int_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                              terms = "extent_of_tumor_resection+cluster*spliceosome_gsva_score+age_at_diagnosis_days",
-                               file.path(results_dir, "cox_EFS_interaction_terms_resection_lgg_group_cluster_spliceosome_score.RDS"),
-                               "multivariate",
-                               years_col = "EFS_years",
-                               status_col = "EFS_status")
+```{r Interaction models with GSVA and SBI}
+models <- c("spliceosome_gsva_score", "SI_SE")
 
-int_forest_efs <- plotForest(readRDS(file.path(results_dir, "cox_EFS_interaction_terms_resection_lgg_group_cluster_spliceosome_score.RDS")))
+for (each in models) {
+  int_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
+                                terms = paste0("extent_of_tumor_resection+cluster*", each, "+age_at_diagnosis_days"),
+                                 file.path(results_dir, paste0("cox_EFS_interaction_terms_resection_lgg_group_cluster_", each, ".RDS")),
+                                 "multivariate",
+                                 years_col = "EFS_years",
+                                 status_col = "EFS_status")
+  
+  int_forest_efs <- plotForest(readRDS(file.path(results_dir, paste0("cox_EFS_interaction_terms_resection_lgg_group_cluster_", each, ".RDS"))))
+  
+  int_forest_efs
+  
+  ggsave(file.path(plot_dir, paste0("forest_int_EFS_resection_lgg_group_cluster_assignment_", each, ".pdf")),
+         int_forest_efs,
+         width = 10, height = 6, units = "in",
+         device = "pdf")
 
-int_forest_efs
-
-ggsave(file.path(plot_dir, "forest_int_EFS_resection_lgg_group_cluster_assignment_spliceosome_score.pdf"),
-       int_forest_efs,
-       width = 10, height = 6, units = "in",
-       device = "pdf")
+  int_model_os <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
+                                terms = paste0("extent_of_tumor_resection+cluster*", each, "+age_at_diagnosis_days"),
+                                 file.path(results_dir, paste0("cox_OS_interaction_terms_resection_lgg_group_cluster_", each, ".RDS")),
+                                 "multivariate",
+                                 years_col = "OS_years",
+                                 status_col = "OS_status")
+  
+  int_forest_os <- plotForest(readRDS(file.path(results_dir, paste0("cox_OS_interaction_terms_resection_lgg_group_cluster_", each, ".RDS"))))
+  
+  int_forest_os
+  
+  ggsave(file.path(plot_dir, paste0("forest_int_OS_resection_lgg_group_cluster_assignment_", each, ".pdf")),
+         int_forest_os,
+         width = 10, height = 6, units = "in",
+         device = "pdf")
+  
+}
 
 add_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
                               terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_days+spliceosome_gsva_score",
