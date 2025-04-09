@@ -9,6 +9,7 @@ suppressPackageStartupMessages({
   library("tidyverse")
   library("ggpubr")
   library("ggplot2")
+  library("gtools")
 })
 
 # Get `magrittr` pipe
@@ -50,12 +51,22 @@ gsva_file <- file.path(root_dir,
                        "sample-psi-clustering",
                        "results",
                        "gsva_output_stranded.tsv")
+cluster_file <- file.path(root_dir, "analyses",
+                          "sample-psi-clustering", 
+                          "results",
+                          "sample-cluster-metadata-top-5000-events-stranded.tsv")
 
-## load histologies info for HGG subty  
+## load histologies and cluster file (stranded samples only)
+cluster_df <- read_tsv(cluster_file) %>%
+  dplyr::rename('Kids_First_Biospecimen_ID'='sample_id') %>%
+  dplyr::mutate(cluster = paste("Cluster", cluster, " ")) %>%
+  select(Kids_First_Biospecimen_ID, cluster)
+
 histologies_df  <-  read_tsv(clin_file, guess_max = 100000) %>%
   filter(cohort == "PBTA",
          experimental_strategy == "RNA-Seq",
-         Kids_First_Biospecimen_ID %in% indep_df$Kids_First_Biospecimen_ID)
+         Kids_First_Biospecimen_ID %in% indep_df$Kids_First_Biospecimen_ID) %>%
+  left_join(cluster_df)
 
 ## Load SBI file
 sbi_df <-  read_tsv(sbi_file) %>%
@@ -70,8 +81,10 @@ gsva_scores_df <- read_tsv(gsva_file) %>%
   filter(geneset == 'KEGG_SPLICEOSOME') %>%
   select(Kids_First_Biospecimen_ID, Histology,
          molecular_subtype,
-         SI, score) %>%
+         SI, score, cluster) %>%
   dplyr::mutate(log2_sbi = log2(SI)  )
+
+
 
 ## create plot
 pdf(NULL)
@@ -118,6 +131,29 @@ gsva_scores_df %>%
     theme_Publication()
 
 ggsave(file.path(plots_dir, "corplot-sbi-vs-gsva-spliceosome-by-hist.pdf"),
+       width = 10, height = 9)
+
+
+# Plot spliceosome GSVA score versus SBI faceted by cluster:
+
+gsva_scores_df %>%
+  mutate(cluster = factor(cluster, levels = mixedsort(unique(cluster)))) %>%
+  ggplot(aes(x = log2_sbi, y = score)) +
+  geom_point() +
+  stat_smooth(method = "lm", 
+              formula = y ~ x, 
+              geom = "smooth", 
+              colour = "red",
+              fill = "pink",
+              linetype="dashed") +
+  labs(x = expression(bold(Log[2] ~ "Splicing Burden Index")),
+       y = "Spliceosome GSVA Score") + 
+  stat_cor(method = "pearson",
+           label.x = -9, label.y = 1, size = 3) +
+  facet_wrap(~cluster, nrow = 3) + 
+  theme_Publication()
+
+ggsave(file.path(plots_dir, "corplot-sbi-vs-gsva-spliceosome-by-cluster.pdf"),
        width = 10, height = 9)
 
 
