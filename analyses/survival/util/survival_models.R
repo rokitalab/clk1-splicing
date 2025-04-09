@@ -328,7 +328,8 @@ plotKM <- function(model,
                    variable,
                    combined = FALSE, 
                    title,
-                   palette = "okabe_ito") {
+                   palette = "okabe_ito",
+                   p_pos = "bottomleft") {
   
   if (combined == FALSE){
     
@@ -355,7 +356,7 @@ plotKM <- function(model,
         unique()
       
       levels <- levels[!is.na(levels)]
-      levels <- mixedsort(levels(levels))
+      levels <- levels(levels)
     }
     
     if ("EFS_days" %in% names(model$original_data)){
@@ -378,7 +379,7 @@ plotKM <- function(model,
         unique()
       
       levels <- levels[!is.na(levels)]
-      levels <- mixedsort(levels(levels))
+      levels <- levels(levels)
       
     }
     
@@ -387,18 +388,18 @@ plotKM <- function(model,
       
       colors <- c(colorblindr::palette_OkabeIto,
                    "black", "#b08ccf", "#a340ff", "#685815")[1:(length(levels))]
-      names(colors) <- glue::glue("{event_type}:{levels}")
+      names(colors) <- glue::glue("{levels}")
       
     } else {
       
       colors <- palette
-      names(colors) <- glue::glue("{event_type}:{levels}")
+      names(colors) <- glue::glue("{levels}")
       
     }
 
     lines <- c(rep("solid", length(levels)), 
                rep("dashed", length(levels)))
-    labels <- glue::glue("{event_type}:{levels}")
+    labels <- glue::glue("{levels}")
 
     km_plot <- survminer::ggsurvplot(fit = model$model, 
                                      data = model$original_data,
@@ -418,7 +419,10 @@ plotKM <- function(model,
     
     km_plot_graph <- km_plot$plot + 
       ggplot2::annotate("text", 
-                        200, 0.15, 
+                        ifelse(p_pos == "topright",
+                               3700, 200),
+                        ifelse(p_pos == "topright",
+                               0.95, 0.15), 
                         label = pvalue_label) +
       theme(legend.text = element_text(size = 16, color = "black")) +
       cowplot::background_grid()
