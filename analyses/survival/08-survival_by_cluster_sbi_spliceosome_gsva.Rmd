@@ -154,7 +154,7 @@ models <- c("spliceosome_gsva_score", "SI_SE")
 
 for (each in models) {
   int_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                                terms = paste0("extent_of_tumor_resection+cluster*", each, "+age_at_diagnosis_days"),
+                                terms = paste0("extent_of_tumor_resection+lgg_group+cluster*", each, "+age_at_diagnosis_days"),
                                  file.path(results_dir, paste0("cox_EFS_interaction_terms_resection_lgg_group_cluster_", each, ".RDS")),
                                  "multivariate",
                                  years_col = "EFS_years",
@@ -170,7 +170,7 @@ for (each in models) {
          device = "pdf")
 
   int_model_os <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                                terms = paste0("extent_of_tumor_resection+cluster*", each, "+age_at_diagnosis_days"),
+                                terms = paste0("extent_of_tumor_resection+lgg_group+cluster*", each, "+age_at_diagnosis_days"),
                                  file.path(results_dir, paste0("cox_OS_interaction_terms_resection_lgg_group_cluster_", each, ".RDS")),
                                  "multivariate",
                                  years_col = "OS_years",
