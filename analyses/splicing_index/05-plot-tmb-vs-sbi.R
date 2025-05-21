@@ -47,6 +47,9 @@ hist_pal <- read_tsv(palette_file) %>%
          !is.na(plot_group)) %>%
   dplyr::select(Kids_First_Biospecimen_ID, match_id, cancer_group, plot_group)
 
+rna_stranded_filter <-read_tsv(palette_file) %>%
+  filter(RNA_library=='stranded')
+
 indep_rna_df <- read_tsv(indep_rna_file) %>% 
   filter(cohort == "PBTA") %>%
  # dplyr::rename(Kids_First_Biospecimen_ID_RNA = Kids_First_Biospecimen_ID) %>%
@@ -76,7 +79,8 @@ sbi_coding_df  <-  read_tsv(sbi_coding_file) %>%
   left_join(hist_pal[,c("Kids_First_Biospecimen_ID", "match_id")]) %>%
   dplyr::select(-Histology) %>%
   right_join(indep_rna_df) %>%
-  dplyr::rename(Kids_First_Biospecimen_ID_RNA = Kids_First_Biospecimen_ID)
+  dplyr::rename(Kids_First_Biospecimen_ID_RNA = Kids_First_Biospecimen_ID) %>%
+  filter(Kids_First_Biospecimen_ID_RNA %in% rna_stranded_filter$Kids_First_Biospecimen_ID)
 
 
 ## intersect tmb values with SBI tumors 
@@ -180,7 +184,7 @@ by_hist$SBI_level <- factor(by_hist$SBI_level, levels = c("Low", "High"))
 # calculate n per group and retain those n >= 3
 counts <- by_hist %>%
   group_by(plot_group) %>%
-  count(SBI_level) %>%
+  dplyr::count(SBI_level) %>%
   filter(n >=3)
   
 by_hist <- by_hist %>%
