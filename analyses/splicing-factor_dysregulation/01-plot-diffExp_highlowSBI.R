@@ -74,12 +74,20 @@ other_hgg_bs_id <- clin_tab %>%
   filter(plot_group == "Other high-grade glioma") %>%
   pull(Kids_First_Biospecimen_ID)
 
+# create cluster subset
+clust_file <- file.path(root_dir, "analyses/sample-psi-clustering/results/sample-cluster-metadata-top-5000-events-stranded.tsv")
+clust_df <- read_tsv(clust_file)
+
+cluster6_bs_id <- clust_df %>%
+  filter(cluster == 6) %>%
+  pull(sample_id)
+
 # read in files, join palette with sbi file
 sbi_coding_df  <-  readr::read_tsv(sbi_coding_file, comment = "#") %>%
   dplyr::rename(Kids_First_Biospecimen_ID = Sample) %>%
   filter(Kids_First_Biospecimen_ID %in% clin_tab$Kids_First_Biospecimen_ID)
 
-bs_list <- list("all_hgg" = hgg_bs_id, "dmg" = dmg_bs_id, "other_hgg" = other_hgg_bs_id)
+bs_list <- list("all_hgg" = hgg_bs_id, "dmg" = dmg_bs_id, "other_hgg" = other_hgg_bs_id, "cluster6" = cluster6_bs_id)
 names <- names(bs_list)
 
 for (each in names) {
