@@ -156,7 +156,7 @@ for (each in names) {
                                    x = 'log2FoldChange',
                                    y = 'padj',
                                    #xlim = c(-4, 6.5),
-                                   title = 'High vs Low SBI HGGs',
+                                   title = 'High vs Low SBI',
                                    subtitle = NULL,
                                    caption = NULL,
                                    pCutoff = 0.005,
@@ -190,10 +190,10 @@ for (each in names) {
     theme_Publication() + 
     xlab("Splicing Factor") + ylab("-log2 (padj)") +
     theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
-    coord_flip() + 
+    # flip axes and round ylim up to the next 10
+    coord_flip(ylim = c(0, ceiling((max(-log2(plot_df$padj))+2)/10)*10)) + 
     geom_text(aes(label =paste(Direction),ymax=0), 
-              hjust = -0.5, size = 4) +
-    ylim(c(0,45))
+              hjust = -0.5, size = 4)
   
   # Save plots as PDF
   pdf(file.path(plots_dir, paste0(each,"-",volc_file)), 
