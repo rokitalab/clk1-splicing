@@ -11,7 +11,7 @@ output_dir="results/"
 bed_files=("unipMod.hg38.col.bed" "unipOther.hg38.col.bed" "unipDisulfBond.hg38.col.bed" "unipLocSignal.hg38.col.bed" "unipDomain.hg38.col.bed")
 
 # Define the splicing event files
-splicing_event_files=("splicing_events.SE.total.pos.bed" "splicing_events.SE.total.neg.bed")
+splicing_event_files=("splicing_events.SE.total.PS.pos.bed" "splicing_events.SE.total.PS.neg.bed")
 
 # Loop through each splicing event file and bed file combination
 for splicing_file in "${splicing_event_files[@]}"; do

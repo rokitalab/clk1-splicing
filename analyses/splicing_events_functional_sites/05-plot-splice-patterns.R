@@ -36,9 +36,9 @@ file_splice_pattern_plot  <- file.path(analysis_dir, "plots", "splicing_pattern_
 file_splice_pattern_plot_other_HGG  <- file.path(analysis_dir, "plots", "splicing_pattern_plot-other-HGG.pdf")
 file_splice_pattern_plot_DMG  <- file.path(analysis_dir, "plots", "splicing_pattern_plot-DMG.pdf")
 
-file_psi <- file.path(results_dir,"splice_events.diff.SE.txt")
-file_psi_func_incl <- file.path(results_dir,"splicing_events.SE.total.pos.intersectunip.ggplot.txt") 
-file_psi_func_skip <-file.path(results_dir,"splicing_events.SE.total.neg.intersectunip.ggplot.txt") 
+file_psi <- file.path(results_dir,"splice_events.diff.SE.PS.txt")
+file_psi_func_incl <- file.path(results_dir,"splicing_events.SE.total.PS.pos.intersectunip.ggplot.txt") 
+file_psi_func_skip <-file.path(results_dir,"splicing_events.SE.total.PS.neg.intersectunip.ggplot.txt") 
 
 create_splice_pattern_plot <- function(psi_tab_file, psi_func_incl_file, psi_func_skip_file, output_file) {
   psi_tab <- read_tsv(psi_tab_file)

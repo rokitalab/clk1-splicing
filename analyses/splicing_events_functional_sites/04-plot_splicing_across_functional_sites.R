@@ -41,14 +41,14 @@ figures_dir <- file.path(root_dir, "figures")
 source(file.path(figures_dir, "theme_for_plots.R"))
 
 ## output files for final plots
-file_dpsi_plot <- file.path(analysis_dir, "plots", "dPSI_across_functional_sites.HGG.pdf")
-file_dpsi_kinase_plot <- file.path(analysis_dir, "plots", "dPSI_across_functional_sites_kinase.HGG.pdf")
-ora_dotplot_path <- file.path(plots_dir,"kinases-ora-plot.pdf")
+file_dpsi_plot <- file.path(analysis_dir, "plots", "dPSI_across_functional_sites.PS.pdf")
+file_dpsi_kinase_plot <- file.path(analysis_dir, "plots", "dPSI_across_functional_sites_kinase.PS.pdf")
+ora_dotplot_path <- file.path(plots_dir,"kinases-ora-plot.PS.pdf")
 kinases_functional_sites = file.path(results_dir,"kinases-functional_sites.tsv")
 
 ## retrieve psi values from tables
-file_psi_pos_func <- file.path(results_dir,"splicing_events.SE.total.pos.intersectunip.ggplot.txt")
-file_psi_neg_func <- file.path(results_dir,"splicing_events.SE.total.neg.intersectunip.ggplot.txt")
+file_psi_pos_func <- file.path(results_dir,"splicing_events.SE.total.PS.pos.intersectunip.ggplot.txt")
+file_psi_neg_func <- file.path(results_dir,"splicing_events.SE.total.PS.neg.intersectunip.ggplot.txt")
 
 ## histologies
 hist_indep_rna_df <- vroom(file.path(data_dir,"histologies.tsv"))
@@ -229,7 +229,7 @@ total_diff_events <- vroom(file.path(results_dir,"splice_events.diff.SE.txt")) %
   dplyr::mutate(Baseline_freq=325-Frequency) # 325 are primary HGGs 
 
 # read in exp file
-clin_file  <- file.path(hist_dir,"histologies-plot-group.tsv")
+clin_file  <- file.path(data_dir,"histologies-plot-group.tsv")
 expr_file <- file.path(data_dir,"gene-expression-rsem-tpm-collapsed.rds")
 
 
