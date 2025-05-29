@@ -6,7 +6,7 @@ use Statistics::Lite qw(:all);
 #
 # Compute splicing index for each sample and generate splicing burden index tables
 ############################################################################################################
-my ($histology,$rmats_tsv,$primary_tumor_file, $splice_case, $subtype) = ($ARGV[0], $ARGV[1], $ARGV[2],$ARGV[3], $ARGV[4]);
+my ($histology,$rmats_tsv,$primary_tumor_file, $splice_case, $subtype, $sample_list_file) = ($ARGV[0], $ARGV[1], $ARGV[2],$ARGV[3], $ARGV[4], $ARGV[5]);
 my (@broad_hist, @bs_id, @splicing_events);
 my (%histology_ids, %inc_levels, %bs_id_hist, %hist_check, %hist_count);
 my @splicing_events;
@@ -46,6 +46,22 @@ while(<FIL>)
 }
 close(FIL);
 
+# cluster file
+my %allowed_samples;
+
+if ($sample_list_file) {
+  open(SAMPLES, $sample_list_file) or die("Cannot open sample list file $sample_list_file");
+  my $header = <SAMPLES>;  # skip header line
+  while(<SAMPLES>) {
+    chomp;
+    my @cols = split /\t/;
+    next unless $cols[5] == 6;  # cluster 6
+    my $bs_id_cluster = $cols[0];       # sample_id
+    $allowed_samples{$bs_id_cluster} = 1;
+  }
+  close(SAMPLES);
+  print scalar(keys %allowed_samples), " samples matched column 6 == 6\n";
+}
 
 ## annotate and store histology information
 open(FIL, $histology) || die("Cannot Open File");
@@ -68,14 +84,15 @@ while (<FIL>) {
 
 
   next unless ($primary_initial_sample_list{$bs_id});
+  next unless $allowed_samples{$bs_id};
   #next unless ( ($hist=~/(high-grade)/)); #|| ($hist=~/DMG/) );
-  if($subtype=~/\w+/) {
-    next unless ($hist=~/$subtype/) ;
-  }
-  else{
-    next unless ( ($hist=~/(high-grade)/) || ($hist=~/DMG/) );
-
-  }
+  #if($subtype=~/\w+/) {
+  #  next unless ($hist=~/$subtype/) ;
+  #}
+  #else{
+  #  next unless ( ($hist=~/(high-grade)/) || ($hist=~/DMG/) );
+  #}
+  
   ## make an array and store histology information and BS IDs
   push @broad_hist, $hist;
   push @bs_ids, $bs_id;
@@ -116,14 +133,15 @@ while(<FIL>)
   ## filter for HGG/histology of interest
   my $hist = $bs_id_hist{$bs_id};
   next unless $primary_initial_sample_list{$bs_id};
-  #next unless ( ($hist=~/(high-grade)/) );# ||
-  if($subtype=~/\w+/) {
-    next unless ($hist=~/$subtype/) ;
-  }
-  else{
-    next unless ( ($hist=~/(high-grade)/) || ($hist=~/DMG/) );
+  next unless $allowed_samples{$bs_id};
 
-  }
+  #next unless ( ($hist=~/(high-grade)/) );# ||
+  #if($subtype=~/\w+/) {
+  #  next unless ($hist=~/$subtype/) ;
+  #}
+  #else{
+  #  next unless ( ($hist=~/(high-grade)/) || ($hist=~/DMG/) );
+  #}
 
 
   ## get gene name
