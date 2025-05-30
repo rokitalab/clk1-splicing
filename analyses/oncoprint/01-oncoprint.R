@@ -483,3 +483,60 @@ alteration_counts_cluster <- alteration_counts_cluster %>%
               ~ .x / cluster_totals[which(cols_to_divide == cur_column())])) %>%
   write_tsv(file.path(results_dir, "hgg_cluster_mutation_freq.tsv"))
 
+
+
+ha_cluster6 = HeatmapAnnotation(name = "annotation", 
+                       df = histologies_df_sorted2 %>% dplyr::filter(Cluster == "6"),
+                       col=list(
+                         "Gender" = c("Male" = "#56B4E9",
+                                      "Female" = "pink",
+                                      "Unknown" = "whitesmoke"),
+                         "Histology" = c("DIPG or DMG" = "#ff40d9",
+                                         
+                                         "Other high-grade glioma" = "#ffccf5"),
+                         "Predisposition" = c("LFS" = "red",
+                                              "NF-1" = "black",
+                                              "Other" = "grey"),
+                         "Molecular Subtype" = c("DHG, H3 G35" = "springgreen4",
+                                                 "DMG, H3 K28" = "#ff40d9",
+                                                 "DIPG, H3 wildtype" = "orchid",
+                                                 "HGG, H3 wildtype" = "lightpink",
+                                                 "HGG, IDH" = "indianred",
+                                                 "IHG, NTRK-altered" = "cornflowerblue",
+                                                 "IHG, ALK-altered" = "skyblue4",
+                                                 "IHG, ROS1-altered" = "lightblue1",
+                                                 "HGG, PXA" = "navy",
+                                                 "To be classified" = "whitesmoke"),
+                         "CNS Region" = loc_cols,
+                         "Mutation Status" = c("Normal" = "grey80",
+                                               "Hypermutant" = "orange",
+                                               "Ultra-hypermutant" = "red",
+                                               "Unknown" = "whitesmoke"),
+                         "CLK1 Ex4 PSI" = colorRamp2(c(-4, 0, 2), c("darkblue","white", "red")),
+                         "CLK1-201" = colorRamp2(c(-3, 0, 3), c("darkblue", "white",  "red")),
+                         "Total CLK1 RNA" = colorRamp2(c(-3, 0, 3), c("darkblue", "white",  "red")),
+                         "Cluster" = c("6" = "#FDBF6F")
+                       ),
+                       annotation_name_side = "right", 
+                       annotation_name_gp = gpar(fontsize = 9),
+                       na_col = "whitesmoke")
+
+cluster6_ids <- histologies_df_sorted2 %>% 
+  dplyr::filter(Cluster == "6") %>%
+  rownames_to_column("match_id") %>%
+  dplyr::pull(match_id) 
+
+gene_matrix_cluster6 <- gene_matrix_sorted[,colnames(gene_matrix_sorted) %in% cluster6_ids]
+
+plot_oncoprint_cluster6 <- oncoPrint(gene_matrix_cluster6[1:25,], get_type = function(x) strsplit(x, ",")[[1]],
+                            column_names_gp = gpar(fontsize = 9), show_column_names = F,
+                            alter_fun = alter_fun,
+                            col = col,
+                            top_annotation = ha_cluster6,
+                            alter_fun_is_vectorized = TRUE,
+                            column_order =  colnames(gene_matrix_cluster6))
+
+pdf(file.path(plots_dir,"oncoprint-hist-cluster6.pdf"),
+    width = 12, height = 7)
+plot_oncoprint_cluster6
+dev.off()
