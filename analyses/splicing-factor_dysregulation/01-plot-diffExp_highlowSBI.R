@@ -74,12 +74,20 @@ other_hgg_bs_id <- clin_tab %>%
   filter(plot_group == "Other high-grade glioma") %>%
   pull(Kids_First_Biospecimen_ID)
 
+# create cluster subset
+clust_file <- file.path(root_dir, "analyses/sample-psi-clustering/results/sample-cluster-metadata-top-5000-events-stranded.tsv")
+clust_df <- read_tsv(clust_file)
+
+cluster6_bs_id <- clust_df %>%
+  filter(cluster == 6) %>%
+  pull(sample_id)
+
 # read in files, join palette with sbi file
 sbi_coding_df  <-  readr::read_tsv(sbi_coding_file, comment = "#") %>%
   dplyr::rename(Kids_First_Biospecimen_ID = Sample) %>%
   filter(Kids_First_Biospecimen_ID %in% clin_tab$Kids_First_Biospecimen_ID)
 
-bs_list <- list("all_hgg" = hgg_bs_id, "dmg" = dmg_bs_id, "other_hgg" = other_hgg_bs_id)
+bs_list <- list("all_hgg" = hgg_bs_id, "dmg" = dmg_bs_id, "other_hgg" = other_hgg_bs_id, "cluster6" = cluster6_bs_id)
 names <- names(bs_list)
 
 for (each in names) {
@@ -148,7 +156,7 @@ for (each in names) {
                                    x = 'log2FoldChange',
                                    y = 'padj',
                                    #xlim = c(-4, 6.5),
-                                   title = 'High vs Low SBI HGGs',
+                                   title = 'High vs Low SBI',
                                    subtitle = NULL,
                                    caption = NULL,
                                    pCutoff = 0.005,
@@ -182,10 +190,10 @@ for (each in names) {
     theme_Publication() + 
     xlab("Splicing Factor") + ylab("-log2 (padj)") +
     theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
-    coord_flip() + 
+    # flip axes and round ylim up to the next 10
+    coord_flip(ylim = c(0, ceiling((max(-log2(plot_df$padj))+2)/10)*10)) + 
     geom_text(aes(label =paste(Direction),ymax=0), 
-              hjust = -0.5, size = 4) +
-    ylim(c(0,45))
+              hjust = -0.5, size = 4)
   
   # Save plots as PDF
   pdf(file.path(plots_dir, paste0(each,"-",volc_file)), 

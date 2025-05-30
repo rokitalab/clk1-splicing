@@ -34,87 +34,94 @@ if(!dir.exists(plots_dir)){
   dir.create(plots_dir, recursive=TRUE)
 }
 
-## file paths
-heatmap_output_file <- file.path(plots_dir,"SF_RNA_vs_protein_levels_heatmap.pdf") 
-
 ## get CPTAC output table 
 cptac_output_file <- file.path(input_dir,"CPTAC3-pbt_SFs.xls") 
-de_file <- file.path(results_dir, "all_hgg-diffSFs_sig_genes.txt")
+hgg_de_file <- file.path(results_dir, "all_hgg-diffSFs_sig_genes.txt")
+cluster6_de_file <- file.path(results_dir, "cluster6-diffSFs_sig_genes.txt")
 
-# Load dataset
-de_genes <- read_tsv(de_file) %>%
+# Load datasets
+hgg_de_genes <- read_tsv(hgg_de_file) %>%
   pull(gene)
 
-cptac_data <- readxl::read_excel(cptac_output_file) %>%
-  # select only rows with CLK1 or SRFs, remove muts
-  filter(grepl("\\srna|\\spro", idx), 
-               !`Data type` %in% c("mut", "cnv")) %>%
-  # remove extra info from cols
-  rename_with(~ gsub("X7316.", "7316-", .), everything()) %>%
-  dplyr::rename(Assay = `Data type`) %>%
-  filter(`Gene symbol` %in% de_genes) %>%
-  # clean up naming for plotting
-  mutate(Assay = case_when(Assay == "proteo" ~ "Whole Cell Proteomics",
-                           Assay == "rna" ~ "RNA-Seq"),
-         Assay = fct_relevel(Assay, c("RNA-Seq", "Whole Cell Proteomics")),
-         # create new display name for phospho proteins to include phos site
-         display_name = case_when(
-                                  # add a space after the gene to trick into thinking the rownames are not duplicated
-                                  Assay == "Whole Cell Proteomics" ~ paste(`Gene symbol`, " ", sep = " "),
-                                  TRUE ~ `Gene symbol`)
-  ) %>%
-  dplyr::select(display_name, Assay, starts_with("7316")) %>%
-  # remove NAs
-  select_if(~ !any(is.na(.)))
+cluster6_de_genes <- read_tsv(cluster6_de_file) %>%
+  pull(gene)
 
-# preserve gene names for rownames
-rownames <- cptac_data$display_name
+de_genes_list <- list("all_hgg" = hgg_de_genes, "cluster6" = cluster6_de_genes)
+names <- names(de_genes_list)
 
-# convert to matrix and then add rownames
-mat <- cptac_data %>%
-  dplyr::select(3:(ncol(cptac_data))) %>%
-  as.matrix()
-storage.mode(mat) <- "numeric"
-class(mat)
+for (each in names) {
+  cptac_data <- readxl::read_excel(cptac_output_file) %>%
+    # select only rows with CLK1 or SRFs, remove muts
+    filter(grepl("\\srna|\\spro", idx), 
+                 !`Data type` %in% c("mut", "cnv")) %>%
+    # remove extra info from cols
+    rename_with(~ gsub("X7316.", "7316-", .), everything()) %>%
+    dplyr::rename(Assay = `Data type`) %>%
+    filter(`Gene symbol` %in% de_genes_list[[each]]) %>%
+    # clean up naming for plotting
+    mutate(Assay = case_when(Assay == "proteo" ~ "Whole Cell Proteomics",
+                             Assay == "rna" ~ "RNA-Seq"),
+           Assay = fct_relevel(Assay, c("RNA-Seq", "Whole Cell Proteomics")),
+           # create new display name for phospho proteins to include phos site
+           display_name = case_when(
+                                    # add a space after the gene to trick into thinking the rownames are not duplicated
+                                    Assay == "Whole Cell Proteomics" ~ paste(`Gene symbol`, " ", sep = " "),
+                                    TRUE ~ `Gene symbol`)
+    ) %>%
+    dplyr::select(display_name, Assay, starts_with("7316")) %>%
+    # remove NAs
+    select_if(~ !any(is.na(.)))
 
+  # preserve gene names for rownames
+  rownames <- cptac_data$display_name
 
-# set rownames, convert to matrix
-rownames(mat) <- rownames
-
-# select row annotations
-row_annot <- cptac_data %>%
-  dplyr::select(Assay) %>%
-  as.data.frame()
+  # convert to matrix and then add rownames
+  mat <- cptac_data %>%
+    dplyr::select(3:(ncol(cptac_data))) %>%
+    as.matrix()
+  storage.mode(mat) <- "numeric"
+  class(mat)
 
 
-# create anno colors
-anno_col <- list(Assay = c("RNA-Seq" = "#DC3220", "Whole Cell Proteomics" = "#40B0A6"))
+  # set rownames, convert to matrix
+  rownames(mat) <- rownames
 
-# Heatmap annotation
-row_anno = rowAnnotation(df = row_annot,
-                         col = anno_col, 
-                         show_legend = TRUE, 
-                         show_annotation_name = FALSE)
+  # select row annotations
+  row_annot <- cptac_data %>%
+    dplyr::select(Assay) %>%
+    as.data.frame()
 
-# Make heatmap without legends
-heat_plot <- Heatmap(mat,
-                     name = "Z-score",
-                     col = colorRamp2(c(-2, 0, 2), c("#E66100", "white", "#5D3A9B")),
-                     cluster_rows = FALSE,
-                     row_split = row_annot$Assay, 
-                     column_gap = 0.5,
-                     show_row_names = TRUE,
-                     show_column_names = FALSE,
-                     show_heatmap_legend = TRUE,
-                     cluster_columns = TRUE, 
-                     right_annotation = row_anno,
-                     row_title = NULL, 
-                     column_title = NULL, 
-                     row_names_gp = grid::gpar(fontsize = 9),
-                     column_title_side = "top",
-                     heatmap_legend_param = list(legend_direction = "horizontal", 
-                                                 legend_position = "top"))
 
-pdf(heatmap_output_file, width = 7, height = 5)
-draw(heat_plot, heatmap_legend_side = "top")
-dev.off()
+  # create anno colors
+  anno_col <- list(Assay = c("RNA-Seq" = "#DC3220", "Whole Cell Proteomics" = "#40B0A6"))
+
+  # Heatmap annotation
+  row_anno = rowAnnotation(df = row_annot,
+                           col = anno_col, 
+                           show_legend = TRUE, 
+                           show_annotation_name = FALSE)
+
+  # Make heatmap without legends
+  heat_plot <- Heatmap(mat,
+                       name = "Z-score",
+                       col = colorRamp2(c(-2, 0, 2), c("#E66100", "white", "#5D3A9B")),
+                       cluster_rows = FALSE,
+                       row_split = row_annot$Assay, 
+                       column_gap = 0.5,
+                       show_row_names = TRUE,
+                       show_column_names = FALSE,
+                       show_heatmap_legend = TRUE,
+                       cluster_columns = TRUE, 
+                       right_annotation = row_anno,
+                       row_title = NULL, 
+                       column_title = NULL, 
+                       row_names_gp = grid::gpar(fontsize = 9),
+                       column_title_side = "top",
+                       heatmap_legend_param = list(legend_direction = "horizontal", 
+                                                   legend_position = "top"))
+
+  heatmap_output_file <- file.path(plots_dir, paste0(each,"-SF_RNA_vs_protein_levels_heatmap.pdf"))
+  pdf(heatmap_output_file, width = 7, height = 5)
+  draw(heat_plot, heatmap_legend_side = "top")
+  dev.off()
+}
