@@ -407,24 +407,45 @@ alteration_counts <- collapse_snv_dat %>%
   arrange(P_Value) %>%
   write_tsv(file.path(results_dir, "clk1_high_low_mutation_counts.tsv"))
 
-# sort samples by histology and cluster and regenerate oncoprint
+
+# sort samples cluster and regenerate oncoprint
 cluster_order <- histologies_df_sorted2 %>%
-  arrange(Histology, Cluster) %>%
+  arrange(Cluster) %>%
   rownames_to_column("match_id") %>%
   pull(match_id)
 
 plot_oncoprint_cluster <- oncoPrint(gene_matrix_sorted[1:30,], get_type = function(x) strsplit(x, ",")[[1]],
+                                    column_names_gp = gpar(fontsize = 9), show_column_names = F,
+                                    alter_fun = alter_fun,
+                                    col = col,
+                                    top_annotation = ha,
+                                    alter_fun_is_vectorized = TRUE,
+                                    column_order =  cluster_order)
+
+# Save plot as PDF
+pdf(file.path(plots_dir,"oncoprint-cluster.pdf"),
+    width = 15, height = 7)
+plot_oncoprint_cluster
+dev.off()
+
+# sort samples by histology and cluster and regenerate oncoprint
+hist_cluster_order <- histologies_df_sorted2 %>%
+  arrange(Histology, Cluster) %>%
+  rownames_to_column("match_id") %>%
+  pull(match_id)
+
+plot_oncoprint_hist_cluster <- oncoPrint(gene_matrix_sorted[1:30,], get_type = function(x) strsplit(x, ",")[[1]],
                             column_names_gp = gpar(fontsize = 9), show_column_names = F,
                             alter_fun = alter_fun,
                             col = col,
                             top_annotation = ha,
                             alter_fun_is_vectorized = TRUE,
-                            column_order =  cluster_order)
+                            column_order =  hist_cluster_order)
 
 # Save plot as PDF
 pdf(file.path(plots_dir,"oncoprint-hist-cluster.pdf"),
     width = 15, height = 7)
-plot_oncoprint_cluster
+plot_oncoprint_hist_cluster
 dev.off()
 
 # assess for non-random distribution of mutations across HGG/DMG clusters
@@ -473,7 +494,8 @@ alteration_counts_cluster <- collapse_snv_dat %>%
   ) %>%
   select(-Fisher_Test) %>%
   ungroup() %>%
-  arrange(P_Value)
+  arrange(P_Value) %>%
+  write_tsv(file.path(results_dir, "hgg_cluster_mutation_count.tsv"))
 
 cols_to_divide <- c("1", "2", "4", "5", "6", "8", "10")
 
