@@ -46,9 +46,11 @@ my %column_index;
 while (<FIL>) {
   chomp;
   my @cols       = split "\t";
-  my $cluster_assigned      = $cols[$column_index{'cluster_assigned'}];
+  my $cluster_assigned      = $cols[$column_index{'cluster'}];
   my $bs_id      = $cols[$column_index{'Kids_First_Biospecimen_ID'}];
 
+  next unless $cluster_assigned=~/6/;
+  
   ## make an array and store histology information and BS IDs
   push @clusters, $cluster_assigned;
   push @bs_ids, $bs_id;
