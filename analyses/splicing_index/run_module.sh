@@ -32,4 +32,9 @@ echo "plotting SBI vs TMB"
 Rscript --vanilla 05-plot-tmb-vs-sbi.R
 
 ## plot gsva score and sbi
+echo "plotting GVSA vs SBI"
 Rscript --vanilla 06-plot-gsva-score-vs-sbi.R
+
+## plot SBI and histology
+echo "plotting SBI high/low with histologies"
+Rscript --vanilla 07-plot-sbi-high-low.R 
