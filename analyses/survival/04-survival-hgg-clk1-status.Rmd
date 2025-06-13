@@ -291,7 +291,7 @@ add_efs_surv_result <- file.path(results_dir,
                      "cox_HGG_EFS_additive_terms_subtype_clk1_status.RDS")
 
 add_model_efs <- fit_save_model(survival_df,
-                               terms = "mol_sub_group+age_at_diagnosis_years",
+                               terms = "mol_sub_group+clk1_status+age_at_diagnosis_years",
                                add_efs_surv_result,
                                "multivariate",
                                years_col = "EFS_years",
