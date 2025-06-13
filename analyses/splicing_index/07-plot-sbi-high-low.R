@@ -137,7 +137,7 @@ plot_sbi <- function(sbi_df, plot_file,label) {
     
     # Labels
     labs(x = "Histology",
-         y = bquote(bold(.(label) * " Splicing Burden Index (sqrt)"))
+         y = bquote(bold(.(label) * " Splicing Burden Index"))
     ) +
     theme_Publication() + 
     theme(legend.position = "none", legend.direction = "horizontal",
@@ -159,9 +159,9 @@ plot_sbi <- function(sbi_df, plot_file,label) {
 
   # Save plots
   ggsave(filename = plot_file, path = plots_dir, plot = p,
-         height = 6.5, width = 8, useDingbats = FALSE)
+         height = 6, width = 8, useDingbats = FALSE)
   ggsave(filename = paste0("scale-free-", plot_file), path = plots_dir, plot = p2,
-         height = 6.5, width = 8, useDingbats = FALSE)
+         height = 6, width = 8, useDingbats = FALSE)
 }
 
 ## plot SBI for each splicing case
