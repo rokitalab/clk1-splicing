@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
 use Statistics::Lite qw(:all);
+use IO::Compress::Gzip qw(gzip $GzipError);
 ############################################################################################################
 # 03-generate_splicing-index_and_diff-events_table.SE.pl
 #
@@ -160,8 +161,7 @@ while(<FIL>)
   my $thr_diff = $cols[-1];
 
   ## only look at strong changes,  tumor junction reads > 10 reads
-  next unless ($IJC >=10);
-  next unless ($SJC >=10);
+  next unless ( ( ($IJC + $SJC) > 10) ) ;
 
   ## create unique ID for splicing change
 
@@ -204,7 +204,11 @@ my %absplice_totals_per_sample;
 my %absplice_totals_per_sample_pos;
 my %absplice_totals_per_sample_neg;
 
-open(EVENTS,">results/splice_events.diff.".$splice_case.".txt");
+my $outfile = "results/splice_events.diff." . $splice_case . ".txt.gz";
+my $events_fh = IO::Compress::Gzip->new($outfile)
+    or die "Cannot open gzip file $outfile: $GzipError\n";
+
+#open(EVENTS,">results/splice_events.diff.".$splice_case.".txt");
 print EVENTS "Splice ID\tCase\tType\tTumor_PSI\tMean_PSI\tSample\tHistology\n";
 foreach my $sample(@bs_ids_uniq)
 {
@@ -235,7 +239,8 @@ foreach my $sample(@bs_ids_uniq)
     }
   }
 }
-close(EVENTS);
+#close(EVENTS);
+$events_fh->close();
 
 #make table for plotting of splice_index
 if (!-d "results")
