@@ -12,6 +12,9 @@ perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file 
 perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples A5SS
 perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples RI
 
+# gzip diff files
+gzip results/*diff*.txt
+
 ## plot values (SBI) generated from above script in CDF plot
 echo "creating SBI CDF plots"
 Rscript --vanilla 02-plot_splicing_burden_index.R
