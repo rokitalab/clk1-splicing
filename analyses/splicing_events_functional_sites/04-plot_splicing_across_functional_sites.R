@@ -41,8 +41,8 @@ figures_dir <- file.path(root_dir, "figures")
 source(file.path(figures_dir, "theme_for_plots.R"))
 
 ## output files for final plots
-file_dpsi_plot <- file.path(analysis_dir, "plots", "dPSI_across_functional_sites.HGG.pdf")
-file_dpsi_kinase_plot <- file.path(analysis_dir, "plots", "dPSI_across_functional_sites_kinase.HGG.pdf")
+file_dpsi_plot <- file.path(analysis_dir, "plots", "dPSI_across_functional_sites.pdf")
+file_dpsi_kinase_plot <- file.path(analysis_dir, "plots", "dPSI_across_functional_sites_kinase.pdf")
 ora_dotplot_path <- file.path(plots_dir,"kinases-ora-plot.pdf")
 kinases_functional_sites = file.path(results_dir,"kinases-functional_sites.tsv")
 
@@ -117,6 +117,8 @@ known_kinase_df <-read.delim(system.file("extdata", "genelistreference.txt", pac
 psi_unip_kinase <- dplyr::inner_join(psi_comb, known_kinase_df, by='gene') 
 counts_psi_unip_kinase <- psi_unip_kinase %>% dplyr::count(Preference )
 
+psi_unip_kinase$gene
+
 ## make sina plot
 set.seed(45)
 kinase_dpsi_plot <- ggplot(psi_unip_kinase,aes(Preference,dPSI*100) ) +  
@@ -173,7 +175,6 @@ ora_skip_results <- enricher(
   )
 )
 
-
 options(enrichplot.colours = c("darkorange","blue"))
 enrich_skip_plot <- enrichplot::dotplot(ora_skip_results,
                                    x = "geneRatio",
@@ -229,15 +230,16 @@ kinase_incl_pref <- kinase_incl_pref %>%
 kinase_pref <- rbind(kinase_skip_pref, kinase_incl_pref) %>% 
   dplyr::select(SpliceID,dPSI,Uniprot, gene, Preference,`Exon Coordinates`)
 
+
 total_diff_events <- vroom(file.path(results_dir,"splice_events.diff.SE.txt")) %>%
   dplyr::rename(SpliceID="Splice ID") %>%
   dplyr::count(SpliceID)  %>% 
   inner_join(kinase_pref,by="SpliceID") %>%
-  dplyr::rename('Frequency'=n) #%>%
-  #dplyr::mutate(Baseline_freq=325-Frequency) # 325 are primary HGGs 
+  dplyr::rename('Frequency'=n) %>%
+  dplyr::mutate(Baseline_freq=69-Frequency) # 325 are primary HGGs 
 
 # read in exp file
-clin_file  <- file.path(hist_dir,"histologies-plot-group.tsv")
+#clin_file  <- file.path(hist_dir,"histologies-plot-group.tsv")
 expr_file <- file.path(data_dir,"gene-expression-rsem-tpm-collapsed.rds")
 
 
@@ -256,7 +258,6 @@ expr_file <- file.path(data_dir,"gene-expression-rsem-tpm-collapsed.rds")
 #  pull(Kids_First_Biospecimen_ID)
 
 
-
 exp <- readRDS(expr_file) %>%
   dplyr::select(any_of(cluster6_bs_id)) %>%
   mutate(gene = rownames(.)) %>%
@@ -271,6 +272,8 @@ exp <- readRDS(expr_file) %>%
   ) %>%
   group_by(gene) %>%                     # Group by gene
   summarize(Average_TPM = mean(TPM, na.rm = TRUE))  # Compute mean TPM per gene
+
+dim(exp)
 
 # Add gene names as a column to count_data
 total_diff_events_gene <- inner_join(total_diff_events,exp, by='gene') %>%
