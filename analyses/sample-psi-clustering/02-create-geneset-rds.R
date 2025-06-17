@@ -19,7 +19,7 @@ data_dir <- file.path(root_dir, "data")
 input_dir <- file.path(analysis_dir, "input")
 
 # output file
-hallmark_kegg_splice_rds_output <- file.path(input_dir,"hallmark_kegg_splice_geneset_mrna.rds")
+hallmark_kegg_splice_rds_output <- file.path(results_dir,"hallmark_kegg_splice_geneset_mrna.rds")
 
 # read in genesets to keep
 genesets_to_keep <- read_tsv(file.path(input_dir, "genesets.tsv")) %>%
