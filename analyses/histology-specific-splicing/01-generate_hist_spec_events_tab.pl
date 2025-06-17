@@ -125,10 +125,6 @@ while(<FIL>)
   my $skip_len = $cols[30];
   my $thr_diff = $cols[-1];
 
-  ## only look at strong changes,  tumor junction reads > 10 reads
-  next unless ($IJC >=10);
-  next unless ($SJC >=10);
-
   ## create unique ID for splicing change
   my $splice_id = $gene.":".$exonStart."-".$exonEnd."_".$upstreamES."-".$upstreamEE."_".$downstreamES."-".$downstreamEE;
   $inc_levels{$splice_id}{$bs_id} = $inc_level;
