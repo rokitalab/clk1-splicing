@@ -33,3 +33,6 @@ Rscript --vanilla 05-plot-tmb-vs-sbi.R
 
 ## plot gsva score and sbi
 Rscript --vanilla 06-plot-gsva-score-vs-sbi.R
+
+## plot gsva score and sbi
+Rscript --vanilla 07-plot_sbi_vs_splicing_factor_expr.R
