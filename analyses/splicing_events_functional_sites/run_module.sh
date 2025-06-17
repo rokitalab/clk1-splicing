@@ -11,18 +11,19 @@ script_directory="$(perl -e 'use File::Basename;
 cd "$script_directory" || exit
 
 ## histology input file (column orders important)
-input_file="../cohort_summary/results/histologies-plot-group.tsv"
-primary_specimens="../../data/independent-specimens.rnaseqpanel.primary.tsv"
+#input_file="../cohort_summary/results/histologies-plot-group.tsv"
+#primary_specimens="../../data/independent-specimens.rnaseqpanel.primary.tsv"
 rmats_file="../../data/splice-events-rmats.tsv.gz"
+cluster_file="../sample-psi-clustering/results/sample-cluster-metadata-top-5000-events-stranded.tsv"
 
-echo "input files:" $input_file ;
-echo $primary_specimens ;
+echo "input files:" $cluster_file ;
 echo $rmats_file ;
 
-## Process rMATS files given histologies file. Keep only HGG midlines samples and storng splicing events
-perl 01-extract_recurrent_splicing_events_hgg.pl $input_file $rmats_file $primary_specimens SE
-#perl 01-extract_recurrent_splicing_events_hgg.pl $input_file $rmats_file $primary_specimens SE "Other high-grade glioma"
-#perl 01-extract_recurrent_splicing_events_hgg.pl $input_file $rmats_file $primary_specimens SE "DMG"
+## Process rMATS files given clusters.
+perl 01-extract_recurrent_splicing_events_cluster.pl $cluster_file $rmats_file SE
+perl 01-extract_recurrent_splicing_events_cluster.pl $cluster_file $rmats_file RI
+perl 01-extract_recurrent_splicing_events_cluster.pl $cluster_file $rmats_file A3SS
+perl 01-extract_recurrent_splicing_events_cluster.pl $cluster_file $rmats_file A5SS
 
 echo "bedtools intersect...";
 bash 02-run_bedtools_intersect.sh

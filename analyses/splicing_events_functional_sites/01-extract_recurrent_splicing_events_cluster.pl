@@ -155,10 +155,6 @@ while(<FIL>)
   my $inc_len  = $cols[29];
   my $skip_len = $cols[30];
 
-  ## only look at strong changes, junction reads > 10 reads
-  next unless ($IJC >=10);
-  next unless ($SJC >=10);
-
   ## create unique ID for splicing change
   my $splice_id = $gene.":".$Start."-".$End."_".$prevES."-".$prevEE."_".$nextES."-".$nextEE;
 
