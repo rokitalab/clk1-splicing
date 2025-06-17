@@ -13,11 +13,12 @@ fi
 # perform clustering
 Rscript --vanilla 01-sample_clustering.R
 
-# assess hist and subtype distribution across clusters
-Rscript --vanilla 02-plot-histology-distr-across-clusters.R
 
-# assess SBI group distribution across clusters
-Rscript --vanilla 03-plot-sbi-with-cluster-mem.R
+# create geneset rds
+Rscript --vanilla 02-create-geneset-rds.R
+
+# assess hist and subtype distribution across clusters
+Rscript --vanilla 03-plot-histology-distr-across-clusters.R
 
 # assess pathway enrichment across clusters
 Rscript --vanilla 04-diff_pathways_per_cluster.R

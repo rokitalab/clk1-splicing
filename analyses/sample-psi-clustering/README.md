@@ -14,8 +14,8 @@ bash run-module.sh
 ## Folder content
 * 00-create-psi-matrix.R; create PSI matrix across primary tumors
 * 01-sample_clustering.R; cluster samples by most variable PSIs and by RNA-seq library type
-* 02-plot-histology-distr-across-clusters.R; assess hist and subtype distribution across clusters
-* 03-plot-sbi-with-cluster-mem.R; assess SBI group distribution across clusters
+* 02-create-geneset-rds.R; Creates an rds file combining hallmark cancer-related and kegg spliceosome genesets
+* 03-plot-histology-distr-across-clusters.R; assess hist and subtype distribution across clusters
 * 04-diff_pathways_per_cluster.R; assess pathway enrichment across clusters
 * 05-generate-gsva-summary-file.sh; collate GSVA data
 
