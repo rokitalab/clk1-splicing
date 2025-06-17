@@ -117,8 +117,6 @@ known_kinase_df <-read.delim(system.file("extdata", "genelistreference.txt", pac
 psi_unip_kinase <- dplyr::inner_join(psi_comb, known_kinase_df, by='gene') 
 counts_psi_unip_kinase <- psi_unip_kinase %>% dplyr::count(Preference )
 
-psi_unip_kinase$gene
-
 ## make sina plot
 set.seed(45)
 kinase_dpsi_plot <- ggplot(psi_unip_kinase,aes(Preference,dPSI*100) ) +  
@@ -236,7 +234,7 @@ total_diff_events <- vroom(file.path(results_dir,"splice_events.diff.SE.txt")) %
   dplyr::count(SpliceID)  %>% 
   inner_join(kinase_pref,by="SpliceID") %>%
   dplyr::rename('Frequency'=n) %>%
-  dplyr::mutate(Baseline_freq=69-Frequency) # 325 are primary HGGs 
+  dplyr::mutate(Baseline_freq=69-Frequency) # 69 samples in cluster - I don't think its used 
 
 # read in exp file
 #clin_file  <- file.path(hist_dir,"histologies-plot-group.tsv")
@@ -272,8 +270,6 @@ exp <- readRDS(expr_file) %>%
   ) %>%
   group_by(gene) %>%                     # Group by gene
   summarize(Average_TPM = mean(TPM, na.rm = TRUE))  # Compute mean TPM per gene
-
-dim(exp)
 
 # Add gene names as a column to count_data
 total_diff_events_gene <- inner_join(total_diff_events,exp, by='gene') %>%
