@@ -37,18 +37,14 @@ source(file.path(figures_dir, "theme_for_plots.R"))
 
 # input file for colors
 palette_file <- file.path(cohort_sum_dir, "results", "histologies-plot-group.tsv")
-es_event_file <- file.path(results_dir, "unique_events-es.tsv")
-ei_event_file <- file.path(results_dir, "unique_events-ei.tsv")
+se_event_file <- file.path(results_dir, "unique_events.SE.tsv")
 
 histology_df <- vroom(palette_file)
-es_events <- vroom(es_event_file) %>% 
-  rename(plot_group=Histology) %>%
-  count(plot_group) %>%
-  rename(unique_hits = n)
-
-ei_events <- vroom(ei_event_file) %>% 
-  rename(plot_group=Histology) %>%
-  count(plot_group) %>%
+se_events <- vroom(se_event_file) %>% 
+  rename(plot_group=Histology) %>% 
+  extract(SpliceID, into = c("SpliceID", "Event"), regex = "^(.*)_(inclusion|skipping)$") %>%
+  mutate(Event = str_to_title(Event)) %>%
+  count(plot_group, Event) %>%
   rename(unique_hits = n)
 
 ## filter using independent specimens file
@@ -64,18 +60,11 @@ hist_indep_df <- histology_df %>%
   count(plot_group) %>%
   rename(Total = n)
 
-avg_unique_es_histology <-inner_join(es_events, hist_indep_df, by='plot_group') %>%
+colnames(se_events)
+
+combined_df <- inner_join(se_events, hist_indep_df, by='plot_group') %>%
   mutate(norm_unique = unique_hits / Total)
 
-avg_unique_ei_histology <-inner_join(ei_events, hist_indep_df, by='plot_group') %>%
-  mutate(norm_unique = unique_hits / Total)
-
-# Combine the two data frames with an additional column
-combined_df <- bind_rows(
-  avg_unique_es_histology %>% mutate(Preference = "Skipping"),
-  avg_unique_ei_histology %>% mutate(Preference = "Inclusion")
-)
-#combined_df$Preference <- factor(combined_df$Preference, levels = c("Skipping", "Inclusion"))
 
 # Sort the data frame in descending order by avg_unique of Skipping events
 group_order <- combined_df %>%
@@ -86,9 +75,9 @@ group_order <- combined_df %>%
 
 
 # Create the side-by-side bar plot with custom colors
-avg_uniq_plot <- ggplot(combined_df, aes(x = fct_relevel(plot_group, group_order), y = norm_unique, fill = Preference)) +
+avg_uniq_plot <- ggplot(combined_df, aes(x = fct_relevel(plot_group, group_order), y = norm_unique, fill = Event)) +
   geom_bar(stat = "identity", position = position_dodge()) +
-  scale_fill_manual(name = "Preference", values = c(Skipping = "#0C7BDC", Inclusion = "#FFC20A"))+ 
+  scale_fill_manual(name = "SE Event", values = c(Skipping = "#0C7BDC", Inclusion = "#FFC20A"))+ 
   labs(x = "Histology",
        y = "Unique Recurrent\nSplice Events per Patient") +
   theme_Publication() + 
