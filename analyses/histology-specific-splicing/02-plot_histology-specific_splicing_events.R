@@ -35,21 +35,19 @@ if(!dir.exists(plots_dir)){
 palette_file <- file.path(cohort_sum_dir, "results", "histologies-plot-group.tsv")
 
 ## output files for final plots
-upsetR_es_plot_file <- file.path(analysis_dir, "plots", "upsetR_histology-specific.es.pdf")
-upsetR_ei_plot_file <- file.path(analysis_dir, "plots", "upsetR_histology-specific.ei.pdf")
-uniq_es_tsv_out <- file.path(results_dir, "unique_events-es.tsv")
-uniq_ei_tsv_out <- file.path(results_dir, "unique_events-ei.tsv")
+upsetR_plot_file <- file.path(analysis_dir, "plots", "upsetR_histology-specific.SE.pdf")
+uniq_tsv_out <- file.path(results_dir, "unique_events.SE.tsv")
 
 # Load the data using vroom
 palette_df <- read_tsv(palette_file)
 splice_event_df <- vroom::vroom(file.path(results_dir, "recurrent_splice_events_by_histology.tsv"), delim = "\t", trim_ws = TRUE, col_names = TRUE)
 
-## make list out of all skipping events
-list_for_skipping_upsetR <- splice_event_df %>%
-  filter(type == 'skipping') %>%
-  dplyr::select(histology, splicing_event) %>%
+## make list out of all SE events
+list_for_upsetR <- splice_event_df %>%
+  dplyr::mutate(event_type = paste(splicing_event, type, sep = "_")) %>%
+  dplyr::select(histology, event_type) %>%
   group_by(histology) %>%
-  summarise(splicing_events = list(splicing_event)) %>% # Summarize as a list
+  summarise(splicing_events = list(event_type)) %>% # Summarize as a list
   ungroup() %>%
   deframe() 
   
@@ -68,7 +66,6 @@ names(cols) <- uniq_plot_cols$plot_group
 # order the names to match the upsetR plot names so the colors match correctly
 # Calculate frequencies
 histology_frequencies <- splice_event_df %>%
-  filter(type == 'skipping') %>%
   count(histology) %>%
   arrange(desc(n))
 
@@ -76,7 +73,7 @@ histology_frequencies <- splice_event_df %>%
 ordered_histologies <- histology_frequencies$histology
 cols <- cols[ordered_histologies]
 
-es_events <- upset(fromList(list_for_skipping_upsetR), 
+se_events <- upset(fromList(list_for_upsetR), 
       keep.order = TRUE, 
       mainbar.y.label = "", 
       main.bar.color = "black",
@@ -96,103 +93,32 @@ es_events <- upset(fromList(list_for_skipping_upsetR),
 
 # Generate the UpSetR plot
 # Save plot
-pdf(upsetR_es_plot_file, height = 8, width = 10)
-print(es_events)
+pdf(upsetR_plot_file, height = 8, width = 10)
+print(se_events)
 dev.off()
 
 # Create an empty list to store the results
-unique_items_list <- vector("list", length(list_for_skipping_upsetR))
+unique_items_list <- vector("list", length(list_for_upsetR))
 
 # Loop through each sublist and find unique items
-for (i in seq_along(list_for_skipping_upsetR)) {
-  current_sublist <- unlist(list_for_skipping_upsetR[[i]])
-  other_sublists <- unlist(list_for_skipping_upsetR[-i])
+for (i in seq_along(list_for_upsetR)) {
+  current_sublist <- unlist(list_for_upsetR[[i]])
+  other_sublists <- unlist(list_for_upsetR[-i])
   unique_items <- current_sublist[!(current_sublist %in% other_sublists)]
-  histology = names(list_for_skipping_upsetR)[i]
+  histology = names(list_for_upsetR)[i]
   unique_items_list[[histology]] <- unique_items
 }
 
 # Iterate through the sub-lists and create one larger list to write to a TSV file
-unique_events_es_df <- data.frame()
+unique_events_df <- data.frame()
 for (Histology in names(unique_items_list)) {
   
   # Create a data frame with list values
   df <- data.frame(SpliceID=unlist(unique_items_list[[Histology]])) %>% mutate(Histology=paste(Histology,sep="")) 
   
   # append to larger df of unique events
-  unique_events_es_df <- rbind(unique_events_es_df,df)
+  unique_events_df <- rbind(unique_events_df,df)
   
 }
-write_tsv(unique_events_es_df, uniq_es_tsv_out)
+write_tsv(unique_events_df, uniq_tsv_out)
 
-## make list out of all inclusion events
-list_for_inclusion_upsetR <- splice_event_df %>%
-  filter(type == 'inclusion') %>%
-  filter(histology !="NA") %>%
-  dplyr::select(histology, splicing_event) %>%
-  group_by(histology) %>%
-  summarise(splicing_events = list(splicing_event)) %>% # Summarize as a list
-  ungroup() %>%
-  deframe()
-
-# Calculate frequencies
-histology_frequencies_incl <- splice_event_df %>%
-  filter(type == 'inclusion') %>%
-  count(histology) %>%
-  arrange(desc(n))
-
-# Reorder cols based on this frequency order
-ordered_histologies <- histology_frequencies_incl$histology
-cols <- cols[ordered_histologies]
-
-# Generate the UpSetR plot
-ei_events <- upset(fromList(list_for_inclusion_upsetR),
-                   keep.order = TRUE, 
-                   mainbar.y.label = "", 
-                   main.bar.color = "black",
-                   sets.bar.color = cols,
-                   order.by = "freq", 
-                   sets.x.label = "Set size",
-                   mb.ratio = c(0.5, 0.5), 
-                   shade.color = "aliceblue",
-                   #text scale
-                   # c(intersection size title, intersection size tick labels, set size title, set size tick labels, set names, numbers above bars)
-                   text.scale = c(2,2,2,1.7,2,0), 
-                   point.size = 3, 
-                   line.size = 1.2,  
-                   nsets = 17, 
-                   empty.intersections = "on")
-# Save plot
-pdf(upsetR_ei_plot_file, height = 8, width = 10)
-print(ei_events)
-dev.off()
-
-# Create an empty list to store the results
-unique_items_list <- vector("list", length(list_for_inclusion_upsetR))
-
-# Loop through each sublist and find unique items
-for (i in seq_along(list_for_inclusion_upsetR)) {
-  current_sublist <- unlist(list_for_inclusion_upsetR[[i]])
-  other_sublists <- unlist(list_for_inclusion_upsetR[-i])
-  unique_items <- current_sublist[!(current_sublist %in% other_sublists)]
-  histology = names(list_for_inclusion_upsetR)[i]
-  unique_items_list[[histology]] <- unique_items
-}
-
-# Iterate through the sub-lists and create one larger list to write to a TSV file
-unique_events_ei_df <- data.frame()
-for (Histology in names(unique_items_list)) {
-  
-  # Create a data frame with list values
-  df <- data.frame(SpliceID=unlist(unique_items_list[[Histology]])) %>% 
-    mutate(Histology=paste(Histology,sep="")) 
-  
-  # Define the file name based on the list name
-  file_name <- file.path(file.path(results_dir), paste("unique_events-es.",Histology, ".tsv", sep = ""))
-  
-  # append to larger df of unique events
-  unique_events_ei_df <- rbind(unique_events_ei_df,df)
-  
-}
-
-write_tsv(unique_events_ei_df, uniq_ei_tsv_out)

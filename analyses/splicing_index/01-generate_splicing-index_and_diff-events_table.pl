@@ -160,9 +160,6 @@ while(<FIL>)
   my $skip_len = $cols[30];
   my $thr_diff = $cols[-1];
 
-  ## only look at strong changes,  tumor junction reads > 10 reads
-  next unless ( ( ($IJC + $SJC) > 10) ) ;
-
   ## create unique ID for splicing change
 
   my $splice_id = $gene.":".$Start."-".$End."_".$prevES."-".$prevEE."_".$nextES."-".$nextEE;
