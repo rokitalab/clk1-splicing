@@ -27,7 +27,6 @@ snv-mutation-tmb-coding.tsv
 * `04-plot_total-splicing-cases.R` plots total splicing cases across samples  
 * `05-plot-tmb-vs-sbi.R` plots splicing burden vs TMB by mutation status and cancer group
 * `06-plot-gsva-score-vs-sbi.R` plots splicing burden vs GSVA score for the splicosome by histology or cluster
-* `07-plot_sbi_vs_splicing_factor_expr.R` plot splicing burden vs. splicing factor gene expression by cluster
 
 ## Directory structure
 ```
@@ -38,7 +37,6 @@ snv-mutation-tmb-coding.tsv
 ├── 04-plot_total-splicing-cases.R
 ├── 05-plot-tmb-vs-sbi.R
 ├── 06-plot-gsva-score-vs-sbi.R
-├── 07-plot_sbi_vs_splicing_factor_expr.R
 ├── README.md
 ├── Rplots.pdf
 ├── input
@@ -56,12 +54,6 @@ snv-mutation-tmb-coding.tsv
 │   ├── sbi-plot-A5SS.pdf
 │   ├── sbi-plot-RI.pdf
 │   ├── sbi-plot-SE.pdf
-│   ├── sbi-sf-correlation-heatmap-byCluster.pdf
-│   ├── sbi-sf-correlation-heatmap-byHist.pdf
-│   ├── sbi-vs-clk1-ex4-psi-other-clusters.pdf
-│   ├── sbi-vs-clk1-tpm-by-cluster.pdf
-│   ├── sbi-vs-clk1-tpm-cluster6.pdf
-│   ├── sbi-vs-clk1-tpm-other-clusters.pdf
 │   └── splice-types.pdf
 ├── results
 │   ├── splice_events.diff.A3SS.txt.gz

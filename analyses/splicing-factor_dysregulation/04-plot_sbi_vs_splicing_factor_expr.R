@@ -1,10 +1,10 @@
 ################################################################################
-# 07-plot_sbi_vs_splicing_factor_expr.R
+# 04-plot_sbi_vs_splicing_factor_expr.R
 # script that calculates pearson correlation coefficients between SE SBI and splicing factor (SF) gene expression within identified clusters and tumor histologies
 #
 # written by Ryan Corbett
 #
-# usage: Rscript 07-plot_sbi_vs_splicing_factor_expr.R
+# usage: Rscript 04-plot_sbi_vs_splicing_factor_expr.R
 ################################################################################
 
 
@@ -25,7 +25,7 @@ suppressPackageStartupMessages({
 ##directory setup
 root_dir <- rprojroot::find_root(rprojroot::has_dir(".git"))
 data_dir <- file.path(root_dir, "data")
-analysis_dir <- file.path(root_dir, "analyses", "splicing_index")
+analysis_dir <- file.path(root_dir, "analyses", "splicing-factor_dysregulation")
 results_dir <- file.path(analysis_dir, "results")
 plots_dir <- file.path(analysis_dir, "plots")
 input_dir <- file.path(analysis_dir, "input")
@@ -33,7 +33,9 @@ input_dir <- file.path(analysis_dir, "input")
 source(file.path(root_dir, "figures", "theme_for_plots.R"))
 
 # set file paths
-sbi_se_file <- file.path(results_dir,
+sbi_se_file <- file.path(root_dir, "analyses", 
+                         "splicing_index",
+                         "results",
                          "splicing_index.SE.txt")
 
 expr_file <- file.path(data_dir,
@@ -44,9 +46,7 @@ cluster_file <- file.path(root_dir, "analyses",
                           "results",
                           "sample-cluster-metadata-top-5000-events-stranded.tsv")
 
-sf_file <- file.path(root_dir, "analyses",
-                     "splicing-factor_dysregulation",
-                     "input", "splicing_factors.txt")
+sf_file <- file.path(input_dir, "splicing_factors.txt")
 
 rmats_file <- file.path(data_dir, "clk1-splice-events-rmats.tsv")
 
@@ -83,13 +83,17 @@ for (clust in colnames(cor_mat)){
   # subset sbi df for cluster of interest
   sbi_sub <- sbi_se %>%
     dplyr::filter(cluster == clust)
-
+  
   # loop through SFs
   for (sf in rownames(cor_mat)){
     
     # calculate pearson correlation coefficients and p-values
-    cor_mat[sf,clust] <- cor.test(sbi_sub$SI, unlist(sf_expr[sf,sbi_sub$Sample]))$estimate
-    p_mat[sf,clust] <- cor.test(sbi_sub$SI, unlist(sf_expr[sf,sbi_sub$Sample]))$p.value
+    cor_mat[sf,clust] <- cor.test(log2(sbi_sub$SI),
+                                  log2(unlist(sf_expr[sf,sbi_sub$Sample])),
+                                  method = "pearson")$estimate
+    p_mat[sf,clust] <- cor.test(log2(sbi_sub$SI),
+                                log2(unlist(sf_expr[sf,sbi_sub$Sample])),
+                                method = "pearson")$p.value
     
   }
   
@@ -99,102 +103,44 @@ for (clust in colnames(cor_mat)){
 fdr_mat <- apply(p_mat, 2, function(x) p.adjust(x, "BH"))
 
 # For plotting, we can limit to most significantly correlated SFs
-plot_mat <- cor_mat[rowSums(fdr_mat < 1e-6 & !is.na(fdr_mat)) > 0,]
+gois_cluster <- unique(as.vector(apply(fdr_mat, 2, function(x) head(names(sort(x)), n = 10))))
+plot_mat <- cor_mat[gois_cluster,]
+plot_mat <- plot_mat[rowSums(is.nan(plot_mat)) == 0,]
+
 fdr_mat <- fdr_mat[rownames(plot_mat),]
 
 col_fun <- colorRamp2(c(-1, 0, 1), c("blue", "white", "red"))
 
 # Create the heatmap
-cluster_heatmap <- Heatmap(plot_mat,
-                          name = "Pearson\nCorrelation",
-                          col = col_fun,
-                          show_row_names = TRUE,
-                          show_column_names = TRUE,
-                          cluster_rows = TRUE,
-                          cluster_columns = TRUE,
-                          cell_fun = function(j, i, x, y, w, h, fill) {
-                            if(fdr_mat[i, j] < 1e-5) {
-                              grid.text("**", x, y)
-                            } else if(fdr_mat[i, j] < 0.05) {
-                              grid.text("*", x, y)
-                            }
-                          }
-                          )
+cluster_heatmap <- Heatmap(t(plot_mat),
+                           name = "Pearson\nCorrelation",
+                           col = col_fun,
+                           show_row_names = TRUE,
+                           show_column_names = TRUE,
+                           cluster_rows = TRUE,
+                           cluster_columns = TRUE,
+                           cell_fun = function(j, i, x, y, w, h, fill) {
+                             if(t(fdr_mat)[i, j] < 1e-5) {
+                               grid.text("**", x, y)
+                             } else if(t(fdr_mat)[i, j] < 0.05) {
+                               grid.text("*", x, y)
+                             }
+                           }
+)
 
 # save to output
 pdf(NULL)
 pdf(file.path(plots_dir, "sbi-sf-correlation-heatmap-byCluster.pdf"),
-    width = 6, height = 10)
+    width = 13, height = 4)
 
 print(cluster_heatmap)
 
 dev.off()
 
-# repeat for by-histology correlation analyses
-hist_cor_mat <- matrix(0,
-                  nrow(sf_expr),
-                  length(unique(cluster_df$plot_group)),
-                  dimnames = list(rownames(sf_expr),
-                                  sort(unique(cluster_df$plot_group))))
-
-hist_p_mat <- hist_cor_mat
-
-# loop through histologies
-for (hist in colnames(hist_cor_mat)){
-  
-  # subset for hist of interest
-  sbi_sub <- sbi_se %>%
-    dplyr::filter(Histology == hist,
-                  Sample %in% cluster_df$sample_id)
-  
-  # loop through SFs
-  for (sf in rownames(hist_cor_mat)){
-    
-    # calculate pearson correlation coefficients and p-values
-    hist_cor_mat[sf,hist] <- cor.test(sbi_sub$SI, unlist(sf_expr[sf,sbi_sub$Sample]))$estimate
-    hist_p_mat[sf,hist] <- cor.test(sbi_sub$SI, unlist(sf_expr[sf,sbi_sub$Sample]))$p.value
-    
-  }
-  
-}
-
-# calcualte FDRs
-hist_fdr_mat <- apply(hist_p_mat, 2, function(x) p.adjust(x, "BH"))
-
-hist_plot_mat <- hist_cor_mat[rowSums(hist_fdr_mat < 1e-7 & !is.na(hist_fdr_mat)) > 0,]
-hist_fdr_mat <- hist_fdr_mat[rownames(hist_plot_mat),]
-
-col_fun <- colorRamp2(c(-1, 0, 1), c("blue", "white", "red"))
-
-# Generate matrix of asterisks for significant p-values
-
-# Create the heatmap
-hist_heatmap <- Heatmap(t(hist_plot_mat),
-                        name = "Pearson\nCorrelation",
-                        col = col_fun,
-                        show_row_names = TRUE,
-                        show_column_names = TRUE,
-                        cluster_rows = TRUE,
-                        cluster_columns = TRUE,
-                        cell_fun = function(j, i, x, y, w, h, fill) {
-                          if(t(hist_fdr_mat)[i, j] < 1e-5) {
-                            grid.text("**", x, y)
-                          } else if(t(hist_fdr_mat)[i, j] < 0.05) {
-                            grid.text("*", x, y)
-                          }
-                        }
-                )
-
-# Write to output
-pdf(file.path(plots_dir, "sbi-sf-correlation-heatmap-byHist.pdf"),
-    width = 10, height = 6)
-
-print(hist_heatmap)
-
-dev.off()
+head(sort(unlist(cor_mat[,6]), decreasing = TRUE), 10)
 
 # extract CLK1 expression and append cluster, sbi info
-clk1_expr <- expr %>%
+clk1_expr <- sf_expr %>%
   as.data.frame() %>%
   rownames_to_column("gene_name") %>%
   dplyr::filter(gene_name == "CLK1") %>%
@@ -218,7 +164,7 @@ names(plotgroup_palette) <- unique(clk1_expr$plot_group)
 # plot SBI against CLK1 expression in cluster 6
 clk1_expr %>%
   dplyr::filter(cluster == 6) %>%
-  ggplot(aes(x = log2(CLK1_tpm+1), y = log2(SI))) +
+  ggplot(aes(x = log2(CLK1_tpm), y = log2(SI))) +
   geom_point(aes(color = plot_group)) +
   stat_smooth(method = "lm", 
               formula = y ~ x, 
@@ -243,30 +189,58 @@ ggsave(file.path(plots_dir,
 # plot SBI against CLK1 expression in all other clusters
 clk1_expr %>%
   dplyr::filter(cluster != 6) %>%
-  ggplot(aes(x = log2(CLK1_tpm+1), y = log2(SI))) +
-    geom_point(aes(color = plot_group),
-               alpha = 0.7) +
-    stat_smooth(method = "lm", 
-                formula = y ~ x, 
-                geom = "smooth", 
-                colour = "red",
-                fill = "pink",
-                linetype="dashed") +
-    labs(x = expression(bold(Log[2] ~ "CLK1 TPM")),
-         y = expression(bold(Log[2] ~ "SE SBI")),
-         color = "Histology") + 
-    stat_cor(method = "pearson",
-             label.x = 0, label.y = -1, size = 3) +
-    facet_wrap(~cluster, nrow = 2,
-               labeller = labeller(cluster = label_wrap_gen(18))) + 
+  ggplot(aes(x = log2(CLK1_tpm), y = log2(SI))) +
+  geom_point(aes(color = plot_group),
+             alpha = 0.7) +
+  stat_smooth(method = "lm", 
+              formula = y ~ x, 
+              geom = "smooth", 
+              colour = "red",
+              fill = "pink",
+              linetype="dashed") +
+  labs(x = expression(bold(Log[2] ~ "CLK1 TPM")),
+       y = expression(bold(Log[2] ~ "SE SBI")),
+       color = "Histology") + 
+  stat_cor(method = "pearson",
+           label.x = 0, label.y = -2, size = 3) +
+  facet_wrap(~cluster, nrow = 2,
+             labeller = labeller(cluster = label_wrap_gen(18))) + 
   scale_color_manual(values = plotgroup_palette, breaks = names(plotgroup_palette)) + 
-  ylim(c(-8,0)) +
-    theme_Publication()
+  ylim(c(-8,-1)) +
+  theme_Publication()
 
 # save plot
 ggsave(file.path(plots_dir,
                  "sbi-vs-clk1-tpm-other-clusters.pdf"),
-       width = 12, height = 5)
+       width = 13, height = 5)
+
+# plot SBI against CLK1 expression by histology
+clk1_expr %>%
+  ggplot(aes(x = log2(CLK1_tpm+1), y = log2(SI))) +
+  geom_point(aes(color = plot_group),
+             alpha = 0.7,
+             show.legend = FALSE) +
+  stat_smooth(method = "lm", 
+              formula = y ~ x, 
+              geom = "smooth", 
+              colour = "red",
+              fill = "pink",
+              linetype="dashed") +
+  labs(x = expression(bold(Log[2] ~ "CLK1 TPM")),
+       y = expression(bold(Log[2] ~ "SE SBI")),
+       color = "Histology") + 
+  stat_cor(method = "pearson",
+           label.x = 0, label.y = -1, size = 3) +
+  facet_wrap(~plot_group, nrow = 3,
+             labeller = labeller(plot_group = label_wrap_gen(18))) + 
+  scale_color_manual(values = plotgroup_palette, breaks = names(plotgroup_palette)) + 
+  ylim(c(-8,0)) +
+  theme_Publication()
+
+# save plot
+ggsave(file.path(plots_dir,
+                 "sbi-vs-clk1-tpm-byHist.pdf"),
+       width = 12, height = 7)
 
 ## Finally, assess correlations between CLK1 exon 4 PSI and SBI
 
@@ -306,7 +280,7 @@ clk1_expr %>%
 
 # save plot
 ggsave(file.path(plots_dir,
-                 "sbi-vs-clk1-tpm-cluster6.pdf"),
+                 "sbi-vs-clk1-ex4-psi-cluster6.pdf"),
        width = 7, height = 4)
 
 # plot SBI vs. clk1 ex4 PSI in cluster 6
