@@ -124,7 +124,7 @@ plot_sbi <- function(sbi_df, plot_file,label) {
     annotate("rect", xmin = -Inf, xmax = Inf, ymin = 0, ymax = lower_sbi,
             fill = "#fac50c", alpha = 0.3) +
     geom_hline(yintercept = lower_sbi, linetype = "dashed", color = "#fac50c", size = 1) +
-    
+
     # Blue shading from upper_sbi to top of the plot
     annotate("rect", xmin = -Inf, xmax = Inf, ymin = upper_sbi, ymax = Inf,
   	    fill = "#2a81e2", alpha = 0.1) +
@@ -143,24 +143,27 @@ plot_sbi <- function(sbi_df, plot_file,label) {
     theme(legend.position = "none", legend.direction = "horizontal",
         axis.text.x = element_text(angle = 70, hjust = 1)) +
 
-    # Make y-axis scale display lower values better
-    # Add low and high SBI ticks
-    scale_y_continuous(trans = "sqrt",
-		       breaks = c(0, lower_sbi, upper_sbi, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
-		       labels = c("0", "Low SBI", "High SBI", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6")) +
     # Histology fill
     scale_fill_manual(values = plot_colors)
   
-  # Scale to max value (for main figure)
-  p2 <- p + coord_cartesian(ylim = c(0, max(si_cdf_plot$SI)))
+  if(label == "SE") {
+    # Scale to max value (for main figure)
+    p2 <- p + coord_cartesian(ylim = c(0, max(si_cdf_plot$SI)+0.03)) +
+	  scale_y_continuous(breaks = c(0, lower_sbi, upper_sbi, 0.1, 0.15, 0.2),
+                             labels = c("0", "Low SBI", "High SBI", "0.1", "0.15", "0.2"))
 
-  # Scale to same max value (for supp figure)
-  p <- p + coord_cartesian(ylim = c(0, 0.6))
+    ggsave(filename = paste0("scale-",plot_file), path = plots_dir, plot = p2,
+         height = 6, width = 8, useDingbats = FALSE)
+  }
+
+  # Scale to same max value and sqrt y-axis to see lower values (for supp figure)
+  p <- p + coord_cartesian(ylim = c(0, 0.5)) +
+	  scale_y_continuous(trans = "sqrt",
+			     breaks = c(0, lower_sbi, upper_sbi, 0.1, 0.2, 0.3, 0.4, 0.5),
+                             labels = c("0", "Low SBI", "High SBI", "0.1", "0.2", "0.3", "0.4", "0.5"))
 
   # Save plots
   ggsave(filename = plot_file, path = plots_dir, plot = p,
-         height = 6, width = 8, useDingbats = FALSE)
-  ggsave(filename = paste0("scale-free-", plot_file), path = plots_dir, plot = p2,
          height = 6, width = 8, useDingbats = FALSE)
 }
 
