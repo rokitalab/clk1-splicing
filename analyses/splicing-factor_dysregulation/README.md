@@ -2,7 +2,9 @@
 
 Module authors: Ammar Naqvi (@naqvia), Jo Lynne Rokita (@jharenza)
 
-The purpose of this module is to identify known splicing factors [(ensemble-annotated)](https://genome.cshlp.org/content/26/6/732.long#ref-15) that are dysregulated in high splicing burden HGGs, potentially explaining the global levels of splicing dysregulation across HGGs.
+The purpose of this module is to identify known splicing factors [(ensemble-annotated)](https://genome.cshlp.org/content/26/6/732.long) that are dysregulated in high splicing burden tumors, potentially explaining the global levels of splicing dysregulation.
+
+The input gene list is taken from supplementary table 2 of the publication linked above. The HGNC symbol was taken for all genes encoding a known or putative RNA binding protein (RBP).
 
 ## Usage
 ### script to run analysis
