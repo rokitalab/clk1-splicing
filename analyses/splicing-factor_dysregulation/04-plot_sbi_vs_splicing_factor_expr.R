@@ -107,7 +107,7 @@ gois_cluster <- unique(as.vector(apply(fdr_mat, 2, function(x) head(names(sort(x
 plot_mat <- cor_mat[gois_cluster,]
 plot_mat <- plot_mat[rowSums(is.nan(plot_mat)) == 0,]
 
-fdr_mat <- fdr_mat[rownames(plot_mat),]
+fdr_plot_mat <- fdr_mat[rownames(plot_mat),]
 
 col_fun <- colorRamp2(c(-1, 0, 1), c("blue", "white", "red"))
 
@@ -120,9 +120,9 @@ cluster_heatmap <- Heatmap(t(plot_mat),
                            cluster_rows = TRUE,
                            cluster_columns = TRUE,
                            cell_fun = function(j, i, x, y, w, h, fill) {
-                             if(t(fdr_mat)[i, j] < 1e-5) {
+                             if(t(fdr_plot_mat)[i, j] < 1e-5) {
                                grid.text("**", x, y)
-                             } else if(t(fdr_mat)[i, j] < 0.05) {
+                             } else if(t(fdr_plot_mat)[i, j] < 0.05) {
                                grid.text("*", x, y)
                              }
                            }
@@ -137,7 +137,36 @@ print(cluster_heatmap)
 
 dev.off()
 
-head(sort(unlist(cor_mat[,6]), decreasing = TRUE), 10)
+# Merge correlation stats and write to output
+sbi_sf_cor_df <- cor_mat %>%
+  as.data.frame() %>%
+  rownames_to_column("gene_symbol") %>%
+  pivot_longer(-gene_symbol,
+               names_to = "cluster",
+               values_to = "pearson_r")
+
+sbi_sf_p_df <- p_mat %>%
+  as.data.frame() %>%
+  rownames_to_column("gene_symbol") %>%
+  pivot_longer(-gene_symbol,
+               names_to = "cluster",
+               values_to = "pearson_pvalue")
+
+sbi_sf_fdr_df <- fdr_mat %>%
+  as.data.frame() %>%
+  rownames_to_column("gene_symbol") %>%
+  pivot_longer(-gene_symbol,
+               names_to = "cluster",
+               values_to = "pearson_fdr")
+
+sbi_sf_cor_df <- sbi_sf_cor_df %>%
+  left_join(sbi_sf_p_df) %>%
+  left_join(sbi_sf_fdr_df) %>%
+  arrange(desc(pearson_r))
+
+write_tsv(sbi_sf_cor_df,
+          file.path(results_dir,
+                    "se-sbi-sf-expr-correlations.tsv"))
 
 # extract CLK1 expression and append cluster, sbi info
 clk1_expr <- sf_expr %>%
