@@ -40,7 +40,7 @@ expr_evodevo_file <-  file.path(data_dir,"evodevo_rna-isoform-expression-rsem-tp
 evodevo_hist_file <- file.path(data_dir,"evodevo-histologies.tsv")
 astro_metadata_file<-file.path(data_dir,"GSE73721-normal-histologies.tsv")
 metadata_pedr_file <-file.path(data_dir,"GSE243682-normal-brain-histologies.tsv")
-pons_cnh_trans_file<- file.path(input_dir,"Pons-CNH.rsem.isoforms.results.gz")
+pons_trans_file<- file.path(input_dir,"BA_KFWTGZPC_20250506.rsem.isoforms.results.gz")
 
 # Output directories
 results_dir <- file.path(analysis_dir, "results")
@@ -203,7 +203,7 @@ ped_clk1_transcr_counts <- readRDS(ped_trans_file) %>%
   dplyr::rename(Kids_First_Biospecimen_ID=Sample) %>%
   inner_join(sra_mapping,by=c("Kids_First_Biospecimen_ID" = "SRR"))
 
-pons_cnh_counts <- vroom(pons_cnh_trans_file) %>%
+pons_counts <- vroom(pons_trans_file) %>%
   filter(grepl("_CLK1", transcript_id)) %>%
   mutate(transcript_id = ifelse(
     grepl("ENST00000321356.9|ENST00000434813.3|ENST00000409403.6", transcript_id),
@@ -215,10 +215,10 @@ pons_cnh_counts <- vroom(pons_cnh_trans_file) %>%
   summarise(TPM = sum(TPM, na.rm = TRUE)) %>%
   dplyr::mutate(group="Pediatric normals",
                 plot_group="Pons",
-                Kids_First_Biospecimen_ID="Pons_CNH") %>%
+                Kids_First_Biospecimen_ID="BA_KFWTGZPC") %>%
   dplyr::select(Kids_First_Biospecimen_ID,transcript_id,TPM,group,plot_group)
 
-ped_clk1_transcr_counts <- rbind(ped_clk1_transcr_counts,pons_cnh_counts) %>% 
+ped_clk1_transcr_counts <- rbind(ped_clk1_transcr_counts, pons_counts) %>% 
   unique()
 
 transcript_expr_CLK1_combined_df <- rbind(all_clk4_transcr_counts,ped_clk1_transcr_counts,gtex_clk1_transc_counts,evodevo_clk1_transc_counts,clk4_transcr_counts_astro) %>% 
