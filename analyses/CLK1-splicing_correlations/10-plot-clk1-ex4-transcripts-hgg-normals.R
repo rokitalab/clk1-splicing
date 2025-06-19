@@ -284,59 +284,31 @@ transcript_expr_CLK1_combined_df$group <- factor(
   levels = c("PBTA", "Pediatric normals", "Evo-Devo", "Cell Type Controls", "GTEx")
 )
 
-## order evodevo
-evodevo_order <-  fct_relevel(
-  "4 Week Post Conception",
-  "5 Week Post Conception",
-  "6 Week Post Conception",
-  "7 Week Post Conception",
-  "8 Week Post Conception",
-  "9 Week Post Conception",
-  "10 Week Post Conception",
-  "11 Week Post Conception",
-  "12 Week Post Conception",
-  "13 Week Post Conception",
-  "16 Week Post Conception",
-  "Adolescent",
-  "Elderly",
-  "Infant",
-  "Neonate",
-  "School Age Child",
-  "Toddler",
-  "Young Adult",
-  "Middle Adult")
-
-# Reordering the plot group names for "Evo-Devo"
+# Subgroup Evo-Devo
 transcript_expr_CLK1_combined_df <- transcript_expr_CLK1_combined_df %>%
   mutate(plot_group = case_when(
-    group == "Evo-Devo" ~ fct_relevel(plot_group,
-                                      "4 Week Post Conception",
-                                      "5 Week Post Conception",
-                                      "6 Week Post Conception",
-                                      "7 Week Post Conception",
-                                      "8 Week Post Conception",
-                                      "9 Week Post Conception",
-                                      "10 Week Post Conception",
-                                      "11 Week Post Conception",
-                                      "12 Week Post Conception",
-                                      "13 Week Post Conception",
-                                      "16 Week Post Conception",
-                                      "Adolescent",
-                                      "Elderly",
-                                      "Infant",
-                                      "Neonate",
-                                      "School Age Child",
-                                      "Toddler",
-                                      "Young Adult",
-                                      "Middle Adult"
-    ),
-    TRUE ~ plot_group # Leave other groups as-is
+    group == "Evo-Devo" & plot_group %in% c(
+      "4 Week Post Conception", "5 Week Post Conception", "6 Week Post Conception",
+      "7 Week Post Conception", "8 Week Post Conception", "9 Week Post Conception",
+      "10 Week Post Conception", "11 Week Post Conception", "12 Week Post Conception",
+      "13 Week Post Conception", "16 Week Post Conception"
+    ) ~ "Evo-Devo: Fetal",
+    group == "Evo-Devo" & plot_group %in% c("Neonate", "Infant", "Toddler") ~ "Evo-Devo: Early Childhood",
+    group == "Evo-Devo" & plot_group %in% c("School Age Child", "Adolescent") ~ "Evo-Devo: School Age",
+    group == "Evo-Devo" & plot_group %in% c("Young Adult", "Middle Adult", "Elderly") ~ "Evo-Devo: Adult",
+    TRUE ~ group
   ))
+
+# Define the desired order for groups
+transcript_expr_CLK1_combined_df$plot_group <- factor(
+  transcript_expr_CLK1_combined_df$plot_group,
+  levels = c("PBTA", "Pediatric normals", "Evo-Devo: Fetal", "Evo-Devo: Early Childhood", "Evo-Devo: School Age", "Evo-Devo: Adult", "Cell Type Controls", "GTEx")
+)
 
 ## make plot for proportion
 tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = proportion)) +
   geom_jitter(
-    aes(color = dot_color),   # Use precomputed colors for jitter points
+    aes(color = plot_group),   # Use precomputed colors for jitter points
     width = 0.2, size = 2) +
   geom_boxplot(
     aes(group = plot_group),  # Create boxplots for each group
@@ -348,19 +320,12 @@ tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = pro
     title = "Relative CLK1 Exon 4 Transcript Expression",
     x = "Group",
     y = "Proportion CLK1 exon 4 inclusion transcript") +
-  scale_color_identity(
-    name = "Group"
-  ) +
-  facet_grid(
-    ~ group,                  # Facet by 'group'
-    scales = "free_x"         # Allow different x-axis scales for each facet
-  )  +
   theme_Publication() +
   theme(
-    legend.position = "right", 
+    #legend.position = "right", 
     axis.text.x = element_text(angle = 75, hjust = 1)
   ) 
 
-pdf(file.path(plots_dir,"clk1_ex4-tpm-phgg-ctrls.pdf"), height = 7, width = 22)
+pdf(file.path(plots_dir,"clk1_ex4-tpm-phgg-ctrls.pdf"), height = 7, width = 7)
 tpm_plot
 dev.off()
