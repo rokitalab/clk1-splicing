@@ -59,16 +59,13 @@ snv-mutation-tmb-coding.tsv
 │   ├── sbi-plot-RI.pdf
 │   ├── sbi-plot-SE-boxplot.pdf
 │   ├── sbi-plot-SE.pdf
-│   ├── scale-free-sbi-plot-A3SS-boxplot.pdf
-│   ├── scale-free-sbi-plot-A5SS-boxplot.pdf
-│   ├── scale-free-sbi-plot-RI-boxplot.pdf
-│   ├── scale-free-sbi-plot-SE-boxplot.pdf
+│   ├── scale-sbi-plot-SE-boxplot.pdf
 │   └── splice-types.pdf
 ├── results
-│   ├── splice_events.diff.A3SS.txt
-│   ├── splice_events.diff.A5SS.txt
-│   ├── splice_events.diff.RI.txt
-│   ├── splice_events.diff.SE.txt
+│   ├── splice_events.diff.A3SS.txt.gz
+│   ├── splice_events.diff.A5SS.txt.gz
+│   ├── splice_events.diff.RI.txt.gz
+│   ├── splice_events.diff.SE.txt.gz
 │   ├── splicing_index.A3SS.txt
 │   ├── splicing_index.A5SS.txt
 │   ├── splicing_index.RI.txt
