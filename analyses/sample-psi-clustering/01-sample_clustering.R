@@ -27,8 +27,7 @@ histologies_file <- file.path(root_dir, "analyses",
                          "cohort_summary", "results",
                          "histologies-plot-group.tsv")
 
-opc_hist_file <- file.path(data_dir, "v11",
-                           "histologies.tsv")
+opc_hist_file <- file.path(data_dir, "histologies.tsv")
 
 # wrangle data
 

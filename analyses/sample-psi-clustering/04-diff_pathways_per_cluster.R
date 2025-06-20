@@ -9,7 +9,7 @@ suppressPackageStartupMessages({
 
 
 root_dir <- rprojroot::find_root(rprojroot::has_dir(".git"))
-data_dir <- file.path(root_dir, "data", "v11")
+data_dir <- file.path(root_dir, "data")
 analysis_dir <- file.path(root_dir, "analyses", "sample-psi-clustering")
 results_dir <- file.path(analysis_dir, "results")
 plot_dir <- file.path(analysis_dir, "plots")
@@ -21,8 +21,7 @@ expr_file <- file.path(data_dir,
 stranded_cluster_file <- file.path(results_dir, "sample-cluster-metadata-top-5000-events-stranded.tsv")
 polyA_cluster_file <- file.path(results_dir, "sample-cluster-metadata-top-5000-events-poly-A_stranded.tsv")
 
-geneSet_file <- file.path(root_dir, "analyses", "clustering_analysis",
-                          "input", "hallmark_splice_geneset_mrna.rds")
+geneSet_file <- file.path(results_dir, "hallmark_kegg_splice_geneset_mrna.rds")
 
 # Wrangle data
 expr <- readRDS(expr_file)

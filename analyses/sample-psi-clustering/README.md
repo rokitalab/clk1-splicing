@@ -14,8 +14,8 @@ bash run-module.sh
 ## Folder content
 * 00-create-psi-matrix.R; create PSI matrix across primary tumors
 * 01-sample_clustering.R; cluster samples by most variable PSIs and by RNA-seq library type
-* 02-plot-histology-distr-across-clusters.R; assess hist and subtype distribution across clusters
-* 03-plot-sbi-with-cluster-mem.R; assess SBI group distribution across clusters
+* 02-create-geneset-rds.R; Creates an rds file combining hallmark cancer-related and kegg spliceosome genesets
+* 03-plot-histology-distr-across-clusters.R; assess hist and subtype distribution across clusters
 * 04-diff_pathways_per_cluster.R; assess pathway enrichment across clusters
 * 05-generate-gsva-summary-file.sh; collate GSVA data
 
@@ -28,12 +28,13 @@ bash run-module.sh
 .
 ├── 00-create-psi-matrix.R
 ├── 01-sample_clustering.R
-├── 02-plot-histology-distr-across-clusters.R
-├── 03-plot-sbi-with-cluster-mem.R
+├── 02-create-geneset-rds.R
+├── 03-plot-histology-distr-across-clusters.R
 ├── 04-diff_pathways_per_cluster.R
-├── 05-generate-spliceosome-summary-file.sh
+├── 05-generate-gsva-summary-file.sh
 ├── README.md
 ├── input
+│   ├── genesets.tsv
 │   ├── lgg-braf-fusion-breakpoint-annotation.tsv
 │   ├── mb_shh_molecular_subtypes.tsv
 │   └── subtype_hex.tsv
@@ -46,8 +47,6 @@ bash run-module.sh
 │   ├── cluster_membership-subtypes_poly-A-stranded.pdf
 │   ├── cluster_membership-subtypes_stranded.pdf
 │   ├── cluster_membership_poly-A-stranded.pdf
-│   ├── cluster_membership_sbi_group_poly-A-stranded.pdf
-│   ├── cluster_membership_sbi_group_stranded.pdf
 │   ├── cluster_membership_stranded.pdf
 │   ├── hgg-dmg-sample-cluster-subtype-enr-top-1000-events-all_libraries.pdf
 │   ├── hgg-dmg-sample-cluster-subtype-enr-top-1000-events-poly-A_stranded.pdf
@@ -110,10 +109,12 @@ bash run-module.sh
 │   ├── cluster_9_pathway_stranded.tsv
 │   ├── gsva_output_poly-A-stranded.tsv
 │   ├── gsva_output_stranded.tsv
+│   ├── hallmark_kegg_splice_geneset_mrna.rds
 │   ├── lgg-braf-fusion-cluster-membership-poly-A-stranded.tsv
 │   ├── lgg-braf-fusion-cluster-membership-stranded.tsv
 │   ├── mb-subgroup-cluster-membership-poly-A-stranded.tsv
 │   ├── mb-subgroup-cluster-membership-stranded.tsv
+│   ├── pbta-splice-event-psis.RDS
 │   ├── psi-matrix-top-1000-events-all_libraries.rds
 │   ├── psi-matrix-top-1000-events-poly-A_stranded.rds
 │   ├── psi-matrix-top-1000-events-stranded.rds
