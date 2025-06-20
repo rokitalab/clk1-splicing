@@ -27,6 +27,7 @@ snv-mutation-tmb-coding.tsv
 * `04-plot_total-splicing-cases.R` plots total splicing cases across samples  
 * `05-plot-tmb-vs-sbi.R` plots splicing burden vs TMB by mutation status and cancer group
 * `06-plot-gsva-score-vs-sbi.R` plots splicing burden vs GSVA score for the splicosome by histology or cluster
+* `07-plot-sbi-high-low.R` plots splicing burden high vs low samples by histology
 
 ## Directory structure
 ```
@@ -37,8 +38,8 @@ snv-mutation-tmb-coding.tsv
 ├── 04-plot_total-splicing-cases.R
 ├── 05-plot-tmb-vs-sbi.R
 ├── 06-plot-gsva-score-vs-sbi.R
+├── 07-plot-sbi-high-low.R
 ├── README.md
-├── Rplots.pdf
 ├── input
 │   └── snv-mutation-tmb-coding.tsv
 ├── plots
@@ -50,10 +51,15 @@ snv-mutation-tmb-coding.tsv
 │   ├── corplot_sbi-tmb-by-cg.pdf
 │   ├── corplot_sbi-tmb.pdf
 │   ├── hist_by_sbi_level_barplot.pdf
+│   ├── sbi-plot-A3SS-boxplot.pdf
 │   ├── sbi-plot-A3SS.pdf
+│   ├── sbi-plot-A5SS-boxplot.pdf
 │   ├── sbi-plot-A5SS.pdf
+│   ├── sbi-plot-RI-boxplot.pdf
 │   ├── sbi-plot-RI.pdf
+│   ├── sbi-plot-SE-boxplot.pdf
 │   ├── sbi-plot-SE.pdf
+│   ├── scale-sbi-plot-SE-boxplot.pdf
 │   └── splice-types.pdf
 ├── results
 │   ├── splice_events.diff.A3SS.txt.gz
