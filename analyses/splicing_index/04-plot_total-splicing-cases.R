@@ -37,10 +37,10 @@ source(file.path(figures_dir, "theme_for_plots.R"))
 plot_path <- file.path(plots_dir,"splice-types.pdf")
 
 ## get and setup input
-splice_case_SE_file  <- file.path(results_dir,"splice_events.diff.SE.txt")
-splice_case_RI_file  <- file.path(results_dir,"splice_events.diff.RI.txt")
-splice_case_A5SS_file  <- file.path(results_dir,"splice_events.diff.A5SS.txt")
-splice_case_A3SS_file  <- file.path(results_dir,"splice_events.diff.A3SS.txt")
+splice_case_SE_file  <- file.path(results_dir,"splice_events.diff.SE.txt.gz")
+splice_case_RI_file  <- file.path(results_dir,"splice_events.diff.RI.txt.gz")
+splice_case_A5SS_file  <- file.path(results_dir,"splice_events.diff.A5SS.txt.gz")
+splice_case_A3SS_file  <- file.path(results_dir,"splice_events.diff.A3SS.txt.gz")
 
 splice_case_SE_df  <-  vroom(splice_case_SE_file ,delim="\t") 
 splice_case_RI_df  <-  vroom(splice_case_RI_file ,delim="\t") 

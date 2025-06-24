@@ -113,12 +113,12 @@ plot_sbi <- function(sbi_df, plot_file,label) {
       aes(y = group_median, yend = group_median)
     ) +
     xlim(-1, 1.2) +
-    scale_y_continuous(
-      #trans = "log10",
-      limits = c(0,0.6),
-     # limits = c(0, 400),
-      #breaks = c(0, 3, 10, 30, 100, 300)
-    ) +
+    # scale_y_continuous(
+    #   #trans = "log10",
+    #   limits = c(0,0.6),
+    #  # limits = c(0, 400),
+    #   #breaks = c(0, 3, 10, 30, 100, 300)
+    # ) +
     
     # add labels
     labs(x = "",

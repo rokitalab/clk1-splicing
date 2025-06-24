@@ -7,10 +7,13 @@ indep_samples="../../data/independent-specimens.rnaseqpanel.primary.tsv"
 
 
 ## process PSI and generate SBI tables
-perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples SE
 perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples A3SS
 perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples A5SS
 perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples RI
+perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples SE
+
+# gzip diff files
+gzip results/*diff*.txt
 
 ## plot values (SBI) generated from above script in CDF plot
 echo "creating SBI CDF plots"
@@ -29,4 +32,9 @@ echo "plotting SBI vs TMB"
 Rscript --vanilla 05-plot-tmb-vs-sbi.R
 
 ## plot gsva score and sbi
+echo "plotting GVSA vs SBI"
 Rscript --vanilla 06-plot-gsva-score-vs-sbi.R
+
+## plot SBI and histology
+echo "plotting SBI high/low with histologies"
+Rscript --vanilla 07-plot-sbi-high-low.R 

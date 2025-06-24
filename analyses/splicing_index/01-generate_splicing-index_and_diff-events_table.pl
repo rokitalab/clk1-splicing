@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
 use Statistics::Lite qw(:all);
+use IO::Compress::Gzip qw(gzip $GzipError);
 ############################################################################################################
 # 03-generate_splicing-index_and_diff-events_table.SE.pl
 #
@@ -158,10 +159,6 @@ while(<FIL>)
   my $inc_len  = $cols[29];
   my $skip_len = $cols[30];
   my $thr_diff = $cols[-1];
-
-  ## only look at strong changes,  tumor junction reads > 10 reads
-  next unless ($IJC >=10);
-  next unless ($SJC >=10);
 
   ## create unique ID for splicing change
 

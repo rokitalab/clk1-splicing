@@ -33,8 +33,8 @@ source(file.path(figures_dir, "theme_for_plots.R"))
 
 ## output file names for plots
 file_splice_pattern_plot  <- file.path(analysis_dir, "plots", "splicing_pattern_plot.pdf")
-file_splice_pattern_plot_other_HGG  <- file.path(analysis_dir, "plots", "splicing_pattern_plot-other-HGG.pdf")
-file_splice_pattern_plot_DMG  <- file.path(analysis_dir, "plots", "splicing_pattern_plot-DMG.pdf")
+#file_splice_pattern_plot_other_HGG  <- file.path(analysis_dir, "plots", "splicing_pattern_plot-other-HGG.pdf")
+#file_splice_pattern_plot_DMG  <- file.path(analysis_dir, "plots", "splicing_pattern_plot-DMG.pdf")
 
 file_psi <- file.path(results_dir,"splice_events.diff.SE.txt")
 file_psi_func_incl <- file.path(results_dir,"splicing_events.SE.total.pos.intersectunip.ggplot.txt") 
