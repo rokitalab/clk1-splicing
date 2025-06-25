@@ -17,15 +17,14 @@ hist_file <- file.path(root_dir, "analyses",
                        "cohort_summary", "results",
                        "histologies-plot-group.tsv")
 
-rmats_file <- file.path(data_dir, "v11",
-                        "splice-events-rmats.tsv.gz")
+indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
 
-gene_psi_file <- file.path(root_dir, "analyses",
-                           "clustering_analysis",
-                           "input", "pan_cancer_splicing_SE.gene.rds")
+rmats_file <- file.path(data_dir, "splice-events-rmats.tsv.gz")
   
 # wrangle data
-samples <- colnames(readRDS(gene_psi_file))
+samples <- read_tsv(indep_file) %>%
+  filter(cohort == "PBTA") %>%
+  pull(Kids_First_Biospecimen_ID)
 
 # Load rmats, filter for samples of interest and SE events, and select relevant columns
 rmats <- data.table::fread(rmats_file) %>%
