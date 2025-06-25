@@ -337,58 +337,59 @@ readr::write_rds(kap_efs_dmg, file.path(results_dir,
 Plot KM
 
 ```{r}
-km_plot <- plotKM(model = list(kap_os_dmg, kap_efs_dmg),
-                  variable = "clk1_status",
-                  combined = T, 
-                  title = "")
+#Commenting out as error - only one group
+#km_plot <- plotKM(model = list(kap_os_dmg, kap_efs_dmg),
+#                  variable = "clk1_status",
+#                  combined = T, 
+#                  title = "")
               
-ggsave(file.path(plot_dir, "km_DMG_OS_EFS_CLK1_status.pdf"), km_plot,
-       width = 10, height = 6, units = "in",
-       device = "pdf")
+#ggsave(file.path(plot_dir, "km_DMG_OS_EFS_CLK1_status.pdf"), km_plot,
+#       width = 10, height = 6, units = "in",
+#       device = "pdf")
 ```
 
 Generate and plot DMG survival models:
 
 ```{r}
-survival_dmg_df <- survival_df %>%
-  dplyr::filter(grepl("DMG", mol_sub_group)) %>%
-  dplyr::mutate(mol_sub_group = fct_relevel(mol_sub_group,
-                                            c("DMG, H3 K28",
-                                              "DMG, H3 K28, TP53")))
+#survival_dmg_df <- survival_df %>%
+#  dplyr::filter(grepl("DMG", mol_sub_group)) %>%
+#  dplyr::mutate(mol_sub_group = fct_relevel(mol_sub_group,
+#                                            c("DMG, H3 K28",
+#                                              "DMG, H3 K28, TP53")))
 
-add_dmg_os_surv_result <- file.path(results_dir, 
-                     "cox_DMG_OS_additive_terms_subtype_clk1_status.RDS")
+#add_dmg_os_surv_result <- file.path(results_dir, 
+#                     "cox_DMG_OS_additive_terms_subtype_clk1_status.RDS")
 
-add_model_os_dmg <- fit_save_model(survival_dmg_df,
-                               terms = "mol_sub_group+clk1_status+age_at_diagnosis_years",
-                               add_dmg_os_surv_result,
-                               "multivariate",
-                               years_col = "OS_years",
-                               status_col = "OS_status"
-                              )
+#add_model_os_dmg <- fit_save_model(survival_dmg_df,
+#                               terms = "mol_sub_group+clk1_status+age_at_diagnosis_years",
+#                               add_dmg_os_surv_result,
+#                               "multivariate",
+#                               years_col = "OS_years",
+#                               status_col = "OS_status"
+#                              )
 
-add_os_dmg_forest_plot <- plotForest(readRDS(add_dmg_os_surv_result))
+#add_os_dmg_forest_plot <- plotForest(readRDS(add_dmg_os_surv_result))
 
-ggsave(file.path(plot_dir, "forest_DMG_OS_add_subtype_clk1_status.pdf"), 
-       add_os_dmg_forest_plot, width = 7.5, height = 3)
+#ggsave(file.path(plot_dir, "forest_DMG_OS_add_subtype_clk1_status.pdf"), 
+#       add_os_dmg_forest_plot, width = 7.5, height = 3)
 ```
 
 ```{r}
-add_dmg_efs_surv_result <- file.path(results_dir, 
-                     "cox_DMG_EFS_additive_terms_subtype_clk1_status.RDS")
+#add_dmg_efs_surv_result <- file.path(results_dir, 
+#                     "cox_DMG_EFS_additive_terms_subtype_clk1_status.RDS")
 
-add_model_efs_dmg <- fit_save_model(survival_dmg_df,
-                               terms = "mol_sub_group+clk1_status+age_at_diagnosis_years",
-                               add_dmg_efs_surv_result,
-                               "multivariate",
-                               years_col = "EFS_years",
-                               status_col = "EFS_status"
-                              )
+#add_model_efs_dmg <- fit_save_model(survival_dmg_df,
+#                               terms = "mol_sub_group+clk1_status+age_at_diagnosis_years",
+#                               add_dmg_efs_surv_result,
+#                               "multivariate",
+#                               years_col = "EFS_years",
+#                               status_col = "EFS_status"
+#                              )
 
-add_efs_dmg_forest_plot <- plotForest(readRDS(add_dmg_efs_surv_result))
+#add_efs_dmg_forest_plot <- plotForest(readRDS(add_dmg_efs_surv_result))
 
-ggsave(file.path(plot_dir, "forest_DMG_EFS_add_subtype_clk1_status.pdf"), 
-       add_efs_dmg_forest_plot, width = 7.5, height = 3)
+#ggsave(file.path(plot_dir, "forest_DMG_EFS_add_subtype_clk1_status.pdf"), 
+#       add_efs_dmg_forest_plot, width = 7.5, height = 3)
 ```
 
 Generate and plot models for HGG separately: 
@@ -422,52 +423,52 @@ readr::write_rds(kap_efs_hgg, file.path(results_dir,
 Plot KM 
 
 ```{r}
-km_plot <- plotKM(model = list(kap_os_hgg, kap_efs_hgg),
-                  variable = "clk1_status",
-                  combined = T, 
-                  title = "")
+#km_plot <- plotKM(model = list(kap_os_hgg, kap_efs_hgg),
+#                  variable = "clk1_status",
+#                  combined = T, 
+#                  title = "")
               
-ggsave(file.path(plot_dir, "km_HGG_OS_EFS_CLK1_status.pdf"), km_plot,
-       width = 10, height = 6, units = "in",
-       device = "pdf")
+#ggsave(file.path(plot_dir, "km_HGG_OS_EFS_CLK1_status.pdf"), km_plot,
+#       width = 10, height = 6, units = "in",
+#       device = "pdf")
 ```
 
 Generate and plot coxph models in HGG:  
 
 ```{r}
-add_hgg_os_surv_result <- file.path(results_dir, 
-                     "cox_HGG_OS_additive_terms_subtype_clk1_status.RDS")
+#add_hgg_os_surv_result <- file.path(results_dir, 
+#                     "cox_HGG_OS_additive_terms_subtype_clk1_status.RDS")
 
-add_model_os_hgg <- fit_save_model(survival_df[!grepl("DMG", survival_df$mol_sub_group) & !is.na(survival_df$extent_of_tumor_resection) & !survival_df$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                               terms = "extent_of_tumor_resection+mol_sub_group+clk1_status+age_at_diagnosis_years",
-                               add_hgg_os_surv_result,
-                               "multivariate",
-                               years_col = "OS_years",
-                               status_col = "OS_status"
-                              )
+#add_model_os_hgg <- fit_save_model(survival_df[!grepl("DMG", survival_df$mol_sub_group) & !is.na(survival_df$extent_of_tumor_resection) & !survival_df$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
+#                               terms = "extent_of_tumor_resection+mol_sub_group+clk1_status+age_at_diagnosis_years",
+#                               add_hgg_os_surv_result,
+#                               "multivariate",
+#                               years_col = "OS_years",
+#                               status_col = "OS_status"
+#                              )
 
-add_os_hgg_forest_plot <- plotForest(readRDS(add_hgg_os_surv_result))
+#add_os_hgg_forest_plot <- plotForest(readRDS(add_hgg_os_surv_result))
 
-ggsave(file.path(plot_dir, "forest_HGG_OS_add_subtype_clk1_status.pdf"), 
-       add_os_hgg_forest_plot, width = 7.5, height = 3)
+#ggsave(file.path(plot_dir, "forest_HGG_OS_add_subtype_clk1_status.pdf"), 
+#       add_os_hgg_forest_plot, width = 7.5, height = 3)
 ```
 
 ```{r}
-add_hgg_efs_surv_result <- file.path(results_dir, 
-                     "cox_HGG_EFS_additive_terms_subtype_clk1_status.RDS")
+#add_hgg_efs_surv_result <- file.path(results_dir, 
+#                     "cox_HGG_EFS_additive_terms_subtype_clk1_status.RDS")
 
-add_model_efs_hgg <- fit_save_model(survival_df[!grepl("DMG", survival_df$mol_sub_group) & !is.na(survival_df$extent_of_tumor_resection) & !survival_df$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                               terms = "extent_of_tumor_resection+mol_sub_group+clk1_status+age_at_diagnosis_years",
-                               add_hgg_efs_surv_result,
-                               "multivariate",
-                               years_col = "EFS_years",
-                               status_col = "EFS_status"
-                              )
+#add_model_efs_hgg <- fit_save_model(survival_df[!grepl("DMG", survival_df$mol_sub_group) & !is.na(survival_df$extent_of_tumor_resection) & !survival_df$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
+#                               terms = "extent_of_tumor_resection+mol_sub_group+clk1_status+age_at_diagnosis_years",
+#                               add_hgg_efs_surv_result,
+#                               "multivariate",
+#                               years_col = "EFS_years",
+#                               status_col = "EFS_status"
+#                              )
 
-add_efs_hgg_forest_plot <- plotForest(readRDS(add_hgg_efs_surv_result))
+#add_efs_hgg_forest_plot <- plotForest(readRDS(add_hgg_efs_surv_result))
 
-ggsave(file.path(plot_dir, "forest_HGG_EFS_add_subtype_clk1_status.pdf"), 
-       add_efs_hgg_forest_plot, width = 7.5, height = 3)
+#ggsave(file.path(plot_dir, "forest_HGG_EFS_add_subtype_clk1_status.pdf"), 
+#       add_efs_hgg_forest_plot, width = 7.5, height = 3)
 ```
 
 Print session info
