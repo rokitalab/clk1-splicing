@@ -236,9 +236,9 @@ kinase_pref <- rbind(kinase_skip_pref, kinase_incl_pref) %>%
 total_diff_events <- vroom(file.path(results_dir,"splice_events.diff.SE.txt")) %>%
   dplyr::rename(SpliceID="Splice ID") %>%
   dplyr::count(SpliceID)  %>% 
-  inner_join(kinase_pref,by="SpliceID") %>%
+  #inner_join(kinase_pref,by="SpliceID") %>%
   dplyr::rename('Frequency'=n) %>%
-  filter(Frequency > 1)
+  filter(Frequency > 1) # Add recurrence filter
   #dplyr::mutate(Baseline_freq=69-Frequency) # 69 samples in cluster - I don't think its used 
 
 # read in exp file

@@ -23,9 +23,9 @@ echo $rmats_file ;
 bash 00-get-uniprot.sh
 
 ## Process rMATS files given clusters.
-#perl 01-extract_recurrent_splicing_events_cluster.pl $cluster_file $rmats_file RI
-#perl 01-extract_recurrent_splicing_events_cluster.pl $cluster_file $rmats_file A3SS
-#perl 01-extract_recurrent_splicing_events_cluster.pl $cluster_file $rmats_file A5SS
+perl 01-extract_recurrent_splicing_events_cluster.pl $cluster_file $rmats_file RI
+perl 01-extract_recurrent_splicing_events_cluster.pl $cluster_file $rmats_file A3SS
+perl 01-extract_recurrent_splicing_events_cluster.pl $cluster_file $rmats_file A5SS
 perl 01-extract_recurrent_splicing_events_cluster.pl $cluster_file $rmats_file SE
 
 echo "bedtools intersect...";
