@@ -19,6 +19,9 @@ cluster_file="../sample-psi-clustering/results/sample-cluster-metadata-top-5000-
 echo "input files:" $cluster_file ;
 echo $rmats_file ;
 
+## Download uniprot files
+bash 00-get-uniprot.sh
+
 ## Process rMATS files given clusters.
 perl 01-extract_recurrent_splicing_events_cluster.pl $cluster_file $rmats_file RI
 perl 01-extract_recurrent_splicing_events_cluster.pl $cluster_file $rmats_file A3SS

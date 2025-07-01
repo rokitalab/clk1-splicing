@@ -45,6 +45,7 @@ file_dpsi_plot <- file.path(analysis_dir, "plots", "dPSI_across_functional_sites
 file_dpsi_kinase_plot <- file.path(analysis_dir, "plots", "dPSI_across_functional_sites_kinase.pdf")
 ora_dotplot_path <- file.path(plots_dir,"kinases-ora-plot.pdf")
 kinases_functional_sites = file.path(results_dir,"kinases-functional_sites.tsv")
+sf_kinases_functional_sites = file.path(results_dir,"splicing-factor-kinases-functional_sites.tsv")
 
 ## retrieve psi values from tables
 file_psi_pos_func <- file.path(results_dir,"splicing_events.SE.total.pos.intersectunip.ggplot.txt")
@@ -60,6 +61,9 @@ cluster_file <- file.path(root_dir, "analyses",
 cluster6_bs_id <- read_tsv(cluster_file) %>%
   filter(cluster == 6) %>%
   pull(sample_id)
+
+## splicing factors 
+splicing_factors <- readLines(file.path(root_dir, "analyses", "splicing-factor_dysregulation", "input", "splicing_factors.txt"))
 
 ## read table of recurrent functional splicing (skipping)
 dpsi_unip_pos <- vroom(file_psi_pos_func) %>% 
@@ -234,7 +238,8 @@ total_diff_events <- vroom(file.path(results_dir,"splice_events.diff.SE.txt")) %
   dplyr::count(SpliceID)  %>% 
   inner_join(kinase_pref,by="SpliceID") %>%
   dplyr::rename('Frequency'=n) %>%
-  dplyr::mutate(Baseline_freq=69-Frequency) # 69 samples in cluster - I don't think its used 
+  filter(Frequency > 1) # Add recurrence filter
+  #dplyr::mutate(Baseline_freq=69-Frequency) # 69 samples in cluster - I don't think its used 
 
 # read in exp file
 #clin_file  <- file.path(hist_dir,"histologies-plot-group.tsv")
@@ -283,6 +288,12 @@ total_diff_events_gene <- inner_join(total_diff_events,exp, by='gene') %>%
   ))
 
 
-## write kinase results for table
+## write kinase results to table
 write_tsv(total_diff_events_gene, kinases_functional_sites)
 
+## subset for splicing factors
+total_diff_events_gene_sf <- total_diff_events_gene %>%
+  filter(gene %in% splicing_factors)
+
+## write splicing factor kinase results to table
+write_tsv(total_diff_events_gene_sf, sf_kinases_functional_sites)

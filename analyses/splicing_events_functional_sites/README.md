@@ -17,16 +17,6 @@ data/histologies.tsv
 data/splice-events-rmats.tsv.gz
 ```
 
-*input bed files obtained from unipro needed to  run*
-```
-unipDisulfBond.hg38col.bed
-unipDomain.hg38.col.bed
-unipLocSignal.hg38.col.bed
-unipMod.hg38.col.bed
-unipOther.hg38.col.bed
-
-```
-
 *Output files:*
 ```
 results/splice_events.diff.SE.HGG.txt
@@ -39,6 +29,7 @@ results/splicing_events.total.HGG.neg.intersectUnip.ggplot.txt
 
 ## Folder content
 * `run_module.sh` takes the files from above and generates table with uniprot overlaps to be used for plotting
+* `01-get-uniprot.sh` downloads relevant uniprot files
 * `01-extract_recurrent_splicing_events_hgg.pl` processing output from rMATS with filters and constructs data table for all downstream analysis and output file to `results/splicing_events.total*`
 * `02-run_bedtools_intersect.sh` runs bedtools intersect to find exon coordinates corresponding to Uniprot sites
 * `03-format_for_ggplot.sh` formats and appends file into table for plotting
@@ -46,31 +37,36 @@ results/splicing_events.total.HGG.neg.intersectUnip.ggplot.txt
 * `05-plot-splice-patterns` generates plots for visualizing splicing event types into `plots` folder
 
 ## Directory structure
+```
 .
+├── 00-get-uniprot.sh
+├── 01-extract_recurrent_splicing_events_cluster.pl
 ├── 01-extract_recurrent_splicing_events_hgg.pl
 ├── 02-run_bedtools_intersect.sh
-├── 02-run_bedtools_intersect.tmp.sh
 ├── 03-format_for_ggplot.pl
 ├── 04-plot_splicing_across_functional_sites.R
 ├── 05-plot-splice-patterns.R
 ├── README.md
 ├── input
-│   ├── CLK1-rmats.tsv
-│   ├── gene_lists.tsv
-│   ├── unipDisulfBond.hg38.col.bed
-│   ├── unipDomain.hg38.col.bed
-│   ├── unipLocSignal.hg38.col.bed
-│   ├── unipMod.hg38.col.bed
-│   └── unipOther.hg38.col.bed
+│   ├── UP000005640_9606_disulfid.bed
+│   ├── UP000005640_9606_domain.bed
+│   ├── UP000005640_9606_mod_res.bed
+│   ├── UP000005640_9606_signal.bed
+│   └── gene_lists.tsv
 ├── plots
-│   ├── dPSI_across_functional_sites.HGG.pdf
-│   ├── dPSI_across_functional_sites_kinase.HGG.pdf
+│   ├── dPSI_across_functional_sites.pdf
+│   ├── dPSI_across_functional_sites_kinase.pdf
 │   ├── kinases-ora-plot.pdf
 │   └── splicing_pattern_plot.pdf
 ├── results
+│   ├── Naqvi-CLK1-workflow.pdf
 │   ├── kinases-functional_sites.tsv
+│   ├── splice_events.diff.A3SS.txt
+│   ├── splice_events.diff.A5SS.txt
+│   ├── splice_events.diff.RI.txt
 │   ├── splice_events.diff.SE.txt
+│   ├── splicing-factor-kinases-functional_sites.tsv
 │   ├── splicing_events.SE.total.neg.intersectunip.ggplot.txt
 │   └── splicing_events.SE.total.pos.intersectunip.ggplot.txt
-├── run_module.sh
-└── scr
+└── run_module.sh
+```
