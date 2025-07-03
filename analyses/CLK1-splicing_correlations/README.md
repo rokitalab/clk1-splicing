@@ -38,9 +38,10 @@ Input files:
 * `07-plot-clk1ex4-hgg-normals.R` plots CLK1 exon 4 transcript expression for HGGs, GTEX normals, fetal brain, and TGEN pediatric normals.
 * `08-plot-Ex4-PSI-all-tumors.R` plot CLK1 Ex 4 PSIs across tumors
 * `09-plot-kinase-PSI-variances-tumors.R` plot CLK1 Ex 4 and all splicing factor kinase PSIs that are functional and differential
-* `10-plot-clk1-ex4-transcripts-hgg-normals.R` plot CLK1 Ex 4 transcripts proportion in tumors and control samples
+* `10-plot-clk1-ex4-transcripts-normals.R` plot CLK1 Ex 4 transcripts proportion in tumors and control samples
 * `11-plot-clk1-ex4-transcripts-by-age-gtex.R` plots CLK1 exon 4 PSI variations across gtex by age
 * `12-plot-clk1-ex4-transcripts-by-age.R` plots CLK1 exon 4 PSI variations across tumors by age
+* `13-volcano-plot-high-vs-low-Ex4-PSI.R` compare high vs low Exon 4 PSI samples
 
 ## Directory structure
 ```
@@ -53,40 +54,31 @@ Input files:
 ├── 05-CLK-SRSF-expr-correlations.R
 ├── 06-CLK1-psi-expr-SRSF-expr-prot-phospho-heatmap.R
 ├── 07-plot-clk1ex4-hgg-normals.R
-├── 08-CLK1-impact-NF1-splicing.Rmd
-├── 08-CLK1-impact-NF1-splicing.html
-├── 09-clk1-nf1-protein-correlations.R
-├── 10-clk1-nf1-single-sample-heatmap.R
+├── 08-plot-Ex4-PSI-all-tumors.R
+├── 09-plot-kinase-PSI-variances-tumors.R
+├── 10-plot-clk1-ex4-transcripts-normals.R
+├── 11-plot-clk1-ex4-transcripts-by-age-gtex.R
+├── 12-plot-clk1-ex4-transcripts-by-age.R
+├── 13-volcano-plot-high-vs-low-Ex4-PSI.R
 ├── README.md
+├── archive
+│   ├── 08-CLK1-impact-NF1-splicing.Rmd
+│   ├── 08-CLK1-impact-NF1-splicing.html
+│   ├── 09-clk1-nf1-protein-correlations.R
+│   └── 10-clk1-nf1-single-sample-heatmap.R
 ├── input
-│   └── CPTAC3-pbt.xls
+│   ├── BA_KFWTGZPC_20250506.filtered.SE.MATS.JC.txt
+│   ├── BA_KFWTGZPC_20250506.rsem.isoforms.results.gz
+│   ├── CPTAC3-pbt.xls
+│   └── gtex-samples-by-age.tsv
 ├── plots
+│   ├── All_volcano_plot.pdf
 │   ├── CLK1-201_exp_vs_SRSF_SRPK_exp_all_hgg.pdf
 │   ├── CLK1-201_exp_vs_SRSF_SRPK_exp_midline_hgg.pdf
 │   ├── CLK1-201_exp_vs_SRSF_SRPK_exp_other_hgg.pdf
-│   ├── CLK1-NF1-all-cors.pdf
-│   ├── CLK1-NF1-cors-Atypical Teratoid Rhabdoid Tumor.pdf
-│   ├── CLK1-NF1-cors-Choroid plexus tumor.pdf
-│   ├── CLK1-NF1-cors-Craniopharyngioma.pdf
-│   ├── CLK1-NF1-cors-DIPG or DMG.pdf
-│   ├── CLK1-NF1-cors-Ependymoma.pdf
-│   ├── CLK1-NF1-cors-Germ cell tumor.pdf
-│   ├── CLK1-NF1-cors-High-grade glioma.pdf
-│   ├── CLK1-NF1-cors-Low-grade glioma.pdf
-│   ├── CLK1-NF1-cors-Medulloblastoma.pdf
-│   ├── CLK1-NF1-cors-Meningioma.pdf
-│   ├── CLK1-NF1-cors-Mesenchymal tumor.pdf
-│   ├── CLK1-NF1-cors-Mixed neuronal-glial tumor.pdf
-│   ├── CLK1-NF1-cors-Neurofibroma plexiform.pdf
-│   ├── CLK1-NF1-cors-Non-neoplastic tumor.pdf
-│   ├── CLK1-NF1-cors-Other CNS embryonal tumor.pdf
-│   ├── CLK1-NF1-cors-Other high-grade glioma.pdf
-│   ├── CLK1-NF1-cors-Other tumor.pdf
-│   ├── CLK1-NF1-cors-Schwannoma.pdf
-│   ├── CLK1-NF1-psi-expr-correlation-heatmap.pdf
-│   ├── CLK1-NF1-subset-cors.pdf
-│   ├── CLK1-exon4-NF1-psi-all-cns-boxplot.pdf
-│   ├── CLK1-psi-all-cns-boxplot.pdf
+│   ├── CLK1-Ex4-range-across-ctrls.pdf
+│   ├── CLK1-Ex4-range-across.pdf
+│   ├── CLK1-Ex4-sdev-across.pdf
 │   ├── CLK1-psi-expr-correlation-heatmap.pdf
 │   ├── CLK1_SRSF_phospho_vs_CLK1_201_exp_DMG.pdf
 │   ├── CLK1_SRSF_phospho_vs_CLK1_201_exp_HGG.pdf
@@ -96,15 +88,14 @@ Input files:
 │   ├── CLK1_SRSF_prot_vs_CLK1_201_exp_HGG.pdf
 │   ├── CLK1_SRSF_prot_vs_CLK1_exp_DMG.pdf
 │   ├── CLK1_SRSF_prot_vs_CLK1_exp_HGG.pdf
+│   ├── CLK1_exp_v_SRPK1_exp_all_hgg.pdf
+│   ├── CLK1_exp_v_SRPK1_exp_midline_hgg.pdf
+│   ├── CLK1_exp_v_SRPK1_exp_other_hgg.pdf
 │   ├── CLK1_exp_vs_CLK1_psi_all_hgg.pdf
 │   ├── CLK1_exp_vs_CLK1_psi_midline_hgg.pdf
 │   ├── CLK1_exp_vs_SRSF_SRPK_exp_all_hgg.pdf
 │   ├── CLK1_exp_vs_SRSF_SRPK_exp_midline_hgg.pdf
 │   ├── CLK1_exp_vs_SRSF_SRPK_exp_other_hgg.pdf
-│   ├── CLK1_exp_vs_SRSF_exp_all_hgg.pdf
-│   ├── CLK1_exp_vs_SRSF_exp_midline_hgg.pdf
-│   ├── CLK1_exp_vs_SRSF_exp_other_hgg.pdf
-│   ├── CLK1ex4-hgg-gtex.pdf
 │   ├── CLK2_exp_vs_SRSF_SRPK_exp_all_hgg.pdf
 │   ├── CLK2_exp_vs_SRSF_SRPK_exp_midline_hgg.pdf
 │   ├── CLK2_exp_vs_SRSF_SRPK_exp_other_hgg.pdf
@@ -117,58 +108,9 @@ Input files:
 │   ├── CLK_exp_vs_CLK1_psi_all_hgg.pdf
 │   ├── CLK_exp_vs_CLK1_psi_midline_hgg.pdf
 │   ├── CLK_exp_vs_CLK1_psi_other_hgg.pdf
-│   ├── NF1 pS2796-phos-cor-CLK1-201 Exon4 PSI-DMG.pdf
-│   ├── NF1 pS2796-phos-cor-CLK1-201 Exon4 PSI-HGG.pdf
-│   ├── NF1 pS2796-phos-cor-CLK1-201 Log2 TPM-DMG.pdf
-│   ├── NF1 pS2796-phos-cor-CLK1-201 Log2 TPM-HGG.pdf
-│   ├── NF1 pS2796-phos-cor-NF1-202 Exon23a PSI-DMG.pdf
-│   ├── NF1 pS2796-phos-cor-NF1-202 Exon23a PSI-HGG.pdf
-│   ├── NF1 pS2796-phos-cor-NF1-202 Log2 TPM-DMG.pdf
-│   ├── NF1 pS2796-phos-cor-NF1-202 Log2 TPM-HGG.pdf
-│   ├── NF1 pS2796-phos-cor-NF1-215 Log2 TPM-DMG.pdf
-│   ├── NF1 pS2796-phos-cor-NF1-215 Log2 TPM-HGG.pdf
-│   ├── NF1 pS2796-phos-cor-NF1-215 PSI-DMG.pdf
-│   ├── NF1 pS2796-phos-cor-NF1-215 PSI-HGG.pdf
-│   ├── NF1 pS2796-phos-cor-NF1-DMG.pdf
-│   ├── NF1 pS2796-phos-cor-Total CLK1 Log2 TPM-DMG.pdf
-│   ├── NF1 pS2796-phos-cor-Total CLK1 Log2 TPM-HGG.pdf
-│   ├── NF1 pS2796-phos-cor-Total NF1 Log2 TPM-DMG.pdf
-│   ├── NF1 pS2796-phos-cor-Total NF1 Log2 TPM-HGG.pdf
-│   ├── NF1 pS864-phos-cor-CLK1-201 Exon4 PSI-DMG.pdf
-│   ├── NF1 pS864-phos-cor-CLK1-201 Exon4 PSI-HGG.pdf
-│   ├── NF1 pS864-phos-cor-CLK1-201 Log2 TPM-DMG.pdf
-│   ├── NF1 pS864-phos-cor-CLK1-201 Log2 TPM-HGG.pdf
-│   ├── NF1 pS864-phos-cor-NF1-202 Exon23a PSI-DMG.pdf
-│   ├── NF1 pS864-phos-cor-NF1-202 Exon23a PSI-HGG.pdf
-│   ├── NF1 pS864-phos-cor-NF1-202 Log2 TPM-DMG.pdf
-│   ├── NF1 pS864-phos-cor-NF1-202 Log2 TPM-HGG.pdf
-│   ├── NF1 pS864-phos-cor-NF1-215 Log2 TPM-DMG.pdf
-│   ├── NF1 pS864-phos-cor-NF1-215 Log2 TPM-HGG.pdf
-│   ├── NF1 pS864-phos-cor-NF1-215 PSI-DMG.pdf
-│   ├── NF1 pS864-phos-cor-NF1-215 PSI-HGG.pdf
-│   ├── NF1 pS864-phos-cor-Total CLK1 Log2 TPM-DMG.pdf
-│   ├── NF1 pS864-phos-cor-Total CLK1 Log2 TPM-HGG.pdf
-│   ├── NF1 pS864-phos-cor-Total NF1 Log2 TPM-DMG.pdf
-│   ├── NF1 pS864-phos-cor-Total NF1 Log2 TPM-HGG.pdf
-│   ├── NF1-protein-cor-CLK1-201 Exon4 PSI-DMG.pdf
-│   ├── NF1-protein-cor-CLK1-201 Exon4 PSI-HGG.pdf
-│   ├── NF1-protein-cor-CLK1-201 Log2 TPM-DMG.pdf
-│   ├── NF1-protein-cor-CLK1-201 Log2 TPM-HGG.pdf
-│   ├── NF1-protein-cor-CLK1-201-DMG.pdf
-│   ├── NF1-protein-cor-NF1-202 Exon23a PSI-DMG.pdf
-│   ├── NF1-protein-cor-NF1-202 Exon23a PSI-HGG.pdf
-│   ├── NF1-protein-cor-NF1-202 Log2 TPM-DMG.pdf
-│   ├── NF1-protein-cor-NF1-202 Log2 TPM-HGG.pdf
-│   ├── NF1-protein-cor-NF1-215 Log2 TPM-DMG.pdf
-│   ├── NF1-protein-cor-NF1-215 Log2 TPM-HGG.pdf
-│   ├── NF1-protein-cor-NF1-215 PSI-DMG.pdf
-│   ├── NF1-protein-cor-NF1-215 PSI-HGG.pdf
-│   ├── NF1-protein-cor-NF1-DMG.pdf
-│   ├── NF1-protein-cor-NF1-HGG.pdf
-│   ├── NF1-protein-cor-Total CLK1 Log2 TPM-DMG.pdf
-│   ├── NF1-protein-cor-Total CLK1 Log2 TPM-HGG.pdf
-│   ├── NF1-protein-cor-Total NF1 Log2 TPM-DMG.pdf
-│   ├── NF1-protein-cor-Total NF1 Log2 TPM-HGG.pdf
+│   ├── DMGs_volcano_plot.pdf
+│   ├── Other HGGs_volcano_plot.pdf
+│   ├── PSI-range-kinses.pdf
 │   ├── SRPK_exp_vs_CLK1_psi_all_hgg.pdf
 │   ├── SRPK_exp_vs_CLK1_psi_midline_hgg.pdf
 │   ├── SRPK_exp_vs_CLK1_psi_other_hgg.pdf
@@ -183,30 +125,28 @@ Input files:
 │   ├── SRSF_exp_vs_CLK1_psi_other_hgg.pdf
 │   ├── SR_phos_CLK1_exp_heatmap.pdf
 │   ├── all_hgg_CLK1_exon4_inclusion_fraction_hgg_stacked.pdf
-│   ├── all_hgg_SBI_high_vs_low_CLK1_exome_capture.pdf
-│   ├── all_hgg_SBI_high_vs_low_CLK1_poly-A stranded.pdf
-│   ├── all_hgg_SBI_high_vs_low_CLK1_poly-A.pdf
-│   ├── all_hgg_SBI_high_vs_low_CLK1_stranded.pdf
-│   ├── clk1-nf1-single-sample-exp-protein-heatmap-dmg.pdf
+│   ├── clk1_ex4-tpm-ctrls-summary.pdf
+│   ├── clk1_ex4-tpm-phgg-ctrls.pdf
+│   ├── clk1ex4-tpm-tumor-age-bin-perm-test.pdf
+│   ├── clk1ex4-tpm-tumor-age-bin-wc-test.pdf
+│   ├── clk4-tpm-gtex-age-bin-perm-test.pdf
+│   ├── clk4-tpm-gtex-age-bin-wc-test.pdf
 │   ├── dmg_CLK1_exon4_inclusion_fraction_hgg_stacked.pdf
-│   ├── dmg_SBI_high_vs_low_CLK1_exome_capture.pdf
-│   ├── dmg_SBI_high_vs_low_CLK1_poly-A stranded.pdf
-│   ├── dmg_SBI_high_vs_low_CLK1_poly-A.pdf
-│   ├── dmg_SBI_high_vs_low_CLK1_stranded.pdf
-│   ├── other_hgg_CLK1_exon4_inclusion_fraction_hgg_stacked.pdf
-│   ├── other_hgg_SBI_high_vs_low_CLK1_exome_capture.pdf
-│   ├── other_hgg_SBI_high_vs_low_CLK1_poly-A stranded.pdf
-│   ├── other_hgg_SBI_high_vs_low_CLK1_poly-A.pdf
-│   └── other_hgg_SBI_high_vs_low_CLK1_stranded.pdf
+│   ├── high_low_ex4_diff-genes-ora-dotplot-All.pdf
+│   ├── high_low_ex4_diff-genes-ora-dotplot-DMGs.pdf
+│   ├── high_low_ex4_diff-genes-ora-dotplot-Other HGGs.pdf
+│   └── other_hgg_CLK1_exon4_inclusion_fraction_hgg_stacked.pdf
 ├── results
+│   ├── All_gene_sign_list.tsv
+│   ├── DMGs_gene_sign_list.tsv
+│   ├── Other HGGs_gene_sign_list.tsv
 │   ├── all_hgg-mean_clk1_psi.txt
+│   ├── clk1-exon4-proportion.tsv
 │   ├── clk1-exon4-psi-hgg.tsv
-│   ├── clk1-nf1-psi-exp-df.rds
+│   ├── clk1-exon4-psi.tsv
 │   ├── clk1-splice-events-rmats.tsv
 │   ├── dmg-mean_clk1_psi.txt
-│   ├── hgg-dmg-clk-nf1-expression-phosphorylation.tsv
 │   ├── hgg-dmg-clk-srsf-expression-phosphorylation.tsv
-│   ├── mean_clk1_psi.txt
 │   ├── nf1-splice-events-rmats.tsv
 │   └── other_hgg-mean_clk1_psi.txt
 ├── run_module.sh
