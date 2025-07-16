@@ -13,6 +13,7 @@ suppressPackageStartupMessages({
   library(ggpubr)
   library(vroom)
   library(data.table)
+  library(ggtext)
 })
 
 
@@ -76,9 +77,7 @@ hist_indep_rna_df  <-  read_tsv(clin_file) %>%
 
 gtex_brain <- read_tsv(gtex_hist_file)  %>% 
   dplyr::filter(gtex_group == "Brain",
-                ) %>%
-  dplyr::filter()
-
+                (AGE == "20-29" | AGE == "30-39"))
 
 #metadata_astrocytes = read_csv(astro_metadata_file) %>% 
 #  #filter(cell_type=="Astrocyte") %>%
@@ -262,8 +261,13 @@ transcript_expr_CLK1_combined_df <- rbind(all_clk4_transcr_counts,gtex_clk1_tran
 # Define the desired order for groups
 transcript_expr_CLK1_combined_df$plot_group <- factor(
   transcript_expr_CLK1_combined_df$plot_group,
-  levels = c("0-14", "15-18", "19-39", "Fetal", "Early Childhood", "School Age", "Adult", "20-29", "30-39", "40-49","50-59","60-69","70-79")
+  levels = c("0-14", "15-18", "19-39", "Fetal", "Early Childhood", "School Age", "Adult", "20-29", "30-39")
 )
+
+color_pal <- c(
+  "Cluster 6" = "#FDBF6F",
+  "Evo-Devo" = "mediumseagreen",
+  "GTEx" = "#6ca6da")
 
 ## make plot for proportion
 tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = proportion)) +
@@ -278,16 +282,19 @@ tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = pro
     alpha = 0.2,
     outlier.shape = NA) +
   labs(
-    title = "Relative CLK1 Exon 4 Transcript Expression",
-    x = "Group",
-    y = "Proportion CLK1 exon 4\ninclusion in transcript") +
+    title = "Relative <i>CLK1</i> Exon 4 Transcript Expression",
+    x = "Age",
+    y = "Proportion <i>CLK1</i> exon 4<br>inclusion in transcript") +
   theme_Publication() +
   theme(
     legend.position = "none", 
-    axis.text.x = element_text(angle = 45, hjust = 1)
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    plot.title = ggtext::element_markdown(),
+    axis.title.y = ggtext::element_markdown()
   ) +
+  scale_color_manual(values = color_pal) +
   facet_wrap(~group, scales = "free_x")
 
-pdf(file.path(plots_dir,"clk1_ex4-tpm-ctrls-summary.pdf"), height = 5, width = 20)
+pdf(file.path(plots_dir,"clk1_ex4-tpm-ctrls-summary.pdf"), height = 5, width = 7)
 tpm_plot
 dev.off()
