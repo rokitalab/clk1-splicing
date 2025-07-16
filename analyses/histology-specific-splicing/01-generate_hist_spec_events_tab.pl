@@ -53,24 +53,22 @@ while (<FIL>) {
   my $hist      = $cols[$column_index{'plot_group'}];
   my $bs_id      = $cols[$column_index{'Kids_First_Biospecimen_ID'}];
   my $CNS_region = $cols[$column_index{'CNS_region'}];
+  my $RNA_libr   = $cols[$column_index{'RNA_library'}];
 
   next unless ($primary_initial_sample_list{$bs_id});
+  next unless ($RNA_libr eq "stranded");
 
-## make an array and store histology information and BS IDs
-push @broad_hist, $hist;
-push @bs_ids, $bs_id;
-
-$bs_id_hist{$bs_id} = $hist;
-
-## store total number of histologies
-$hist_count{$hist}++;
-push @{$histology_ids{$hist}}, $bs_id;
-
-$cns_regions{$bs_id} = $CNS_region;
-
-## histology counter for downstream analysis
-$hist_count{$hist}++;
-
+  ## make an array and store histology information and BS IDs
+  push @broad_hist, $hist;
+  push @bs_ids, $bs_id;
+  
+  $bs_id_hist{$bs_id} = $hist;
+  
+  ## store total number of histologies
+  $hist_count{$hist}++;
+  push @{$histology_ids{$hist}}, $bs_id;
+  
+  $cns_regions{$bs_id} = $CNS_region;
 }
 
 close(FIL);
