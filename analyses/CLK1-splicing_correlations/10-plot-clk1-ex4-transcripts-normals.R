@@ -14,6 +14,8 @@ suppressPackageStartupMessages({
   library(vroom)
   library(data.table)
   library(ggtext)
+  library(ggpubr)
+  library(rstatix)
 })
 
 
@@ -76,8 +78,7 @@ hist_indep_rna_df  <-  read_tsv(clin_file) %>%
 	 Kids_First_Biospecimen_ID %in% cluster6_bs_id)
 
 gtex_brain <- read_tsv(gtex_hist_file)  %>% 
-  dplyr::filter(gtex_group == "Brain",
-                (AGE == "20-29" | AGE == "30-39"))
+  dplyr::filter(gtex_group == "Brain")
 
 #metadata_astrocytes = read_csv(astro_metadata_file) %>% 
 #  #filter(cell_type=="Astrocyte") %>%
@@ -261,13 +262,35 @@ transcript_expr_CLK1_combined_df <- rbind(all_clk4_transcr_counts,gtex_clk1_tran
 # Define the desired order for groups
 transcript_expr_CLK1_combined_df$plot_group <- factor(
   transcript_expr_CLK1_combined_df$plot_group,
-  levels = c("0-14", "15-18", "19-39", "Fetal", "Early Childhood", "School Age", "Adult", "20-29", "30-39")
+  levels = c("0-14", "15-18", "19-39", "Fetal", "Early Childhood", "School Age", "Adult", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79")
 )
 
 color_pal <- c(
   "Cluster 6" = "#FDBF6F",
   "Evo-Devo" = "mediumseagreen",
   "GTEx" = "#6ca6da")
+
+# Get stats
+stat.tests <- transcript_expr_CLK1_combined_df %>%
+  group_by(group) %>%
+  wilcox_test(proportion ~ plot_group, p.adjust.method = "BH") %>%
+  filter(p.adj < 0.05)
+
+# get position by each facet
+stat.tests <- stat.tests %>%
+  group_by(group) %>%
+  mutate(
+    x    = as.numeric(factor(group1, levels = unique(transcript_expr_CLK1_combined_df$plot_group))),
+    xend = as.numeric(factor(group2, levels = unique(transcript_expr_CLK1_combined_df$plot_group))),
+    y_base   = max(transcript_expr_CLK1_combined_df$proportion[transcript_expr_CLK1_combined_df$group == first(group)]),
+    
+    # compute y-adjustment for overlapping comparisons within a facet
+    step_h   = y_base * 0.05,
+    comp_id  = row_number(),                           
+    y.position = y_base * 1.05 + (comp_id - 1) * step_h
+  ) %>%
+  ungroup() %>%                                       
+  select(-y_base, -step_h, -comp_id)
 
 ## make plot for proportion
 tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = proportion)) +
@@ -293,7 +316,9 @@ tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = pro
     axis.title.y = ggtext::element_markdown()
   ) +
   scale_color_manual(values = color_pal) +
-  facet_wrap(~group, scales = "free_x")
+  facet_wrap(~group, scales = "free_x") +
+  stat_pvalue_manual(stat.tests,
+                     tip.length   = 0.01)
 
 pdf(file.path(plots_dir,"clk1_ex4-tpm-ctrls-summary.pdf"), height = 5, width = 7)
 tpm_plot
