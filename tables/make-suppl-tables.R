@@ -21,17 +21,16 @@ if(!dir.exists(supp_tables_dir)){
 
 # define input files
 histology_file <- file.path(data_dir, "histologies.tsv")
-histology_ei_splice_events <- file.path(analysis_dir, "histology-specific-splicing", "results", "unique_events-ei.tsv")
-histology_es_splice_events <- file.path(analysis_dir, "histology-specific-splicing", "results", "unique_events-es.tsv")
+histology_se_events <- file.path(analysis_dir, "histology-specific-splicing", "results", "unique_events.SE.tsv")
 cluster_membership <- file.path(analysis_dir, "sample-psi-clustering", "results", "sample-cluster-metadata-top-5000-events-stranded.tsv")
 gsva <- file.path(analysis_dir, "sample-psi-clustering", "results", "all_gsva_de_results_stranded.tsv")
 CNS_match_json <- file.path(table_dir, "input", "CNS_primary_site_match.json")
-sf_list_file <- file.path(root_dir, "analyses","splicing-factor_dysregulation", "input","splicing_factors.txt")
+sf_list_file <- file.path(root_dir, "analyses","splicing-factor_dysregulation", "input", "splicing_factors.txt")
 hugo_file <- file.path(root_dir, "analyses", "oncoprint", "input", "hgnc-symbol-check.csv")
 deseq2_sf_file <- file.path(analysis_dir, "splicing-factor_dysregulation", "results", "all_hgg-diffSFs_sig_genes.txt")
 func_sites_es_file <- file.path(analysis_dir, "splicing_events_functional_sites", "results", "splicing_events.SE.total.neg.intersectunip.ggplot.txt") 
 func_sites_ei_file <- file.path(analysis_dir, "splicing_events_functional_sites", "results", "splicing_events.SE.total.pos.intersectunip.ggplot.txt") 
-kinase_func_sites_file <- file.path(analysis_dir, "splicing_events_functional_sites", "results", "kinases-functional_sites.tsv")
+kinase_func_sites_file <- file.path(analysis_dir, "splicing_events_functional_sites", "results", "splicing-factor-kinases-functional_sites.tsv")
 clk1_ex4_prop <- file.path(analysis_dir, "CLK1-splicing_correlations", "results", "clk1-exon4-proportion.tsv")
 
 deseq2_morph_file <- file.path(root_dir,"analyses/CLK1-splicing-impact-morpholino","results","ctrl_vs_treated.de.tsv")
@@ -42,10 +41,10 @@ func_sites_A5SS_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-
 func_sites_A3SS_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","splicing_events.morpho.A3SS.intersectUnip.ggplot.txt")
 func_sites_RI_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","splicing_events.morpho.RI.intersectUnip.ggplot.txt")
 
+cluster_cor_file <- file.path(root_dir, "analyses/splicing-factor_dysregulation/results/se-sbi-sf-expr-correlations.tsv")
 
 func_sites_goi_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results", "differential_splice_by_goi_category.tsv")
 primers_file <-  file.path(input_dir,"primers.tsv")
-
 ds_de_crispr_events_file <-  file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results", "ds-de-crispr-events.tsv")
 
 # define suppl output files and sheet names, when appropriate
@@ -53,7 +52,8 @@ table_s1_file <- file.path(supp_tables_dir, "TableS1-histologies.xlsx")
 table_s2_file <- file.path(supp_tables_dir, "TableS2-histology-specific-splice-events.xlsx")
 table_s3_file <- file.path(supp_tables_dir, "TableS3-SF-dysreg.xlsx")
 table_s4_file <- file.path(supp_tables_dir, "TableS4-functional-sites.xlsx")
-table_s5_file <- file.path(supp_tables_dir, "TableS5-CLK1-ex4-splicing-impact-morpholino.xlsx")
+table_s5_file <- file.path(supp_tables_dir, "TableS5-cluster-expr-correlations.xlsx")
+table_s6_file <- file.path(supp_tables_dir, "TableS6-CLK1-ex4-splicing-impact-morpholino.xlsx")
 
 ## write table for histologies
 # Sheet 1: README tab
@@ -144,14 +144,10 @@ write.xlsx(list_s1_table,
            keepNA=TRUE)
 
 ## Table 2 histology specific splicing events
-## sheet 1, exon inclusion splicing
-ei_events_df <- vroom(histology_ei_splice_events)
+## sheet 1, se events splicing
+se_events_df <- vroom(histology_se_events)
 
-## sheet 2, exon inclusion splicing
-es_events_df <- vroom(histology_es_splice_events)
-
-
-## sheet 3, cluster membership
+## sheet 2, cluster membership
 cluster_membership_df <- read_tsv(cluster_membership) %>%
   dplyr::select(sample_id, plot_group,
                 RNA_library, molecular_subtype,
@@ -164,15 +160,14 @@ cluster_membership_df <- read_tsv(cluster_membership) %>%
     TRUE ~ molecular_subtype
   ))
 
-## sheet 4, gsva scores
+## sheet 3, gsva scores
 gsva_df <- read_tsv(gsva) %>%
   dplyr::mutate(Filename = as.numeric(stringr::str_extract(Filename, "\\d+"))) %>%
   dplyr::rename(Cluster = Filename) %>%
   arrange(Cluster)
           
 # Combine and output
-list_s2_table <- list(exon_inclusion = ei_events_df,
-                      exon_skipping = es_events_df,
+list_s2_table <- list(se_events = se_events_df,
                       clust_memb = cluster_membership_df,
                       gsva_scores = gsva_df)
 
@@ -220,7 +215,7 @@ clk1_ex4_prop_df <- vroom(clk1_ex4_prop)
 # Combine and output
 list_s4_table <- list(ds_skipping = ds_events_es_df,
                       ds_inclusion = ds_events_ei_df,
-                      kinases= kinase_events_df,
+                      prioritized_sf_kinases = kinase_events_df,
                       clk1_ex4_prop = clk1_ex4_prop_df)
 
 write.xlsx(list_s4_table,
@@ -228,7 +223,17 @@ write.xlsx(list_s4_table,
            overwrite=TRUE,
            keepNA=TRUE)
 
-## Table 5 morpholino vs ctrl DESeq2 and rMATs results
+## Table 5 Cluster expression correlations
+cluster_cor_df <- read_tsv(cluster_cor_file)
+
+list_s5_table <- list(cluster_expression_correlations = cluster_cor_df)
+
+write.xlsx(list_s5_table,
+           table_s5_file,
+           overwrite=TRUE,
+           keepNA=TRUE)
+
+## Table 6 morpholino vs ctrl DESeq2 and rMATs results
 deseq2_morpholino_df <- vroom(deseq2_morph_file) %>%
   filter(padj < 0.05) %>%
   dplyr::select(Gene_Symbol,	
@@ -253,7 +258,7 @@ ds_de_crispr_df <-  vroom(ds_de_crispr_events_file) %>%
 
 consensus_targets_df <- vroom(clk1_consens_targets_file)
 
-list_s5_table <- list(deseq2_morp = deseq2_morpholino_df,
+list_s6_table <- list(deseq2_morp = deseq2_morpholino_df,
                       rmats = rmats_df,
                       ds_SE = ds_events_SE_df,
                       ds_A5SS = ds_events_A5SS_df,
@@ -264,7 +269,7 @@ list_s5_table <- list(deseq2_morp = deseq2_morpholino_df,
                       intersection_de_ds_crispr = ds_de_crispr_df,
                       consensus_targets = consensus_targets_df)
 
-write.xlsx(list_s5_table,
-           table_s5_file,
+write.xlsx(list_s6_table,
+           table_s6_file,
            overwrite=TRUE,
            keepNA=TRUE)

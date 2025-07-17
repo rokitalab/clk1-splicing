@@ -235,6 +235,7 @@ foreach my $sample(@bs_ids_uniq)
     {
 
       my $dpsi = $psi_tumor-$mean_psi;
+      
       print EVENTS $splice_event,"\t".$splice_case,"\t",$sample,"\t",$bs_id_cluster{$sample},"\t",$cns_regions{$sample},"\tInclusion\t",$dpsi,"\n";
       print BEDPOS $chr{$splice_event},"\t";
 
@@ -243,7 +244,7 @@ foreach my $sample(@bs_ids_uniq)
       {
         $exon_coord = $2;
         my($start_exon_coord,$end_exon_coord) = split/\-/,$exon_coord;
-        print BEDPOS $start_exon_coord,"\t",$end_exon_coord,"\t",$splice_event,"\t",$mean_psi,"\t",$str{$splice_event},"\n";
+        print BEDPOS $start_exon_coord,"\t",$end_exon_coord,"\t",$splice_event,"\t",$dpsi,"\t",$str{$splice_event},"\n";
 
       }
     }
@@ -260,7 +261,7 @@ foreach my $sample(@bs_ids_uniq)
       {
         $exon_coord = $2;
         my($start_exon_coord,$end_exon_coord) = split/\-/,$exon_coord;
-        print BEDNEG $start_exon_coord,"\t",$end_exon_coord,"\t",$splice_event,"\t",$mean_psi,"\t",$str{$splice_event},"\n";
+        print BEDNEG $start_exon_coord,"\t",$end_exon_coord,"\t",$splice_event,"\t",$dpsi,"\t",$str{$splice_event},"\n";
       }
     }
   }
