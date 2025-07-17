@@ -46,9 +46,7 @@ indep_rna_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary
 goi_file <- file.path(input_dir,"oncoprint-goi-lists-OpenPedCan-gencode-v39.csv")
 tmb_file <- file.path(input_dir, "snv-mutation-tmb-coding.tsv")
 cnv_file <- file.path(data_dir, "consensus_wgs_plus_freec_wxs_plus_freec_tumor_only.tsv.gz")
-psi_exp_file <- file.path(root_dir, "analyses", "CLK1-splicing_correlations", "results", "hgg-dmg-clk-srsf-expression-phosphorylation.tsv")
 fus_file <- file.path(data_dir, "fusion-putative-oncogenic.tsv")
-diff_psi_file <- file.path(root_dir, "analyses", "splicing_events_functional_sites", "results", "splice_events.diff.SE.txt")
 cluster_file <- file.path(root_dir, "analyses", 
                           "sample-psi-clustering", "results", 
                           "sample-cluster-metadata-top-5000-events-stranded.tsv")
@@ -68,25 +66,19 @@ histologies_df <- read_tsv(clin_file, guess_max = 100000) %>%
                                            Kids_First_Participant_ID == "PT_ZH3SBJPZ" ~ NA_character_,
                                            TRUE ~ NA_character_))
 
-low_clk1_psi <- read_tsv(diff_psi_file) %>%
-  filter(`Splice ID` == "CLK1:200860125-200860215_200859679-200859746_200861237-200861466") %>%
-  pull(Sample)
-
 goi <- read_csv(goi_file) %>%
   pull(HGAT) %>%
-  unique() %>%
-  c("CLK1")
+  unique()
 
-cluster_df <- read_tsv(cluster_file)
+cluster_df <- read_tsv(cluster_file) %>%
+  rename(Kids_First_Biospecimen_ID = sample_id)
 
 indep_rna_df <- vroom(indep_rna_file) %>% 
   dplyr::filter(cohort == 'PBTA') %>%
   # get match id for DNA samples
   left_join(histologies_df[,c("Kids_First_Biospecimen_ID", "match_id", "plot_group", "RNA_library")]) %>%
-  filter(plot_group %in% c("DIPG or DMG", "Other high-grade glioma"),
-         RNA_library %in% c("stranded", "poly-A stranded")) %>%
-  left_join(cluster_df %>% dplyr::select(sample_id, cluster),
-            by = c("Kids_First_Biospecimen_ID" = "sample_id"))
+  filter(RNA_library == "stranded") %>%
+  left_join(cluster_df %>% dplyr::select(Kids_First_Biospecimen_ID, cluster))
 
 matched_dna_samples <- histologies_df %>%
   filter(experimental_strategy %in% c("WGS", "WXS", "Targeted Panel"),
@@ -103,23 +95,6 @@ tmb_df <- read_tsv(tmb_file) %>%
                                 tmb >= 100 ~ "Ultra-hypermutant")) %>%
   # remove WXS for a sample we have WGS for
   filter(Kids_First_Biospecimen_ID != "BS_QF7M4SHH")
-
-splice_df <-  read_tsv(psi_exp_file) %>%
-  filter(match_id %in% indep_rna_df$match_id) %>%
-  # z-score
-  dplyr::mutate(`CLK1-201 (Exon4) PSI` = as.numeric(scale(IncLevel1)),
-                `CLK1-201` = as.numeric(scale(`CLK1_201`)),
-                `Total CLK1` = as.numeric(scale(`CLK1`))) 
-
-high_clk1_psi <- splice_df %>%
-  dplyr::arrange(-IncLevel1) %>%
-  dplyr::slice(1:length(low_clk1_psi)) %>%
-  pull(Kids_First_Biospecimen_ID)
-
-splice_df_anno <- splice_df %>%
-  mutate(clk1_status = case_when(Kids_First_Biospecimen_ID %in% low_clk1_psi ~ "Low",
-                                 Kids_First_Biospecimen_ID %in% high_clk1_psi ~ "High",
-                                 TRUE ~ NA_character_))
 
 # read in cnv file and reformat to add to maf
 cnv_df <- read_tsv(cnv_file) %>%
@@ -228,23 +203,19 @@ rownames(gene_matrix) <- gene_matrix$Hugo_Symbol
 gene_matrix <- gene_matrix %>%
   select(-c(Sort_Order, Hugo_Symbol)) 
 
-# mutate the hgg dataframe for plotting
-histologies_df_sorted <- splice_df_anno %>%
-  left_join(histologies_df, by = "match_id", relationship = "many-to-many") %>%
-  select(match_id, plot_group, cancer_predisposition, reported_gender, molecular_subtype, CNS_region, `CLK1-201 (Exon4) PSI`,
-         `CLK1-201`, `Total CLK1`, clk1_status) %>%
+# mutate the dataframe for plotting
+histologies_df_sorted <- histologies_df %>%
+  inner_join(cluster_df) %>%
+  select(match_id, plot_group, cancer_predisposition, reported_gender, molecular_subtype, CNS_region, cluster) %>%
   left_join(indep_rna_df %>% dplyr::select(match_id, cluster)) %>%
   unique() %>%
-  group_by(match_id, plot_group, cancer_predisposition, reported_gender, molecular_subtype, `CLK1-201 (Exon4) PSI`,
-           `CLK1-201`, `Total CLK1`, clk1_status, cluster) %>%
+  group_by(match_id, plot_group, cancer_predisposition, reported_gender, molecular_subtype, cluster) %>%
   summarise(CNS_region = str_c(unique(na.omit(CNS_region)), collapse = ","),
-            CLK1_PSI = mean(`CLK1-201 (Exon4) PSI`),
             .groups = "drop") %>%
   left_join(unique(tmb_df[,c("tmb_status", "match_id")])) %>%
   filter(match_id %in% names(gene_matrix)) %>%
   # unset rownames
   column_to_rownames("match_id") %>%
-  arrange(CLK1_PSI) %>%
   dplyr::mutate(molecular_subtype = gsub(", TP53", "", molecular_subtype),
                 molecular_subtype = case_when(grepl("To be classified", molecular_subtype) ~ "To be classified",
                                               TRUE ~ molecular_subtype),
@@ -254,21 +225,16 @@ histologies_df_sorted <- splice_df_anno %>%
                                        TRUE ~ tmb_status)) 
 
 histologies_df_sorted2 <- histologies_df_sorted %>%
-  select(reported_gender,  cancer_predisposition, plot_group, molecular_subtype, CNS_region, tmb_status, 
-         CLK1_PSI, `CLK1-201`, `Total CLK1`, cluster) %>%
+  select(reported_gender, cancer_predisposition, plot_group, CNS_region, tmb_status, cluster) %>%
   dplyr::rename("Gender"=reported_gender,
                 "Histology" = plot_group,
                 "Predisposition" = cancer_predisposition,
-                "Molecular Subtype"=molecular_subtype,
                 "CNS Region"=CNS_region, 
                 "Mutation Status"=tmb_status,
-                # "CLK1 status" = clk1_status,
-                "CLK1 Ex4 PSI"= CLK1_PSI,
-                "CLK1-201" =`CLK1-201`,
-                "Total CLK1 RNA" = `Total CLK1`,
                 "Cluster" = cluster) %>%
   dplyr::mutate(Cluster = factor(Cluster)) %>%
-  dplyr::mutate(Cluster = fct_relevel(Cluster, mixedsort(as.character(unique(Cluster)))))
+  dplyr::mutate(Cluster = fct_relevel(Cluster, mixedsort(as.character(unique(Cluster))))) %>%
+  arrange(Cluster)
 
 # write out metadata
 histologies_df_sorted2 %>%
@@ -281,48 +247,53 @@ loc_cols <- c("#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", "#AA4499", 
 names(loc_cols) <- c("Hemispheric", "Midline", "Mixed", "Optic pathway", "Other", "Posterior fossa", "Spine", "Suprasellar", "Ventricles")
 
 
+
 ha = HeatmapAnnotation(name = "annotation", 
                        df = histologies_df_sorted2,
                        col=list(
                          "Gender" = c("Male" = "#56B4E9",
                                       "Female" = "pink",
                                       "Unknown" = "whitesmoke"),
-                         "Histology" = c("DIPG or DMG" = "#ff40d9",
-                                         
-                                         "Other high-grade glioma" = "#ffccf5"),
+                         "Histology" = c("Ependymoma" =                       "#2200ff",       
+                                         "Atypical Teratoid Rhabdoid Tumor" = "#4d0d85",       
+                                         "Other high-grade glioma" =          "#ffccf5",       
+                                         "Low-grade glioma" =                 "#8f8fbf",       
+                                         "Meningioma" =                       "#2db398",       
+                                         "DIPG or DMG" =                      "#ff40d9",       
+                                         "Medulloblastoma" =                  "#a340ff",       
+                                         "Other tumor" =                      '#b5b5b5',       
+                                         "Mesenchymal tumor" =                "#7fbf00",       
+                                         "Craniopharyngioma" =                "#b2502d",       
+                                         "Mixed neuronal-glial tumor" =       "#685815",       
+                                         "Non-neoplastic tumor" =             "#FFF5EB",       
+                                         "Choroid plexus tumor" =             "#00441B",       
+                                         "Schwannoma" =                       "#ab7200",       
+                                         "Neurofibroma plexiform" =           "#e6ac39",       
+                                         "Other CNS embryonal tumor" =        "#b08ccf",       
+                                         "Germ cell tumor" =                  "#0074d9"),
                          "Predisposition" = c("LFS" = "red",
                                               "NF-1" = "black",
                                               "Other" = "grey"),
-                         "Molecular Subtype" = c("DHG, H3 G35" = "springgreen4",
-                                                 "DMG, H3 K28" = "#ff40d9",
-                                                 "DIPG, H3 wildtype" = "orchid",
-                                                 "HGG, H3 wildtype" = "lightpink",
-                                                 "HGG, IDH" = "indianred",
-                                                 "IHG, NTRK-altered" = "cornflowerblue",
-                                                 "IHG, ALK-altered" = "skyblue4",
-                                                 "IHG, ROS1-altered" = "lightblue1",
-                                                 "HGG, PXA" = "navy",
-                                                 "To be classified" = "whitesmoke"),
                          "CNS Region" = loc_cols,
                          "Mutation Status" = c("Normal" = "grey80",
                                                "Hypermutant" = "orange",
                                                "Ultra-hypermutant" = "red",
                                                "Unknown" = "whitesmoke"),
-                         "CLK1 Ex4 PSI" = colorRamp2(c(-4, 0, 2), c("darkblue","white", "red")),
-                         "CLK1-201" = colorRamp2(c(-3, 0, 3), c("darkblue", "white",  "red")),
-                         "Total CLK1 RNA" = colorRamp2(c(-3, 0, 3), c("darkblue", "white",  "red")),
                          "Cluster" = c("1" = "#B2DF8A",
                                        "2" = "#E31A1C",
+                                       "3" = "#33A02C",
                                        "4" = "#A6CEE3",
                                        "5" = "#FB9A99",
                                        "6" = "#FDBF6F",
+                                       "7" = "#CAB2D6",
                                        "8" = "#FFFF99",
-                                       "10" = "#B15928")
+                                       "9" = "#1F78B4",
+                                       "10" = "#B15928",
+                                       "11" = "#6A3D9A")
                        ),
                        annotation_name_side = "right", 
                        annotation_name_gp = gpar(fontsize = 9),
                        na_col = "whitesmoke")
-
 
 col = colors
 
@@ -360,73 +331,6 @@ plot_oncoprint <- oncoPrint(gene_matrix_sorted[1:25,], get_type = function(x) st
                             alter_fun_is_vectorized = TRUE,
                             column_order =  colnames(gene_matrix_sorted))
 
-# Save plot as PDF
-pdf(file.path(plots_dir,"oncoprint-clk1-psi.pdf"),
-    width = 15, height = 7)
-plot_oncoprint
-dev.off()
-
-# create df for enrichment
-ids_clk1 <- histologies_df_sorted %>%
-  rownames_to_column(var = "match_id") %>%
-  select(match_id, clk1_status)
-
-total_high <- nrow(ids_clk1)/2
-total_low <- nrow(ids_clk1)/2
-
-alteration_counts <- collapse_snv_dat %>%
-  distinct(match_id, Hugo_Symbol, .keep_all = TRUE) %>%
-  dplyr::mutate(count = case_when(
-    count > 0 ~ 1,
-    TRUE ~ 0
-  )) %>%
-  full_join(ids_clk1) %>%
-  filter(!is.na(clk1_status)) %>%
-  ## group by junction and calculate means
-  select(Hugo_Symbol, clk1_status) %>%
-  group_by(Hugo_Symbol, clk1_status) %>%
-  count() %>%
-  ungroup() %>%
-  # Spread to wide format to get separate columns for "High" and "Low"
-  pivot_wider(names_from = clk1_status, values_from = n, values_fill = list(n = 0)) %>%
-  rowwise() %>%
-  mutate(
-    Fisher_Test = list(
-      fisher.test(
-        matrix(
-          c(High, total_high - High,  # Counts of High and the absence of High
-            Low, total_low - Low),    # Counts of Low and the absence of Low
-          nrow = 2
-        )
-      )
-    ),
-    P_Value = Fisher_Test$p.value
-  ) %>%
-  select(Hugo_Symbol, High, Low, P_Value) %>%
-  ungroup() %>%
-  arrange(P_Value) %>%
-  write_tsv(file.path(results_dir, "clk1_high_low_mutation_counts.tsv"))
-
-
-# sort samples cluster and regenerate oncoprint
-cluster_order <- histologies_df_sorted2 %>%
-  arrange(Cluster) %>%
-  rownames_to_column("match_id") %>%
-  pull(match_id)
-
-plot_oncoprint_cluster <- oncoPrint(gene_matrix_sorted[1:30,], get_type = function(x) strsplit(x, ",")[[1]],
-                                    column_names_gp = gpar(fontsize = 9), show_column_names = F,
-                                    alter_fun = alter_fun,
-                                    col = col,
-                                    top_annotation = ha,
-                                    alter_fun_is_vectorized = TRUE,
-                                    column_order =  cluster_order)
-
-# Save plot as PDF
-pdf(file.path(plots_dir,"oncoprint-cluster.pdf"),
-    width = 15, height = 7)
-plot_oncoprint_cluster
-dev.off()
 
 # sort samples by histology and cluster and regenerate oncoprint
 hist_cluster_order <- histologies_df_sorted2 %>%
@@ -448,117 +352,62 @@ pdf(file.path(plots_dir,"oncoprint-hist-cluster.pdf"),
 plot_oncoprint_hist_cluster
 dev.off()
 
-# assess for non-random distribution of mutations across HGG/DMG clusters
-ids_cluster <- histologies_df_sorted %>%
-  rownames_to_column(var = "match_id") %>%
-  select(match_id, cluster, plot_group)
-
-cluster_totals <- table(histologies_df_sorted$cluster)
-
-alteration_counts_cluster <- collapse_snv_dat %>%
-  distinct(match_id, Hugo_Symbol, .keep_all = TRUE) %>%
-  # convert counts to 0 (no mutation) or 1 (at least one mutation)
-  dplyr::mutate(count = case_when(
-    count > 0 ~ 1,
-    TRUE ~ 0
-  )) %>%
-  full_join(ids_cluster) %>%
-  filter(!is.na(cluster)) %>%
-  ## group by junction and calculate means
-  dplyr::select(Hugo_Symbol, cluster) %>%
-  group_by(Hugo_Symbol, cluster) %>%
-  count() %>%
-  ungroup() %>%
-  # Spread to wide format to get separate columns for "High" and "Low"
-  pivot_wider(names_from = cluster, values_from = n, values_fill = list(n = 0)) %>%
-  dplyr::select(Hugo_Symbol, `1`, `2`, `4`, `5`, `6`, `8`, `10`) %>%
-  rowwise() %>%
-  mutate(
-    Fisher_Test = list(
-      fisher.test(
-        # create matrix of pts with and without mutations by cluster
-        matrix(
-          c(`1`, `2`, `4`, `5`, `6`, `8`, `10`, 
-            cluster_totals["1"] - `1`,
-            cluster_totals["2"] - `2`,
-            cluster_totals["4"] - `4`,
-            cluster_totals["5"] - `5`,
-            cluster_totals["6"] - `6`,
-            cluster_totals["8"] - `8`,
-            cluster_totals["10"] - `10`),    
-          nrow = 7
-        )
-      )
-    ),
-    P_Value = Fisher_Test$p.value
-  ) %>%
-  select(-Fisher_Test) %>%
-  ungroup() %>%
-  arrange(P_Value) %>%
-  write_tsv(file.path(results_dir, "hgg_cluster_mutation_count.tsv"))
-
-cols_to_divide <- c("1", "2", "4", "5", "6", "8", "10")
-
-# convert Ns to percentages
-alteration_counts_cluster <- alteration_counts_cluster %>%
-  mutate(across(all_of(cols_to_divide),
-              ~ .x / cluster_totals[which(cols_to_divide == cur_column())])) %>%
-  write_tsv(file.path(results_dir, "hgg_cluster_mutation_freq.tsv"))
-
-
-
-ha_cluster6 = HeatmapAnnotation(name = "annotation", 
-                       df = histologies_df_sorted2 %>% dplyr::filter(Cluster == "6"),
-                       col=list(
-                         "Gender" = c("Male" = "#56B4E9",
-                                      "Female" = "pink",
-                                      "Unknown" = "whitesmoke"),
-                         "Histology" = c("DIPG or DMG" = "#ff40d9",
-                                         
-                                         "Other high-grade glioma" = "#ffccf5"),
-                         "Predisposition" = c("LFS" = "red",
-                                              "NF-1" = "black",
-                                              "Other" = "grey"),
-                         "Molecular Subtype" = c("DHG, H3 G35" = "springgreen4",
-                                                 "DMG, H3 K28" = "#ff40d9",
-                                                 "DIPG, H3 wildtype" = "orchid",
-                                                 "HGG, H3 wildtype" = "lightpink",
-                                                 "HGG, IDH" = "indianred",
-                                                 "IHG, NTRK-altered" = "cornflowerblue",
-                                                 "IHG, ALK-altered" = "skyblue4",
-                                                 "IHG, ROS1-altered" = "lightblue1",
-                                                 "HGG, PXA" = "navy",
-                                                 "To be classified" = "whitesmoke"),
-                         "CNS Region" = loc_cols,
-                         "Mutation Status" = c("Normal" = "grey80",
-                                               "Hypermutant" = "orange",
-                                               "Ultra-hypermutant" = "red",
-                                               "Unknown" = "whitesmoke"),
-                         "CLK1 Ex4 PSI" = colorRamp2(c(-4, 0, 2), c("darkblue","white", "red")),
-                         "CLK1-201" = colorRamp2(c(-3, 0, 3), c("darkblue", "white",  "red")),
-                         "Total CLK1 RNA" = colorRamp2(c(-3, 0, 3), c("darkblue", "white",  "red")),
-                         "Cluster" = c("6" = "#FDBF6F")
-                       ),
-                       annotation_name_side = "right", 
-                       annotation_name_gp = gpar(fontsize = 9),
-                       na_col = "whitesmoke")
-
-cluster6_ids <- histologies_df_sorted2 %>% 
-  dplyr::filter(Cluster == "6") %>%
-  rownames_to_column("match_id") %>%
-  dplyr::pull(match_id) 
-
-gene_matrix_cluster6 <- gene_matrix_sorted[,colnames(gene_matrix_sorted) %in% cluster6_ids]
-
-plot_oncoprint_cluster6 <- oncoPrint(gene_matrix_cluster6[1:25,], get_type = function(x) strsplit(x, ",")[[1]],
-                            column_names_gp = gpar(fontsize = 9), show_column_names = F,
-                            alter_fun = alter_fun,
-                            col = col,
-                            top_annotation = ha_cluster6,
-                            alter_fun_is_vectorized = TRUE,
-                            column_order =  colnames(gene_matrix_cluster6))
-
-pdf(file.path(plots_dir,"oncoprint-hist-cluster6.pdf"),
-    width = 12, height = 7)
-plot_oncoprint_cluster6
-dev.off()
+for (group_n in unique(histologies_df_sorted2$Cluster)) {
+  ha_cluster = HeatmapAnnotation(name = "annotation", 
+                         df = histologies_df_sorted2 %>% dplyr::filter(Cluster == group_n) %>% dplyr::select(-Cluster),
+                         col=list(
+                           "Gender" = c("Male" = "#56B4E9",
+                                        "Female" = "pink",
+                                        "Unknown" = "whitesmoke"),
+                           "Histology" = c("Ependymoma" =                       "#2200ff",       
+                                           "Atypical Teratoid Rhabdoid Tumor" = "#4d0d85",       
+                                           "Other high-grade glioma" =          "#ffccf5",       
+                                           "Low-grade glioma" =                 "#8f8fbf",       
+                                           "Meningioma" =                       "#2db398",       
+                                           "DIPG or DMG" =                      "#ff40d9",       
+                                           "Medulloblastoma" =                  "#a340ff",       
+                                           "Other tumor" =                      '#b5b5b5',       
+                                           "Mesenchymal tumor" =                "#7fbf00",       
+                                           "Craniopharyngioma" =                "#b2502d",       
+                                           "Mixed neuronal-glial tumor" =       "#685815",       
+                                           "Non-neoplastic tumor" =             "#FFF5EB",       
+                                           "Choroid plexus tumor" =             "#00441B",       
+                                           "Schwannoma" =                       "#ab7200",       
+                                           "Neurofibroma plexiform" =           "#e6ac39",       
+                                           "Other CNS embryonal tumor" =        "#b08ccf",       
+                                           "Germ cell tumor" =                  "#0074d9"),
+                           "Predisposition" = c("LFS" = "red",
+                                                "NF-1" = "black",
+                                                "Other" = "grey"),
+                           "CNS Region" = loc_cols,
+                           "Mutation Status" = c("Normal" = "grey80",
+                                                 "Hypermutant" = "orange",
+                                                 "Ultra-hypermutant" = "red",
+                                                 "Unknown" = "whitesmoke")
+                         ),
+                         annotation_name_side = "right", 
+                         annotation_name_gp = gpar(fontsize = 9),
+                         na_col = "whitesmoke")
+  
+  cluster_ids <- histologies_df_sorted2 %>% 
+    dplyr::filter(Cluster == group_n) %>%
+    rownames_to_column("match_id") %>%
+    arrange(Histology) %>%
+    dplyr::pull(match_id) 
+  
+  gene_matrix_cluster <- gene_matrix_sorted[,colnames(gene_matrix_sorted) %in% cluster_ids]
+  
+  plot_oncoprint_cluster <- oncoPrint(gene_matrix_cluster[1:25,], get_type = function(x) strsplit(x, ",")[[1]],
+                              column_names_gp = gpar(fontsize = 9), show_column_names = F,
+                              alter_fun = alter_fun,
+                              col = col,
+                              top_annotation = ha_cluster,
+                              alter_fun_is_vectorized = TRUE,
+                              column_order = cluster_ids)
+  
+  pdf(NULL)
+  pdf(file.path(plots_dir,paste0("oncoprint-hist-cluster", group_n, ".pdf")),
+      width = 12, height = 7)
+  print(plot_oncoprint_cluster)
+  dev.off()
+}
