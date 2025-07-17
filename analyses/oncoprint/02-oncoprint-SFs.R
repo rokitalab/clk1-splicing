@@ -44,7 +44,6 @@ clin_file <- file.path(root_dir, "analyses", "cohort_summary", "results", "histo
 indep_rna_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
 tmb_file <- file.path(input_dir, "snv-mutation-tmb-coding.tsv")
 cnv_file <- file.path(data_dir, "consensus_wgs_plus_freec_wxs_plus_freec_tumor_only.tsv.gz")
-psi_exp_file <- file.path(root_dir, "analyses", "CLK1-splicing_correlations", "results", "clk1-nf1-psi-exp-phos-df.rds")
 fus_file <- file.path(data_dir, "fusion-putative-oncogenic.tsv")
 goi_file <- file.path(root_dir, "analyses","splicing-factor_dysregulation/input","splicing_factors.txt")
 hugo_file <- file.path(input_dir, "hgnc-symbol-check.csv")
@@ -57,7 +56,16 @@ source(file.path(input_dir, "mutation-colors.R"))
 plot_out <- file.path(plots_dir,"oncoprint-splicesosome-SFs.pdf")
 
 # read in files
-histologies_df <- read_tsv(clin_file, guess_max = 100000) 
+histologies_df <- read_tsv(clin_file, guess_max = 100000) %>%
+  mutate(cancer_predisposition = case_when(cancer_predispositions == "Neurofibromatosis, Type 1 (NF-1)" ~ "NF-1",
+                                           cancer_predispositions == "Li-Fraumeni syndrome (TP53)" ~ "LFS",
+                                           cancer_predispositions == "Other inherited conditions NOS" ~ "Other",
+                                           Kids_First_Participant_ID == "PT_3CHB9PK5" ~ "CMMRD",
+                                           #  Kids_First_Participant_ID == "PT_D5KKHPAE" ~ "BRCA1",
+                                           # Kids_First_Participant_ID == "PT_7WT6P5M8" ~ "PNKP",
+                                           Kids_First_Participant_ID == "PT_JNEV57VK" ~ "LS",
+                                           Kids_First_Participant_ID == "PT_ZH3SBJPZ" ~ NA_character_,
+                                           TRUE ~ NA_character_))
 
 # read in sbi file
 sbi_df <- read_tsv(sbi_file) %>%
@@ -72,12 +80,15 @@ goi <- readLines(goi_file) %>%
   c(hugo_genes) %>%
   unique()
 
+cluster_df <- read_tsv(cluster_file) %>%
+  rename(Kids_First_Biospecimen_ID = sample_id)
+
 indep_rna_df <- vroom(indep_rna_file) %>% 
   dplyr::filter(cohort == 'PBTA') %>%
   # get match id for DNA samples
   left_join(histologies_df[,c("Kids_First_Biospecimen_ID", "match_id", "plot_group", "RNA_library")]) %>%
-  filter(plot_group %in% c("DIPG or DMG", "Other high-grade glioma"),
-         RNA_library %in% c("stranded", "poly-A stranded"))
+  filter(RNA_library == "stranded") %>%
+  left_join(cluster_df %>% dplyr::select(Kids_First_Biospecimen_ID, cluster))
 
 matched_dna_samples <- histologies_df %>%
   filter(experimental_strategy %in% c("WGS", "WXS", "Targeted Panel"),
@@ -94,18 +105,6 @@ tmb_df <- read_tsv(tmb_file) %>%
                                 tmb >= 100 ~ "Ultra-hypermutant")) %>%
   # remove WXS for a sample we have WGS for
   filter(Kids_First_Biospecimen_ID != "BS_QF7M4SHH")
-
-splice_df <-  readRDS(psi_exp_file) %>%
-  rownames_to_column("match_id") %>%
-  filter(match_id %in% indep_rna_df$match_id) %>%
-  left_join(sbi_df) %>%
-  # z-score
-  dplyr::mutate(`CLK1-201 (Exon4) PSI` = as.numeric(scale(`CLK1-201 (Exon4) PSI`)),
-                `NF1-215 PSI` = as.numeric(scale(`NF1-215 PSI`)),
-                `CLK1-201` = as.numeric(scale(`CLK1-201`)),
-                `Total CLK1` = as.numeric(scale(`Total CLK1`)),
-                `Total NF1` = as.numeric(scale(`Total NF1`)),
-                SI = as.numeric(scale(SI)))
 
 # read in cnv file and reformat to add to maf
 cnv_df <- read_tsv(cnv_file) %>%
@@ -224,22 +223,19 @@ print(paste(length(unique(collapse_snv_dat_mut$match_id)), "tumors mutated in",
             length(unique(matched_dna_samples$match_id)), "patients"))
 print(paste(round(length(unique(collapse_snv_dat_mut$match_id))/length(unique(matched_dna_samples$match_id))*100, 2),"%"))
 
-# mutate the hgg dataframe for plotting
-histologies_df_sorted <- splice_df %>%
-  left_join(histologies_df, by = "match_id", relationship = "many-to-many") %>%
-  select(match_id, plot_group, reported_gender, molecular_subtype, CNS_region, `CLK1-201 (Exon4) PSI`, SI,
-         `NF1-215 PSI`, `CLK1-201`, `Total CLK1`, `Total NF1`, `NF1 pS864`, `NF1 pS2796`, `Total NF1 Protein`) %>%
+# mutate the dataframe for plotting
+histologies_df_sorted <- histologies_df %>%
+  inner_join(cluster_df) %>%
+  select(match_id, plot_group, cancer_predisposition, reported_gender, molecular_subtype, CNS_region, cluster) %>%
+  left_join(indep_rna_df %>% dplyr::select(match_id, cluster)) %>%
   unique() %>%
-  group_by(match_id, plot_group, reported_gender, molecular_subtype, `CLK1-201 (Exon4) PSI`, SI,
-           `NF1-215 PSI`, `CLK1-201`, `Total CLK1`, `Total NF1`, `NF1 pS864`, `NF1 pS2796`, `Total NF1 Protein`) %>%
+  group_by(match_id, plot_group, cancer_predisposition, reported_gender, molecular_subtype, cluster) %>%
   summarise(CNS_region = str_c(unique(na.omit(CNS_region)), collapse = ","),
-            CLK1_PSI = mean(`CLK1-201 (Exon4) PSI`),
             .groups = "drop") %>%
   left_join(unique(tmb_df[,c("tmb_status", "match_id")])) %>%
   filter(match_id %in% names(gene_matrix)) %>%
   # unset rownames
   column_to_rownames("match_id") %>%
-  arrange(SI) %>%
   dplyr::mutate(molecular_subtype = gsub(", TP53", "", molecular_subtype),
                 molecular_subtype = case_when(grepl("To be classified", molecular_subtype) ~ "To be classified",
                                               TRUE ~ molecular_subtype),
@@ -247,6 +243,18 @@ histologies_df_sorted <- splice_df %>%
                                        TRUE ~ CNS_region),
                 tmb_status = case_when(is.na(tmb_status) ~ "Unknown",
                                        TRUE ~ tmb_status)) 
+
+histologies_df_sorted2 <- histologies_df_sorted %>%
+  select(reported_gender, cancer_predisposition, plot_group, CNS_region, tmb_status, cluster) %>%
+  dplyr::rename("Gender"=reported_gender,
+                "Histology" = plot_group,
+                "Predisposition" = cancer_predisposition,
+                "CNS Region"=CNS_region, 
+                "Mutation Status"=tmb_status,
+                "Cluster" = cluster) %>%
+  dplyr::mutate(Cluster = factor(Cluster)) %>%
+  dplyr::mutate(Cluster = fct_relevel(Cluster, mixedsort(as.character(unique(Cluster))))) %>%
+  arrange(Cluster)
 
 # get SI high/low
 quantiles_si <- quantile(histologies_df_sorted$SI, probs=c(.25, .75), na.rm = TRUE)

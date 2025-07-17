@@ -1,85 +1,484 @@
-match_id	Gender	Histology	Molecular Subtype	CNS Region	SBI	Kids_First_Participant_ID
-PT_7WT6P5M8_7316-2308_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Posterior fossa	-0.9595292455301258	PT_7WT6P5M8
-PT_JNEV57VK_7316-2594_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	DMG, H3 K28	Midline	-0.9591062760782053	PT_JNEV57VK
-PT_Y5KY6KN9_7316-195_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	DMG, H3 K28	Posterior fossa	-0.9213122438356518	PT_Y5KY6KN9
-PT_387VK1T9_7316-3625_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	IHG, NTRK-altered	Hemispheric	-0.8984403163641118	PT_387VK1T9
-PT_KVMF5TFW_7316-3030_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	DMG, H3 K28	Midline	-0.8965010835715052	PT_KVMF5TFW
-PT_7FZ8SE69_7316-2152_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	DMG, H3 K28	Midline	-0.8858526892742761	PT_7FZ8SE69
-PT_59D00MBQ_7316-1936_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	DMG, H3 K28	Midline	-0.8849326465914313	PT_59D00MBQ
-PT_PF9EC93Q_7316-3765_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	HGG, H3 wildtype	Hemispheric	-0.8428281411985243	PT_PF9EC93Q
-PT_DJ106XYS_7316-3935_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	DMG, H3 K28	Other	-0.8080704436969841	PT_DJ106XYS
-PT_3NQ55S57_7316UP-2413_Solid Tissue_Primary Tumor	Male	Other high-grade glioma	NA	Hemispheric	-0.8031528500852113	PT_3NQ55S57
-PT_X5TQR8V2_7316-343_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	DMG, H3 K28	Midline	-0.7945869207626131	PT_X5TQR8V2
-PT_HMF8J4EG_7316-644_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	DMG, H3 K28	Midline	-0.7843057883211241	PT_HMF8J4EG
-PT_Z4PJA6KT_7316-1763_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	DMG, H3 K28	Midline	-0.7703022789541173	PT_Z4PJA6KT
-PT_7FAJ9STP_16510-16_Solid Tissue_Initial CNS Tumor	NA	Other high-grade glioma	NA	Hemispheric	-0.7559827973715142	PT_7FAJ9STP
-PT_37B5JRP1_7316-2217_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Midline	-0.7434717392493503	PT_37B5JRP1
-PT_394ZA6P7_7316-5741_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Posterior fossa	-0.694408149405509	PT_394ZA6P7
-PT_KEQ53KRH_7316-440_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	HGG, H3 wildtype	Mixed	-0.6940542090394161	PT_KEQ53KRH
-PT_FKCPVY7V_7316-8031_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	DMG, H3 K28	Midline	-0.6913880923530028	PT_FKCPVY7V
-PT_FFSCZ7CA_7316UP-2877_Solid Tissue_Primary Tumor	Female	Other high-grade glioma	NA	Hemispheric	-0.6831559058164989	PT_FFSCZ7CA
-PT_63HDZHCN_7316-2980_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Hemispheric	-0.6766217652868406	PT_63HDZHCN
-PT_VAJN5QP8_7316-2176_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	HGG, H3 wildtype	Hemispheric	-0.6591633393419929	PT_VAJN5QP8
-PT_Y660CKCB_7316-3122_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	DMG, H3 K28	Midline	-0.6521585927655273	PT_Y660CKCB
-PT_GBCZ0RW3_7316-9642_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	HGG, H3 wildtype	NA	-0.6500573509023995	PT_GBCZ0RW3
-PT_MV5WXTQV_7316-8036_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Hemispheric	-0.6490144985179982	PT_MV5WXTQV
-PT_5K5CZXYB_7316-8035_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	DHG, H3 G35	Hemispheric	-0.6485877308359316	PT_5K5CZXYB
-PT_ZKQTJ7F7_7316-9560_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, IDH	NA	-0.6222505747046324	PT_ZKQTJ7F7
-PT_Z4BF2NSB_7316-161_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Hemispheric	-0.6131703976774123	PT_Z4BF2NSB
-PT_FRHVM7G9_7316-9048_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	DMG, H3 K28	Midline	-0.6102679709902191	PT_FRHVM7G9
-PT_DXET8FM2_16510-2_Solid Tissue_Initial CNS Tumor	NA	Other high-grade glioma	NA	Hemispheric	-0.5731487129016039	PT_DXET8FM2
-PT_RYMG3M91_A18777_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	DMG, H3 K28	Midline	-0.5599019314019837	PT_RYMG3M91
-PT_D9A6G154_7316-9211_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	DMG, H3 K28	Spine	-0.5492289334400638	PT_D9A6G154
-PT_QQZXYR4M_7316-1946_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, IDH	Hemispheric	-0.5336309429901037	PT_QQZXYR4M
-PT_VVCN8DXT_7316-71_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Hemispheric	-0.5307968931087128	PT_VVCN8DXT
-PT_TWF36J8K_7316-6251_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	DMG, H3 K28	Mixed	-0.5285754998061671	PT_TWF36J8K
-PT_D5KKHPAE_7316-4337_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	HGG, PXA	Hemispheric	-0.5031858301987795	PT_D5KKHPAE
-PT_R5T773FS_7316-8029_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	DMG, H3 K28	Posterior fossa	-0.4856453941042639	PT_R5T773FS
-PT_AZFSRAWZ_7316-4553_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	DHG, H3 G35	Hemispheric	-0.46126960678630696	PT_AZFSRAWZ
-PT_XMYN334C_7316UP-3705_Solid Tissue_Primary Tumor	Female	Other high-grade glioma	NA	Hemispheric	-0.4560154938373399	PT_XMYN334C
-PT_DRRTC594_7316-8856_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	HGG, H3 wildtype	Hemispheric	-0.4182667226812001	PT_DRRTC594
-PT_N3205P0D_7316-1099_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	DHG, H3 G35	Hemispheric	-0.41696076448411007	PT_N3205P0D
-PT_5BWZA0NT_7316-1102_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	DMG, H3 K28	Ventricles	-0.4016866938103236	PT_5BWZA0NT
-PT_DB281Z4K_7316UP-310_Solid Tissue_Primary Tumor	Female	Other high-grade glioma	HGG, H3 wildtype	Hemispheric	-0.39919757928094574	PT_DB281Z4K
-PT_6SH7PV1N_7316-535_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Hemispheric	-0.3983084848194816	PT_6SH7PV1N
-PT_KX1QQQRC_7316-8939_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	HGG, H3 wildtype	Hemispheric	-0.3952347287310073	PT_KX1QQQRC
-PT_Q37KKTVP_7316-6985_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	DMG, H3 K28	Midline	-0.37637263235045526	PT_Q37KKTVP
-PT_9X1XY3JK_7316-6041_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	DMG, H3 K28	Spine	-0.36259113380518393	PT_9X1XY3JK
-PT_TNJPSPW3_7316-10002_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	DHG, H3 G35	NA	-0.33282352371522345	PT_TNJPSPW3
-PT_7YM9EBCK_16510-3_Solid Tissue_Initial CNS Tumor	NA	Other high-grade glioma	NA	Hemispheric	-0.3267033904860844	PT_7YM9EBCK
-PT_QTDY0Y9A_7316-3771_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	DMG, H3 K28	Mixed	-0.292529923325057	PT_QTDY0Y9A
-PT_2JDDX6TJ_7316-409_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	DMG, H3 K28	Midline	-0.24375492516447697	PT_2JDDX6TJ
-PT_C2D4JXS1_7316-1746_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	HGG, H3 wildtype	Posterior fossa	-0.2370570373938972	PT_C2D4JXS1
-PT_X5SGG610_7316UP-1104_Solid Tissue_Primary Tumor	Female	Other high-grade glioma	DHG, H3 G35	Hemispheric	-0.21162135949194755	PT_X5SGG610
-PT_PR4YBBH3_7316-116_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	DMG, H3 K28	Midline	-0.15257331540725724	PT_PR4YBBH3
-PT_KCDPF85V_7316UP-2066_Solid Tissue_Primary Tumor	Female	Other high-grade glioma	NA	Hemispheric	-0.08691001108821644	PT_KCDPF85V
-PT_MP85FHCR_7316-9850_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	HGG, H3 wildtype	NA	-0.07470063796812819	PT_MP85FHCR
-PT_9PDE9KSB_7316-4723_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	DHG, H3 G35	Hemispheric	0.03131791736963635	PT_9PDE9KSB
-PT_WPQF0B3M_7316-5328_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Hemispheric	0.039476380059604854	PT_WPQF0B3M
-PT_C7HHJG7Z_7316-4516_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	DMG, H3 K28	Midline	0.07019587878519541	PT_C7HHJG7Z
-PT_9RTMDPES_7316-4220_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Midline	0.12265088956689926	PT_9RTMDPES
-PT_YKFSBN25_7316-8461_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	HGG, H3 wildtype	Hemispheric	0.18039631508726028	PT_YKFSBN25
-PT_FCYM09DV_16510-1_Solid Tissue_Initial CNS Tumor	NA	Other high-grade glioma	NA	Hemispheric	0.18348511294200337	PT_FCYM09DV
-PT_M1BBF6RA_7316-9799_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	DHG, H3 G35	NA	0.22686531925210113	PT_M1BBF6RA
-PT_1FQFJ0V1_7316-5087_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Mixed	0.23155347744036223	PT_1FQFJ0V1
-PT_6RZ363TJ_7316UP-2035_Solid Tissue_Primary Tumor	Female	Other high-grade glioma	HGG, H3 wildtype	Hemispheric	0.2590788386367887	PT_6RZ363TJ
-PT_0FNG5FK3_7316-7756_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Hemispheric	0.2925420567214639	PT_0FNG5FK3
-PT_PEHEAEVT_7316-4552_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Hemispheric	0.40433503064269377	PT_PEHEAEVT
-PT_0FGS6YME_7316-8811_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Hemispheric	0.4739345717343663	PT_0FGS6YME
-PT_DF8P04Y1_7316-9253_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	HGG, IDH	Hemispheric	0.531812486569577	PT_DF8P04Y1
-PT_38B4CHBF_7316-9849_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	DHG, H3 G35	NA	0.6011520834594166	PT_38B4CHBF
-PT_GHTSGFCT_7316-4438_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Midline	0.6526100846729492	PT_GHTSGFCT
-PT_QBEA1CGX_7316-10711_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Posterior fossa	0.6741542162243999	PT_QBEA1CGX
-PT_MSQ6GSVP_7316-2274_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	IHG, NTRK-altered	Mixed	0.725510483885949	PT_MSQ6GSVP
-PT_G395P98S_7316-8826_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	DHG, H3 G35	Hemispheric	0.7984841075930257	PT_G395P98S
-PT_N13MXT13_7316-7758_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Posterior fossa	0.8156082916818442	PT_N13MXT13
-PT_SGJK5KSB_7316-9140_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	HGG, H3 wildtype	Midline	0.8698196945142105	PT_SGJK5KSB
-PT_WMWFCG6J_7316-8038_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Other	0.8740647111488888	PT_WMWFCG6J
-PT_CQS4V67V_7316-9212_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	DHG, H3 G35	Hemispheric	0.991057386905542	PT_CQS4V67V
-PT_2A5QN7QS_7316-10004_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	DHG, H3 G35	Hemispheric	1.0028506215212822	PT_2A5QN7QS
-PT_A64KYWHR_7316-4543_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Hemispheric	1.148773176037886	PT_A64KYWHR
-PT_TWAHK62W_7316-9055_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	HGG, H3 wildtype	Midline	1.3123336223663766	PT_TWAHK62W
-PT_8HZN8J7C_7316-8034_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Hemispheric	1.8426365497569044	PT_8HZN8J7C
-PT_89HXDTTW_7316-4842_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	IHG, NTRK-altered	Hemispheric	2.468581135080178	PT_89HXDTTW
-PT_5D439P2D_7316-9945_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	HGG, H3 wildtype	Midline	2.8788581338277623	PT_5D439P2D
-PT_ERTJRQ37_7316-9854_Solid Tissue_Initial CNS Tumor	Unknown	DIPG or DMG	DMG, H3 K28	Spine	3.1063870526754	PT_ERTJRQ37
+match_id	Gender	Histology	CNS Region	SBI	Cluster	Kids_First_Participant_ID
+PT_00G007DM_7316-272_Solid Tissue_Initial CNS Tumor	Male	Other CNS embryonal tumor	Posterior fossa	0.0362569150455809	10	PT_00G007DM
+PT_02J5CWN5_7316-2989_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Suprasellar	0.0127797518857927	1	PT_02J5CWN5
+PT_04YTK82N_7316-746_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0223306643925396	10	PT_04YTK82N
+PT_06ERX8Z7_7316-2578_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Ventricles	0.0109607048958999	2	PT_06ERX8Z7
+PT_06H29FCG_7316-1944_Solid Tissue_Initial CNS Tumor	Female	Ependymoma	Posterior fossa	0.0230227334603866	7	PT_06H29FCG
+PT_0CE0HFYB_7316-2581_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Hemispheric	0.0121978265690841	2	PT_0CE0HFYB
+PT_0DWRY9ZX_7316-2221_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0451314070479648	10	PT_0DWRY9ZX
+PT_0DXHDZJR_7316-2857_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.0182108836810706	6	PT_0DXHDZJR
+PT_0EWY6S6S_7316-3491_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.0102403641018347	4	PT_0EWY6S6S
+PT_0F3RHT8J_7316-2673_Solid Tissue_Initial CNS Tumor	Female	Meningioma	Other	0.0191037417913609	5	PT_0F3RHT8J
+PT_0FGS6YME_7316-8811_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.0504741657310752	6	PT_0FGS6YME
+PT_0MHKP408_7316-726_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.00895385572342898	1	PT_0MHKP408
+PT_0WKX8Q5X_7316-88_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Spine	0.017095927146768	7	PT_0WKX8Q5X
+PT_0WMP712K_7316-922_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Mixed	0.0151992164270473	11	PT_0WMP712K
+PT_124TTG01_7316-1960_Solid Tissue_Initial CNS Tumor	Female	Non-neoplastic tumor	Suprasellar	0.0200782472613459	5	PT_124TTG01
+PT_13MKXR8G_7316-2251_Solid Tissue_Initial CNS Tumor	Male	Choroid plexus tumor	Ventricles	0.0390427714646465	3	PT_13MKXR8G
+PT_164RNWTT_7316-1078_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Posterior fossa	0.0164780968958515	7	PT_164RNWTT
+PT_16EJ7BZ9_7316-1938_Solid Tissue_Initial CNS Tumor	Male	Meningioma	Mixed	0.013515602191348	2	PT_16EJ7BZ9
+PT_17NG0KW3_7316-1945_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.019964876605971	11	PT_17NG0KW3
+PT_1BV6ND1D_7316-3203_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.00870471808959571	1	PT_1BV6ND1D
+PT_1DRAVX4S_7316-1968_Solid Tissue_Initial CNS Tumor	Female	Mesenchymal tumor	Other	0.0210563994023904	11	PT_1DRAVX4S
+PT_1EB5KHZX_7316-1076_Solid Tissue_Initial CNS Tumor	Female	Non-neoplastic tumor	Hemispheric	0.0283242097828006	8	PT_1EB5KHZX
+PT_1FQFJ0V1_7316-5087_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Mixed	0.030115023726523	2	PT_1FQFJ0V1
+PT_1MW98VR1_7316-2558_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Posterior fossa	0.0198010112542815	7	PT_1MW98VR1
+PT_1NN9AW39_7316-3148_Solid Tissue_Initial CNS Tumor	Male	Other tumor	Mixed	0.0273570971937482	5	PT_1NN9AW39
+PT_1T7WF5S1_7316-2934_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Ventricles	0.016143470542718	11	PT_1T7WF5S1
+PT_1TB2V1PH_7316-2608_Solid Tissue_Initial CNS Tumor	Male	Germ cell tumor	Mixed	0.0927185092740027	5	PT_1TB2V1PH
+PT_1TGKS073_7316-1659_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Spine	0.0154435885149829	2	PT_1TGKS073
+PT_1Z015H6V_7316-3516_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Spine	0.0364316934808891	7	PT_1Z015H6V
+PT_1ZAWNGWT_7316-3345_Solid Tissue_Initial CNS Tumor	Female	Mixed neuronal-glial tumor	Hemispheric	0.0792688527601727	1	PT_1ZAWNGWT
+PT_23NZGSRJ_7316-2659_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Mixed	0.0577456217458922	10	PT_23NZGSRJ
+PT_26V72ZXB_7316-3576_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Mixed	0.0245532447682076	11	PT_26V72ZXB
+PT_2A5QN7QS_7316-10004_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Hemispheric	0.0854706811634606	6	PT_2A5QN7QS
+PT_2BTC5TEN_7316-2183_Solid Tissue_Initial CNS Tumor	Female	Craniopharyngioma	Suprasellar	0.0103911769774255	5	PT_2BTC5TEN
+PT_2C63FJAM_7316-3040_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Hemispheric	0.0103173140970224	7	PT_2C63FJAM
+PT_2E552BAR_7316-2719_Solid Tissue_Initial CNS Tumor	Male	Neurofibroma plexiform	Other	0.0530397189948663	9	PT_2E552BAR
+PT_2FK75B27_7316-1700_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.040478537843167	10	PT_2FK75B27
+PT_2FVTD0WR_7316-2897_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Mixed	0.0964366428283954	1	PT_2FVTD0WR
+PT_2GPH62JS_7316-1775_Solid Tissue_Initial CNS Tumor	Male	Craniopharyngioma	Suprasellar	0.0178854864310325	5	PT_2GPH62JS
+PT_2PRV78FX_7316-176_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Hemispheric	0.0149363231061532	7	PT_2PRV78FX
+PT_2YCHME6S_7316-2622_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.0958083832335329	1	PT_2YCHME6S
+PT_2Z7GVDTM_7316-3515_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.0150133782578535	4	PT_2Z7GVDTM
+PT_32J909WM_7316-2688_Solid Tissue_Initial CNS Tumor	Male	Atypical Teratoid Rhabdoid Tumor	Mixed	0.0110174081237911	3	PT_32J909WM
+PT_37B5JRP1_7316-2217_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Midline	0.0173196569699008	6	PT_37B5JRP1
+PT_37WTWPZY_7316-73_Solid Tissue_Initial CNS Tumor	Female	Other tumor	Other	0.0445047022618202	5	PT_37WTWPZY
+PT_387VK1T9_7316-3625_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Hemispheric	0.0168972284715906	2	PT_387VK1T9
+PT_38B4CHBF_7316-9849_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	NA	0.0540612457591414	6	PT_38B4CHBF
+PT_38FS37DP_7316-2686_Solid Tissue_Initial CNS Tumor	Female	Mesenchymal tumor	Hemispheric	0.0866190839165685	5	PT_38FS37DP
+PT_39HBKSGG_7316-908_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0399057660815353	10	PT_39HBKSGG
+PT_3A2Q62RD_7316-2243_Solid Tissue_Initial CNS Tumor	Female	Ependymoma	Posterior fossa	0.021620940825794	7	PT_3A2Q62RD
+PT_3A87PCQK_7316-480_Solid Tissue_Initial CNS Tumor	Male	Mixed neuronal-glial tumor	Hemispheric	0.0223053314773509	4	PT_3A87PCQK
+PT_3AWKWXEV_7316-85_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.021173104434907	2	PT_3AWKWXEV
+PT_3CVMBGD7_7316-1963_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.0131658743666491	1	PT_3CVMBGD7
+PT_3KK1F95W_7316-1744_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Hemispheric	0.0409066609643964	8	PT_3KK1F95W
+PT_3KWSRWZN_7316-2648_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Ventricles	0.0254950350751054	7	PT_3KWSRWZN
+PT_3NM45TQ8_7316-1077_Solid Tissue_Initial CNS Tumor	Male	Mixed neuronal-glial tumor	Hemispheric	0.0227289257400538	8	PT_3NM45TQ8
+PT_3NQ55S57_7316UP-2413_Solid Tissue_Primary Tumor	Male	Other high-grade glioma	Hemispheric	0.0155921160990429	4	PT_3NQ55S57
+PT_3P3D97AB_7316-13_Solid Tissue_Initial CNS Tumor	Male	Neurofibroma plexiform	Spine	0.0332440489048257	9	PT_3P3D97AB
+PT_3R0P995B_7316-873_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Mixed	0.0140072584920279	7	PT_3R0P995B
+PT_3SW2VHD5_7316-2984_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Ventricles	0.0374303327140686	9	PT_3SW2VHD5
+PT_3T3VGWC6_7316-375_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Hemispheric	0.010250890121719	8	PT_3T3VGWC6
+PT_3V5GTCJR_7316-1646_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.012573842447444	4	PT_3V5GTCJR
+PT_3VCS1PPF_7316-198_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Spine	0.0131506641653876	7	PT_3VCS1PPF
+PT_3WA7SBQ6_7316-2248_Solid Tissue_Initial CNS Tumor	Female	Choroid plexus tumor	Hemispheric	0.029648851590106	3	PT_3WA7SBQ6
+PT_4159VCJY_7316-389_Solid Tissue_Initial CNS Tumor	Female	Mixed neuronal-glial tumor	Hemispheric	0.0174292308736678	2	PT_4159VCJY
+PT_41QYPSGV_7316-884_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Hemispheric	0.0111609655682604	2	PT_41QYPSGV
+PT_41RR5FQD_7316-1115_Solid Tissue_Initial CNS Tumor	Male	Germ cell tumor	Other	0.0671163061943761	5	PT_41RR5FQD
+PT_44HPG5YT_7316-3067_Solid Tissue_Initial CNS Tumor	Female	Mixed neuronal-glial tumor	Hemispheric	0.0126792944890536	8	PT_44HPG5YT
+PT_45P9F9MD_7316-314_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.030710629686942	10	PT_45P9F9MD
+PT_46F28BFH_7316-1799_Solid Tissue_Initial CNS Tumor	Female	Ependymoma	Hemispheric	0.0273021042721559	7	PT_46F28BFH
+PT_4ADZ9F53_7316-3060_Solid Tissue_Initial CNS Tumor	Female	Mixed neuronal-glial tumor	Hemispheric	0.0273947004522181	4	PT_4ADZ9F53
+PT_4JG5KWE8_7316-50_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Midline	0.00944176765464545	1	PT_4JG5KWE8
+PT_4TASAQKA_7316-3566_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Mixed	0.0065394842619504	1	PT_4TASAQKA
+PT_4XVA57J7_7316-1760_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Hemispheric	0.0140548774958742	2	PT_4XVA57J7
+PT_54MH6Q46_7316-2591_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Hemispheric	0.0454422661315221	2	PT_54MH6Q46
+PT_59D00MBQ_7316-1936_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	Midline	0.0127646743500402	6	PT_59D00MBQ
+PT_59FJRPVX_7316-3769_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Hemispheric	0.0127215111986217	8	PT_59FJRPVX
+PT_5BWZA0NT_7316-1102_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	Ventricles	0.0303958580519901	6	PT_5BWZA0NT
+PT_5CKDR2SF_7316-525_Solid Tissue_Initial CNS Tumor	Female	Atypical Teratoid Rhabdoid Tumor	Posterior fossa	0.011417809428521	3	PT_5CKDR2SF
+PT_5D439P2D_7316-9945_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Midline	0.107131806930693	2	PT_5D439P2D
+PT_5F4N0CAP_7316-219_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.0243311227989938	11	PT_5F4N0CAP
+PT_5FR2YA6E_7316-109_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0493785035339995	10	PT_5FR2YA6E
+PT_5K5CZXYB_7316-8035_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Hemispheric	0.024812264817523	2	PT_5K5CZXYB
+PT_5KP2E0DS_7316-3936_Solid Tissue_Initial CNS Tumor	Male	Mixed neuronal-glial tumor	Hemispheric	0.0508731493594136	8	PT_5KP2E0DS
+PT_5KRVE8E4_7316-1671_Solid Tissue_Initial CNS Tumor	Female	Craniopharyngioma	Suprasellar	0.00980304898981551	5	PT_5KRVE8E4
+PT_5M8A47WW_7316-436_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.00777856349126174	1	PT_5M8A47WW
+PT_5P3XJ97K_7316-390_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.00792875705560062	1	PT_5P3XJ97K
+PT_5SKQHRC5_7316-9013_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Spine	0.100826497638578	6	PT_5SKQHRC5
+PT_5VAKED5F_7316-2689_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Ventricles	0.00568967038136964	1	PT_5VAKED5F
+PT_5X061J42_7316-2149_Solid Tissue_Initial CNS Tumor	Male	Germ cell tumor	Mixed	0.0884623197237457	5	PT_5X061J42
+PT_625X34JX_7316-2170_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Spine	0.0132616798127763	7	PT_625X34JX
+PT_63HDZHCN_7316-2980_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.0202919947506562	2	PT_63HDZHCN
+PT_66XN3MT1_7316-936_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Ventricles	0.0112955155913692	2	PT_66XN3MT1
+PT_67R1AF5R_7316-889_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Ventricles	0.0110482349770951	7	PT_67R1AF5R
+PT_69C7CBFW_7316-1959_Solid Tissue_Initial CNS Tumor	Male	Mesenchymal tumor	Other	0.0253434637801832	11	PT_69C7CBFW
+PT_6DB7B9WV_7316-3317_Solid Tissue_Initial CNS Tumor	Male	Non-neoplastic tumor	Hemispheric	0.0218535230822631	8	PT_6DB7B9WV
+PT_6DW5NFKX_7316-3150_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Hemispheric	0.0118243859713149	2	PT_6DW5NFKX
+PT_6E8JYRXM_7316-2729_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Mixed	0.00688223178552889	1	PT_6E8JYRXM
+PT_6GDPNFA6_7316-2610_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Mixed	0.0231713285396981	6	PT_6GDPNFA6
+PT_6MB6RED3_7316-226_Solid Tissue_Initial CNS Tumor	Male	Craniopharyngioma	Suprasellar	0.0178008305905464	5	PT_6MB6RED3
+PT_6MWPJ96F_7316-1928_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.0139866775473023	1	PT_6MWPJ96F
+PT_6PFFSB6D_7316-2569_Solid Tissue_Initial CNS Tumor	Male	Other tumor	Hemispheric	0.0467051673265579	5	PT_6PFFSB6D
+PT_6PJ126FF_7316-8815_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	Midline	0.0315321891097162	2	PT_6PJ126FF
+PT_6Q0NPVP3_7316-2255_Solid Tissue_Initial CNS Tumor	Female	Mixed neuronal-glial tumor	Hemispheric	0.0665013742336005	5	PT_6Q0NPVP3
+PT_6R7AE0P3_7316-2653_Solid Tissue_Initial CNS Tumor	Male	Other tumor	Other	0.0844285613523617	5	PT_6R7AE0P3
+PT_6R95FQT2_7316-459_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.0115431111804391	1	PT_6R95FQT2
+PT_6RZ363TJ_7316UP-2035_Solid Tissue_Primary Tumor	Female	Other high-grade glioma	Hemispheric	0.0351649556099521	8	PT_6RZ363TJ
+PT_6SH7PV1N_7316-535_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.0243475244949276	10	PT_6SH7PV1N
+PT_6TKJRSPW_7316-162_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.0134356026463035	4	PT_6TKJRSPW
+PT_6VD8J6FB_7316-8032_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Hemispheric	0.0551238157346521	4	PT_6VD8J6FB
+PT_6VJ5PNKS_7316-2174_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.026246719160105	8	PT_6VJ5PNKS
+PT_78NQ0QQS_7316-1651_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0183911882510013	11	PT_78NQ0QQS
+PT_7BJBEBZT_7316-1670_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0313012575177693	10	PT_7BJBEBZT
+PT_7E3V3JFX_7316-506_Solid Tissue_Initial CNS Tumor	Female	Ependymoma	Posterior fossa	0.0225904132686418	7	PT_7E3V3JFX
+PT_7F3ZPZB7_7316-2662_Solid Tissue_Initial CNS Tumor	Male	Germ cell tumor	Midline	0.0571897362906733	5	PT_7F3ZPZB7
+PT_7F485CXV_7316-1114_Solid Tissue_Initial CNS Tumor	Female	Mixed neuronal-glial tumor	Hemispheric	0.0659166086350975	8	PT_7F485CXV
+PT_7FAJ9STP_16510-16_Solid Tissue_Initial CNS Tumor	NA	Other high-grade glioma	Hemispheric	0.0207756456967047	8	PT_7FAJ9STP
+PT_7FZ8SE69_7316-2152_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	Midline	0.0110007269202811	2	PT_7FZ8SE69
+PT_7KTAH3RD_7316-2671_Solid Tissue_Initial CNS Tumor	Male	Craniopharyngioma	Suprasellar	0.0197457397890181	5	PT_7KTAH3RD
+PT_7M2PGCBV_7316-331_Solid Tissue_Initial CNS Tumor	Male	Meningioma	Other	0.0151244020785299	5	PT_7M2PGCBV
+PT_7MZRW1DH_7316-2582_Solid Tissue_Initial CNS Tumor	Female	Atypical Teratoid Rhabdoid Tumor	Hemispheric	0.0157930697901415	2	PT_7MZRW1DH
+PT_7QKGGMKV_7316-347_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Mixed	0.0385437459151048	10	PT_7QKGGMKV
+PT_7TRGHZBK_7316-431_Solid Tissue_Initial CNS Tumor	Female	Choroid plexus tumor	Hemispheric	0.0153895696683107	3	PT_7TRGHZBK
+PT_7VPSS2SN_7316-3621_Solid Tissue_Initial CNS Tumor	Female	Mixed neuronal-glial tumor	Mixed	0.00672006805132204	4	PT_7VPSS2SN
+PT_7VSY72EK_7316-1855_Solid Tissue_Initial CNS Tumor	Male	Other tumor	Mixed	0.0427604047782089	5	PT_7VSY72EK
+PT_7WT6P5M8_7316-2308_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Posterior fossa	0.0078438931807061	6	PT_7WT6P5M8
+PT_7YM9EBCK_16510-3_Solid Tissue_Initial CNS Tumor	NA	Other high-grade glioma	Hemispheric	0.0310761687378477	4	PT_7YM9EBCK
+PT_7YSCM82T_7316-1658_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Midline	0.00881300407712714	2	PT_7YSCM82T
+PT_82MX6J77_7316-302_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.0442610135197278	10	PT_82MX6J77
+PT_85RSG67R_7316-2986_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0488276437250033	10	PT_85RSG67R
+PT_868QRW9G_7316-3132_Solid Tissue_Initial CNS Tumor	Male	Mixed neuronal-glial tumor	Hemispheric	0.0206117021276596	4	PT_868QRW9G
+PT_8CZ6ANE0_7316-1970_Solid Tissue_Initial CNS Tumor	Male	Mixed neuronal-glial tumor	Hemispheric	0.0198694168274225	4	PT_8CZ6ANE0
+PT_8GBF5MTD_7316-166_Solid Tissue_Initial CNS Tumor	Male	Craniopharyngioma	Suprasellar	0.009789594154415	2	PT_8GBF5MTD
+PT_8HZN8J7C_7316-8034_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.0938124159295643	10	PT_8HZN8J7C
+PT_8KSGR8MY_16510-6_Solid Tissue_Initial CNS Tumor	NA	Other high-grade glioma	Hemispheric	0.021290528104205	4	PT_8KSGR8MY
+PT_8P368R5B_7316-4998_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	Midline	0.0607611753673023	4	PT_8P368R5B
+PT_8R00BMHH_7316-1845_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Midline	0.0129122006028072	1	PT_8R00BMHH
+PT_8RB3EKNP_7316-4028_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Mixed	0.0372274300305749	10	PT_8RB3EKNP
+PT_8RB7TPS2_7316-3_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Hemispheric	0.0248735853599807	7	PT_8RB7TPS2
+PT_8V3360DR_7316-641_Solid Tissue_Initial CNS Tumor	Female	Schwannoma	Spine	0.012937206814254	9	PT_8V3360DR
+PT_8YS7JD5V_7316UP-2398_Solid Tissue_Primary Tumor	Female	Other high-grade glioma	Hemispheric	0.0189873417721519	4	PT_8YS7JD5V
+PT_91PDAFH0_7316-5267_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.0246377040630877	6	PT_91PDAFH0
+PT_92YX7KK9_7316-1785_Solid Tissue_Initial CNS Tumor	Male	Germ cell tumor	Midline	0.0370890201013132	5	PT_92YX7KK9
+PT_962TCBVR_7316-391_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Ventricles	0.00979293896577892	1	PT_962TCBVR
+PT_976P4557_7316-214_Solid Tissue_Initial CNS Tumor	Male	Meningioma	Hemispheric	0.0248806906536543	8	PT_976P4557
+PT_99S5BPE3_7316-292_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Hemispheric	0.0326128382425001	7	PT_99S5BPE3
+PT_9A6RPJ97_7316-906_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Mixed	0.0163791492806876	11	PT_9A6RPJ97
+PT_9BZETM0M_7316-158_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.0410854402789887	6	PT_9BZETM0M
+PT_9C2G356W_7316-3555_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.00968294905255355	1	PT_9C2G356W
+PT_9DER14KH_7316-2230_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Mixed	0.0305092308550393	11	PT_9DER14KH
+PT_9DMMZ08D_7316-1666_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.0825321294147474	10	PT_9DMMZ08D
+PT_9M4CQX3M_7316-1972_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.012840695711549	1	PT_9M4CQX3M
+PT_9PDE9KSB_7316-4723_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Hemispheric	0.0301343202628976	2	PT_9PDE9KSB
+PT_9YMRNZHH_7316-2178_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0326385688192417	10	PT_9YMRNZHH
+PT_A9F8Y6MA_7316-476_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Mixed	0.0120936989286363	1	PT_A9F8Y6MA
+PT_AC5SD9AC_7316-2291_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.00827101936093716	1	PT_AC5SD9AC
+PT_AQWDQW27_7316-523_Solid Tissue_Initial CNS Tumor	Female	Meningioma	Hemispheric	0.0111591009255178	5	PT_AQWDQW27
+PT_ATE3YRH5_7316-3308_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.0129207236952933	1	PT_ATE3YRH5
+PT_AWBPNFM5_7316-1854_Solid Tissue_Initial CNS Tumor	Male	Mixed neuronal-glial tumor	Hemispheric	0.0149808286111771	8	PT_AWBPNFM5
+PT_AXMVG8QE_7316-2732_Solid Tissue_Initial CNS Tumor	Female	Meningioma	Ventricles	0.0235575633805722	5	PT_AXMVG8QE
+PT_AXVH36AM_7316-2180_Solid Tissue_Initial CNS Tumor	Female	Mesenchymal tumor	Spine	0.01653021747201	5	PT_AXVH36AM
+PT_AYZA2WCW_7316-197_Solid Tissue_Initial CNS Tumor	Female	Choroid plexus tumor	Ventricles	0.0177880292427382	3	PT_AYZA2WCW
+PT_B54PH840_7316-2707_Solid Tissue_Initial CNS Tumor	Male	Other tumor	Midline	0.0263053470454019	10	PT_B54PH840
+PT_B7QRTN72_7316-1802_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0551922573894847	10	PT_B7QRTN72
+PT_BBHAD51D_7316-1089_Solid Tissue_Initial CNS Tumor	Female	Mixed neuronal-glial tumor	Hemispheric	0.0747548768755245	8	PT_BBHAD51D
+PT_BCN28SW9_7316-3574_Solid Tissue_Initial CNS Tumor	Male	Mixed neuronal-glial tumor	Hemispheric	0.0163272254549957	8	PT_BCN28SW9
+PT_BCWGRGDB_7316-3623_Solid Tissue_Initial CNS Tumor	Male	Meningioma	Hemispheric	0.0174899647743098	5	PT_BCWGRGDB
+PT_BDM0M83S_7316-3072_Solid Tissue_Initial CNS Tumor	Male	Other tumor	Ventricles	0.0186435749135675	11	PT_BDM0M83S
+PT_BDNE55YT_7316-1710_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Spine	0.00694433409080074	1	PT_BDNE55YT
+PT_BF3PGTF7_7316-1808_Solid Tissue_Initial CNS Tumor	Female	Meningioma	Mixed	0.054157364727045	5	PT_BF3PGTF7
+PT_BG7GAFK6_7316-3626_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Hemispheric	0.0168706766291917	10	PT_BG7GAFK6
+PT_BK92NM09_7316-2669_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.00930514260543993	1	PT_BK92NM09
+PT_BNARR0N6_7316-1954_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Posterior fossa	0.0203807796917498	7	PT_BNARR0N6
+PT_BPKVVWVB_7316-2250_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Mixed	0.0345509418253721	10	PT_BPKVVWVB
+PT_BRTVGGRK_7316-2893_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Ventricles	0.0336866333257559	10	PT_BRTVGGRK
+PT_BTTM2HS5_7316-2287_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.0222446758899425	11	PT_BTTM2HS5
+PT_BWFTKJXT_7316-1094_Solid Tissue_Initial CNS Tumor	Male	Schwannoma	Other	0.0105163708453366	9	PT_BWFTKJXT
+PT_BWN251DF_7316-659_Solid Tissue_Initial CNS Tumor	Female	Ependymoma	Hemispheric	0.0221136797029206	7	PT_BWN251DF
+PT_C1M4YF1R_7316-127_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.015707739761442	1	PT_C1M4YF1R
+PT_C2D4JXS1_7316-1746_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Posterior fossa	0.0343215881064487	5	PT_C2D4JXS1
+PT_C7HHJG7Z_7316-4516_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	Midline	0.0339374639004668	2	PT_C7HHJG7Z
+PT_CB1XPA3W_7316-1767_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Hemispheric	0.0112919414969888	2	PT_CB1XPA3W
+PT_CB9PD1YP_7316-97_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Hemispheric	0.0304422091478459	8	PT_CB9PD1YP
+PT_CEWNZVKF_7316-124_Solid Tissue_Initial CNS Tumor	Male	Craniopharyngioma	Suprasellar	0.0170856540719554	5	PT_CEWNZVKF
+PT_CGPJY881_7316-891_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.0214101830663616	1	PT_CGPJY881
+PT_CK41DW03_7316-329_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Spine	0.0132247632247632	2	PT_CK41DW03
+PT_CQS4V67V_7316-9212_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.0712252884077857	6	PT_CQS4V67V
+PT_CR2YBSPT_7316-359_Solid Tissue_Initial CNS Tumor	Male	Mixed neuronal-glial tumor	Hemispheric	0.0266774979691308	8	PT_CR2YBSPT
+PT_CSZ9QA1N_7316-1464_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Mixed	0.0219074287596772	1	PT_CSZ9QA1N
+PT_CTSQ5FHH_7316-438_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Mixed	0.0362689036602711	10	PT_CTSQ5FHH
+PT_CW0BJE0Y_7316-41_Solid Tissue_Initial CNS Tumor	Male	Atypical Teratoid Rhabdoid Tumor	Posterior fossa	0.0224040229669381	5	PT_CW0BJE0Y
+PT_CWA1405H_7316-2252_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0197710523362388	11	PT_CWA1405H
+PT_CYBYN18G_7316-2567_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Hemispheric	0.033926259969101	7	PT_CYBYN18G
+PT_CYVVA9AB_7316-3299_Solid Tissue_Initial CNS Tumor	Female	Ependymoma	Hemispheric	0.0216917451835185	2	PT_CYVVA9AB
+PT_D1WJ3BJX_7316-358_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0161971496812768	10	PT_D1WJ3BJX
+PT_D215EQAP_7316-747_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0435220632681846	10	PT_D215EQAP
+PT_D3AN5M5W_7316-47_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Ventricles	0.0143974527583581	6	PT_D3AN5M5W
+PT_D5KKHPAE_7316-4337_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Hemispheric	0.0166974417246658	2	PT_D5KKHPAE
+PT_D835NGZW_16510-5_Solid Tissue_Initial CNS Tumor	NA	Other high-grade glioma	Hemispheric	0.0166651955159326	4	PT_D835NGZW
+PT_D9A6G154_7316-9211_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	Spine	0.0306508326146089	2	PT_D9A6G154
+PT_D9NTSYSC_7316-3064_Solid Tissue_Initial CNS Tumor	Male	Mixed neuronal-glial tumor	Hemispheric	0.0103626092097484	8	PT_D9NTSYSC
+PT_DACV00WF_7316-489_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.0197551111690926	11	PT_DACV00WF
+PT_DB281Z4K_7316UP-310_Solid Tissue_Primary Tumor	Female	Other high-grade glioma	Hemispheric	0.0163684873880805	6	PT_DB281Z4K
+PT_DEDRCQWH_7316-398_Solid Tissue_Initial CNS Tumor	Female	Neurofibroma plexiform	Spine	0.0279186116632792	9	PT_DEDRCQWH
+PT_DEKWG1QG_7316-2139_Solid Tissue_Initial CNS Tumor	Female	Non-neoplastic tumor	Other	0.0203688354745131	5	PT_DEKWG1QG
+PT_DFCZAG9T_7316-224_Solid Tissue_Initial CNS Tumor	Male	Other tumor	Other	0.0303745563557424	11	PT_DFCZAG9T
+PT_DFXQFYPV_7316-2155_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Mixed	0.0287735849056604	10	PT_DFXQFYPV
+PT_DJ106XYS_7316-3935_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	Other	0.0153455250576711	2	PT_DJ106XYS
+PT_DQT78GS5_7316-3326_Solid Tissue_Initial CNS Tumor	Female	Other CNS embryonal tumor	Hemispheric	0.0156433813231752	10	PT_DQT78GS5
+PT_DTP4MMRA_7316-1463_Solid Tissue_Initial CNS Tumor	Female	Schwannoma	Spine	0.0173679105433649	9	PT_DTP4MMRA
+PT_DW6V5V8E_7316-924_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Midline	0.0210268855940237	1	PT_DW6V5V8E
+PT_DXET8FM2_16510-2_Solid Tissue_Initial CNS Tumor	NA	Other high-grade glioma	Hemispheric	0.0265513390878959	8	PT_DXET8FM2
+PT_DXF7ZZQZ_7316-2809_Solid Tissue_Initial CNS Tumor	Female	Mixed neuronal-glial tumor	Hemispheric	0.0147090033466656	4	PT_DXF7ZZQZ
+PT_E3ADF4ZB_7316-2664_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Hemispheric	0.0108875344410119	2	PT_E3ADF4ZB
+PT_E3S6H59E_7316-133_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.025815544326424	4	PT_E3S6H59E
+PT_E4ECAFEN_7316-38_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Mixed	0.0282458828035236	10	PT_E4ECAFEN
+PT_E4TXAYR6_7316-9077_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Hemispheric	0.0466127314081709	2	PT_E4TXAYR6
+PT_E9PS2A96_7316-9011_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.0421756373937677	6	PT_E9PS2A96
+PT_EB89G70N_7316-2858_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Mixed	0.0170067428390345	7	PT_EB89G70N
+PT_EC8R84NM_7316-341_Solid Tissue_Initial CNS Tumor	Female	Craniopharyngioma	Suprasellar	0.013257755882297	5	PT_EC8R84NM
+PT_ECMZCNTF_7316-736_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Hemispheric	0.0241926193310549	7	PT_ECMZCNTF
+PT_EDWA0XTP_7316-670_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.0332413084652178	10	PT_EDWA0XTP
+PT_EG7PH32E_7316-2144_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Spine	0.0913745569121701	7	PT_EG7PH32E
+PT_EGGY1XC0_7316-2865_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.015368962193424	11	PT_EGGY1XC0
+PT_EPFX7V9H_7316-2571_Solid Tissue_Initial CNS Tumor	Female	Mixed neuronal-glial tumor	Hemispheric	0.00687027668477921	2	PT_EPFX7V9H
+PT_ERTJRQ37_7316-9854_Solid Tissue_Initial CNS Tumor	Unknown	DIPG or DMG	Spine	0.101236990573641	6	PT_ERTJRQ37
+PT_EYHJQQ8E_7316-77_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.0109781305911167	4	PT_EYHJQQ8E
+PT_EYWDFKA7_7316-29_Solid Tissue_Initial CNS Tumor	Female	Schwannoma	Spine	0.0211425500768988	9	PT_EYWDFKA7
+PT_EZS4SRH6_7316-676_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Ventricles	0.0254634579639103	10	PT_EZS4SRH6
+PT_F0N89D15_7316-3756_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Mixed	0.0164882438398285	10	PT_F0N89D15
+PT_F1086Z0A_7316-1101_Solid Tissue_Initial CNS Tumor	Male	Mesenchymal tumor	Other	0.0212963824049103	5	PT_F1086Z0A
+PT_F3S9PB94_7316-2240_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0256200599618425	10	PT_F3S9PB94
+PT_F822DBA0_7316-458_Solid Tissue_Initial CNS Tumor	Male	Mesenchymal tumor	Spine	0.0160053964555099	5	PT_F822DBA0
+PT_FAD8FQ6S_7316-120_Solid Tissue_Initial CNS Tumor	Female	Mixed neuronal-glial tumor	Hemispheric	0.0155887039490103	8	PT_FAD8FQ6S
+PT_FAPEH6R1_7316-1660_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Midline	0.00936618933082719	1	PT_FAPEH6R1
+PT_FAQWD7GX_7316-2311_Solid Tissue_Initial CNS Tumor	Male	Craniopharyngioma	Mixed	0.0082794584044889	2	PT_FAQWD7GX
+PT_FCYM09DV_16510-1_Solid Tissue_Initial CNS Tumor	NA	Other high-grade glioma	Hemispheric	0.0429598821592583	8	PT_FCYM09DV
+PT_FF0MSK4D_7316-2987_Solid Tissue_Initial CNS Tumor	Female	Other CNS embryonal tumor	Midline	0.106651115157032	11	PT_FF0MSK4D
+PT_FFRHWB74_7316-932_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Hemispheric	0.0155957097304087	2	PT_FFRHWB74
+PT_FFSCZ7CA_7316UP-2877_Solid Tissue_Primary Tumor	Female	Other high-grade glioma	Hemispheric	0.0219348360513833	4	PT_FFSCZ7CA
+PT_FKCPVY7V_7316-8031_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	Midline	0.0192782697752877	6	PT_FKCPVY7V
+PT_FKWCVXNC_7316-332_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.0125904312722331	1	PT_FKWCVXNC
+PT_FN4GEEFR_7316-729_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.0211499243470824	11	PT_FN4GEEFR
+PT_FWD7NZQ0_7316-1108_Solid Tissue_Initial CNS Tumor	Male	Mixed neuronal-glial tumor	Hemispheric	0.0158591255219848	8	PT_FWD7NZQ0
+PT_FXPJM0MW_7316-207_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.0107422905165442	4	PT_FXPJM0MW
+PT_FYECBRPP_7316-1778_Solid Tissue_Initial CNS Tumor	Male	Atypical Teratoid Rhabdoid Tumor	Mixed	0.0309003898203023	8	PT_FYECBRPP
+PT_G1QNGVCZ_7316-1118_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.0345959203412958	10	PT_G1QNGVCZ
+PT_G395P98S_7316-8826_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.0626116071428571	6	PT_G395P98S
+PT_G3AVDN4E_7316-2227_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0427026642478569	10	PT_G3AVDN4E
+PT_G8DRDA33_7316-879_Solid Tissue_Initial CNS Tumor	Male	Non-neoplastic tumor	Spine	0.0257990765230645	5	PT_G8DRDA33
+PT_GAM3E6M3_7316-872_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Hemispheric	0.0273500392189242	7	PT_GAM3E6M3
+PT_GB8MNK85_7316-1086_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Hemispheric	0.019501155624037	8	PT_GB8MNK85
+PT_GBCZ0RW3_7316-9642_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	NA	0.024331438430401	4	PT_GBCZ0RW3
+PT_GCKT4FJX_7316-3919_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.00693878880672378	1	PT_GCKT4FJX
+PT_GCXG7800_7316-2720_Solid Tissue_Initial CNS Tumor	Male	Non-neoplastic tumor	Other	0.0403614673000679	5	PT_GCXG7800
+PT_GDDWPDMC_7316-2575_Solid Tissue_Initial CNS Tumor	Male	Mixed neuronal-glial tumor	Hemispheric	0.0116032875981528	8	PT_GDDWPDMC
+PT_GERCQ0JG_7316-3520_Solid Tissue_Initial CNS Tumor	Female	Mixed neuronal-glial tumor	Hemispheric	0.0136443661971831	1	PT_GERCQ0JG
+PT_GGCQAGPS_7316-304_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.0336814440832699	10	PT_GGCQAGPS
+PT_GH693TT8_7316-2181_Solid Tissue_Initial CNS Tumor	Male	Atypical Teratoid Rhabdoid Tumor	Mixed	0.0119503458498024	3	PT_GH693TT8
+PT_GH6HM5QF_7316-3202_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0334337247470475	11	PT_GH6HM5QF
+PT_GNKRMTQY_7316-3856_Solid Tissue_Initial CNS Tumor	Female	Other tumor	Midline	0.0238015082143819	8	PT_GNKRMTQY
+PT_GPQJYAW4_7316-1750_Solid Tissue_Initial CNS Tumor	Female	Mixed neuronal-glial tumor	Hemispheric	0.0257342022047904	8	PT_GPQJYAW4
+PT_GQZ84ACS_7316-487_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Suprasellar	0.0110614800225098	1	PT_GQZ84ACS
+PT_GR8P8NY5_7316-178_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.0193961382149274	11	PT_GR8P8NY5
+PT_GSSQYQKV_7316-3028_Solid Tissue_Initial CNS Tumor	Female	Neurofibroma plexiform	Other	0.118792202134611	9	PT_GSSQYQKV
+PT_GVDMG7KC_7316-152_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Hemispheric	0.0358550930713547	8	PT_GVDMG7KC
+PT_GY0QSY4H_7316-1075_Solid Tissue_Initial CNS Tumor	Male	Craniopharyngioma	Suprasellar	0.00951730348243258	5	PT_GY0QSY4H
+PT_H0HWHRPB_7316-1679_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.0276715247179587	8	PT_H0HWHRPB
+PT_H45M7M2T_7316-1652_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Hemispheric	0.00718954248366013	2	PT_H45M7M2T
+PT_H6E09982_7316-5_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0227632687447346	11	PT_H6E09982
+PT_H8Z52K09_7316-2224_Solid Tissue_Initial CNS Tumor	Male	Atypical Teratoid Rhabdoid Tumor	Hemispheric	0.0220122556571155	6	PT_H8Z52K09
+PT_HBT0C66Y_7316-3149_Solid Tissue_Initial CNS Tumor	Male	Non-neoplastic tumor	Hemispheric	0.0131475371396989	4	PT_HBT0C66Y
+PT_HEGTYPQJ_7316-2562_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0341773370559353	10	PT_HEGTYPQJ
+PT_HGHV85PZ_7316-2300_Solid Tissue_Initial CNS Tumor	Male	Mixed neuronal-glial tumor	Ventricles	0.0184538751176655	1	PT_HGHV85PZ
+PT_HJA1ZYS1_7316-2939_Solid Tissue_Initial CNS Tumor	Female	Non-neoplastic tumor	Spine	0.0267412831124441	5	PT_HJA1ZYS1
+PT_HMF8J4EG_7316-644_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	Midline	0.014341285091624901	2	PT_HMF8J4EG
+PT_HMY997GX_7316-3554_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Ventricles	0.00955522141921715	2	PT_HMY997GX
+PT_HN0AXSZ0_7316-1103_Solid Tissue_Initial CNS Tumor	Female	Choroid plexus tumor	Posterior fossa	0.0197929939085054	3	PT_HN0AXSZ0
+PT_HV1DFFQ1_7316-9139_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	Midline	0.0991400491400491	6	PT_HV1DFFQ1
+PT_HV6C0T34_7316-3062_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.00887074548711589	1	PT_HV6C0T34
+PT_HVZTF42R_7316-2187_Solid Tissue_Initial CNS Tumor	Female	Atypical Teratoid Rhabdoid Tumor	Hemispheric	0.0145267277023036	5	PT_HVZTF42R
+PT_HXDCHQ9Y_7316-2171_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Ventricles	0.0131245953740215	2	PT_HXDCHQ9Y
+PT_HYXSSCJ5_7316-1088_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Hemispheric	0.0182046261167544	8	PT_HYXSSCJ5
+PT_J06X17XH_7316-1649_Solid Tissue_Initial CNS Tumor	Male	Other tumor	Hemispheric	0.0536380784203556	5	PT_J06X17XH
+PT_J0SZ1SX5_7316-2589_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Suprasellar	0.0157835611308744	1	PT_J0SZ1SX5
+PT_J302B8Y5_7316-386_Solid Tissue_Initial CNS Tumor	Male	Atypical Teratoid Rhabdoid Tumor	Posterior fossa	0.0249587898768545	6	PT_J302B8Y5
+PT_J4MWGQFQ_7316-2071_Solid Tissue_Initial CNS Tumor	Female	Meningioma	Hemispheric	0.0132127728901922	5	PT_J4MWGQFQ
+PT_J5NSRW1Y_7316-3817_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.0259103424805866	6	PT_J5NSRW1Y
+PT_JEA0AEMZ_7316-2169_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0555652157112773	10	PT_JEA0AEMZ
+PT_JJZ5PN64_7316-8964_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Hemispheric	0.0279148865568875	8	PT_JJZ5PN64
+PT_JN3EN2HR_7316-2267_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Mixed	0.0133418793327374	7	PT_JN3EN2HR
+PT_JN3S17B3_7316-1693_Solid Tissue_Initial CNS Tumor	Female	Choroid plexus tumor	Ventricles	0.0162654189706508	5	PT_JN3S17B3
+PT_JNEV57VK_7316-2594_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	Midline	0.00983904250928601	6	PT_JNEV57VK
+PT_JPWVCTAJ_7316-1953_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Suprasellar	0.0326091446036925	1	PT_JPWVCTAJ
+PT_JQ45JK94_7316-222_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Hemispheric	0.014569709164757	1	PT_JQ45JK94
+PT_JV9G8MFD_7316-2269_Solid Tissue_Initial CNS Tumor	Female	Atypical Teratoid Rhabdoid Tumor	Hemispheric	0.064968070903505	6	PT_JV9G8MFD
+PT_JXGMAHHN_7316-874_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Suprasellar	0.00938070304105337	1	PT_JXGMAHHN
+PT_JYZA0PNV_7316-437_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Mixed	0.0337997302764666	1	PT_JYZA0PNV
+PT_K30AWQ8A_7316-393_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Spine	0.0223440883115039	1	PT_K30AWQ8A
+PT_K63972GG_7316-666_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Hemispheric	0.00798059227036975	1	PT_K63972GG
+PT_K94ZVZMX_7316-521_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Mixed	0.0217394993635978	11	PT_K94ZVZMX
+PT_KCDPF85V_7316UP-2066_Solid Tissue_Primary Tumor	Female	Other high-grade glioma	Hemispheric	0.043505454277883	4	PT_KCDPF85V
+PT_KEQ53KRH_7316-440_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Mixed	0.0178111328226322	6	PT_KEQ53KRH
+PT_KFYJBQB8_7316-3075_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.012962844125008	2	PT_KFYJBQB8
+PT_KHX1WQ4H_7316-186_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.0131859296482412	1	PT_KHX1WQ4H
+PT_KN25EYMG_7316-2309_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Ventricles	0.0294854726290234	11	PT_KN25EYMG
+PT_KVMF5TFW_7316-3030_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	Midline	0.0163906465862769	6	PT_KVMF5TFW
+PT_KX1QQQRC_7316-8939_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Hemispheric	0.028702145107687	2	PT_KX1QQQRC
+PT_KXB1PJV0_7316-206_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.0118663987564924	1	PT_KXB1PJV0
+PT_M04EC74B_7316-918_Solid Tissue_Initial CNS Tumor	Male	Atypical Teratoid Rhabdoid Tumor	Other	0.0696446155223346	5	PT_M04EC74B
+PT_M0AP3Z15_7316-14_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Mixed	0.0239362872354468	10	PT_M0AP3Z15
+PT_M0FVZ88D_7316-1986_Solid Tissue_Initial CNS Tumor	Male	Meningioma	Posterior fossa	0.0190299473547942	5	PT_M0FVZ88D
+PT_M1BBF6RA_7316-9799_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	NA	0.056799401562201	2	PT_M1BBF6RA
+PT_M2J30CF7_7316-1747_Solid Tissue_Initial CNS Tumor	Female	Mesenchymal tumor	Midline	0.0298053527980535	5	PT_M2J30CF7
+PT_M5HDHQNQ_7316-475_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.01065194846285	1	PT_M5HDHQNQ
+PT_MBAXTJET_7316-275_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.00865121308844819	1	PT_MBAXTJET
+PT_MNR94DEV_7316-370_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.011416306342738	4	PT_MNR94DEV
+PT_MP85FHCR_7316-9850_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	NA	0.0424884122512042	6	PT_MP85FHCR
+PT_MPRBGGEJ_7316-2172_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.0173016983652439	1	PT_MPRBGGEJ
+PT_MSBPMJ56_7316-306_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.0523949279452158	10	PT_MSBPMJ56
+PT_MSQ6GSVP_7316-2274_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Mixed	0.0717346968935655	6	PT_MSQ6GSVP
+PT_MT27S7S4_7316-1969_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Mixed	0.0303614802114588	6	PT_MT27S7S4
+PT_MV5WXTQV_7316-8036_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.0200425561122932	2	PT_MV5WXTQV
+PT_N3205P0D_7316-1099_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.0332383292383292	6	PT_N3205P0D
+PT_N4PR21ME_7316-330_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Ventricles	0.00902893249085467	7	PT_N4PR21ME
+PT_N56EYD4Z_7316-3857_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0346119536128457	10	PT_N56EYD4Z
+PT_N9CGVG02_7316-2197_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Mixed	0.00815208199438487	1	PT_N9CGVG02
+PT_N9SG16EC_7316-1958_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.0139791710351576	1	PT_N9SG16EC
+PT_NA8NZ0BN_7316-2135_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Hemispheric	0.0158904109589041	8	PT_NA8NZ0BN
+PT_NBSRQAMS_7316-1079_Solid Tissue_Initial CNS Tumor	Male	Mesenchymal tumor	Spine	0.0194281974722893	5	PT_NBSRQAMS
+PT_NCDHZ8H8_7316-2780_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0258982448617025	10	PT_NCDHZ8H8
+PT_ND34A6PR_7316-122_Solid Tissue_Initial CNS Tumor	Female	Atypical Teratoid Rhabdoid Tumor	Hemispheric	0.0208015977793575	5	PT_ND34A6PR
+PT_NDVJE438_7316-2811_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0188267080566813	10	PT_NDVJE438
+PT_NEB4WEAT_7316-3020_Solid Tissue_Initial CNS Tumor	Male	Craniopharyngioma	Suprasellar	0.011887026691496	5	PT_NEB4WEAT
+PT_NESAQHB1_7316-3689_Solid Tissue_Initial CNS Tumor	Male	Other CNS embryonal tumor	Hemispheric	0.0245337517384017	10	PT_NESAQHB1
+PT_NGDW8WVP_7316-1704_Solid Tissue_Initial CNS Tumor	Male	Mesenchymal tumor	Posterior fossa	0.014372068971666	2	PT_NGDW8WVP
+PT_NPETR8RY_7316-160_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Ventricles	0.0154629253373826	7	PT_NPETR8RY
+PT_NPPBNRVV_7316-1943_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Spine	0.0102715585243866	2	PT_NPPBNRVV
+PT_NTEKMKTX_7316-1650_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0131946899810356	11	PT_NTEKMKTX
+PT_NV584F7Q_7316-3192_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.0365812880358456	10	PT_NV584F7Q
+PT_NXX0M835_7316-948_Solid Tissue_Initial CNS Tumor	Male	Schwannoma	Other	0.0141405135520685	9	PT_NXX0M835
+PT_NZFFMZ0B_7316-923_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Hemispheric	0.0196131072232911	8	PT_NZFFMZ0B
+PT_P2NGYMG5_7316-1956_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	Posterior fossa	0.0122738805232462	6	PT_P2NGYMG5
+PT_P4ZEFY19_7316-937_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0305959152630995	10	PT_P4ZEFY19
+PT_PABK01H0_7316-1669_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.0237381692477105	10	PT_PABK01H0
+PT_PAW18EK3_7316-1948_Solid Tissue_Initial CNS Tumor	Male	Mixed neuronal-glial tumor	Hemispheric	0.0153244776532448	4	PT_PAW18EK3
+PT_PEHEAEVT_7316-4552_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.0364401660268527	2	PT_PEHEAEVT
+PT_PF9EC93Q_7316-3765_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Hemispheric	0.0137701734512233	4	PT_PF9EC93Q
+PT_PFA762TK_7316-368_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.0145984057730896	1	PT_PFA762TK
+PT_PFP1ZVHD_7316-2310_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Hemispheric	0.0101606083503481	2	PT_PFP1ZVHD
+PT_PGVQ4XRZ_7316-946_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.00887519156604187	1	PT_PGVQ4XRZ
+PT_PHKSYE6Q_7316-220_Solid Tissue_Initial CNS Tumor	Female	Choroid plexus tumor	Ventricles	0.0751238233539922	3	PT_PHKSYE6Q
+PT_PJFTMJ6H_7316-2150_Solid Tissue_Initial CNS Tumor	Female	Mesenchymal tumor	Posterior fossa	0.0239830656424581	5	PT_PJFTMJ6H
+PT_PNED3GG3_7316-387_Solid Tissue_Initial CNS Tumor	Female	Craniopharyngioma	Suprasellar	0.0153675643485741	5	PT_PNED3GG3
+PT_PR4YBBH3_7316-116_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	Midline	0.0464772663512073	6	PT_PR4YBBH3
+PT_PX4E85V1_7316-1083_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0263755320826108	10	PT_PX4E85V1
+PT_PY4QFHHV_7316-3768_Solid Tissue_Initial CNS Tumor	Male	Mixed neuronal-glial tumor	Hemispheric	0.0323630256804982	8	PT_PY4QFHHV
+PT_Q25V9Y6M_7316-1668_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.0131665076960482	1	PT_Q25V9Y6M
+PT_Q38AT6JY_7316-3773_Solid Tissue_Initial CNS Tumor	Male	Craniopharyngioma	Suprasellar	0.0252912381892005	5	PT_Q38AT6JY
+PT_QBEA1CGX_7316-10711_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Posterior fossa	0.072889865860665	6	PT_QBEA1CGX
+PT_QD6KKKJH_7316-1765_Solid Tissue_Initial CNS Tumor	Male	Other tumor	Mixed	0.0529505582137161	11	PT_QD6KKKJH
+PT_QEP13FH4_7316-3025_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Ventricles	0.0317318720530139	11	PT_QEP13FH4
+PT_QJ3144WH_7316-3204_Solid Tissue_Initial CNS Tumor	Female	Choroid plexus tumor	Ventricles	0.0188352527975169	3	PT_QJ3144WH
+PT_QJDY4Y9P_7316-562_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.00971922246220302	1	PT_QJDY4Y9P
+PT_QQ9JGEY9_7316-356_Solid Tissue_Initial CNS Tumor	Female	Non-neoplastic tumor	Other	0.0248192881324915	9	PT_QQ9JGEY9
+PT_QQZXYR4M_7316-1946_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.0248252291440112	6	PT_QQZXYR4M
+PT_QS59ATXW_16510-14_Solid Tissue_Initial CNS Tumor	NA	Other high-grade glioma	Hemispheric	0.0138209243181619	4	PT_QS59ATXW
+PT_QT9T89S5_7316-297_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Suprasellar	0.0139400615337866	1	PT_QT9T89S5
+PT_QTDY0Y9A_7316-3771_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	Mixed	0.0307633601657188	6	PT_QTDY0Y9A
+PT_QW5VW2PY_7316-313_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0379588483513201	10	PT_QW5VW2PY
+PT_QZN7FZER_7316-2757_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Ventricles	0.00862777857543759	7	PT_QZN7FZER
+PT_R0M1QBY4_7316-905_Solid Tissue_Initial CNS Tumor	Female	Mixed neuronal-glial tumor	Hemispheric	0.0551113836987712	8	PT_R0M1QBY4
+PT_R0R6VWX9_7316-9343_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	NA	0.0441806331471136	2	PT_R0R6VWX9
+PT_R5T773FS_7316-8029_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	Posterior fossa	0.0348016504994933	6	PT_R5T773FS
+PT_R63RHJWX_7316-739_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Mixed	0.0280795081706113	10	PT_R63RHJWX
+PT_R6WWH1QX_7316-423_Solid Tissue_Initial CNS Tumor	Female	Ependymoma	Hemispheric	0.0213901229344428	7	PT_R6WWH1QX
+PT_RFB07MZS_7316-2107_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Mixed	0.0331849785671801	11	PT_RFB07MZS
+PT_RFGZ2JGP_7316-135_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.0309328932402596	11	PT_RFGZ2JGP
+PT_RH59ET3M_7316-1655_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.0290825831591223	10	PT_RH59ET3M
+PT_RJ1TJ2KH_7316-2110_Solid Tissue_Initial CNS Tumor	Male	Atypical Teratoid Rhabdoid Tumor	Posterior fossa	0.0881501156713221	6	PT_RJ1TJ2KH
+PT_RKECV80K_7316-9_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Hemispheric	0.0298964803312629	1	PT_RKECV80K
+PT_RM5S859Q_7316-111_Solid Tissue_Initial CNS Tumor	Female	Ependymoma	Hemispheric	0.0258909605853198	7	PT_RM5S859Q
+PT_RQ21EBK9_7316-367_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.047410971458497	10	PT_RQ21EBK9
+PT_RRG1V7EP_7316-820_Solid Tissue_Initial CNS Tumor	Female	Atypical Teratoid Rhabdoid Tumor	Hemispheric	0.0385502187170039	5	PT_RRG1V7EP
+PT_RRT2E7HK_7316-136_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Hemispheric	0.0521660861738348	8	PT_RRT2E7HK
+PT_RYMG3M91_A18777_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	Midline	0.0151321461485864	6	PT_RYMG3M91
+PT_S0PBN4M7_7316-1805_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Ventricles	0.00615259077927377	1	PT_S0PBN4M7
+PT_S21ZTKPS_7316-362_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Hemispheric	0.0107819728398746	2	PT_S21ZTKPS
+PT_S2ASFBP7_7316-2157_Solid Tissue_Initial CNS Tumor	Female	Craniopharyngioma	Suprasellar	0.0112022134494045	5	PT_S2ASFBP7
+PT_S2CXXZCF_7316-643_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.00531224176602526	1	PT_S2CXXZCF
+PT_S4A0R1PM_7316-2699_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.01520707667899	11	PT_S4A0R1PM
+PT_S4H6KA09_7316-2134_Solid Tissue_Initial CNS Tumor	Female	Ependymoma	Hemispheric	0.0220794861501405	8	PT_S4H6KA09
+PT_S4YNE17X_7316-2899_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.0107475821897209	2	PT_S4YNE17X
+PT_S7JCQ3TH_7316-8828_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	Spine	0.0173532369702826	2	PT_S7JCQ3TH
+PT_S7WJ99PC_7316-677_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Ventricles	0.0129220844672916	2	PT_S7WJ99PC
+PT_S8E3281G_7316-2138_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Spine	0.0270438835086017	7	PT_S8E3281G
+PT_SABHZ7XX_7316-3029_Solid Tissue_Initial CNS Tumor	Male	Schwannoma	Spine	0.0177338752017423	9	PT_SABHZ7XX
+PT_SGJK5KSB_7316-9140_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Midline	0.0637543343490596	6	PT_SGJK5KSB
+PT_SJEG0MKD_7316-146_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.0115502488972347	1	PT_SJEG0MKD
+PT_SMDEQVHJ_7316-119_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.00995554559378386	1	PT_SMDEQVHJ
+PT_SRWZDG3N_7316-361_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Mixed	0.00802059764375439	1	PT_SRWZDG3N
+PT_SSE4AH59_7316-1776_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.0143172749225052	8	PT_SSE4AH59
+PT_T03AT4BJ_7316-2708_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0258169258439843	10	PT_T03AT4BJ
+PT_T1FV709B_7316-681_Solid Tissue_Initial CNS Tumor	Male	Mixed neuronal-glial tumor	Mixed	0.011887371265795	1	PT_T1FV709B
+PT_T3REPTTC_7316-3488_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.0311708337922679	10	PT_T3REPTTC
+PT_T4VKB29K_7316-2125_Solid Tissue_Initial CNS Tumor	Female	Ependymoma	Posterior fossa	0.0086896803038585	7	PT_T4VKB29K
+PT_T9F17G9F_7316-8814_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Hemispheric	0.0982525864244259	10	PT_T9F17G9F
+PT_TB8HPJBN_7316-2663_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.00989863939366268	1	PT_TB8HPJBN
+PT_TEBD1SES_7316-3054_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Optic pathway	0.0209505176489769	1	PT_TEBD1SES
+PT_TH18S0JQ_7316-3068_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.0546383647798742	1	PT_TH18S0JQ
+PT_TKWTTRQ7_7316-2971_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0230398109553973	10	PT_TKWTTRQ7
+PT_TNJPSPW3_7316-10002_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	NA	0.0323019959994893	2	PT_TNJPSPW3
+PT_TPSMT960_7316-400_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.00789554114171223	1	PT_TPSMT960
+PT_TRXF649Z_7316-915_Solid Tissue_Initial CNS Tumor	Female	Mixed neuronal-glial tumor	Hemispheric	0.0471467665803442	8	PT_TRXF649Z
+PT_TVJ5EGMR_7316-8033_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.0200237029699468	6	PT_TVJ5EGMR
+PT_TVK2KY36_7316-2626_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Mixed	0.0766589418946416	8	PT_TVK2KY36
+PT_TWAHK62W_7316-9055_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Midline	0.0746704902663652	6	PT_TWAHK62W
+PT_TXFYRDP4_7316-193_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Hemispheric	0.010184824144116	8	PT_TXFYRDP4
+PT_V0X73HEQ_7316-2182_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Mixed	0.0148697068403909	7	PT_V0X73HEQ
+PT_V482NWB8_7316-8037_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	Midline	0.0295967443581206	2	PT_V482NWB8
+PT_V8714N9H_7316-2322_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0332606708389002	11	PT_V8714N9H
+PT_V9ACEWSK_16510-25_Solid Tissue_Initial CNS Tumor	NA	Other high-grade glioma	Hemispheric	0.0420546710723941	8	PT_V9ACEWSK
+PT_VABP80N2_7316-1949_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Mixed	0.0321509161476668	1	PT_VABP80N2
+PT_VAJN5QP8_7316-2176_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Hemispheric	0.021153875653868	1	PT_VAJN5QP8
+PT_VCD0W8HG_7316-2756_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	Mixed	0.0184346753647177	1	PT_VCD0W8HG
+PT_VGXHFMND_7316-1643_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.0112979884459665	4	PT_VGXHFMND
+PT_VHS5RM2K_7316-364_Solid Tissue_Initial CNS Tumor	Male	Mesenchymal tumor	Hemispheric	0.0346767040906829	5	PT_VHS5RM2K
+PT_VJ0M4E8Y_7316-2099_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.0122711933735556	4	PT_VJ0M4E8Y
+PT_VQDNSYXM_7316-1637_Solid Tissue_Initial CNS Tumor	Female	Mixed neuronal-glial tumor	Mixed	0.00650796826031873	4	PT_VQDNSYXM
+PT_VT6PJVQN_7316-205_Solid Tissue_Initial CNS Tumor	Male	Craniopharyngioma	Suprasellar	0.0310392232676032	5	PT_VT6PJVQN
+PT_VVCN8DXT_7316-71_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Hemispheric	0.0300230440030725	8	PT_VVCN8DXT
+PT_VY45XTT7_7316-1801_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0331257224685564	10	PT_VY45XTT7
+PT_VZTTTP3Q_7316-167_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Mixed	0.0249163665612489	4	PT_VZTTTP3Q
+PT_W17NV5YG_7316-2079_Solid Tissue_Initial CNS Tumor	Female	Ependymoma	Hemispheric	0.00854687739757557	7	PT_W17NV5YG
+PT_W6AWJJK7_7316-230_Solid Tissue_Initial CNS Tumor	Female	Mixed neuronal-glial tumor	Hemispheric	0.0150762940789954	1	PT_W6AWJJK7
+PT_W6CW60K9_7316-380_Solid Tissue_Initial CNS Tumor	Male	Craniopharyngioma	Suprasellar	0.028926541076803	5	PT_W6CW60K9
+PT_WE1CHTWK_7316-87_Solid Tissue_Initial CNS Tumor	Male	Other CNS embryonal tumor	Hemispheric	0.0392463256108884	10	PT_WE1CHTWK
+PT_WG2Z95B5_7316-2141_Solid Tissue_Initial CNS Tumor	Male	Atypical Teratoid Rhabdoid Tumor	Hemispheric	0.0264553393656238	5	PT_WG2Z95B5
+PT_WKNKNYHH_7316-1107_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Posterior fossa	0.0110860578729801	7	PT_WKNKNYHH
+PT_WMWFCG6J_7316-8038_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	Other	0.0786047960137029	10	PT_WMWFCG6J
+PT_WVC247PK_7316-1090_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.00857138741230534	1	PT_WVC247PK
+PT_WWZ2Q14R_7316-3138_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.031674359488929	10	PT_WWZ2Q14R
+PT_WY8REZ3P_7316-1783_Solid Tissue_Initial CNS Tumor	Female	Mixed neuronal-glial tumor	Hemispheric	0.0116777706883504	8	PT_WY8REZ3P
+PT_WYVMWYVA_7316-257_Solid Tissue_Initial CNS Tumor	Male	Choroid plexus tumor	Hemispheric	0.0171882109094586	3	PT_WYVMWYVA
+PT_X0FPPTMT_7316-280_Solid Tissue_Initial CNS Tumor	Female	Mixed neuronal-glial tumor	Ventricles	0.0246692004504505	8	PT_X0FPPTMT
+PT_X1PRY0FC_7316-1779_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Suprasellar	0.00672373698223855	1	PT_X1PRY0FC
+PT_X1XVE1XX_7316-3511_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.0896459690713557	10	PT_X1XVE1XX
+PT_X5SGG610_7316UP-1104_Solid Tissue_Primary Tumor	Female	Other high-grade glioma	Hemispheric	0.0227751929879589	6	PT_X5SGG610
+PT_X8S0H6TG_7316-876_Solid Tissue_Initial CNS Tumor	Female	Mesenchymal tumor	Other	0.0143075127905933	5	PT_X8S0H6TG
+PT_XA98HG1C_7316-931_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0349701342021565	11	PT_XA98HG1C
+PT_XHYBZKCX_7316-2972_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Spine	0.0262609420591913	7	PT_XHYBZKCX
+PT_XMYN334C_7316UP-3705_Solid Tissue_Primary Tumor	Female	Other high-grade glioma	Hemispheric	0.0284978746332994	4	PT_XMYN334C
+PT_XP8AM1CH_7316-1096_Solid Tissue_Initial CNS Tumor	Female	Non-neoplastic tumor	Suprasellar	0.0188901165484549	8	PT_XP8AM1CH
+PT_XSS1ANXD_7316-495_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.0139284281319857	4	PT_XSS1ANXD
+PT_XTVQB9S4_7316-2186_Solid Tissue_Initial CNS Tumor	Female	Atypical Teratoid Rhabdoid Tumor	Mixed	0.0229524535381368	3	PT_XTVQB9S4
+PT_XX2VW3D9_7316-96_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Posterior fossa	0.0190024963064853	10	PT_XX2VW3D9
+PT_XY404K0D_7316-1782_Solid Tissue_Initial CNS Tumor	Male	Mixed neuronal-glial tumor	Hemispheric	0.0106798771170765	4	PT_XY404K0D
+PT_Y5KY6KN9_7316-195_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	Posterior fossa	0.0111344797723617	6	PT_Y5KY6KN9
+PT_Y660CKCB_7316-3122_Solid Tissue_Initial CNS Tumor	Male	DIPG or DMG	Midline	0.0261891680402244	6	PT_Y660CKCB
+PT_Y8HSH496_7316-196_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.0215763836673314	8	PT_Y8HSH496
+PT_YBJYA2CD_7316-2244_Solid Tissue_Initial CNS Tumor	Female	Choroid plexus tumor	Ventricles	0.0286112460144851	3	PT_YBJYA2CD
+PT_YFS3AWC0_7316-153_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Mixed	0.0241917615066976	11	PT_YFS3AWC0
+PT_YJBPEF4V_7316-938_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.00864941055868785	1	PT_YJBPEF4V
+PT_YJGTKDV0_7316-1683_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.00599461306004467	1	PT_YJGTKDV0
+PT_YKVK5HTK_7316-441_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.00954078769271401	1	PT_YKVK5HTK
+PT_YRMG61G8_7316-2305_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.00775697102241662	1	PT_YRMG61G8
+PT_YRNATR8Q_7316-8039_Solid Tissue_Initial CNS Tumor	Female	Other high-grade glioma	Hemispheric	0.0232798849163187	4	PT_YRNATR8Q
+PT_YV2S3ES7_7316-182_Solid Tissue_Initial CNS Tumor	Male	Medulloblastoma	Posterior fossa	0.0192187824641596	8	PT_YV2S3ES7
+PT_YXZPWFVB_7316-966_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Spine	0.0148904132507947	7	PT_YXZPWFVB
+PT_Z4GS3ZQQ_7316-740_Solid Tissue_Initial CNS Tumor	Female	Ependymoma	Hemispheric	0.0365130998310513	6	PT_Z4GS3ZQQ
+PT_Z4PJA6KT_7316-1763_Solid Tissue_Initial CNS Tumor	Female	DIPG or DMG	Midline	0.0181800330546056	6	PT_Z4PJA6KT
+PT_Z9QE51C3_7316-373_Solid Tissue_Initial CNS Tumor	Male	Mixed neuronal-glial tumor	Hemispheric	0.0249770528842759	8	PT_Z9QE51C3
+PT_ZA95JQEB_7316-384_Solid Tissue_Initial CNS Tumor	Female	Ependymoma	Ventricles	0.0268700899464875	7	PT_ZA95JQEB
+PT_ZCXS29JJ_7316-2153_Solid Tissue_Initial CNS Tumor	Male	Mesenchymal tumor	Hemispheric	0.0226223545634405	5	PT_ZCXS29JJ
+PT_ZD9AYB6F_7316-3323_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Posterior fossa	0.0148228236607143	4	PT_ZD9AYB6F
+PT_ZG4J0EK0_7316-3774_Solid Tissue_Initial CNS Tumor	Female	Medulloblastoma	Mixed	0.0352706191844887	10	PT_ZG4J0EK0
+PT_ZKQTJ7F7_7316-9560_Solid Tissue_Initial CNS Tumor	Male	Other high-grade glioma	NA	0.0144692382322438	6	PT_ZKQTJ7F7
+PT_ZMKMKCFQ_7316-2988_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Mixed	0.023035827125979	2	PT_ZMKMKCFQ
+PT_ZN1F7RMP_7316-1080_Solid Tissue_Initial CNS Tumor	Female	Non-neoplastic tumor	Suprasellar	0.0238328319954435	5	PT_ZN1F7RMP
+PT_ZR8MQRVG_7316-346_Solid Tissue_Initial CNS Tumor	Female	Low-grade glioma	Midline	0.014755838641189	1	PT_ZR8MQRVG
+PT_ZS2YDFBE_7316-2860_Solid Tissue_Initial CNS Tumor	Female	Choroid plexus tumor	Ventricles	0.0202474480750928	3	PT_ZS2YDFBE
+PT_ZVV78QP5_7316-117_Solid Tissue_Initial CNS Tumor	Male	Low-grade glioma	Posterior fossa	0.0154347744148355	1	PT_ZVV78QP5
+PT_ZWY04DCR_7316-2666_Solid Tissue_Initial CNS Tumor	Male	Ependymoma	Hemispheric	0.0281628372580799	7	PT_ZWY04DCR
