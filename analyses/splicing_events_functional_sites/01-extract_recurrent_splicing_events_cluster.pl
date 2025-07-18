@@ -209,8 +209,8 @@ if($subtype =~/\w+/){
 else{
   open(EVENTS,">results/splice_events.diff.".$splice_case.".txt");
   print EVENTS "Splice ID\tCase\tSample\tCluster\tCNS\tType\tdPSI\n";
-  open(BEDPOS, ">results/splicing_events.SE.total.pos.bed");
-  open(BEDNEG, ">results/splicing_events.SE.total.neg.bed");
+  open(BEDPOS, ">results/splicing_events.".$splice_case.".total.pos.bed");
+  open(BEDNEG, ">results/splicing_events.".$splice_case.".total.neg.bed");
 }
 foreach my $sample(@bs_ids_uniq)
 {
