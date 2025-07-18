@@ -62,7 +62,7 @@ while (<FIL>) {
   my $RNA_libr   = $cols[$column_index{'RNA_library'}];
 
   next unless ($primary_initial_sample_list{$bs_id});
-  next unless ($RNA_libr=="stranded");
+  next unless ($RNA_libr eq "stranded");
 
   ## make an array and store histology information and BS IDs
   push @broad_hist, $hist;
@@ -75,14 +75,12 @@ while (<FIL>) {
   push @{$histology_ids{$hist}}, $bs_id;
 
   $cns_regions{$bs_id} = $CNS_region;
-
-  ## histology counter for downstream analysis
-  $hist_count{$hist}++;
-  #print $hist,"\n";
-
 }
 
 close(FIL);
+
+# build a lookup hash of the bs_ids saved
+my %bs_ids_keep = map { $_ => 1 } @bs_ids;
 
 ## process rMATS output (may take awhile) from merged input file
 print "processing rMATs results... ".(localtime)."\n";
@@ -96,6 +94,9 @@ while(<FIL>)
 
   my @cols  = split "\t";
   my $bs_id = $cols[1];
+  
+  next unless exists $bs_ids_keep{$bs_id};
+  
   my $ctrl  = $cols[2];
 
   ## get gene name

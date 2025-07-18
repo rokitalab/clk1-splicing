@@ -148,7 +148,7 @@ plot_sbi <- function(sbi_df, plot_file,label) {
   
   if(label == "SE") {
     # Scale to max value (for main figure)
-    p2 <- p + coord_cartesian(ylim = c(0, max(si_cdf_plot$SI)+0.03)) +
+    p2 <- p + coord_cartesian(ylim = c(0, max(si_cdf_plot$SI)+0.01)) +
 	  scale_y_continuous(breaks = c(0, lower_sbi, upper_sbi, 0.1, 0.15, 0.2),
                              labels = c("0", "Low SBI", "High SBI", "0.1", "0.15", "0.2"))
 
@@ -157,10 +157,10 @@ plot_sbi <- function(sbi_df, plot_file,label) {
   }
 
   # Scale to same max value and sqrt y-axis to see lower values (for supp figure)
-  p <- p + coord_cartesian(ylim = c(0, 0.5)) +
+  p <- p + coord_cartesian(ylim = c(0, 0.4)) +
 	  scale_y_continuous(trans = "sqrt",
-			     breaks = c(0, lower_sbi, upper_sbi, 0.1, 0.2, 0.3, 0.4, 0.5),
-                             labels = c("0", "Low SBI", "High SBI", "0.1", "0.2", "0.3", "0.4", "0.5"))
+			     breaks = c(0, lower_sbi, upper_sbi, 0.1, 0.2, 0.3, 0.4),
+                             labels = c("0", "Low SBI", "High SBI", "0.1", "0.2", "0.3", "0.4"))
 
   # Save plots
   ggsave(filename = plot_file, path = plots_dir, plot = p,

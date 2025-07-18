@@ -56,7 +56,8 @@ independent_specimens_df <- read_tsv(file.path(data_dir,"independent-specimens.r
 hist_indep_df <- histology_df %>%
   right_join(independent_specimens_df, by="Kids_First_Biospecimen_ID") %>% 
   unique() %>%
-  filter(!is.na(plot_group)) %>%  # Remove rows with NA in plot_group
+  filter(!is.na(plot_group),
+         RNA_library == "stranded") %>%  # Remove rows with NA in plot_group
   count(plot_group) %>%
   rename(Total = n)
 

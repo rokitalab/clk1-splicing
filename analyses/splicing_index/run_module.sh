@@ -13,7 +13,7 @@ perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file 
 perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples SE
 
 # gzip diff files
-gzip results/*diff*.txt
+gzip -f results/*diff*.txt
 
 ## plot values (SBI) generated from above script in CDF plot
 echo "creating SBI CDF plots"

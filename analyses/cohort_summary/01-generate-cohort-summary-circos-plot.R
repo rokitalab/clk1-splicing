@@ -108,13 +108,14 @@ combined_plot_map <- under40_df %>%
   arrange(broad_histology) %>%
   write_tsv(file.path(results_dir, "plot_mapping.tsv"))
 
-# add plot mapping to histlogy df
+# add plot mapping to histology df
 combined_hist_map <- under40_df %>%
   left_join(map_file, by = c("broad_histology", "cancer_group")) %>%
   write_tsv(file.path(results_dir, "histologies-plot-group.tsv"))
 
 combined_hist_map <- combined_hist_map %>%
   filter(experimental_strategy == "RNA-Seq",
+         RNA_library == "stranded",
          !is.na(pathology_diagnosis))
 
 ## filter using independent specimens file 
