@@ -44,12 +44,13 @@ clin_file <- file.path(root_dir, "analyses", "cohort_summary", "results", "histo
 indep_rna_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
 tmb_file <- file.path(input_dir, "snv-mutation-tmb-coding.tsv")
 cnv_file <- file.path(data_dir, "consensus_wgs_plus_freec_wxs_plus_freec_tumor_only.tsv.gz")
-psi_exp_file <- file.path(root_dir, "analyses", "CLK1-splicing_correlations", "results", "clk1-nf1-psi-exp-phos-df.rds")
 fus_file <- file.path(data_dir, "fusion-putative-oncogenic.tsv")
 goi_file <- file.path(root_dir, "analyses","splicing-factor_dysregulation/input","splicing_factors.txt")
 hugo_file <- file.path(input_dir, "hgnc-symbol-check.csv")
 sbi_file <- file.path(root_dir, "analyses", "splicing_index", "results", "splicing_index.SE.txt")
-
+cluster_file <- file.path(root_dir, "analyses", 
+                          "sample-psi-clustering", "results", 
+                          "sample-cluster-metadata-top-5000-events-stranded.tsv")
 ## color for barplot
 source(file.path(input_dir, "mutation-colors.R"))
 
@@ -57,7 +58,16 @@ source(file.path(input_dir, "mutation-colors.R"))
 plot_out <- file.path(plots_dir,"oncoprint-splicesosome-SFs.pdf")
 
 # read in files
-histologies_df <- read_tsv(clin_file, guess_max = 100000) 
+histologies_df <- read_tsv(clin_file, guess_max = 100000) %>%
+  mutate(cancer_predisposition = case_when(cancer_predispositions == "Neurofibromatosis, Type 1 (NF-1)" ~ "NF-1",
+                                           cancer_predispositions == "Li-Fraumeni syndrome (TP53)" ~ "LFS",
+                                           cancer_predispositions == "Other inherited conditions NOS" ~ "Other",
+                                           Kids_First_Participant_ID == "PT_3CHB9PK5" ~ "CMMRD",
+                                           #  Kids_First_Participant_ID == "PT_D5KKHPAE" ~ "BRCA1",
+                                           # Kids_First_Participant_ID == "PT_7WT6P5M8" ~ "PNKP",
+                                           Kids_First_Participant_ID == "PT_JNEV57VK" ~ "LS",
+                                           Kids_First_Participant_ID == "PT_ZH3SBJPZ" ~ NA_character_,
+                                           TRUE ~ NA_character_))
 
 # read in sbi file
 sbi_df <- read_tsv(sbi_file) %>%
@@ -72,12 +82,15 @@ goi <- readLines(goi_file) %>%
   c(hugo_genes) %>%
   unique()
 
+cluster_df <- read_tsv(cluster_file) %>%
+  rename(Kids_First_Biospecimen_ID = sample_id)
+
 indep_rna_df <- vroom(indep_rna_file) %>% 
   dplyr::filter(cohort == 'PBTA') %>%
   # get match id for DNA samples
   left_join(histologies_df[,c("Kids_First_Biospecimen_ID", "match_id", "plot_group", "RNA_library")]) %>%
-  filter(plot_group %in% c("DIPG or DMG", "Other high-grade glioma"),
-         RNA_library %in% c("stranded", "poly-A stranded"))
+  filter(RNA_library == "stranded") %>%
+  left_join(cluster_df %>% dplyr::select(Kids_First_Biospecimen_ID, cluster))
 
 matched_dna_samples <- histologies_df %>%
   filter(experimental_strategy %in% c("WGS", "WXS", "Targeted Panel"),
@@ -94,18 +107,6 @@ tmb_df <- read_tsv(tmb_file) %>%
                                 tmb >= 100 ~ "Ultra-hypermutant")) %>%
   # remove WXS for a sample we have WGS for
   filter(Kids_First_Biospecimen_ID != "BS_QF7M4SHH")
-
-splice_df <-  readRDS(psi_exp_file) %>%
-  rownames_to_column("match_id") %>%
-  filter(match_id %in% indep_rna_df$match_id) %>%
-  left_join(sbi_df) %>%
-  # z-score
-  dplyr::mutate(`CLK1-201 (Exon4) PSI` = as.numeric(scale(`CLK1-201 (Exon4) PSI`)),
-                `NF1-215 PSI` = as.numeric(scale(`NF1-215 PSI`)),
-                `CLK1-201` = as.numeric(scale(`CLK1-201`)),
-                `Total CLK1` = as.numeric(scale(`Total CLK1`)),
-                `Total NF1` = as.numeric(scale(`Total NF1`)),
-                SI = as.numeric(scale(SI)))
 
 # read in cnv file and reformat to add to maf
 cnv_df <- read_tsv(cnv_file) %>%
@@ -224,22 +225,20 @@ print(paste(length(unique(collapse_snv_dat_mut$match_id)), "tumors mutated in",
             length(unique(matched_dna_samples$match_id)), "patients"))
 print(paste(round(length(unique(collapse_snv_dat_mut$match_id))/length(unique(matched_dna_samples$match_id))*100, 2),"%"))
 
-# mutate the hgg dataframe for plotting
-histologies_df_sorted <- splice_df %>%
-  left_join(histologies_df, by = "match_id", relationship = "many-to-many") %>%
-  select(match_id, plot_group, reported_gender, molecular_subtype, CNS_region, `CLK1-201 (Exon4) PSI`, SI,
-         `NF1-215 PSI`, `CLK1-201`, `Total CLK1`, `Total NF1`, `NF1 pS864`, `NF1 pS2796`, `Total NF1 Protein`) %>%
+# mutate the dataframe for plotting
+histologies_df_sorted <- histologies_df %>%
+  inner_join(sbi_df) %>%
+  inner_join(cluster_df) %>%
+  select(match_id, plot_group, cancer_predisposition, reported_gender, molecular_subtype, CNS_region, cluster, SI) %>%
+  left_join(indep_rna_df %>% dplyr::select(match_id, cluster)) %>%
   unique() %>%
-  group_by(match_id, plot_group, reported_gender, molecular_subtype, `CLK1-201 (Exon4) PSI`, SI,
-           `NF1-215 PSI`, `CLK1-201`, `Total CLK1`, `Total NF1`, `NF1 pS864`, `NF1 pS2796`, `Total NF1 Protein`) %>%
+  group_by(match_id, plot_group, cancer_predisposition, reported_gender, molecular_subtype, cluster, SI) %>%
   summarise(CNS_region = str_c(unique(na.omit(CNS_region)), collapse = ","),
-            CLK1_PSI = mean(`CLK1-201 (Exon4) PSI`),
             .groups = "drop") %>%
   left_join(unique(tmb_df[,c("tmb_status", "match_id")])) %>%
   filter(match_id %in% names(gene_matrix)) %>%
   # unset rownames
   column_to_rownames("match_id") %>%
-  arrange(SI) %>%
   dplyr::mutate(molecular_subtype = gsub(", TP53", "", molecular_subtype),
                 molecular_subtype = case_when(grepl("To be classified", molecular_subtype) ~ "To be classified",
                                               TRUE ~ molecular_subtype),
@@ -249,7 +248,7 @@ histologies_df_sorted <- splice_df %>%
                                        TRUE ~ tmb_status)) 
 
 # get SI high/low
-quantiles_si <- quantile(histologies_df_sorted$SI, probs=c(.25, .75), na.rm = TRUE)
+quantiles_si <- quantile(histologies_df_sorted$SBI, probs=c(.25, .75), na.rm = TRUE)
 lower_si <- quantiles_si[1]
 upper_si <- quantiles_si[2]
 
@@ -260,12 +259,14 @@ histologies_df_sorted <- histologies_df_sorted %>%
   filter(tmb_status == "Normal")
 
 histologies_df_sorted2 <- histologies_df_sorted %>%
-  select(reported_gender, plot_group, molecular_subtype, CNS_region, SI) %>%
+  filter(cluster == 6) %>%
+  select(reported_gender, cancer_predisposition, plot_group, CNS_region, SI) %>%
   dplyr::rename("Gender"=reported_gender,
                 "Histology" = plot_group,
-                "Molecular Subtype"=molecular_subtype,
+                "Predisposition" = cancer_predisposition,
                 "CNS Region"=CNS_region, 
-                "SBI" = SI) 
+                "SBI"=SI) %>%
+  arrange(Histology)
 
 # write out metadata
 histologies_df_sorted2 %>%
@@ -284,24 +285,30 @@ ha = HeatmapAnnotation(name = "annotation",
                          "Gender" = c("Male" = "#56B4E9",
                                       "Female" = "pink",
                                       "Unknown" = "whitesmoke"),
-                         "Histology" = c("DIPG or DMG" = "#ff40d9",
-                                         "Other high-grade glioma" = "#ffccf5"),
-                         "Molecular Subtype" = c("DHG, H3 G35" = "springgreen4",
-                                                 "DMG, H3 K28" = "#ff40d9",
-                                                 "DIPG, H3 wildtype" = "orchid",
-                                                 "HGG, H3 wildtype" = "lightpink",
-                                                 "HGG, IDH" = "indianred",
-                                                 "IHG, NTRK-altered" = "cornflowerblue",
-                                                 "IHG, ALK-altered" = "skyblue4",
-                                                 "IHG, ROS1-altered" = "lightblue1",
-                                                 "HGG, PXA" = "navy",
-                                                 "To be classified" = "whitesmoke"),
+                         "Histology" = c("Ependymoma" =                       "#2200ff",       
+                                         "Atypical Teratoid Rhabdoid Tumor" = "#4d0d85",       
+                                         "Other high-grade glioma" =          "#ffccf5",       
+                                         "Low-grade glioma" =                 "#8f8fbf",       
+                                         "Meningioma" =                       "#2db398",       
+                                         "DIPG or DMG" =                      "#ff40d9",       
+                                         "Medulloblastoma" =                  "#a340ff",       
+                                         "Other tumor" =                      '#b5b5b5',       
+                                         "Mesenchymal tumor" =                "#7fbf00",       
+                                         "Craniopharyngioma" =                "#b2502d",       
+                                         "Mixed neuronal-glial tumor" =       "#685815",       
+                                         "Non-neoplastic tumor" =             "#FFF5EB",       
+                                         "Choroid plexus tumor" =             "#00441B",       
+                                         "Schwannoma" =                       "#ab7200",       
+                                         "Neurofibroma plexiform" =           "#e6ac39",       
+                                         "Other CNS embryonal tumor" =        "#b08ccf",       
+                                         "Germ cell tumor" =                  "#0074d9"),
                          "CNS Region" = loc_cols,
                          "SBI" = colorRamp2(c(-4, 0, 4), c("darkblue","white", "red"))
                        ),
                        annotation_name_side = "right", 
                        annotation_name_gp = gpar(fontsize = 9),
-                       na_col = "whitesmoke")
+                       na_col = "whitesmoke"
+                       )
 
 
 col = colors
@@ -315,6 +322,7 @@ ht_opt$ROW_ANNO_PADDING = unit(1.25, "cm")
 
 plot_oncoprint <- oncoPrint(gene_matrix_sorted[1:20,], get_type = function(x) strsplit(x, ",")[[1]],
                             column_names_gp = gpar(fontsize = 9), show_column_names = F,
+                            row_names_gp=gpar(fontsize = 11, fontface="italic"),
                             alter_fun = list(
                               background = function(x, y, w, h) grid.rect(x, y, w, h, gp = gpar(fill = "whitesmoke",col="whitesmoke")),
                               Missense_Mutation = function(x, y, w, h) grid.rect(x, y, w*0.85, h*0.85, gp = gpar(fill = unname(col["Missense_Mutation"]),col = NA)),
@@ -341,7 +349,7 @@ plot_oncoprint <- oncoPrint(gene_matrix_sorted[1:20,], get_type = function(x) st
                             column_order =  colnames(gene_matrix_sorted))
 
 # Save plot as PDF
-pdf(plot_out, width = 9, height = 3.5)
+pdf(plot_out, width = 15, height = 7)
 plot_oncoprint
 dev.off()
 
