@@ -49,7 +49,7 @@ while (<FIL>) {
   my $cluster_assigned      = $cols[$column_index{'cluster'}];
   my $bs_id      = $cols[$column_index{'Kids_First_Biospecimen_ID'}];
 
-  next unless $cluster_assigned=~/6/;
+  #next unless $cluster_assigned=~/6/;
   
   ## make an array and store histology information and BS IDs
   push @clusters, $cluster_assigned;
@@ -87,9 +87,8 @@ while(<FIL>)
   my $bs_id = $cols[1];
   my $ctrl  = $cols[2];
 
-  ## filter for HGG/histology of interest
+  ## filter for samples assigned to a cluster
   next unless $bs_id_cluster{$bs_id};
-
   my $cluster = $bs_id_cluster{$bs_id};
 
   ## get gene name
@@ -215,6 +214,8 @@ else{
 }
 foreach my $sample(@bs_ids_uniq)
 {
+  # Only reports on cluster 6 values
+  next unless $bs_id_cluster{$sample} == 6;
   foreach my $splice_event(@splicing_events_uniq)
   {
     ## look at splicing events that are present in sample and are recurrent
@@ -230,11 +231,12 @@ foreach my $sample(@bs_ids_uniq)
     my $mean_psi  = $mean_psi{$splice_event};
 
     #> +2 z-scores
-
     if($psi_tumor > ($mean_psi + ($std_psi + $std_psi)) )
     {
-
+      
+      # dPSI filter
       my $dpsi = $psi_tumor-$mean_psi;
+      next unless $dpsi > 0.1;
       
       print EVENTS $splice_event,"\t".$splice_case,"\t",$sample,"\t",$bs_id_cluster{$sample},"\t",$cns_regions{$sample},"\tInclusion\t",$dpsi,"\n";
       print BEDPOS $chr{$splice_event},"\t";
@@ -251,8 +253,11 @@ foreach my $sample(@bs_ids_uniq)
     # < -2 z-scores, inclusion events
     if($psi_tumor < ($mean_psi - ($std_psi + $std_psi)) )
     {
+      
+      # dPSI filter
       my $dpsi = $mean_psi-$psi_tumor;
-
+      next unless $dpsi > 0.1;
+      
       print EVENTS $splice_event,"\t".$splice_case,"\t",$sample,"\t",$bs_id_cluster{$sample},"\t",$cns_regions{$sample},"\tSkipping\t",$dpsi,"\n";
       print BEDNEG $chr{$splice_event},"\t";
 
