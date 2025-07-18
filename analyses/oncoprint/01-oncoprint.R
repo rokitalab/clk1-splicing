@@ -323,14 +323,6 @@ alter_fun = list(
   Amp = function(x, y, w, h) grid.rect(x, y, w*0.85, h*0.85, gp = gpar(fill = unname(col["Amp"]), col = NA)),
   Loss = function(x, y, w, h) grid.rect(x, y, w*0.85, h*0.85, gp = gpar(fill = unname(col["Loss"]), col = NA)))
 
-plot_oncoprint <- oncoPrint(gene_matrix_sorted[1:25,], get_type = function(x) strsplit(x, ",")[[1]],
-                            column_names_gp = gpar(fontsize = 9), show_column_names = F,
-                            alter_fun = alter_fun,
-                            col = col,
-                            top_annotation = ha,
-                            alter_fun_is_vectorized = TRUE,
-                            column_order =  colnames(gene_matrix_sorted))
-
 
 # sort samples by histology and cluster and regenerate oncoprint
 hist_cluster_order <- histologies_df_sorted2 %>%
@@ -340,6 +332,7 @@ hist_cluster_order <- histologies_df_sorted2 %>%
 
 plot_oncoprint_hist_cluster <- oncoPrint(gene_matrix_sorted[1:30,], get_type = function(x) strsplit(x, ",")[[1]],
                             column_names_gp = gpar(fontsize = 9), show_column_names = F,
+                            row_names_gp=gpar(fontsize = 11, fontface="italic"),
                             alter_fun = alter_fun,
                             col = col,
                             top_annotation = ha,
@@ -398,12 +391,13 @@ for (group_n in unique(histologies_df_sorted2$Cluster)) {
   gene_matrix_cluster <- gene_matrix_sorted[,colnames(gene_matrix_sorted) %in% cluster_ids]
   
   plot_oncoprint_cluster <- oncoPrint(gene_matrix_cluster[1:25,], get_type = function(x) strsplit(x, ",")[[1]],
-                              column_names_gp = gpar(fontsize = 9), show_column_names = F,
-                              alter_fun = alter_fun,
-                              col = col,
-                              top_annotation = ha_cluster,
-                              alter_fun_is_vectorized = TRUE,
-                              column_order = cluster_ids)
+                                      row_names_gp=gpar(fontsize = 11, fontface="italic"),
+                                      column_names_gp = gpar(fontsize = 9), show_column_names = F,
+                                      alter_fun = alter_fun,
+                                      col = col,
+                                      top_annotation = ha_cluster,
+                                      alter_fun_is_vectorized = TRUE,
+                                      column_order = cluster_ids)
   
   pdf(NULL)
   pdf(file.path(plots_dir,paste0("oncoprint-hist-cluster", group_n, ".pdf")),
