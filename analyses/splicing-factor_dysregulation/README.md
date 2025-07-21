@@ -6,6 +6,8 @@ The purpose of this module is to identify known splicing factors [(ensemble-anno
 
 The input gene list is taken from supplementary table 2 of the publication linked above. The HGNC symbol was taken for all genes encoding a known or putative RNA binding protein (RBP).
 
+The input CPTAC proteomics data file comes from supplying the list of SFs into http://34.71.182.187/ and exporting the excel file `CPTAC3-pbt.xls`.
+
 ## Usage
 ### script to run analysis
 <br>**Run shell script to make final tables to be used for plotting below**
@@ -30,6 +32,7 @@ bash run_module.sh
 ├── input
 │   ├── CPTAC3-pbt_SF_family.xls
 │   ├── CPTAC3-pbt_SFs.xls
+│   ├── CPTAC3-pbt.xls
 │   └── splicing_factors.txt
 ├── plots
 │   ├── all_hgg-barplot-sbi-SFs.pdf

@@ -35,15 +35,21 @@ if(!dir.exists(plots_dir)){
 }
 
 ## get CPTAC output table 
-cptac_output_file <- file.path(input_dir,"CPTAC3-pbt_SFs.xls") 
+cptac_output_file <- file.path(input_dir,"CPTAC3-pbt.xls") 
 hgg_de_file <- file.path(results_dir, "all_hgg-diffSFs_sig_genes.txt")
 cluster6_de_file <- file.path(results_dir, "cluster6-diffSFs_sig_genes.txt")
 
 # Load datasets
 hgg_de_genes <- read_tsv(hgg_de_file) %>%
+  arrange(padj) %>%
+  slice_head(n = 20) %>%
   pull(gene)
 
-cluster6_de_genes <- read_tsv(cluster6_de_file) %>%
+cluster6_de_gene_file <- read_tsv(cluster6_de_file) %>%
+  arrange(padj) %>%
+  slice_head(n = 20)
+
+cluster6_de_genes <- cluster6_de_gene_file %>%
   pull(gene)
 
 de_genes_list <- list("all_hgg" = hgg_de_genes, "cluster6" = cluster6_de_genes)
@@ -125,3 +131,4 @@ for (each in names) {
   draw(heat_plot, heatmap_legend_side = "top")
   dev.off()
 }
+
