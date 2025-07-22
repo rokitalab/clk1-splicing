@@ -35,6 +35,15 @@ if(!dir.exists(plots_dir)){
   dir.create(plots_dir, recursive=TRUE)
 }
 
+# get GSVA scores
+gsva_file <- file.path(root_dir, "analyses", 
+                       "sample-psi-clustering", "results", 
+                       "gsva_output_stranded.tsv")
+gsva_df <- read_tsv(gsva_file) %>%
+  filter(geneset == "KEGG_SPLICEOSOME") %>%
+  select(sample_id, score) %>%
+  mutate(score = round(score, 1))
+
 # get histology info
 hist_file <- file.path(root_dir, "data", "histologies-plot-group.tsv")
 cluster_file <- file.path(root_dir, "analyses", 
@@ -42,9 +51,12 @@ cluster_file <- file.path(root_dir, "analyses",
                           "sample-cluster-metadata-top-5000-events-stranded.tsv")
 
 hist_df <- read_tsv(cluster_file) %>%
-  rename(Kids_First_Biospecimen_ID = sample_id) %>%
-  select(Kids_First_Biospecimen_ID, cluster) %>%
+  inner_join(gsva_df) %>%
+  rename(Kids_First_Biospecimen_ID = sample_id,
+         GSVA = score) %>%
+  select(Kids_First_Biospecimen_ID, cluster, GSVA) %>%
   inner_join(read_tsv(hist_file))
+
 
 ## get CPTAC output table 
 cptac_output_file <- file.path(input_dir,"CPTAC3-pbt.xls") 
@@ -74,7 +86,8 @@ kegg_splice <- msigdbr::msigdbr(species = "Homo sapiens", category = "C2", subca
   pull(gene_symbol) %>%
   unique()
 
-de_genes_list <- list("all_hgg" = hgg_de_genes, "cluster6" = cluster6_de_genes, "sf" = sf_genes, "hugo" = hugo_genes, "kegg_splice" = kegg_splice)
+#de_genes_list <- list("all_hgg" = hgg_de_genes, "cluster6" = cluster6_de_genes, "sf" = sf_genes, "hugo" = hugo_genes, "kegg_splice" = kegg_splice)
+de_genes_list <- list("sf" = sf_genes, "hugo" = hugo_genes, "kegg_splice" = kegg_splice)
 names <- names(de_genes_list)
 
 for (each in names) {
@@ -97,6 +110,7 @@ for (each in names) {
                                     TRUE ~ `Gene symbol`)
     ) %>%
     dplyr::select(display_name, Assay, starts_with("7316")) %>%
+    dplyr::filter(Assay == "Whole Cell Proteomics") %>%
     # remove NAs
     select_if(~ !any(is.na(.)))
 
@@ -111,8 +125,7 @@ for (each in names) {
     as.matrix()
   storage.mode(mat) <- "numeric"
   class(mat)
-
-
+  
   # set rownames, convert to matrix
   rownames(mat) <- rownames
 
@@ -120,26 +133,36 @@ for (each in names) {
   row_annot <- cptac_data %>%
     dplyr::select(Assay) %>%
     as.data.frame()
-
+  
+  top_genes <- apply(mat, 1, function(x) sd(x, na.rm = TRUE)) %>%
+    sort(decreasing = TRUE) %>%
+    head(30) %>%
+    names()
+  
+  mat <- mat[top_genes, , drop = FALSE]
+  row_annot <- row_annot[top_genes, , drop = FALSE]
   
   # create anno colors
-  anno_col <- list(Assay = c("RNA-Seq" = "#DC3220", "Whole Cell Proteomics" = "#40B0A6"))
+  #anno_col <- list(Assay = c("RNA-Seq" = "#DC3220", "Whole Cell Proteomics" = "#40B0A6"))
 
   # Heatmap annotation
-  row_anno = rowAnnotation(df = row_annot,
-                           col = anno_col, 
-                           show_legend = TRUE, 
-                           show_annotation_name = FALSE)
+  #row_anno = rowAnnotation(df = row_annot,
+  #                         col = anno_col, 
+  #                         show_legend = TRUE, 
+  #                         show_annotation_name = FALSE)
   
   # get diagnoses
   hist_data <- hist_df %>%
     filter(sample_id %in% colnames(mat)) %>%
-    distinct(sample_id, cluster, plot_group) %>%
+    distinct(sample_id, cluster, plot_group, GSVA) %>%
     rename(Histology = plot_group,
-           Cluster = cluster) %>%
+           Cluster = cluster,
+           `KEGG Spliceosome GSVA` = GSVA) %>%
+    mutate(Cluster = factor(Cluster, levels = as.character(1:11))) %>%
     column_to_rownames("sample_id") %>% 
-    select(Histology, Cluster) %>%
+    select(Histology, Cluster, `KEGG Spliceosome GSVA`) %>%
     .[colnames(mat), , drop = FALSE]
+  
   
   # histology colors
   hist_col <- list("Histology" = 
@@ -170,8 +193,8 @@ for (each in names) {
                               "8" = "#FFFF99",
                               "9" = "#1F78B4",
                               "10" = "#B15928",
-                              "11" = "#6A3D9A"))
-  
+                              "11" = "#6A3D9A"),
+                "KEGG Spliceosome GSVA" = colorRamp2(c(-1, 0, 1), c("#93003A", "white", "#00429D")))
   
   column_anno = columnAnnotation(df = hist_data,
                                  col = hist_col,
@@ -190,7 +213,7 @@ for (each in names) {
                        show_heatmap_legend = TRUE,
                        cluster_columns = TRUE, 
                        top_annotation = column_anno,
-                       right_annotation = row_anno,
+                       #right_annotation = row_anno,
                        row_title = NULL, 
                        column_title = NULL, 
                        row_names_gp = grid::gpar(fontsize = 9),
