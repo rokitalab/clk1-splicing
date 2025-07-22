@@ -110,46 +110,33 @@ for (each in names) {
                                     TRUE ~ `Gene symbol`)
     ) %>%
     dplyr::select(display_name, Assay, starts_with("7316")) %>%
-    dplyr::filter(Assay == "Whole Cell Proteomics") %>%
     # remove NAs
     select_if(~ !any(is.na(.)))
 
+  cptac_prot <- cptac_data %>%
+    dplyr::filter(Assay == "Whole Cell Proteomics")
+    
   # preserve gene names for rownames
-  rownames <- cptac_data$display_name
-
+  rownames <- cptac_prot$display_name
   
   # convert to matrix and then add rownames
-  mat <- cptac_data %>%
+  mat <- cptac_prot %>%
     dplyr::select(any_of(hist_df$sample_id)) %>%
-    #dplyr::select(3:(ncol(cptac_data))) %>%
+    #dplyr::select(3:(ncol(cptac_prot))) %>%
     as.matrix()
   storage.mode(mat) <- "numeric"
   class(mat)
   
   # set rownames, convert to matrix
   rownames(mat) <- rownames
-
-  # select row annotations
-  row_annot <- cptac_data %>%
-    dplyr::select(Assay) %>%
-    as.data.frame()
   
+  # get top 30 most variable proteins
   top_genes <- apply(mat, 1, function(x) sd(x, na.rm = TRUE)) %>%
     sort(decreasing = TRUE) %>%
     head(30) %>%
     names()
   
   mat <- mat[top_genes, , drop = FALSE]
-  row_annot <- row_annot[top_genes, , drop = FALSE]
-  
-  # create anno colors
-  #anno_col <- list(Assay = c("RNA-Seq" = "#DC3220", "Whole Cell Proteomics" = "#40B0A6"))
-
-  # Heatmap annotation
-  #row_anno = rowAnnotation(df = row_annot,
-  #                         col = anno_col, 
-  #                         show_legend = TRUE, 
-  #                         show_annotation_name = FALSE)
   
   # get diagnoses
   hist_data <- hist_df %>%
@@ -221,9 +208,56 @@ for (each in names) {
                        heatmap_legend_param = list(legend_direction = "horizontal", 
                                                    legend_position = "top"))
 
-  heatmap_output_file <- file.path(plots_dir, paste0(each,"-SF_RNA_vs_protein_levels_heatmap.pdf"))
-  pdf(heatmap_output_file, width = 10, height = 7)
+  heatmap_output_file <- file.path(plots_dir, paste0(each,"-SF_protein_heatmap.pdf"))
+  pdf(heatmap_output_file, width = 10, height = 5)
   draw(heat_plot, heatmap_legend_side = "top")
+  dev.off()
+  
+  
+  # Make correpsonding RNA heatmap
+  
+  cptac_RNA <- cptac_data %>%
+    dplyr::filter(Assay == "RNA-Seq")
+  
+  # preserve gene names for rownames
+  rownames <- cptac_RNA$display_name
+  
+  # convert to matrix and then add rownames
+  mat_RNA <- cptac_RNA %>%
+    dplyr::select(any_of(hist_df$sample_id)) %>%
+    #dplyr::select(3:(ncol(cptac_data))) %>%
+    as.matrix()
+  storage.mode(mat_RNA) <- "numeric"
+  class(mat_RNA)
+  
+  rownames(mat_RNA) <- rownames
+  
+  # Same genes (but trim whitespace from protein file)
+  mat_RNA <- mat_RNA[str_trim(top_genes), , drop = FALSE]
+  
+  heat_plot_RNA <- Heatmap(mat_RNA,
+                       name = "Z-score",
+                       col = colorRamp2(c(-2, 0, 2), c("#E66100", "white", "#5D3A9B")),
+                       cluster_rows = FALSE,
+                       row_split = row_annot$Assay, 
+                       column_gap = 0.5,
+                       show_row_names = TRUE,
+                       show_column_names = FALSE,
+                       show_heatmap_legend = TRUE,
+                       cluster_columns = TRUE, 
+                       top_annotation = column_anno,
+                       #right_annotation = row_anno,
+                       row_title = NULL, 
+                       column_title = NULL, 
+                       row_names_gp = grid::gpar(fontsize = 9, fontface="italic"),
+                       row_order = str_trim(rownames(mat)),
+                       column_title_side = "top",
+                       heatmap_legend_param = list(legend_direction = "horizontal", 
+                                                   legend_position = "top"))
+  
+  heatmap_output_file <- file.path(plots_dir, paste0(each,"-SF_RNA_heatmap.pdf"))
+  pdf(heatmap_output_file, width = 10, height = 5)
+  draw(heat_plot_RNA, heatmap_legend_side = "top")
   dev.off()
 }
 
