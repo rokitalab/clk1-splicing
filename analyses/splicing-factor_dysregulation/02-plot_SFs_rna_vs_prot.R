@@ -130,11 +130,10 @@ for (each in names) {
     filter(sample_id %in% colnames(mat)) %>%
     distinct(sample_id, cluster, plot_group, GSVA) %>%
     rename(Histology = plot_group,
-           Cluster = cluster,
-           `KEGG Spliceosome GSVA` = GSVA) %>%
+           Cluster = cluster) %>%
     mutate(Cluster = factor(Cluster, levels = as.character(1:11))) %>%
     column_to_rownames("sample_id") %>% 
-    select(Histology, Cluster, `KEGG Spliceosome GSVA`) %>%
+    select(Histology, Cluster, GSVA) %>%
     .[colnames(mat), , drop = FALSE]
   
   
@@ -168,11 +167,12 @@ for (each in names) {
                               "9" = "#1F78B4",
                               "10" = "#B15928",
                               "11" = "#6A3D9A"),
-                "KEGG Spliceosome GSVA" = colorRamp2(c(-1, 0, 1), c("blue", "white", "darkorange")))
+                "GSVA" = colorRamp2(c(-1, 0, 1), c("blue", "white", "darkorange")))
 column_anno = columnAnnotation(df = hist_data,
                                  col = hist_col,
                                  show_legend = TRUE, 
-                                 show_annotation_name = FALSE)
+                                 show_annotation_name = TRUE,
+                                 annotation_name_gp = grid::gpar(fontsize = 9, fontface = "bold"))
 
   # Make heatmap without legends
   heat_plot <- Heatmap(mat,
@@ -188,7 +188,7 @@ column_anno = columnAnnotation(df = hist_data,
                        top_annotation = column_anno,
                        #right_annotation = row_anno,
                        row_title = NULL, 
-                       column_title = NULL, 
+                       column_title = NULL,
                        row_names_gp = grid::gpar(fontsize = 9),
                        column_title_side = "top",
                        heatmap_legend_param = list(legend_direction = "horizontal", 
@@ -236,7 +236,7 @@ column_anno = columnAnnotation(df = hist_data,
                        top_annotation = column_anno,
                        #right_annotation = row_anno,
                        row_title = NULL, 
-                       column_title = NULL, 
+                       column_title = TRUE, 
                        row_names_gp = grid::gpar(fontsize = 9, fontface="italic"),
                        row_order = str_trim(rownames(mat)),
                        column_title_side = "top",
