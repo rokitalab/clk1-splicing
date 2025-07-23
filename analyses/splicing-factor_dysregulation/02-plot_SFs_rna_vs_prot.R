@@ -193,6 +193,9 @@ column_anno = columnAnnotation(df = hist_data,
                        column_title_side = "top",
                        heatmap_legend_param = list(legend_direction = "horizontal", 
                                                    legend_position = "top"))
+  
+  # Get sample order
+  col_order <- column_order(heat_plot)
 
   heatmap_output_file <- file.path(plots_dir, paste0(each,"-SF_protein_heatmap.pdf"))
   pdf(heatmap_output_file, width = 10, height = 5.5)
@@ -201,7 +204,6 @@ column_anno = columnAnnotation(df = hist_data,
   
   
   # Make correpsonding RNA heatmap
-  
   cptac_RNA <- cptac_data %>%
     dplyr::filter(Assay == "RNA-Seq")
   
@@ -229,7 +231,8 @@ column_anno = columnAnnotation(df = hist_data,
                        show_row_names = TRUE,
                        show_column_names = FALSE,
                        show_heatmap_legend = TRUE,
-                       cluster_columns = TRUE, 
+                       cluster_columns = FALSE, 
+                       column_order = colnames(mat)[col_order],
                        top_annotation = column_anno,
                        #right_annotation = row_anno,
                        row_title = NULL, 
