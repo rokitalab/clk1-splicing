@@ -150,7 +150,7 @@ for (library in names(library_type)){
       annotation_name_gp= gpar(fontsize = 10))
     
     # define psi color scale
-    col_fun = colorRamp2(c(0, 0.5, 1), c("blue", "whitesmoke", "red"))
+    col_fun = colorRamp2(c(0, 0.5, 1), c("blue", "white", "red"))
     
     # reorder matrix to match cluster df
     cluster_mat <- cluster_mat[,cluster_df$sample_id]
