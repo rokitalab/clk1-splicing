@@ -60,22 +60,10 @@ hist_df <- read_tsv(cluster_file) %>%
 
 ## get CPTAC output table 
 cptac_output_file <- file.path(input_dir,"CPTAC3-pbt.xls") 
-hgg_de_file <- file.path(results_dir, "all_hgg-diffSFs_sig_genes.txt")
-cluster6_de_file <- file.path(results_dir, "cluster6-diffSFs_sig_genes.txt")
 sf_file <- file.path(input_dir, "splicing_factors.txt")
 hugo_file <- file.path(root_dir, "analyses", "oncoprint", "input", "hgnc-symbol-check.csv")
 
 # Load datasets
-hgg_de_genes <- read_tsv(hgg_de_file) %>%
-  arrange(padj) %>%
-  slice_head(n = 20) %>%
-  pull(gene)
-
-cluster6_de_genes <- read_tsv(cluster6_de_file) %>%
-  arrange(padj) %>%
-  slice_head(n = 20) %>%
-  pull(gene)
-
 sf_genes <- read_lines(sf_file)
 
 hugo_genes <- read_csv(hugo_file, skip = 1) %>%
@@ -86,9 +74,8 @@ kegg_splice <- msigdbr::msigdbr(species = "Homo sapiens", category = "C2", subca
   pull(gene_symbol) %>%
   unique()
 
-#de_genes_list <- list("all_hgg" = hgg_de_genes, "cluster6" = cluster6_de_genes, "sf" = sf_genes, "hugo" = hugo_genes, "kegg_splice" = kegg_splice)
-de_genes_list <- list("sf" = sf_genes, "hugo" = hugo_genes, "kegg_splice" = kegg_splice)
-names <- names(de_genes_list)
+genes_list <- list("sf" = sf_genes, "hugo" = hugo_genes, "kegg_splice" = kegg_splice)
+names <- names(genes_list)
 
 for (each in names) {
   cptac_data <- readxl::read_excel(cptac_output_file) %>%
@@ -98,7 +85,7 @@ for (each in names) {
     # remove extra info from cols
     rename_with(~ gsub("X7316.", "7316-", .), everything()) %>%
     dplyr::rename(Assay = `Data type`) %>%
-    filter(`Gene symbol` %in% de_genes_list[[each]]) %>%
+    filter(`Gene symbol` %in% genes_list[[each]]) %>%
     # clean up naming for plotting
     mutate(Assay = case_when(Assay == "proteo" ~ "Whole Cell Proteomics",
                              Assay == "rna" ~ "RNA-Seq"),
@@ -181,9 +168,8 @@ for (each in names) {
                               "9" = "#1F78B4",
                               "10" = "#B15928",
                               "11" = "#6A3D9A"),
-                "KEGG Spliceosome GSVA" = colorRamp2(c(-1, 0, 1), c("#93003A", "white", "#00429D")))
-  
-  column_anno = columnAnnotation(df = hist_data,
+                "KEGG Spliceosome GSVA" = colorRamp2(c(-1, 0, 1), c("blue", "white", "darkorange")))
+column_anno = columnAnnotation(df = hist_data,
                                  col = hist_col,
                                  show_legend = TRUE, 
                                  show_annotation_name = FALSE)
@@ -191,9 +177,9 @@ for (each in names) {
   # Make heatmap without legends
   heat_plot <- Heatmap(mat,
                        name = "Z-score",
-                       col = colorRamp2(c(-2, 0, 2), c("#E66100", "white", "#5D3A9B")),
+                       #col = colorRamp2(c(-2, 0, 2), c("#5D3A9B", "white", "#E66100")),
+                       col = colorRamp2(c(-2, 0, 2), c("blue", "white", "red")),
                        cluster_rows = FALSE,
-                       row_split = row_annot$Assay, 
                        column_gap = 0.5,
                        show_row_names = TRUE,
                        show_column_names = FALSE,
@@ -209,7 +195,7 @@ for (each in names) {
                                                    legend_position = "top"))
 
   heatmap_output_file <- file.path(plots_dir, paste0(each,"-SF_protein_heatmap.pdf"))
-  pdf(heatmap_output_file, width = 10, height = 5)
+  pdf(heatmap_output_file, width = 10, height = 5.5)
   draw(heat_plot, heatmap_legend_side = "top")
   dev.off()
   
@@ -237,9 +223,8 @@ for (each in names) {
   
   heat_plot_RNA <- Heatmap(mat_RNA,
                        name = "Z-score",
-                       col = colorRamp2(c(-2, 0, 2), c("#E66100", "white", "#5D3A9B")),
+                       col = colorRamp2(c(-2, 0, 2), c("blue", "white", "red")),
                        cluster_rows = FALSE,
-                       row_split = row_annot$Assay, 
                        column_gap = 0.5,
                        show_row_names = TRUE,
                        show_column_names = FALSE,
@@ -256,7 +241,7 @@ for (each in names) {
                                                    legend_position = "top"))
   
   heatmap_output_file <- file.path(plots_dir, paste0(each,"-SF_RNA_heatmap.pdf"))
-  pdf(heatmap_output_file, width = 10, height = 5)
+  pdf(heatmap_output_file, width = 10, height = 5.5)
   draw(heat_plot_RNA, heatmap_legend_side = "top")
   dev.off()
 }
