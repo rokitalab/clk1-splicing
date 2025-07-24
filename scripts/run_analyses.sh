@@ -41,17 +41,17 @@ echo "----------------------------------"
 cd ${analyses_dir}/histology-specific-splicing
 bash run_module.sh
 
-## splicing index
-echo "----------------------------------"
-echo "splicing index"
-cd ${analyses_dir}/splicing_index
-bash run_module.sh
-
 ## psi clustering
 echo "----------------------------------"
 echo "psi clustering"
 cd ${analyses_dir}/sample-psi-clustering
 bash run-module.sh
+
+## splicing index
+echo "----------------------------------"
+echo "splicing index"
+cd ${analyses_dir}/splicing_index
+bash run_module.sh
 
 ## splicing-factor_dysregulation
 echo "----------------------------------"
@@ -94,13 +94,6 @@ echo "long-read-CLK1-validation"
 cd ${analyses_dir}/long-read-CLK1-validation
 bash run_module.sh
 
-## KNS42-cell-line
-echo "----------------------------------"
-echo "KNS42-cell-line"
-echo "----------------------------------"
-cd ${analyses_dir}/KNS42-cell-line
-bash run_module.sh
-
 ## CLK1-inhibition-assays
 echo "----------------------------------"
 echo "CLK1-inhibition-assays"
@@ -113,4 +106,11 @@ echo "----------------------------------"
 echo "CLK1-splicing-impact-morpholino"
 echo "----------------------------------"
 cd ${analyses_dir}/CLK1-splicing-impact-morpholino
+bash run_module.sh
+
+## KNS42-cell-line
+echo "----------------------------------"
+echo "KNS42-cell-line"
+echo "----------------------------------"
+cd ${analyses_dir}/KNS42-cell-line
 bash run_module.sh
