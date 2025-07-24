@@ -53,13 +53,6 @@ echo "psi clustering"
 cd ${analyses_dir}/sample-psi-clustering
 bash run-module.sh
 
-## survival
-echo "----------------------------------"
-echo "survival"
-echo "----------------------------------"
-cd ${analyses_dir}/survival
-bash run-survival-module.sh
-
 ## splicing-factor_dysregulation
 echo "----------------------------------"
 echo "splicing factor dysregulation"
@@ -74,12 +67,12 @@ echo "----------------------------------"
 cd ${analyses_dir}/splicing_events_functional_sites
 bash run_module.sh
 
-## oncoprint
-echo "----------------------------------"
-echo "oncoprint"
-echo "----------------------------------"
-cd ${analyses_dir}/oncoprint
-bash run-oncoprint.sh
+## oncoprint (skipping for now)
+#echo "----------------------------------"
+#echo "oncoprint"
+#echo "----------------------------------"
+#cd ${analyses_dir}/oncoprint
+#bash run-oncoprint.sh
 
 ## CLK1 splicing correlations
 echo "----------------------------------"
@@ -87,6 +80,13 @@ echo "CLK1 splicing correlations"
 echo "----------------------------------"
 cd ${analyses_dir}/CLK1-splicing_correlations
 bash run_module.sh
+
+## survival
+echo "----------------------------------"
+echo "survival"
+echo "----------------------------------"
+cd ${analyses_dir}/survival
+bash run-survival-module.sh
 
 ## long-read-CLK1-validation
 echo "----------------------------------"
