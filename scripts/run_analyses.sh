@@ -26,12 +26,13 @@ echo "----------------------------------"
 cd ${analyses_dir}/cohort_summary
 Rscript 01-generate-cohort-summary-circos-plot.R
 
+#### Skipping due to stranded only cohort ####
 ## stranded-polyA-assessment
-echo "----------------------------------"
-echo stranded-polyA-assessment
-echo "----------------------------------"
-cd ${analyses_dir}/stranded-polyA-assessment
-bash run_module.sh
+#echo "----------------------------------"
+#echo stranded-polyA-assessment
+#echo "----------------------------------"
+#cd ${analyses_dir}/stranded-polyA-assessment
+#bash run_module.sh
 
 ## histology-specific splice events
 echo "----------------------------------"
@@ -50,7 +51,7 @@ bash run_module.sh
 echo "----------------------------------"
 echo "psi clustering"
 cd ${analyses_dir}/sample-psi-clustering
-bash run_module.sh
+bash run-module.sh
 
 ## survival
 echo "----------------------------------"
@@ -73,19 +74,19 @@ echo "----------------------------------"
 cd ${analyses_dir}/splicing_events_functional_sites
 bash run_module.sh
 
-## CLK1 splicing correlations
-echo "----------------------------------"
-echo "CLK1 splicing correlations"
-echo "----------------------------------"
-cd ${analyses_dir}/CLK1-splicing_correlations
-bash run_module.sh
-
 ## oncoprint
 echo "----------------------------------"
 echo "oncoprint"
 echo "----------------------------------"
 cd ${analyses_dir}/oncoprint
 bash run-oncoprint.sh
+
+## CLK1 splicing correlations
+echo "----------------------------------"
+echo "CLK1 splicing correlations"
+echo "----------------------------------"
+cd ${analyses_dir}/CLK1-splicing_correlations
+bash run_module.sh
 
 ## long-read-CLK1-validation
 echo "----------------------------------"
@@ -98,6 +99,13 @@ echo "----------------------------------"
 echo "KNS42-cell-line"
 echo "----------------------------------"
 cd ${analyses_dir}/KNS42-cell-line
+bash run_module.sh
+
+## CLK1-inhibition-assays
+echo "----------------------------------"
+echo "CLK1-inhibition-assays"
+echo "----------------------------------"
+cd ${analyses_dir}/CLK1-inhibition-assays
 bash run_module.sh
 
 ## CLK1-splicing-impact-morpholino
