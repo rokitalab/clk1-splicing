@@ -38,8 +38,8 @@ sbi_se_file <- file.path(root_dir, "analyses",
                          "results",
                          "splicing_index.SE.txt")
 
-expr_file <- file.path(data_dir,
-                       "gene-expression-rsem-tpm-collapsed.rds")
+expr_file <- file.path(data_dir, "gene-expression-rsem-tpm-collapsed.rds")
+expr_trans_file <- file.path(data_dir,"rna-isoform-expression-rsem-tpm.rds")
 
 cluster_file <- file.path(root_dir, "analyses",
                           "sample-psi-clustering", 
@@ -54,6 +54,7 @@ rmats_file <- file.path(data_dir, "clk1-splice-events-rmats.tsv")
 sbi_se <- read_tsv(sbi_se_file)
 
 expr <- readRDS(expr_file)
+expr_trans <- readRDS(expr_trans_file)
 
 cluster_df <- read_tsv(cluster_file)
 
@@ -167,6 +168,25 @@ sbi_sf_cor_df <- sbi_sf_cor_df %>%
 write_tsv(sbi_sf_cor_df,
           file.path(results_dir,
                     "se-sbi-sf-expr-correlations.tsv"))
+
+clk1_ex4_expr <- expr_trans %>%
+  filter(grepl("^CLK1", gene_symbol)) %>%
+  dplyr::filter(transcript_id == "ENST00000321356.9") %>%
+  group_by(transcript_id) %>%
+  summarise(across(starts_with("BS"), sum, na.rm = TRUE)) %>%
+  pivot_longer(
+    cols = -transcript_id,
+    names_to = "Sample",
+    values_to = "CLK1_tpm"
+  ) %>%
+  dplyr::select(-transcript_id) %>%
+  left_join(cluster_df %>% dplyr::select(sample_id,
+                                         cluster,
+                                         plot_group,
+                                         plot_group_hex),
+            by = c("Sample" = "sample_id")) %>%
+  dplyr::filter(!is.na(cluster)) %>%
+  left_join(sbi_se %>% dplyr::select("Sample", "SI"))
 
 # extract CLK1 expression and append cluster, sbi info
 clk1_expr <- sf_expr %>%
@@ -287,6 +307,11 @@ clk1_expr <- clk1_expr %>%
   left_join(rmats_df %>% dplyr::select(sample_id, IncLevel1),
             by = c("Sample" = "sample_id"))
 
+# append clk1 ex4 PSI to clk1 exon 4 expr
+clk1_ex4_expr <- clk1_ex4_expr %>%
+  left_join(rmats_df %>% dplyr::select(sample_id, IncLevel1),
+            by = c("Sample" = "sample_id"))
+
 # Plot SBI against clk1 ex4 PSI in cluster 6
 clk1_expr %>%
   dplyr::filter(cluster == 6) %>%
@@ -345,7 +370,7 @@ ggsave(file.path(plots_dir,
 ## Assess correlations between CLK1 exon 4 PSI and CLK1 TPM
 
 # Plot SBI against clk1 ex4 PSI in cluster 6
-clk1_expr %>%
+clk1_ex4_expr %>%
   dplyr::filter(cluster == 6) %>%
   ggplot(aes(x = IncLevel1, y = log2(CLK1_tpm))) +
   geom_point(aes(color = plot_group)) +
@@ -359,9 +384,8 @@ clk1_expr %>%
        y = expression(bold(Log[2] ~ "CLK1 TPM")),
        color = "Histology") + 
   stat_cor(method = "pearson",
-           label.x = 0.12, label.y = 2.1, size = 5) +
+           label.x = 0.2, label.y = -1.9, size = 5) +
   scale_color_manual(values = plotgroup_palette, breaks = names(plotgroup_palette)) + 
-  ylim(c(2,7)) +
   theme_Publication()
 
 # save plot
@@ -370,7 +394,7 @@ ggsave(file.path(plots_dir,
        width = 7, height = 4)
 
 # plot SBI vs. clk1 ex4 PSI in cluster 6
-clk1_expr %>%
+clk1_ex4_expr %>%
   dplyr::filter(cluster != 6) %>%
   ggplot(aes(x = IncLevel1, y = log2(CLK1_tpm))) +
   geom_point(aes(color = plot_group),
@@ -385,11 +409,11 @@ clk1_expr %>%
        y = expression(bold(Log[2] ~ "CLK1 TPM")),
        color = "Histology") + 
   stat_cor(method = "pearson",
-           label.x = 0.3, label.y = -1, size = 3) +
+           label.x = 0.3, label.y = -3.5, size = 3) +
   facet_wrap(~cluster, nrow = 2,
              labeller = labeller(cluster = label_wrap_gen(18))) + 
   scale_color_manual(values = plotgroup_palette, breaks = names(plotgroup_palette)) + 
-  ylim(c(-1,7)) +
+  ylim(c(-4,4)) +
   theme_Publication()
 
 # save plot
