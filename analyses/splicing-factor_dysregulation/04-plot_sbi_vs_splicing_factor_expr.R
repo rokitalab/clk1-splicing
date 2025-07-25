@@ -271,7 +271,7 @@ ggsave(file.path(plots_dir,
                  "sbi-vs-clk1-tpm-byHist.pdf"),
        width = 12, height = 7)
 
-## Finally, assess correlations between CLK1 exon 4 PSI and SBI
+## Assess correlations between CLK1 exon 4 PSI and SBI
 
 # Load clk1 rmats and filter for exon 4
 rmats_df <-  vroom(rmats_file) %>%
@@ -338,6 +338,63 @@ clk1_expr %>%
 # save plot
 ggsave(file.path(plots_dir,
                  "sbi-vs-clk1-ex4-psi-other-clusters.pdf"),
+       width = 12, height = 5)
+
+
+
+## Assess correlations between CLK1 exon 4 PSI and CLK1 TPM
+
+# Plot SBI against clk1 ex4 PSI in cluster 6
+clk1_expr %>%
+  dplyr::filter(cluster == 6) %>%
+  ggplot(aes(x = IncLevel1, y = log2(CLK1_tpm))) +
+  geom_point(aes(color = plot_group)) +
+  stat_smooth(method = "lm", 
+              formula = y ~ x, 
+              geom = "smooth", 
+              colour = "red",
+              fill = "pink",
+              linetype="dashed") +
+  labs(x = "CLK1 exon 4 PSI",
+       y = expression(bold(Log[2] ~ "CLK1 TPM")),
+       color = "Histology") + 
+  stat_cor(method = "pearson",
+           label.x = 0.12, label.y = 2.1, size = 5) +
+  scale_color_manual(values = plotgroup_palette, breaks = names(plotgroup_palette)) + 
+  ylim(c(2,7)) +
+  theme_Publication()
+
+# save plot
+ggsave(file.path(plots_dir,
+                 "tpm-vs-clk1-ex4-psi-cluster6.pdf"),
+       width = 7, height = 4)
+
+# plot SBI vs. clk1 ex4 PSI in cluster 6
+clk1_expr %>%
+  dplyr::filter(cluster != 6) %>%
+  ggplot(aes(x = IncLevel1, y = log2(CLK1_tpm))) +
+  geom_point(aes(color = plot_group),
+             alpha = 0.7) +
+  stat_smooth(method = "lm", 
+              formula = y ~ x, 
+              geom = "smooth", 
+              colour = "red",
+              fill = "pink",
+              linetype="dashed") +
+  labs(x = "CLK1 exon 4 PSI",
+       y = expression(bold(Log[2] ~ "CLK1 TPM")),
+       color = "Histology") + 
+  stat_cor(method = "pearson",
+           label.x = 0.3, label.y = -1, size = 3) +
+  facet_wrap(~cluster, nrow = 2,
+             labeller = labeller(cluster = label_wrap_gen(18))) + 
+  scale_color_manual(values = plotgroup_palette, breaks = names(plotgroup_palette)) + 
+  ylim(c(-1,7)) +
+  theme_Publication()
+
+# save plot
+ggsave(file.path(plots_dir,
+                 "tpm-vs-clk1-ex4-psi-other-clusters.pdf"),
        width = 12, height = 5)
 
 # print session info
