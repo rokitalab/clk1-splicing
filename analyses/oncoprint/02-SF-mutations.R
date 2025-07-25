@@ -94,12 +94,18 @@ maf_cols <- c("Hugo_Symbol",
               "SIFT",
               "gnomad_3_1_1_splice_ai_consequence")
 
+
+# variant classifications to exclude
+exclude_class <- c("Silent", "Intron", "RNA", "IGR", "3'Flank", "5'Flank")
+
 # read in and combine MAFs
 cons_maf <- data.table::fread(cons_maf_file, data.table = FALSE) %>%
-  dplyr::select(all_of(maf_cols)) 
+  dplyr::select(all_of(maf_cols)) %>%
+  filter(!Variant_Classification %in% exclude_class)
 
 tumor_only_maf <- data.table::fread(tumor_only_maf_file, data.table = FALSE) %>%
-  dplyr::select(all_of(maf_cols)) 
+  dplyr::select(all_of(maf_cols))  %>%
+  filter(!Variant_Classification %in% exclude_class) 
 
 maf <- cons_maf %>%
   bind_rows(tumor_only_maf) %>% 
@@ -112,11 +118,10 @@ for (each in gene_list_names) {
   maf_filtered <- maf %>%
     dplyr::filter(Hugo_Symbol %in% gene_list[[each]],
                   Tumor_Sample_Barcode  %in% sample_list[[sample]]) %>%
-    dplyr::mutate(keep = case_when(Variant_Classification == "Missense_Mutation" & (grepl("dam", PolyPhen) | grepl("deleterious\\(", SIFT)) ~ "yes",
-                                   Variant_Classification == "Missense_Mutation" & PolyPhen == "" & SIFT == "" ~ "yes",
-                                   Variant_Classification != "Missense_Mutation" ~ "yes",
-                                   TRUE ~ "no")) %>%
-    dplyr::filter(keep == "yes")
+    dplyr::mutate(pred_deleterious = case_when((grepl("dam", PolyPhen) | grepl("deleterious\\(", SIFT)) ~ "yes",
+                                   PolyPhen == "" & SIFT == "" ~ "yes",
+                                   TRUE ~ "no")) #%>%
+#    dplyr::filter(keep == "yes")
     print(nrow(maf_filtered))
     write_tsv(maf_filtered, file.path(paste0(results_dir, "/", each, "-", sample, "-samples.maf")))
   }
