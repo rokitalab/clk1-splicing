@@ -221,7 +221,7 @@ clk1_expr %>%
               colour = "red",
               fill = "pink",
               linetype="dashed") +
-  labs(x = expression(bold(Log[2] ~ "CLK1 TPM")),
+  labs(x = expression(bold(Log[2] ~ bolditalic("CLK1") ~ "TPM")),
        y = expression(bold(Log[2] ~ "SE SBI")),
        color = "Histology") + 
   stat_cor(method = "pearson",
@@ -247,7 +247,7 @@ clk1_expr %>%
               colour = "red",
               fill = "pink",
               linetype="dashed") +
-  labs(x = expression(bold(Log[2] ~ "CLK1 TPM")),
+  labs(x = expression(bold(Log[2] ~ bolditalic("CLK1") ~ "TPM")),
        y = expression(bold(Log[2] ~ "SE SBI")),
        color = "Histology") + 
   stat_cor(method = "pearson",
@@ -275,7 +275,7 @@ clk1_expr %>%
               colour = "red",
               fill = "pink",
               linetype="dashed") +
-  labs(x = expression(bold(Log[2] ~ "CLK1 TPM")),
+  labs(x = expression(bold(Log[2] ~ bolditalic("CLK1") ~ "TPM")),
        y = expression(bold(Log[2] ~ "SE SBI")),
        color = "Histology") + 
   stat_cor(method = "pearson",
@@ -323,7 +323,7 @@ clk1_expr %>%
               colour = "red",
               fill = "pink",
               linetype="dashed") +
-  labs(x = "CLK1 exon 4 PSI",
+  labs(x = expression(bolditalic("CLK1") ~ "exon 4 PSI"),
        y = expression(bold(Log[2] ~ "SE SBI")),
        color = "Histology") + 
   stat_cor(method = "pearson",
@@ -349,7 +349,7 @@ clk1_expr %>%
               colour = "red",
               fill = "pink",
               linetype="dashed") +
-  labs(x = "CLK1 exon 4 PSI",
+  labs(x = expression(bold(bolditalic("CLK1") ~ "exon 4 PSI")),
        y = expression(bold(Log[2] ~ "SE SBI")),
        color = "Histology") + 
   stat_cor(method = "pearson",
@@ -380,8 +380,8 @@ clk1_ex4_expr %>%
               colour = "red",
               fill = "pink",
               linetype="dashed") +
-  labs(x = "CLK1 exon 4 PSI",
-       y = expression(bold(Log[2] ~ "CLK1 TPM")),
+  labs(x = expression(bold(bolditalic("CLK1") ~ "exon 4 PSI")),
+       y = expression(bold(Log[2] ~ "ENST00000321356 TPM")),
        color = "Histology") + 
   stat_cor(method = "pearson",
            label.x = 0.2, label.y = -1.9, size = 5) +
@@ -393,7 +393,7 @@ ggsave(file.path(plots_dir,
                  "tpm-vs-clk1-ex4-psi-cluster6.pdf"),
        width = 7, height = 4)
 
-# plot SBI vs. clk1 ex4 PSI in cluster 6
+# plot SBI vs. clk1 ex4 PSI in other clusters
 clk1_ex4_expr %>%
   dplyr::filter(cluster != 6) %>%
   ggplot(aes(x = IncLevel1, y = log2(CLK1_tpm))) +
@@ -405,8 +405,8 @@ clk1_ex4_expr %>%
               colour = "red",
               fill = "pink",
               linetype="dashed") +
-  labs(x = "CLK1 exon 4 PSI",
-       y = expression(bold(Log[2] ~ "CLK1 TPM")),
+  labs(x = expression(bold(bolditalic("CLK1") ~ "exon 4 PSI")),
+       y = expression(bold(Log[2] ~ bolditalic("CLK1") ~ "ENST00000321356 TPM")),
        color = "Histology") + 
   stat_cor(method = "pearson",
            label.x = 0.3, label.y = -3.5, size = 3) +
