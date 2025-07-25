@@ -7,10 +7,10 @@ indep_samples="../../data/independent-specimens.rnaseqpanel.primary.tsv"
 
 
 ## process PSI and generate SBI tables
-#perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples A3SS
-#perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples A5SS
-#perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples RI
-#perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples SE
+perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples A3SS
+perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples A5SS
+perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples RI
+perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples SE
 
 # gzip diff files
 gzip -f results/*diff*.txt
