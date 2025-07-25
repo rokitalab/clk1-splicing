@@ -1,7 +1,7 @@
 ################################################################################
 # 08-plot-Ex4-PSI-all-tumors.R
 # script that plots CLK1 exon 4 PSI variations across tumors and ctrls
-# written by Ammar Naqvi
+# written by Ammar Naqvi, Patricia Sullivan
 #
 # usage: Rscript 08-plot-Ex4-PSI-all-tumors.R
 ################################################################################
@@ -13,6 +13,7 @@ suppressPackageStartupMessages({
   library("ggplot2")
   library("vroom")
   library("data.table")
+  library("ggtext")
 })
 
 # Get `magrittr` pipe
@@ -115,17 +116,22 @@ ex4_psi_filtered <- var_exp_filt %>%
   mutate(PSI_variance = sd(IncLevel1, na.rm = TRUE)) %>%
   filter(!is.na(PSI_variance))
 
+hist_colors <- var_exp_filt %>%
+  distinct(plot_group, plot_group_hex) %>%
+  deframe()
+
 # Plot with pairwise comparison results and mean labels
-boxplot_tpm<- ggplot(var_exp_filt, aes(x = plot_group, y = IncLevel1)) +
-  geom_boxplot(outlier.shape = NA, fill = "grey", color = "#2c3e50") +
-  stat_summary(fun = mean, geom = "point", shape = 18, size = 3, color = "black") +
-  geom_jitter(width = 0.2, size = 2, shape = 21, color = "black", fill="grey") + # Add actual data points
-  labs(title = "CLK Exon 4 PSI", 
-       x = "Histology", y = "PSI") +
+boxplot_tpm<- ggplot(var_exp_filt,
+                     aes(reorder(plot_group, IncLevel1), IncLevel1, fill = plot_group)) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.5) +
+  geom_jitter(width = 0.2, size = 2, shape = 21, color = "black", alpha = 0.7) + # Add actual data points
+  labs(x = "Histology", y = "<i>CLK1</i> Exon 4 PSI") +
   theme_Publication() + 
   theme(legend.position = "none", 
-        axis.text.x = element_text(angle = 75, hjust = 1)) +
-  scale_x_discrete(labels = function(x) sapply(x, function(l) str_wrap(l, width = 30))) # Wrap x-axis labels 
+        axis.text.x = element_text(angle = 75, hjust = 1),
+        axis.title.y = element_markdown()) +
+  scale_fill_manual(values = hist_colors) +
+  scale_x_discrete(labels = function(x) sapply(x, function(l) str_wrap(l, width = 22))) # Wrap x-axis labels 
 
 
 var_plot<- ggplot(data=ex4_psi_filtered, 
@@ -133,10 +139,11 @@ var_plot<- ggplot(data=ex4_psi_filtered,
            group=1), color="black") +
   geom_point(aes(fill = 'black'), size = 3, pch = 21, color="black") +  # Map color inside aes()
   xlab("Histology") + 
-  ylab("Standard Deviation") + 
-  ggtitle("CLK1 Exon 4 variation") +
+  ylab("<i>CLK1</i> Exon 4 Standard Deviation") + 
   theme_Publication() + 
-  theme(axis.text.x=element_text(angle = 75, hjust = 1, size = 11),legend.position = "none") 
+  theme(axis.text.x=element_text(angle = 75, hjust = 1, size = 11),
+        legend.position = "none",
+        axis.title.y = element_markdown()) 
 
 ex4_psi_range <- ex4_psi_filtered %>%
   group_by(plot_group) %>%
@@ -150,13 +157,19 @@ psi_range_plot<- ggplot(data=ex4_psi_range,
            group=1), color="black") +
   geom_point(aes(fill = 'black'), size = 3, pch = 21, color="black") +  # Map color inside aes()
   xlab("Histology") + 
-  ylab("PSI Range") + 
-  ggtitle("CLK1 Exon 4 PSI Range") +
+  ylab("<i>CLK1</i> Exon 4 PSI Range") + 
   theme_Publication() + 
-  theme(axis.text.x=element_text(angle = 75, hjust = 1, size = 11),legend.position = "none") 
+  theme(axis.text.x=element_text(angle = 75, hjust = 1, size = 11),
+        legend.position = "none",
+        axis.title.y = element_markdown()) 
 
 
 # Save plot as PDF
+pdf(file.path(plots_dir, "CLK1-Ex4-PSI-cohort.pdf"), 
+    width = 8, height = 6)
+print(boxplot_tpm)
+dev.off()
+
 pdf(file.path(plots_dir, "CLK1-Ex4-sdev-across.pdf"), 
     width = 4, height = 6)
 print(var_plot)
@@ -201,10 +214,11 @@ psi_range_plot<- ggplot(data=combo_psi_range,
                             group=1), color="black") +
   geom_point(aes(fill = 'black'), size = 3, pch = 21, color="black") +  # Map color inside aes()
   xlab("Histology") + 
-  ylab("PSI Range") + 
-  ggtitle("CLK1 Exon 4 PSI Range") +
+  ylab("<i>CLK1</i> Exon 4 PSI Range") +
   theme_Publication() + 
-  theme(axis.text.x=element_text(angle = 75, hjust = 1, size = 11),legend.position = "none") 
+  theme(axis.text.x=element_text(angle = 75, hjust = 1, size = 11),
+        legend.position = "none",
+        axis.title.y = element_markdown()) 
 
 pdf(file.path(plots_dir, "CLK1-Ex4-range-across-ctrls.pdf"), 
     width = 4, height = 6)
