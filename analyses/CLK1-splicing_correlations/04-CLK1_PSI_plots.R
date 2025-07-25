@@ -45,11 +45,15 @@ source(file.path(figures_dir, "theme_for_plots.R"))
 ## input files
 rmats_file <- file.path(results_dir,"clk1-splice-events-rmats.tsv")
 clin_file  <- file.path(hist_dir,"histologies-plot-group.tsv")
+cluster_file <- file.path(root_dir, "analyses",
+                          "sample-psi-clustering", "results",
+                          "sample-cluster-metadata-top-5000-events-stranded.tsv")
 
 ## output files for final plots
 hgg_plot_file <- file.path(plots_dir,"all_hgg_CLK1_exon4_inclusion_fraction_hgg_stacked.pdf")
 dmg_plot_file <- file.path(plots_dir,"dmg_CLK1_exon4_inclusion_fraction_hgg_stacked.pdf")
 other_hgg_plot_file <- file.path(plots_dir,"other_hgg_CLK1_exon4_inclusion_fraction_hgg_stacked.pdf")
+cluster6_plot_file <- file.path(plots_dir,"cluster6_CLK1_exon4_inclusion_fraction_stacked.pdf")
 
 ## get CLK1 psi values in tumors and ctrls
 indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
@@ -59,6 +63,7 @@ indep_df <- vroom(indep_file)
 histologies_df  <-  read_tsv(clin_file) %>%
   filter(cohort == "PBTA",
          experimental_strategy == "RNA-Seq",
+         RNA_library == "stranded",
          Kids_First_Biospecimen_ID %in% indep_df$Kids_First_Biospecimen_ID)
 
 hgg_bs_id <- histologies_df %>%
@@ -73,6 +78,10 @@ dmg_bs_id <- histologies_df %>%
 other_hgg_bs_id <- histologies_df %>%
   filter(plot_group == "Other high-grade glioma") %>%
   pull(Kids_First_Biospecimen_ID)
+
+cluster6_bs_id <- read_tsv(cluster_file) %>%
+  filter(cluster == 6) %>%
+  pull(sample_id)
 
 ## load rmats input for CLK1
 clk1_rmats <- fread(rmats_file) %>%
@@ -96,7 +105,7 @@ clk1_rmats <- fread(rmats_file) %>%
   # Join rmats data with clinical data
   inner_join(histologies_df, by='Kids_First_Biospecimen_ID') 
 
-bs_list <- list("all_hgg" = hgg_bs_id, "dmg" = dmg_bs_id, "other_hgg" = other_hgg_bs_id)
+bs_list <- list("all_hgg" = hgg_bs_id, "dmg" = dmg_bs_id, "other_hgg" = other_hgg_bs_id, "cluster6" = cluster6_bs_id)
 names <- names(bs_list)
 
 for (each in names) {
@@ -107,6 +116,8 @@ for (each in names) {
     plot_file <- dmg_plot_file
   } else if (each == "other_hgg") {
     plot_file <- other_hgg_plot_file
+  } else if (each == "cluster6") {
+    plot_file <- cluster6_plot_file
   }
   
   # Filter the DataFrame based on current group's IDs
