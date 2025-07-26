@@ -56,13 +56,23 @@ metadata_file <- file.path(input_dir, "splicing_indices_with_survival.tsv")
 clk1_psi_file <- file.path(root_dir, "analyses",
                            "CLK1-splicing_correlations", "results",
                            "clk1-splice-events-rmats.tsv")
+
+cluster_file <- file.path(root_dir, "analyses",
+                          "sample-psi-clustering", "results",
+                          "sample-cluster-metadata-top-5000-events-stranded.tsv")
 ```
 
 Wrangle data
 Append clk1 group to `metadata`
 
 ```{r}
-histologies <- read_tsv(histologies_file, guess_max = 10000) 
+histologies <- read_tsv(histologies_file, guess_max = 10000)
+
+histologies <- read_tsv(cluster_file) %>% 
+  rename(Kids_First_Biospecimen_ID = sample_id) %>%
+  select(Kids_First_Biospecimen_ID, cluster) %>%
+  inner_join(histologies)
+
 
 meta <- read_tsv(metadata_file) %>%
   left_join(histologies %>% dplyr::select(Kids_First_Biospecimen_ID,
@@ -209,65 +219,68 @@ for (group in groups){
     
   }
   
-  # Generate kaplan meier survival models for OS and EFS, and save outputs
-  kap_os <- survival_analysis(
-    metadata  = group_hist,
-    ind_var = "clk1_group",
-    test = "kap.meier",
-    metadata_sample_col = "Kids_First_Biospecimen_ID",
-    days_col = "OS_days",
-    status_col = "OS_status"
-  )
-
-  readr::write_rds(kap_os, km_os_model_file)
+  print(group_hist)
+  if (nrow(group_hist) > 2) {
   
-  kap_efs <- survival_analysis(
-    metadata  = group_hist,
-    ind_var = "clk1_group",
-    test = "kap.meier",
-    metadata_sample_col = "Kids_First_Biospecimen_ID",
-    days_col = "EFS_days",
-    status_col = "EFS_status"
-  )
-
-  readr::write_rds(kap_efs, km_efs_model_file)
-
-  # Run cox proprtional hazards models for OS, including appropriate covariates per histology
-  add_model_os <- suppressWarnings(fit_save_model(group_hist,
-                                  terms = ifelse(
-                                      group == "Low-grade glioma",
-                                      "mol_sub_group+extent_of_tumor_resection+clk1_group+age_at_diagnosis_days+age_at_diagnosis_days",
-                                      ifelse(group == "Mixed neuronal-glial tumor",
-                                             "mol_sub_group+extent_of_tumor_resection+clk1_group+age_at_diagnosis_days+age_at_diagnosis_days",
-                                              "mol_sub_group+extent_of_tumor_resection+clk1_group+age_at_diagnosis_days"
-                                  )),
-             coxph_os_model_file,
-             "multivariate",
-             years_col = "OS_years",
-             status_col = "OS_status"
-            ))
+    # Generate kaplan meier survival models for OS and EFS, and save outputs
+    kap_os <- survival_analysis(
+      metadata  = group_hist,
+      ind_var = "clk1_group",
+      test = "kap.meier",
+      metadata_sample_col = "Kids_First_Biospecimen_ID",
+      days_col = "OS_days",
+      status_col = "OS_status"
+    )
   
-  # Run cox proprtional hazards models for EFS, including appropriate covariates per histology
-  add_model_efs <- suppressWarnings(fit_save_model(group_hist,
-                                  terms = ifelse(
-                                      group == "Low-grade glioma",
-                                      "mol_sub_group+extent_of_tumor_resection+clk1_group+age_at_diagnosis_days+age_at_diagnosis_days",
-                                      ifelse(group == "Mixed neuronal-glial tumor",
-                                             "mol_sub_group+extent_of_tumor_resection+clk1_group+age_at_diagnosis_days+age_at_diagnosis_days",
-                                              "mol_sub_group+extent_of_tumor_resection+clk1_group+age_at_diagnosis_days"
-                                  )),
-             coxph_efs_model_file,
-             "multivariate",
-             years_col = "EFS_years",
-             status_col = "EFS_status"
-            ))
+    readr::write_rds(kap_os, km_os_model_file)
+    
+    kap_efs <- survival_analysis(
+      metadata  = group_hist,
+      ind_var = "clk1_group",
+      test = "kap.meier",
+      metadata_sample_col = "Kids_First_Biospecimen_ID",
+      days_col = "EFS_days",
+      status_col = "EFS_status"
+    )
   
-  group_hist %>%
-    filter(!is.na(clk1_group)) %>%
-    select(-OS_years, -EFS_years, 
-           -Kids_First_Participant_ID) %>%
-    write_tsv(output_file)
+    readr::write_rds(kap_efs, km_efs_model_file)
   
+    # Run cox proprtional hazards models for OS, including appropriate covariates per histology
+    add_model_os <- suppressWarnings(fit_save_model(group_hist,
+                                    terms = ifelse(
+                                        group == "Low-grade glioma",
+                                        "mol_sub_group+extent_of_tumor_resection+clk1_group+age_at_diagnosis_days+age_at_diagnosis_days",
+                                        ifelse(group == "Mixed neuronal-glial tumor",
+                                               "mol_sub_group+extent_of_tumor_resection+clk1_group+age_at_diagnosis_days+age_at_diagnosis_days",
+                                                "mol_sub_group+extent_of_tumor_resection+clk1_group+age_at_diagnosis_days"
+                                    )),
+               coxph_os_model_file,
+               "multivariate",
+               years_col = "OS_years",
+               status_col = "OS_status"
+              ))
+    
+    # Run cox proprtional hazards models for EFS, including appropriate covariates per histology
+    add_model_efs <- suppressWarnings(fit_save_model(group_hist,
+                                    terms = ifelse(
+                                        group == "Low-grade glioma",
+                                        "mol_sub_group+extent_of_tumor_resection+clk1_group+age_at_diagnosis_days+age_at_diagnosis_days",
+                                        ifelse(group == "Mixed neuronal-glial tumor",
+                                               "mol_sub_group+extent_of_tumor_resection+clk1_group+age_at_diagnosis_days+age_at_diagnosis_days",
+                                                "mol_sub_group+extent_of_tumor_resection+clk1_group+age_at_diagnosis_days"
+                                    )),
+               coxph_efs_model_file,
+               "multivariate",
+               years_col = "EFS_years",
+               status_col = "EFS_status"
+              ))
+    
+    group_hist %>%
+      filter(!is.na(clk1_group)) %>%
+      select(-OS_years, -EFS_years, 
+             -Kids_First_Participant_ID) %>%
+      write_tsv(output_file)
+  }
 }
 ```
 
