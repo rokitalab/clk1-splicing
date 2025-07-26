@@ -2,7 +2,7 @@
 # 04-plot_sbi_vs_splicing_factor_expr.R
 # script that calculates pearson correlation coefficients between SE SBI and splicing factor (SF) gene expression within identified clusters and tumor histologies
 #
-# written by Ryan Corbett
+# written by Ryan Corbett, Patricia Sullivan
 #
 # usage: Rscript 04-plot_sbi_vs_splicing_factor_expr.R
 ################################################################################
@@ -17,6 +17,8 @@ suppressPackageStartupMessages({
   library("ComplexHeatmap")
   library("ggpubr")
   library("vroom")
+  library("cowplot")
+  
 })
 
 # Get `magrittr` pipe
@@ -211,7 +213,7 @@ plotgroup_palette <- unique(clk1_expr$plot_group_hex)
 names(plotgroup_palette) <- unique(clk1_expr$plot_group)
 
 # plot SBI against CLK1 expression in cluster 6
-clk1_expr %>%
+plot1 <- clk1_expr %>%
   dplyr::filter(cluster == 6) %>%
   ggplot(aes(x = log2(CLK1_tpm), y = log2(SI))) +
   geom_point(aes(color = plot_group)) +
@@ -225,15 +227,16 @@ clk1_expr %>%
        y = expression(bold(Log[2] ~ "SE SBI")),
        color = "Histology") + 
   stat_cor(method = "pearson",
-           label.x = 2, label.y = -3.5, size = 3) +
+           label.x = 2.2, label.y = -2.5, size = 5) +
   scale_color_manual(values = plotgroup_palette, breaks = names(plotgroup_palette)) + 
-  ylim(c(-7.5,-3)) +
-  theme_Publication()
+  theme_Publication() + 
+  theme(legend.position = "none")
 
+plot1 + theme(legend.position = "right")
 # save plot
 ggsave(file.path(plots_dir,
                  "sbi-vs-clk1-tpm-cluster6.pdf"),
-       width = 7, height = 4)
+       width = 7, height = 7)
 
 # plot SBI against CLK1 expression in all other clusters
 clk1_expr %>%
@@ -251,11 +254,10 @@ clk1_expr %>%
        y = expression(bold(Log[2] ~ "SE SBI")),
        color = "Histology") + 
   stat_cor(method = "pearson",
-           label.x = 0, label.y = -2, size = 3) +
+           label.x = 0, label.y = -2.5, size = 3) +
   facet_wrap(~cluster, nrow = 2,
              labeller = labeller(cluster = label_wrap_gen(18))) + 
   scale_color_manual(values = plotgroup_palette, breaks = names(plotgroup_palette)) + 
-  ylim(c(-8,-1)) +
   theme_Publication()
 
 # save plot
@@ -279,11 +281,10 @@ clk1_expr %>%
        y = expression(bold(Log[2] ~ "SE SBI")),
        color = "Histology") + 
   stat_cor(method = "pearson",
-           label.x = 0, label.y = -1, size = 3) +
+           label.x = 0, label.y = -2, size = 3) +
   facet_wrap(~plot_group, nrow = 3,
              labeller = labeller(plot_group = label_wrap_gen(18))) + 
   scale_color_manual(values = plotgroup_palette, breaks = names(plotgroup_palette)) + 
-  ylim(c(-8,0)) +
   theme_Publication()
 
 # save plot
@@ -323,13 +324,12 @@ clk1_expr %>%
               colour = "red",
               fill = "pink",
               linetype="dashed") +
-  labs(x = expression(bolditalic("CLK1") ~ "exon 4 PSI"),
+  labs(x = expression(bolditalic("CLK1") ~ bold("exon 4 PSI")),
        y = expression(bold(Log[2] ~ "SE SBI")),
        color = "Histology") + 
   stat_cor(method = "pearson",
-           label.x = 0.1, label.y = -3.5, size = 3) +
+           label.x = 0.1, label.y = -2.5, size = 5) +
   scale_color_manual(values = plotgroup_palette, breaks = names(plotgroup_palette)) + 
-  ylim(c(-7.5,-3)) +
   theme_Publication()
 
 # save plot
@@ -353,11 +353,10 @@ clk1_expr %>%
        y = expression(bold(Log[2] ~ "SE SBI")),
        color = "Histology") + 
   stat_cor(method = "pearson",
-           label.x = 0.1, label.y = -2, size = 3) +
+           label.x = 0.1, label.y = -2.5, size = 3) +
   facet_wrap(~cluster, nrow = 2,
              labeller = labeller(cluster = label_wrap_gen(18))) + 
   scale_color_manual(values = plotgroup_palette, breaks = names(plotgroup_palette)) + 
-  ylim(c(-8,-1)) +
   theme_Publication()
 
 # save plot
@@ -370,7 +369,7 @@ ggsave(file.path(plots_dir,
 ## Assess correlations between CLK1 exon 4 PSI and CLK1 TPM
 
 # Plot SBI against clk1 ex4 PSI in cluster 6
-clk1_ex4_expr %>%
+plot2 <- clk1_ex4_expr %>%
   dplyr::filter(cluster == 6) %>%
   ggplot(aes(x = IncLevel1, y = log2(CLK1_tpm))) +
   geom_point(aes(color = plot_group)) +
@@ -384,10 +383,12 @@ clk1_ex4_expr %>%
        y = expression(bold(Log[2] ~ "ENST00000321356 TPM")),
        color = "Histology") + 
   stat_cor(method = "pearson",
-           label.x = 0.2, label.y = -1.9, size = 5) +
+           label.x = 0.15, label.y = 4.8, size = 5) +
   scale_color_manual(values = plotgroup_palette, breaks = names(plotgroup_palette)) + 
-  theme_Publication()
+  theme_Publication() +
+  theme(legend.position = "none")
 
+plot2 + theme(legend.position = "right")
 # save plot
 ggsave(file.path(plots_dir,
                  "tpm-vs-clk1-ex4-psi-cluster6.pdf"),
@@ -420,6 +421,35 @@ clk1_ex4_expr %>%
 ggsave(file.path(plots_dir,
                  "tpm-vs-clk1-ex4-psi-other-clusters.pdf"),
        width = 12, height = 5)
+
+
+## Combine plots to one file
+
+legend_plot <- clk1_expr %>%
+  dplyr::filter(cluster == 6) %>%
+  ggplot(aes(x = IncLevel1, y = log2(CLK1_tpm))) +
+  geom_point(aes(color = plot_group)) +
+  scale_color_manual(values = plotgroup_palette, breaks = names(plotgroup_palette), name = "Histology") + 
+  theme_Publication() +
+  theme(legend.position = "top",
+        legend.justification = "center") +
+  guides(color = guide_legend(ncol = 2))
+
+legend <- ggpubr::get_legend(legend_plot)
+
+
+plot_grid(
+  legend,
+  plot_grid(plot1, plot2, ncol = 2, rel_widths = c(1, 1)),
+  ncol = 1,
+  rel_heights = c(0.3, 1)
+)
+
+# save plot
+ggsave(file.path(plots_dir,
+                 "tpm-vs-sbi-and-tpm-vs-clk1-ex4-psi-cluster6.pdf"),
+       width = 8, height = 5)
+
 
 # print session info
 sessionInfo()

@@ -22,3 +22,5 @@ Rscript --vanilla 02-plot_SFs_rna_vs_prot.R
 
 ## plot SBI vs SF expression
 Rscript --vanilla 04-plot_sbi_vs_splicing_factor_expr.R
+
+rm Rplots.pdf
