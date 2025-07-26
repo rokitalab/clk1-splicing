@@ -25,6 +25,7 @@ histology_se_events <- file.path(analysis_dir, "histology-specific-splicing", "r
 cluster_membership <- file.path(analysis_dir, "sample-psi-clustering", "results", "sample-cluster-metadata-top-5000-events-stranded.tsv")
 gsva <- file.path(analysis_dir, "sample-psi-clustering", "results", "all_gsva_de_results_stranded.tsv")
 CNS_match_json <- file.path(table_dir, "input", "CNS_primary_site_match.json")
+kegg_file <- file.path(root_dir, "analyses", "sample-psi-clustering", "results", "hallmark_kegg_splice_geneset_mrna.rds")
 sf_list_file <- file.path(root_dir, "analyses","splicing-factor_dysregulation", "input", "splicing_factors.txt")
 hugo_file <- file.path(root_dir, "analyses", "oncoprint", "input", "hgnc-symbol-check.csv")
 deseq2_sf_file <- file.path(analysis_dir, "splicing-factor_dysregulation", "results", "all_hgg-diffSFs_sig_genes.txt")
@@ -177,18 +178,24 @@ write.xlsx(list_s2_table,
            keepNA=TRUE)
 
 ## Table 3 Splicing factor dysregulation
-## sheet 1, exon inclusion splicing
-sf_list <- readLines(sf_list_file) 
+#tab 1, kegg list
+kegg_rds <- readRDS(kegg_file)
+kegg_list <- kegg_rds$KEGG_SPLICEOSOME
+#tab 2, hugo list
 hugo_list <- read_csv(hugo_file, skip = 1) %>%
-  pull(`Approved symbol`) 
-goi_list <- c(sf_list, hugo_list) %>%
-  unique()
+  pull(`Approved symbol`)
+#tab 3, sf list
+sf_list <- readLines(sf_list_file) 
 
+## tab 4, exon inclusion splicing
 deseq_df <- vroom(deseq2_sf_file) %>%
   dplyr::select(-Significant)
 
 # Combine and output
-list_s3_table <- list(splicing_factors_and_splicosome=goi_list, deseq2=deseq_df)
+list_s3_table <- list(kegg_spliceosome = kegg_list, 
+                      hugo_spliceosome = hugo_list,
+                      sf_genes = sf_list,
+                      deseq2 = deseq_df)
 
 write.xlsx(list_s3_table,
            table_s3_file,
