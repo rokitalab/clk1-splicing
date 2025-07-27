@@ -80,8 +80,8 @@ all_clk4_transcr_counts <- readRDS(tpm_file) %>%
   filter(grepl("^CLK1", gene_symbol)) %>%
   mutate(
     transcript_id = case_when(
-    #  transcript_id %in% c("ENST00000321356.9", "ENST00000434813.3", "ENST00000409403.6") ~ "Exon 4",
-      transcript_id == "ENST00000321356.9" ~ "Exon 4",
+      transcript_id %in% c("ENST00000321356.9", "ENST00000434813.3", "ENST00000409403.6") ~ "Exon 4",
+#      transcript_id == "ENST00000321356.9" ~ "Exon 4",
       TRUE ~ "Other"
     )
   ) %>%
@@ -202,6 +202,39 @@ for (each in models) {
          width = 10, height = 6, units = "in",
          device = "pdf")
 }
+
+## clk1 x age
+  int_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
+                                terms = paste0("extent_of_tumor_resection+lgg_group+cluster+CLK1_Ex4_TPM*age_at_diagnosis_days"),
+                                 file.path(results_dir, paste0("cox_EFS_interaction_terms_resection_lgg_group_cluster_CLK1_Ex4_TPM_age.RDS")),
+                                 "multivariate",
+                                 years_col = "EFS_years",
+                                 status_col = "EFS_status")
+  
+  int_forest_efs <- plotForest(readRDS(file.path(results_dir, paste0("cox_EFS_interaction_terms_resection_lgg_group_cluster_CLK1_Ex4_TPM_age.RDS"))))
+  
+  int_forest_efs
+  
+  ggsave(file.path(plot_dir, paste0("forest_int_EFS_resection_lgg_group_cluster_clk1_age.pdf")),
+         int_forest_efs,
+         width = 10, height = 6, units = "in",
+         device = "pdf")
+
+  int_model_os <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
+                                terms = paste0("extent_of_tumor_resection+lgg_group+cluster+CLK1_Ex4_TPM*age_at_diagnosis_days"),
+                                 file.path(results_dir, paste0("cox_OS_interaction_terms_resection_lgg_group_cluster_clk1_age.RDS")),
+                                 "multivariate",
+                                 years_col = "OS_years",
+                                 status_col = "OS_status")
+  
+  int_forest_os <- plotForest(readRDS(file.path(results_dir, paste0("cox_OS_interaction_terms_resection_lgg_group_cluster_clk1_age.RDS"))))
+  
+  int_forest_os
+  
+  ggsave(file.path(plot_dir, paste0("forest_int_OS_resection_lgg_group_cluster_clk1_age.pdf")),
+         int_forest_os,
+         width = 10, height = 6, units = "in",
+         device = "pdf")
 
 models2 <- c("SI_SE", "CLK1_Ex4_TPM")
 for (each in models2) {
