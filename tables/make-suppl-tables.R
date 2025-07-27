@@ -25,10 +25,14 @@ histology_se_events <- file.path(analysis_dir, "histology-specific-splicing", "r
 cluster_membership <- file.path(analysis_dir, "sample-psi-clustering", "results", "sample-cluster-metadata-top-5000-events-stranded.tsv")
 gsva <- file.path(analysis_dir, "sample-psi-clustering", "results", "all_gsva_de_results_stranded.tsv")
 CNS_match_json <- file.path(table_dir, "input", "CNS_primary_site_match.json")
+
 kegg_file <- file.path(root_dir, "analyses", "sample-psi-clustering", "results", "hallmark_kegg_splice_geneset_mrna.rds")
 sf_list_file <- file.path(root_dir, "analyses","splicing-factor_dysregulation", "input", "splicing_factors.txt")
 hugo_file <- file.path(root_dir, "analyses", "oncoprint", "input", "hgnc-symbol-check.csv")
-deseq2_sf_file <- file.path(analysis_dir, "splicing-factor_dysregulation", "results", "all_hgg-diffSFs_sig_genes.txt")
+hugo_maf_file <- file.path(root_dir, "analyses", "oncoprint", "results", "hugo-all-samples.maf")
+sf_maf_file <- file.path(root_dir, "analyses", "oncoprint", "results", "sf-all-samples.maf")
+deseq2_sf_file <- file.path(analysis_dir, "splicing-factor_dysregulation", "results", "cluster6-diffSFs_sig_genes.txt")
+
 func_sites_es_file <- file.path(analysis_dir, "splicing_events_functional_sites", "results", "splicing_events.SE.total.neg.intersectunip.ggplot.txt") 
 func_sites_ei_file <- file.path(analysis_dir, "splicing_events_functional_sites", "results", "splicing_events.SE.total.pos.intersectunip.ggplot.txt") 
 kinase_func_sites_file <- file.path(analysis_dir, "splicing_events_functional_sites", "results", "splicing-factor-kinases-functional_sites.tsv")
@@ -187,7 +191,13 @@ hugo_list <- read_csv(hugo_file, skip = 1) %>%
 #tab 3, sf list
 sf_list <- readLines(sf_list_file) 
 
-## tab 4, exon inclusion splicing
+# tab 4
+hugo_maf <- read_tsv(hugo_maf_file)
+
+# tab 5
+sf_maf <- read_tsv(sf_maf_file)
+
+## tab 6, exon inclusion splicing
 deseq_df <- vroom(deseq2_sf_file) %>%
   dplyr::select(-Significant)
 
@@ -195,6 +205,8 @@ deseq_df <- vroom(deseq2_sf_file) %>%
 list_s3_table <- list(kegg_spliceosome = kegg_list, 
                       hugo_spliceosome = hugo_list,
                       sf_genes = sf_list,
+                      hugo_mutations = hugo_maf,
+                      sf_mutations = sf_maf,
                       deseq2 = deseq_df)
 
 write.xlsx(list_s3_table,
