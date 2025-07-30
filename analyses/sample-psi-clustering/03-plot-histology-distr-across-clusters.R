@@ -1,5 +1,5 @@
 ################################################################################
-# 02-plot-histology-distr-across-clusters.R
+# 03-plot-histology-distr-across-clusters.R
 # Plot the distribution of histologies across clusters
 #
 # Author: Ammar Naqvi, Jo Lynne Rokita, Ryan Corbett
