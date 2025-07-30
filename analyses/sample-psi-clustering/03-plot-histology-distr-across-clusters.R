@@ -81,6 +81,14 @@ for (type in names(cluster_files)){
     left_join(histologies %>% dplyr::select(plot_group, plot_group_hex)) %>%
     distinct()
   
+  histologies_df <- histologies_df %>%
+    mutate(cluster = as.numeric(cluster)) %>%
+    add_count(cluster, name = "group_n") %>%
+    mutate(
+      cluster_label = paste0(cluster, " (n = ", group_n, ")"),
+      cluster_label = factor(cluster_label, levels = unique(cluster_label[order(cluster)]))
+    )
+  
   color_df <- histologies_df %>%
     dplyr::select(plot_group_hex, plot_group) %>%
     dplyr::filter(!is.na(plot_group)) %>%
@@ -90,13 +98,15 @@ for (type in names(cluster_files)){
   
   # create plot
   pdf(file.path(paste0(plots_dir, "/cluster_membership_", type, ".pdf")),
-      height = 4, width = 7)
+      height = 7, width = 5)
   
-  hist_plot <- ggplot(histologies_df, aes(fill=plot_group, x= factor(cluster))) +
-                geom_bar(stat="count", position="stack") + 
-                xlab("Cluster") + ylab("Frequency") +
+  hist_plot <- ggplot(histologies_df, aes(fill=plot_group, x=cluster_label)) +
+                geom_bar(position="fill") + 
+                xlab("Cluster") + ylab("Fraction") +
                 scale_fill_manual("Histology", values = cols) + 
-                theme_Publication()
+                theme_Publication() +
+                theme(legend.position = "none",
+                  axis.text.x = element_text(angle = 45, hjust = 1))
   
   print(hist_plot)
   
