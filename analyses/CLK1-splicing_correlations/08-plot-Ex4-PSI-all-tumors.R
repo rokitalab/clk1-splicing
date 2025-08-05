@@ -47,6 +47,9 @@ clin_file  <- file.path(hist_dir,"histologies-plot-group.tsv")
 expr_file <- file.path(data_dir,"gene-expression-rsem-tpm-collapsed.rds")
 gtex_rmats <- file.path(data_dir,"gtex-brain-under40-harmonized-splice-events-rmats.SE.tsv.gz")
 pedr_rmats <- file.path(data_dir,"GSE243682-normal-splice-events-rmats.tsv.gz")
+cluster_file <- file.path(root_dir, "analyses",
+                          "sample-psi-clustering", "results",
+                          "sample-cluster-metadata-top-5000-events-stranded.tsv")
 
 ## output files for final plots
 hgg_plot_file <- file.path(plots_dir,"all_hgg_CLK1_exon4_inclusion_fraction_hgg_stacked.pdf")
@@ -81,12 +84,16 @@ add_TPM_values <- function(df, matrix) {
   return(df)
 }
 
-## load histologies info for HGG subty  
+## load histologies info
 histologies_df  <-  read_tsv(clin_file) %>%
   filter(cohort == "PBTA",
          experimental_strategy == "RNA-Seq",
          RNA_library=='stranded',
          Kids_First_Biospecimen_ID %in% indep_df$Kids_First_Biospecimen_ID)
+
+## load in clusters
+cluster_df <- read_tsv(cluster_file) %>%
+  rename(Kids_First_Biospecimen_ID = sample_id)
 
 ## load rmats input for CLK1
 clk1_rmats <- fread(rmats_file) %>%
