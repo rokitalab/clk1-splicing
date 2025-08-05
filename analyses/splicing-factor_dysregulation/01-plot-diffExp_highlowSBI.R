@@ -152,11 +152,12 @@ for (each in names) {
     tibble::add_column(gene=count_data_sf$gene) 
   
   volc_hgg_plot <- EnhancedVolcano(res,
-                                   lab = gsub("ENSG[1234567890]+[.][1234567890]+_", "",count_data_sf$gene), ## remove ensembleid portion
+                                   lab = paste0("italic('", gsub("ENSG[0-9]+\\.[0-9]+_", "", count_data_sf$gene), "')"), ## remove ensembleid portion
                                    x = 'log2FoldChange',
                                    y = 'padj',
                                    #xlim = c(-4, 6.5),
                                    title = 'High vs Low SBI',
+                                   parseLabels = TRUE,
                                    subtitle = NULL,
                                    caption = NULL,
                                    pCutoff = 0.005,
@@ -189,11 +190,12 @@ for (each in names) {
     geom_bar(stat="identity", colour="black", fill="red") + 
     theme_Publication() + 
     xlab("Splicing Factor") + ylab("-log2 (padj)") +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+    theme(axis.text.x = element_text(angle = 90, hjust = 1),
+          axis.text.y = element_text(face = "italic")) + 
     # flip axes and round ylim up to the next 10
     coord_flip(ylim = c(0, ceiling((max(-log2(plot_df$padj))+2)/10)*10)) + 
     geom_text(aes(label =paste(Direction),ymax=0), 
-              hjust = -0.5, size = 4)
+              hjust = -0.5, size = 4) 
   
   # Save plots as PDF
   pdf(file.path(plots_dir, paste0(each,"-",volc_file)), 
