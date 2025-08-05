@@ -90,7 +90,7 @@ histologies_df  <-  read_tsv(clin_file) %>%
 
 ## load rmats input for CLK1
 clk1_rmats <- fread(rmats_file) %>%
-  # filter for CLK1 and exon 4, HGGs
+  # filter for CLK1 and exon 4
   dplyr::filter(
     geneSymbol=="CLK1",
     exonStart_0base=="200860124", 
@@ -99,16 +99,24 @@ clk1_rmats <- fread(rmats_file) %>%
   dplyr::rename(Kids_First_Biospecimen_ID=sample_id) %>% 
   dplyr::select(Kids_First_Biospecimen_ID,IncLevel1) %>%
   # Join rmats data with clinical data
-  inner_join(histologies_df, by='Kids_First_Biospecimen_ID') %>%
   mutate(gene_symbol="CLK1")
+
+clk1_rmats_cohort <- histologies_df %>%
+  left_join(clk1_rmats, by='Kids_First_Biospecimen_ID')
+  
+PSI_output <- clk1_rmats_cohort %>% 
+  dplyr::select(Kids_First_Biospecimen_ID, plot_group, IncLevel1) %>%
+  dplyr::rename(PSI = IncLevel1) %>%
+  dplyr::mutate(PSI = round(PSI, digits = 2))
+write_tsv(x = PSI_output, file = file.path(results_dir,"clk1-exon4-proportion.tsv"))
 
 exp <- readRDS(expr_file) %>%
   dplyr::select(any_of(histologies_df$Kids_First_Biospecimen_ID))
 
-var_exp_filt <- add_TPM_values(clk1_rmats, exp) 
+var_exp_filt <- add_TPM_values(clk1_rmats_cohort, exp) 
 
 # filter for very high expression 
-high_expression <- quantile(var_exp_filt$gene_tpm, 0.90)
+high_expression <- quantile(var_exp_filt$gene_tpm, 0.90, na.rm = TRUE)
 ex4_psi_filtered <- var_exp_filt %>%
    filter(gene_tpm > high_expression) %>%
   # Compute variance and add as a new column
