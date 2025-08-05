@@ -93,7 +93,8 @@ histologies_df  <-  read_tsv(clin_file) %>%
 
 ## load in clusters
 cluster_df <- read_tsv(cluster_file) %>%
-  rename(Kids_First_Biospecimen_ID = sample_id)
+  dplyr::rename(Kids_First_Biospecimen_ID = sample_id) %>%
+  dplyr::mutate(cluster = factor(cluster))
 
 ## load rmats input for CLK1
 clk1_rmats <- fread(rmats_file) %>%
@@ -107,6 +108,7 @@ clk1_rmats <- fread(rmats_file) %>%
   dplyr::select(Kids_First_Biospecimen_ID,IncLevel1) %>%
   # Join rmats data with clinical data
   inner_join(histologies_df, by='Kids_First_Biospecimen_ID') %>%
+  inner_join(cluster_df) %>%
   mutate(gene_symbol="CLK1")
 
 exp <- readRDS(expr_file) %>%
@@ -123,9 +125,17 @@ ex4_psi_filtered <- var_exp_filt %>%
   mutate(PSI_variance = sd(IncLevel1, na.rm = TRUE)) %>%
   filter(!is.na(PSI_variance))
 
+# define colors for histology
 hist_colors <- var_exp_filt %>%
   distinct(plot_group, plot_group_hex) %>%
   deframe()
+
+# define colors for clusters
+cluster_cols <- c("#B2DF8A","#E31A1C","#33A02C","#A6CEE3","#FB9A99","#FDBF6F",
+                  "#CAB2D6","#FFFF99","#1F78B4","#B15928","#6A3D9A","#FF7F00",
+                  "#2ef4ca","#f4cced","#bd18ea")
+names(cluster_cols) <- 1:length(cluster_cols)
+cluster_cols <- cluster_cols[1:length(cluster_cols)]
 
 # Plot with pairwise comparison results and mean labels
 boxplot_tpm<- ggplot(var_exp_filt,
@@ -140,6 +150,18 @@ boxplot_tpm<- ggplot(var_exp_filt,
   scale_fill_manual(values = hist_colors) +
   scale_x_discrete(labels = function(x) sapply(x, function(l) str_wrap(l, width = 22))) # Wrap x-axis labels 
 
+boxplot_tpm_cluster <- ggplot(var_exp_filt, aes(x = cluster, y = IncLevel1)) +
+  geom_boxplot(aes(fill = cluster, group = cluster), outlier.shape = NA, alpha = 0.5) +
+  geom_jitter(aes(fill = plot_group), width = 0.2, size = 2, shape = 21, color = "black", alpha = 0.7) + # Add actual data points
+  labs(x = "Cluster", y = "<i>CLK1</i> Exon 4 PSI", fill = "Histology") +
+  theme_Publication() + 
+  theme(legend.position = "right", 
+        axis.title.y = element_markdown()) +
+  scale_fill_manual(
+    values = c(hist_colors, cluster_cols),
+    breaks = names(hist_colors)  # ensures only plot_group shows
+  ) +
+  scale_x_discrete(labels = function(x) sapply(x, function(l) str_wrap(l, width = 22))) # Wrap x-axis labels 
 
 var_plot<- ggplot(data=ex4_psi_filtered, 
        aes(reorder(plot_group, PSI_variance),PSI_variance,  
@@ -175,6 +197,12 @@ psi_range_plot<- ggplot(data=ex4_psi_range,
 pdf(file.path(plots_dir, "CLK1-Ex4-PSI-cohort.pdf"), 
     width = 8, height = 6)
 print(boxplot_tpm)
+dev.off()
+
+# Save plot as PDF
+pdf(file.path(plots_dir, "CLK1-Ex4-PSI-clusters.pdf"), 
+    width = 8, height = 4)
+print(boxplot_tpm_cluster)
 dev.off()
 
 pdf(file.path(plots_dir, "CLK1-Ex4-sdev-across.pdf"), 
