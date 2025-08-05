@@ -68,7 +68,7 @@ all_clk4_transcr_counts <- readRDS(expr_tpm_tumor_file) %>%
     age_years = age_at_diagnosis_days / 365,
     age_bin = cut(
       age_years,
-      breaks = c(0, 14, 18, 40),
+      breaks = c(0, 14, 18, 39),
       labels = c("[0-14]", "[15-18]", "[19-39]"),
       right = TRUE
     )
