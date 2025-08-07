@@ -13,7 +13,7 @@ suppressPackageStartupMessages({
   library("viridis")
   library("RColorBrewer")
   library("vroom")
-  library("ggtheme")
+  library("ggtext")
 })
 
 # Get `magrittr` pipe
