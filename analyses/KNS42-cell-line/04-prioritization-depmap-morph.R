@@ -40,29 +40,26 @@ source(file.path(figures_dir,"theme_for_plots.R"))
 splicing_genes <- read_lines(file.path(sf_dir, "splicing_factors.txt"))
 
 # read in genes with spliced exons annotated to functional sites
-func_sites <- read_tsv(file.path(func_dir, "kinases-functional_sites.tsv")) %>%
-  mutate(splice_gene = ifelse(gene %in% splicing_genes, "yes", "no"))
+func_sites <- read_tsv(file.path(func_dir, "splicing-factor-kinases-functional_sites.tsv"))
 
 # which genes are involved in splicing?
 func_sites %>%
-  filter(splice_gene == "yes") %>%
   pull(gene) %>%
   unique()
 
 #[1] "CLK1"  "CLK2"  "CLK3"  "CLK4"  "SRPK1"
 
 func_sites_filt <- func_sites %>%
-  select(gene, mean_dPSI, Average_TPM, splice_gene) %>%
-  group_by(gene, Average_TPM, splice_gene) %>%
+  select(gene, mean_dPSI, Average_TPM) %>%
+  group_by(gene, Average_TPM) %>%
   summarise(max_dPSI = max(mean_dPSI)) %>%
   unique() 
 
 func_sites_filt_splice <- func_sites_filt %>%
-  filter(splice_gene == "yes") %>%
   write_tsv(file.path(res_dir, "splice_genes_functional.tsv"))
   
 # explore whether any of these also overlap as dependencies
-dep <- read_csv(file.path(data_dir, "CRISPRGeneEffect.csv"))
+dep <- read_csv(file.path(input_dir, "CRISPRGeneEffect.csv"))
 models <- read_csv(file.path(input_dir, "Model.csv")) %>%
 # filter for pediatric, AYA
     filter(Age < 40,

@@ -42,6 +42,9 @@ Rscript 04-plot_splicing_across_functional_sites.R
 echo "plot splice patterns";
 Rscript --vanilla 05-plot-splice-patterns.R
 
+# save event counts for figure generation
+find results/ -type f ! -name 'line_count.txt' -exec wc -l {} + > results/line_count.txt
+
 ##rm intermediatery files
 rm results/splicing_events*.wo.txt
 rm results/*bed
