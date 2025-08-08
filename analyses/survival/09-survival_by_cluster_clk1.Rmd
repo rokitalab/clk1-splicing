@@ -61,6 +61,11 @@ kegg_scores_stranded_file <- file.path(root_dir, "analyses",
                           "gsva_output_stranded.tsv")
 
 tpm_file <- file.path(data_dir, "rna-isoform-expression-rsem-tpm.rds")
+clk1_psi_file <- file.path(root_dir, 
+                           "analyses", 
+                           "CLK1-splicing_correlations", 
+                           "results", 
+                           "clk1-exon4-proportion.tsv")
 ```
 
 Wrangle data 
@@ -71,6 +76,10 @@ metadata <- read_tsv(metadata_file)
 
 clusters <- read_tsv(cluster_file) %>%
   dplyr::rename(Kids_First_Biospecimen_ID = sample_id)
+
+clk1_psi <- read_tsv(clk1_psi_file) %>%
+  dplyr::rename(CLK1_ex4_PSI = proportion) %>%
+  select(-plot_group)
 
 gsva_scores <- read_tsv(kegg_scores_stranded_file) %>%
   dplyr::filter(geneset == "KEGG_SPLICEOSOME") %>%
@@ -89,14 +98,15 @@ all_clk4_transcr_counts <- readRDS(tpm_file) %>%
   summarise(across(starts_with("BS"), sum, na.rm = TRUE)) %>%
   pivot_longer(cols = -transcript_id, names_to = "Kids_First_Biospecimen_ID", values_to = "CLK1_Ex4_TPM") %>%
   filter(transcript_id == "Exon 4") %>%
-  inner_join(clusters, by = "Kids_First_Biospecimen_ID")
+  inner_join(clusters, by = "Kids_First_Biospecimen_ID") %>%
+  left_join(clk1_psi)
 
 # how many clusters?
 n_clust <- length(unique(clusters$cluster))
 
 metadata <- metadata %>%
   right_join(all_clk4_transcr_counts %>% dplyr::select(Kids_First_Biospecimen_ID,
-                                       cluster, CLK1_Ex4_TPM)) %>%
+                                       cluster, CLK1_Ex4_TPM, CLK1_ex4_PSI)) %>%
   left_join(gsva_scores %>% dplyr::select(sample_id,
                                           spliceosome_gsva_score),
             by = c("Kids_First_Biospecimen_ID" = "sample_id")) %>% 
@@ -110,7 +120,7 @@ metadata <- metadata %>%
   dplyr::mutate(SI_SE = SI_SE * 10)
 ```
 
-Generate coxph models including extent of tumor resection, lgg group, and cluster assignment and SBI as covariates
+Generate coxph models including extent of tumor resection, lgg group, cluster assignment, SBI, and CLK1 exon 4 TPM as covariates
 
 ```{r}
 add_model_os <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
@@ -145,7 +155,7 @@ ggsave(file.path(plot_dir, "forest_add_EFS_resection_lgg_group_cluster_assignmen
        width = 10, height = 6, units = "in",
        device = "pdf")
 ```
-repeat analysis, replacing SBI with KEGG spliceosome gsva score
+repeat analysis with CLK1 exon 4 TPM alone
 
 ```{r}
 add_model_os <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
@@ -163,11 +173,69 @@ ggsave(file.path(plot_dir, "forest_add_OS_resection_lgg_group_cluster_assignment
        forest_os,
        width = 10, height = 6, units = "in",
        device = "pdf")
+
+
+add_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
+                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_days+CLK1_Ex4_TPM",
+                               file.path(results_dir, "cox_EFS_additive_terms_resection_lgg_group_cluster_CLK1_Ex4_TPM.RDS"),
+                               "multivariate",
+                               years_col = "EFS_years",
+                               status_col = "EFS_status")
+
+forest_efs <- plotForest(readRDS(file.path(results_dir, "cox_EFS_additive_terms_resection_lgg_group_cluster_CLK1_Ex4_TPM.RDS")))
+
+forest_efs
+
+ggsave(file.path(plot_dir, "forest_add_EFS_resection_lgg_group_cluster_assignment_CLK1_Ex4_TPM.pdf"),
+       forest_efs,
+       width = 10, height = 6, units = "in",
+       device = "pdf")
+
+
 ```
 
 
+repeat analysis with CLK1 exon 4 PSI
+
+```{r}
+add_model_os <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
+                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_days+CLK1_ex4_PSI",
+                               file.path(results_dir, "cox_OS_additive_terms_resection_lgg_group_cluster_CLK1_ex4_PSI.RDS"),
+                               "multivariate",
+                               years_col = "OS_years",
+                               status_col = "OS_status")
+
+forest_os <- plotForest(readRDS(file.path(results_dir, "cox_OS_additive_terms_resection_lgg_group_cluster_CLK1_ex4_PSI.RDS")))
+
+forest_os
+
+ggsave(file.path(plot_dir, "forest_add_OS_resection_lgg_group_cluster_assignment_CLK1_ex4_PSI.pdf"),
+       forest_os,
+       width = 10, height = 6, units = "in",
+       device = "pdf")
+
+add_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
+                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_days+CLK1_ex4_PSI",
+                               file.path(results_dir, "cox_EFS_additive_terms_resection_lgg_group_cluster_CLK1_ex4_PSI.RDS"),
+                               "multivariate",
+                               years_col = "EFS_years",
+                               status_col = "EFS_status")
+
+forest_efs <- plotForest(readRDS(file.path(results_dir, "cox_EFS_additive_terms_resection_lgg_group_cluster_CLK1_ex4_PSI.RDS")))
+
+forest_efs
+
+ggsave(file.path(plot_dir, "forest_add_EFS_resection_lgg_group_cluster_assignment_CLK1_ex4_PSI.pdf"),
+       forest_efs,
+       width = 10, height = 6, units = "in",
+       device = "pdf")
+```
+
+
+Interaction with GSVA, SBI, CLK1
+
 ```{r Interaction models with GSVA, SBI, CLK1}
-models <- c("spliceosome_gsva_score", "SI_SE", "CLK1_Ex4_TPM")
+models <- c("spliceosome_gsva_score", "SI_SE", "CLK1_Ex4_TPM", "CLK1_ex4_PSI")
 # by cluster
 for (each in models) {
   int_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
@@ -241,12 +309,12 @@ for (each in models2) {
   #### by spliceosome_gsva_score
   int_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
                                 terms = paste0("extent_of_tumor_resection+lgg_group+cluster+spliceosome_gsva_score*", each, "+age_at_diagnosis_days"),
-                                 file.path(results_dir, paste0("cox_EFS_interaction_terms_resection_lgg_group_cluster_spliceosome_gsva_score", each, ".RDS")),
+                                 file.path(results_dir, paste0("cox_EFS_interaction_terms_resection_lgg_group_cluster_spliceosome_gsva_score_", each, ".RDS")),
                                  "multivariate",
                                  years_col = "EFS_years",
                                  status_col = "EFS_status")
   
-  int_forest_efs <- plotForest(readRDS(file.path(results_dir, paste0("cox_EFS_interaction_terms_resection_lgg_group_cluster_spliceosome_gsva_score", each, ".RDS"))))
+  int_forest_efs <- plotForest(readRDS(file.path(results_dir, paste0("cox_EFS_interaction_terms_resection_lgg_group_cluster_spliceosome_gsva_score_", each, ".RDS"))))
   
   int_forest_efs
   
@@ -316,7 +384,8 @@ Generate KM models with `CLK1_group` as covariate
 ```{r}
 # Generate kaplan meier survival models for OS and EFS, and save outputs
 c6_si_kap_os <- survival_analysis(
-  metadata  = cluster6_df %>% dplyr::filter(!is.na(CLK1_group)),
+  metadata  = cluster6_df %>% 
+    dplyr::filter(!is.na(CLK1_group)),
   ind_var = "CLK1_group",
   test = "kap.meier",
   metadata_sample_col = "Kids_First_Biospecimen_ID",
@@ -328,7 +397,8 @@ readr::write_rds(c6_si_kap_os,
                  file.path(results_dir, "logrank_cluster6_OS_clk1_group.RDS"))
 
 c6_si_kap_efs <- survival_analysis(
-  metadata  = cluster6_df %>% dplyr::filter(!is.na(CLK1_group)),
+  metadata  = cluster6_df %>% 
+    dplyr::filter(!is.na(CLK1_group)),
   ind_var = "CLK1_group",
   test = "kap.meier",
   metadata_sample_col = "Kids_First_Biospecimen_ID",
