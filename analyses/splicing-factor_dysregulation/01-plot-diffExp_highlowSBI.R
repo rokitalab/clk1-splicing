@@ -151,8 +151,19 @@ for (each in names) {
   res <- as_tibble(res) %>% 
     tibble::add_column(gene=count_data_sf$gene) 
   
+  # Remove Ensembl IDs for matching
+  clean_gene_names <- paste0("italic(",gsub("ENSG[0-9]+\\.[0-9]+_", "", count_data_sf$gene),")")
+  
+  # Find the genes that pass your existing cutoffs
+  genes_to_label <- clean_gene_names[
+    (res$padj < 0.0000000000001 & res$log2FoldChange > 0.5) |
+      (res$padj < 0.000000001 & res$log2FoldChange < -0.5)
+  ]
+  
   volc_hgg_plot <- EnhancedVolcano(res,
-                                   lab = gsub("ENSG[1234567890]+[.][1234567890]+_", "",count_data_sf$gene), ## remove ensembleid portion
+                                   lab = clean_gene_names,
+                                   selectLab = genes_to_label,
+                                   parseLabels = TRUE,
                                    x = 'log2FoldChange',
                                    y = 'padj',
                                    #xlim = c(-4, 6.5),
@@ -160,13 +171,19 @@ for (each in names) {
                                    subtitle = NULL,
                                    caption = NULL,
                                    pCutoff = 0.005,
-                                   FCcutoff = .5,
-                                   pointSize = 4,
-                                   labSize = 5,
+                                   FCcutoff = 0.5,
                                    typeConnectors = "closed",
                                    drawConnectors = TRUE,
                                    widthConnectors = 1,
-                                   colConnectors = 'black')
+                                   colConnectors = 'black',
+                                   # key bits for overlap
+                                   max.overlaps = Inf,              # pass through to ggrepel
+                                   maxoverlapsConnectors = Inf,     # EnhancedVolcano’s connector control
+                                   # give the plot breathing room
+                                   xlim = range(res$log2FoldChange, na.rm = TRUE) + c(-0.5, 0.5),
+                                   ylim = c(0, max(-log10(res$padj), na.rm = TRUE) + 0.5),
+                                   pointSize = 3.5,
+                                   labSize = 4.5)
   
   # Attempt to override axis titles post-hoc
   volc_hgg_plot <- volc_hgg_plot + labs(x = expression(bold(Log[2] * " Fold Change")), 
@@ -189,7 +206,8 @@ for (each in names) {
     geom_bar(stat="identity", colour="black", fill="red") + 
     theme_Publication() + 
     xlab("Splicing Factor") + ylab("-log2 (padj)") +
-    theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
+    theme(axis.text.x = element_text(angle = 90, hjust = 1),
+          axis.text.y = element_text(face = "italic")) + 
     # flip axes and round ylim up to the next 10
     coord_flip(ylim = c(0, ceiling((max(-log2(plot_df$padj))+2)/10)*10)) + 
     geom_text(aes(label =paste(Direction),ymax=0), 
