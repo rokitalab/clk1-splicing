@@ -1,9 +1,9 @@
 ################################################################################
-# 09-plot-clk1-ex4-transcripts-hgg-normals 
+# 10-plot-clk1-ex4-transcripts-hgg-normals 
 # Plot CLK1 exon 4 transcript expression with normals/ctrls
 #
-# written by Ammar S Naqvi
-# Usage: Rscript 09-plot-clk1-ex4-transcripts-hgg-normals
+# written by Ammar S Naqvi, Patricia Sullivan
+# Usage: Rscript 10-plot-clk1-ex4-transcripts-hgg-normals
 ################################################################################
 
 # Load libraries
@@ -175,6 +175,8 @@ evo_devo_tpm <- readRDS(expr_evodevo_file) %>%
   select(transcript_id, Sample_ID, transcript_id, TPM) %>%
   dplyr::rename(Kids_First_Biospecimen_ID=Sample_ID) # Select necessary columns
 
+### Postnatally we sampled neonates, “infants” (6-9 months), “toddlers” (2-4 years), “school” (7-9 years), “teenagers” (13-19 years), and then adults from each decade until 63 years of age (Supplementary Tables 1–2).... ‘ya’ young adult (25-32 years) and ‘sen’ senior (58-63 years)....“yma” young middle age (39-41 years)
+### https://pmc.ncbi.nlm.nih.gov/articles/PMC6658352/#S7
 
 evodevo_histology_df <- vroom(evodevo_hist_file) 
 evodevo_clk1_transc_counts <- inner_join(evodevo_histology_df,evo_devo_tpm, by="Kids_First_Biospecimen_ID") %>%
@@ -187,9 +189,10 @@ evodevo_clk1_transc_counts <- inner_join(evodevo_histology_df,evo_devo_tpm, by="
                 "10 Week Post Conception", "11 Week Post Conception", "12 Week Post Conception",
                 "13 Week Post Conception", "16 Week Post Conception"
               ) ~ "Fetal",
-              pathology_free_text_diagnosis %in% c("Neonate", "Infant", "Toddler") ~ "Early Childhood",
-              pathology_free_text_diagnosis %in% c("School Age Child", "Adolescent") ~ "School Age",
-              pathology_free_text_diagnosis %in% c("Young Adult", "Middle Adult", "Elderly") ~ "Adult",
+              pathology_free_text_diagnosis %in% c("Neonate", "Infant", "Toddler") ~ "0-4",
+              pathology_free_text_diagnosis %in% c("School Age Child", "Adolescent") ~ "7-19",
+              pathology_free_text_diagnosis %in% c("Young Adult") ~ "25-32",
+              pathology_free_text_diagnosis %in% c("Middle Adult", "Elderly") ~ "39-63",
               TRUE ~ NA)) %>%
   dplyr::select(Kids_First_Biospecimen_ID,TPM,plot_group,group,transcript_id) 
 
@@ -262,7 +265,8 @@ transcript_expr_CLK1_combined_df <- rbind(all_clk4_transcr_counts,gtex_clk1_tran
 # Define the desired order for groups
 transcript_expr_CLK1_combined_df$plot_group <- factor(
   transcript_expr_CLK1_combined_df$plot_group,
-  levels = c("0-14", "15-18", "19-39", "Fetal", "Early Childhood", "School Age", "Adult", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79")
+ # levels = c("0-14", "15-18", "19-39", "Fetal", "Early Childhood", "School Age", "Adult", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79")
+  levels = c("0-14", "15-18", "19-39", "Fetal", "0-4", "7-19", "25-32", "39-63", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79")
 )
 
 color_pal <- c(
@@ -296,7 +300,7 @@ stat.tests <- stat.tests %>%
 tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = proportion)) +
   geom_jitter(
     aes(color = group),   # Use precomputed colors for jitter points
-    width = 0.2, size = 2) +
+    width = 0.2, size = 1.5) +
   geom_boxplot(
     aes(group = plot_group),  # Create boxplots for each group
     width = 0.6,              # Adjust the width of the boxplots
@@ -305,7 +309,6 @@ tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = pro
     alpha = 0.2,
     outlier.shape = NA) +
   labs(
-    title = "Relative <i>CLK1</i> Exon 4 Transcript Expression",
     x = "Age",
     y = "Proportion <i>CLK1</i> exon 4<br>inclusion in transcript") +
   theme_Publication() +
@@ -318,8 +321,12 @@ tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = pro
   scale_color_manual(values = color_pal) +
   facet_wrap(~group, scales = "free_x") +
   stat_pvalue_manual(stat.tests,
-                     tip.length   = 0.01)
+                     tip.length   = 0.01) + 
+  scale_y_continuous(
+                       limits = c(0.0, 1.0),
+                       breaks = seq(0.0, 1.0, by = 0.25)  # Adjust the step as needed
+                     )
 
-pdf(file.path(plots_dir,"clk1_ex4-tpm-ctrls-summary.pdf"), height = 5, width = 7)
+pdf(file.path(plots_dir,"clk1_ex4-tpm-ctrls-summary.pdf"), height = 3.5, width = 9)
 tpm_plot
 dev.off()
