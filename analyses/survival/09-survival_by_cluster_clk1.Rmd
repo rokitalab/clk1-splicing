@@ -117,14 +117,15 @@ metadata <- metadata %>%
     Histology == "Low-grade glioma" ~ "LGG",
     TRUE ~ "non-LGG"
   )) %>%
-  dplyr::mutate(SI_SE = SI_SE * 10)
+  dplyr::mutate(SBI_SE = SI_SE * 10) %>%
+  dplyr::mutate(age_at_diagnosis_years = age_at_diagnosis_days/365.25)
 ```
 
 Generate coxph models including extent of tumor resection, lgg group, cluster assignment, SBI, and CLK1 exon 4 TPM as covariates
 
 ```{r}
 add_model_os <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_days+SI_SE+CLK1_Ex4_TPM",
+                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_years+SBI_SE+CLK1_Ex4_TPM",
                                file.path(results_dir, "cox_OS_additive_terms_resection_lgg_group_cluster_SBI_CLK1_Ex4_TPM.RDS"),
                                "multivariate",
                                years_col = "OS_years",
@@ -140,7 +141,7 @@ ggsave(file.path(plot_dir, "forest_add_OS_resection_lgg_group_cluster_assignment
        device = "pdf")
 
 add_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_days+SI_SE+CLK1_Ex4_TPM",
+                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_years+SBI_SE+CLK1_Ex4_TPM",
                                file.path(results_dir, "cox_EFS_additive_terms_resection_lgg_group_cluster_SBI_CLK1_Ex4_TPM.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
@@ -159,7 +160,7 @@ repeat analysis with CLK1 exon 4 TPM alone
 
 ```{r}
 add_model_os <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_days+CLK1_Ex4_TPM",
+                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_years+CLK1_Ex4_TPM",
                                file.path(results_dir, "cox_OS_additive_terms_resection_lgg_group_cluster_CLK1_Ex4_TPM.RDS"),
                                "multivariate",
                                years_col = "OS_years",
@@ -176,7 +177,7 @@ ggsave(file.path(plot_dir, "forest_add_OS_resection_lgg_group_cluster_assignment
 
 
 add_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_days+CLK1_Ex4_TPM",
+                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_years+CLK1_Ex4_TPM",
                                file.path(results_dir, "cox_EFS_additive_terms_resection_lgg_group_cluster_CLK1_Ex4_TPM.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
@@ -199,7 +200,7 @@ repeat analysis with CLK1 exon 4 PSI
 
 ```{r}
 add_model_os <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_days+CLK1_ex4_PSI",
+                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_years+CLK1_ex4_PSI",
                                file.path(results_dir, "cox_OS_additive_terms_resection_lgg_group_cluster_CLK1_ex4_PSI.RDS"),
                                "multivariate",
                                years_col = "OS_years",
@@ -215,7 +216,7 @@ ggsave(file.path(plot_dir, "forest_add_OS_resection_lgg_group_cluster_assignment
        device = "pdf")
 
 add_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_days+CLK1_ex4_PSI",
+                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_years+CLK1_ex4_PSI",
                                file.path(results_dir, "cox_EFS_additive_terms_resection_lgg_group_cluster_CLK1_ex4_PSI.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
@@ -235,11 +236,11 @@ ggsave(file.path(plot_dir, "forest_add_EFS_resection_lgg_group_cluster_assignmen
 Interaction with GSVA, SBI, CLK1
 
 ```{r Interaction models with GSVA, SBI, CLK1}
-models <- c("spliceosome_gsva_score", "SI_SE", "CLK1_Ex4_TPM", "CLK1_ex4_PSI")
+models <- c("spliceosome_gsva_score", "SBI_SE", "CLK1_Ex4_TPM", "CLK1_ex4_PSI")
 # by cluster
 for (each in models) {
   int_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                                terms = paste0("extent_of_tumor_resection+lgg_group+cluster*", each, "+age_at_diagnosis_days"),
+                                terms = paste0("extent_of_tumor_resection+lgg_group+cluster*", each, "+age_at_diagnosis_years"),
                                  file.path(results_dir, paste0("cox_EFS_interaction_terms_resection_lgg_group_cluster_", each, ".RDS")),
                                  "multivariate",
                                  years_col = "EFS_years",
@@ -255,7 +256,7 @@ for (each in models) {
          device = "pdf")
 
   int_model_os <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                                terms = paste0("extent_of_tumor_resection+lgg_group+cluster*", each, "+age_at_diagnosis_days"),
+                                terms = paste0("extent_of_tumor_resection+lgg_group+cluster*", each, "+age_at_diagnosis_years"),
                                  file.path(results_dir, paste0("cox_OS_interaction_terms_resection_lgg_group_cluster_", each, ".RDS")),
                                  "multivariate",
                                  years_col = "OS_years",
@@ -273,7 +274,7 @@ for (each in models) {
 
 ## clk1 x age
   int_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                                terms = paste0("extent_of_tumor_resection+lgg_group+cluster+CLK1_Ex4_TPM*age_at_diagnosis_days"),
+                                terms = paste0("extent_of_tumor_resection+lgg_group+cluster+CLK1_Ex4_TPM*age_at_diagnosis_years"),
                                  file.path(results_dir, paste0("cox_EFS_interaction_terms_resection_lgg_group_cluster_CLK1_Ex4_TPM_age.RDS")),
                                  "multivariate",
                                  years_col = "EFS_years",
@@ -289,7 +290,7 @@ for (each in models) {
          device = "pdf")
 
   int_model_os <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                                terms = paste0("extent_of_tumor_resection+lgg_group+cluster+CLK1_Ex4_TPM*age_at_diagnosis_days"),
+                                terms = paste0("extent_of_tumor_resection+lgg_group+cluster+CLK1_Ex4_TPM*age_at_diagnosis_years"),
                                  file.path(results_dir, paste0("cox_OS_interaction_terms_resection_lgg_group_cluster_clk1_age.RDS")),
                                  "multivariate",
                                  years_col = "OS_years",
@@ -304,11 +305,11 @@ for (each in models) {
          width = 10, height = 6, units = "in",
          device = "pdf")
 
-models2 <- c("SI_SE", "CLK1_Ex4_TPM")
+models2 <- c("SBI_SE", "CLK1_Ex4_TPM")
 for (each in models2) {
   #### by spliceosome_gsva_score
   int_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                                terms = paste0("extent_of_tumor_resection+lgg_group+cluster+spliceosome_gsva_score*", each, "+age_at_diagnosis_days"),
+                                terms = paste0("extent_of_tumor_resection+lgg_group+cluster+spliceosome_gsva_score*", each, "+age_at_diagnosis_years"),
                                  file.path(results_dir, paste0("cox_EFS_interaction_terms_resection_lgg_group_cluster_spliceosome_gsva_score_", each, ".RDS")),
                                  "multivariate",
                                  years_col = "EFS_years",
@@ -327,7 +328,7 @@ for (each in models2) {
 
 
 add_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_days+spliceosome_gsva_score+CLK1_Ex4_TPM",
+                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_years+spliceosome_gsva_score+CLK1_Ex4_TPM",
                                file.path(results_dir, "cox_EFS_additive_terms_resection_lgg_group_cluster_spliceosome_score_CLK1_Ex4_TPM.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
@@ -344,7 +345,7 @@ ggsave(file.path(plot_dir, "forest_add_EFS_resection_lgg_group_cluster_assignmen
 
 
 add_model_os <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_days+spliceosome_gsva_score+CLK1_Ex4_TPM",
+                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_years+spliceosome_gsva_score+CLK1_Ex4_TPM",
                                file.path(results_dir, "cox_OS_additive_terms_resection_lgg_group_cluster_spliceosome_score_CLK1_Ex4_TPM.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
@@ -506,7 +507,7 @@ add_model_c6_efs <- fit_save_model(cluster6_df %>%
                                                                             c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                                                               "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
                                                                               "Other CNS embryonal tumor", "Low-grade glioma"))),
-                              terms = "extent_of_tumor_resection+age_at_diagnosis_days+Histology+CLK1_TPM_group",
+                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+Histology+CLK1_TPM_group",
                                file.path(results_dir, "cox_EFS_additive_terms_subtype_cluster_clk1_tpm_group.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
@@ -525,7 +526,7 @@ add_model_c6_os <- fit_save_model(cluster6_df %>%
                                                                             c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                                                               "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
                                                                               "Other CNS embryonal tumor", "Low-grade glioma"))),
-                              terms = "extent_of_tumor_resection+age_at_diagnosis_days+Histology+CLK1_TPM_group",
+                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+Histology+CLK1_TPM_group",
                                file.path(results_dir, "cox_OS_additive_terms_subtype_cluster_clk1_tpm_group.RDS"),
                                "multivariate",
                                years_col = "OS_years",
@@ -549,7 +550,7 @@ add_model_c6_efs <- fit_save_model(cluster6_df %>%
                                                                             c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                                                               "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
                                                                               "Other CNS embryonal tumor", "Low-grade glioma"))),
-                              terms = "extent_of_tumor_resection+age_at_diagnosis_days+Histology+CLK1_PSI_group",
+                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+Histology+CLK1_PSI_group",
                                file.path(results_dir, "cox_EFS_additive_terms_subtype_cluster_clk1_psi_group.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
@@ -568,7 +569,7 @@ add_model_c6_os <- fit_save_model(cluster6_df %>%
                                                                             c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                                                               "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
                                                                               "Other CNS embryonal tumor", "Low-grade glioma"))),
-                              terms = "extent_of_tumor_resection+age_at_diagnosis_days+Histology+CLK1_PSI_group",
+                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+Histology+CLK1_PSI_group",
                                file.path(results_dir, "cox_OS_additive_terms_subtype_cluster_clk1_psi_group.RDS"),
                                "multivariate",
                                years_col = "OS_years",
@@ -591,7 +592,7 @@ add_model_c6_efs <- fit_save_model(cluster6_df %>%
                                                                             c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                                                               "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
                                                                               "Other CNS embryonal tumor", "Low-grade glioma"))),
-                              terms = "extent_of_tumor_resection+age_at_diagnosis_days+Histology+CLK1_Ex4_TPM",
+                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+Histology+CLK1_Ex4_TPM",
                                file.path(results_dir, "cox_EFS_additive_terms_subtype_cluster_clk1_tpm.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
@@ -610,7 +611,7 @@ add_model_c6_os <- fit_save_model(cluster6_df %>%
                                                                             c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                                                               "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
                                                                               "Other CNS embryonal tumor", "Low-grade glioma"))),
-                              terms = "extent_of_tumor_resection+age_at_diagnosis_days+Histology+CLK1_Ex4_TPM",
+                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+Histology+CLK1_Ex4_TPM",
                                file.path(results_dir, "cox_OS_additive_terms_subtype_cluster_clk1_tpm.RDS"),
                                "multivariate",
                                years_col = "OS_years",
@@ -633,7 +634,7 @@ add_model_c6_efs <- fit_save_model(cluster6_df %>%
                                                                             c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                                                               "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
                                                                               "Other CNS embryonal tumor", "Low-grade glioma"))),
-                              terms = "extent_of_tumor_resection+age_at_diagnosis_days+Histology+CLK1_ex4_PSI",
+                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+Histology+CLK1_ex4_PSI",
                                file.path(results_dir, "cox_EFS_additive_terms_subtype_cluster_clk1_psi.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
@@ -652,7 +653,7 @@ add_model_c6_os <- fit_save_model(cluster6_df %>%
                                                                             c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                                                               "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
                                                                               "Other CNS embryonal tumor", "Low-grade glioma"))),
-                              terms = "extent_of_tumor_resection+age_at_diagnosis_days+Histology+CLK1_ex4_PSI",
+                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+Histology+CLK1_ex4_PSI",
                                file.path(results_dir, "cox_OS_additive_terms_subtype_cluster_clk1_psi.RDS"),
                                "multivariate",
                                years_col = "OS_years",
