@@ -152,7 +152,7 @@ for (each in names) {
     tibble::add_column(gene=count_data_sf$gene) 
   
   # Remove Ensembl IDs for matching
-  clean_gene_names <- paste0("italic(",gsub("ENSG[0-9]+\\.[0-9]+_", "", count_data_sf$gene),")")
+  clean_gene_names <- gsub("ENSG[0-9]+\\.[0-9]+_", "", count_data_sf$gene)
   
   # Find the genes that pass your existing cutoffs
   genes_to_label <- clean_gene_names[
@@ -163,7 +163,6 @@ for (each in names) {
   volc_hgg_plot <- EnhancedVolcano(res,
                                    lab = clean_gene_names,
                                    selectLab = genes_to_label,
-                                   parseLabels = TRUE,
                                    x = 'log2FoldChange',
                                    y = 'padj',
                                    #xlim = c(-4, 6.5),
