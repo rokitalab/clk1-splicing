@@ -1,8 +1,8 @@
 ################################################################################
-# 05-plot_diff-splice-events.R
+# 04-plot_diff-splice-events.R
 # written byAmmar Naqvi and Jo Lynne Rokita
 #
-# usage: Rscript 03-plot_diff-splice-events.R
+# usage: Rscript 04-plot_diff-splice-events.R
 ################################################################################
 
 suppressPackageStartupMessages({
@@ -63,9 +63,10 @@ dpsi_unip_skp <- vroom(c(file_psi_SE_func, file_psi_RI_func, file_psi_A5SS_func,
   mutate(Preference='Skipping')
 
 psi_comb <- rbind(dpsi_unip_incl,dpsi_unip_skp) %>% 
-  mutate(Uniprot = case_when(Uniprot == 'DisulfBond' ~ "Disulfide Bond",
-                             Uniprot == 'LocSignal' ~ "Localization Signal",
-                             Uniprot == 'Mod' ~ 'Modification',
+  mutate(Uniprot = case_when(Uniprot == 'disulfid' ~ 'Disulfide Bond',
+                             Uniprot == 'domain' ~ 'Protein Domain',
+                             Uniprot == 'mod_res' ~ 'Modification',
+                             Uniprot == 'sigmal' ~ 'Signal',
                              .default = Uniprot),
          Uniprot_wrapped = stringr::str_wrap(Uniprot, width = 10)
   )
@@ -129,7 +130,7 @@ plot_barplot_family <- ggplot(psi_comb_goi_subset_for_plot, aes(x = classificati
             hjust = -0.5, size = 3.5) +
   theme_Publication() +
   theme(legend.position = "top", legend.direction = "horizontal") +
-  ylim(c(0,85))+
+  ylim(c(0,100))+
   coord_flip() 
 
 # Save plot as PDF
