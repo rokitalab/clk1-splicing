@@ -107,6 +107,7 @@ dev.off()
 psi_comb_goi <- psi_comb %>% 
   inner_join(oncokb_gene_ref, by="gene") %>% 
   unique() %>%
+  select(-Uniprot_wrapped) %>%
 # write for supplemental 
 write_tsv(file.path(results_dir, "differential_splice_by_goi_category.tsv"))
 

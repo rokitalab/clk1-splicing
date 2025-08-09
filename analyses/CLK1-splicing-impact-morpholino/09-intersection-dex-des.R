@@ -80,7 +80,9 @@ intersect <- psi_comb %>%
   inner_join(dex_comb, by='geneSymbol', relationship = "many-to-many",
              suffix = c("_psi", "_de")) %>%
   dplyr::select(geneSymbol, Preference_psi, Preference_de) %>%
-  unique
+  unique()
+
+write_lines(sort(unique(intersect$geneSymbol)), file.path(results_dir, "de_ds_genes.txt"))
 
 total_events <- psi_comb %>%
   full_join(dex_comb, by='geneSymbol', relationship = "many-to-many",
