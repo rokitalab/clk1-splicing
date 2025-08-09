@@ -1,31 +1,19 @@
 sample_id	geneset	gsva_score
-CTRL1	DNA Repair all genes	0.3207546367917329
-CTRL2	DNA Repair all genes	0.1386380600411452
-CTRL3	DNA Repair all genes	-0.008444092183879232
-Treated1	DNA Repair all genes	-0.3217238528317468
-Treated2	DNA Repair all genes	-0.039456570336950936
-Treated3	DNA Repair all genes	-0.3015572354581052
-CTRL1	Homologous Recombination	0.6444608023555395
-CTRL2	Homologous Recombination	0.4258146943651689
-CTRL3	Homologous Recombination	0.2590525559044987
-Treated1	Homologous Recombination	-0.6862101313320857
-Treated2	Homologous Recombination	-0.13197998625009466
-Treated3	Homologous Recombination	-0.4469431497295249
-CTRL1	Mismatch Repair	-0.7600000000000013
-CTRL2	Mismatch Repair	-0.6160000000000012
-CTRL3	Mismatch Repair	-0.34174011299435103
-Treated1	Mismatch Repair	0.5199999999999996
-Treated2	Mismatch Repair	0.7497931034482758
-Treated3	Mismatch Repair	0.7759999999999998
-CTRL1	Nucleotide Excision Repair	0.5918443002780353
-CTRL2	Nucleotide Excision Repair	0.63855421686747
-CTRL3	Nucleotide Excision Repair	-0.39751237961555097
-Treated1	Nucleotide Excision Repair	-0.5593897328444237
-Treated2	Nucleotide Excision Repair	-0.2594515995014522
-Treated3	Nucleotide Excision Repair	-0.5184965212964566
-CTRL1	Non-homologous End Joining	0.6559999999999997
-CTRL2	Non-homologous End Joining	-0.10800000000000082
-CTRL3	Non-homologous End Joining	0.5759999999999996
-Treated1	Non-homologous End Joining	-0.731166666666668
-Treated2	Non-homologous End Joining	-0.3336190476190488
-Treated3	Non-homologous End Joining	-0.4880000000000011
+CTRL1	DNA Repair all genes	0.24698093990979123
+CTRL2	DNA Repair all genes	-0.10074704295497028
+CTRL3	DNA Repair all genes	0.19411491815229584
+Treated1	DNA Repair all genes	-0.27004219409282737
+Treated2	DNA Repair all genes	0.24367088607594917
+Treated3	DNA Repair all genes	-0.31139240506329147
+CTRL1	Homologous Recombination	-0.182926829268293
+CTRL2	Homologous Recombination	0.08786741713570939
+CTRL3	Homologous Recombination	0.010298102981029456
+Treated1	Homologous Recombination	-0.3641489640702862
+Treated2	Homologous Recombination	0.2189514998598261
+Treated3	Homologous Recombination	0.07825203252032464
+CTRL1	Non-homologous End Joining	0.726190476190476
+CTRL2	Non-homologous End Joining	-0.13095238095238138
+CTRL3	Non-homologous End Joining	0.5833333333333333
+Treated1	Non-homologous End Joining	-0.833333333333331
+Treated2	Non-homologous End Joining	-0.17741935483871096
+Treated3	Non-homologous End Joining	-0.5595238095238089

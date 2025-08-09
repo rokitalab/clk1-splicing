@@ -45,6 +45,7 @@ func_sites_SE_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-mo
 func_sites_A5SS_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","splicing_events.morpho.A5SS.intersectUnip.ggplot.txt")
 func_sites_A3SS_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","splicing_events.morpho.A3SS.intersectUnip.ggplot.txt")
 func_sites_RI_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","splicing_events.morpho.RI.intersectUnip.ggplot.txt")
+de_ds_genes_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","de_ds_genes.txt")
 
 cluster_cor_file <- file.path(root_dir, "analyses/splicing-factor_dysregulation/results/se-sbi-sf-expr-correlations.tsv")
 
@@ -268,7 +269,7 @@ ds_events_SE_df <- vroom(func_sites_SE_morpho_tsv_file)
 ds_events_A5SS_df <- vroom(func_sites_A5SS_morpho_tsv_file)
 ds_events_A3SS_df <- vroom(func_sites_A3SS_morpho_tsv_file)
 ds_events_RI_df <- vroom(func_sites_RI_morpho_tsv_file)
-cancer_genes_func_df <- vroom(func_sites_goi_file)
+de_ds_genes_file_df <- read_lines(de_ds_genes_file)
 
 primers_df <- vroom(primers_file, delim = "\t")
 
@@ -283,7 +284,7 @@ list_s6_table <- list(deseq2_morp = deseq2_morpholino_df,
                       ds_A5SS = ds_events_A5SS_df,
                       ds_A3SS = ds_events_A3SS_df,
                       ds_RI = ds_events_RI_df,
-                      ds_cancer_genes = cancer_genes_func_df,
+                      de_ds_genes = de_ds_genes_file_df,
                       primers = primers_df,
                       intersection_de_ds_crispr = ds_de_crispr_df,
                       consensus_targets = consensus_targets_df)

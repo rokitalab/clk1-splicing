@@ -57,8 +57,9 @@ events_func_df  <-  vroom(events_func_file, comment = "#", delim="\t") %>%
 
 ## run enrichR to compute and identify significant over-repr pathways
 ora_results <- enricher(
-  gene = events_func_df$geneSymbol, # A vector of your genes of interest
-  pvalueCutoff = 1, 
+  gene = events_func_df$geneSymbol,
+  pvalueCutoff = 0.05,
+  qvalueCutoff = 0.1,
   pAdjustMethod = "BH", 
   TERM2GENE = dplyr::select(
     pathway_df,
@@ -86,8 +87,8 @@ enrich_plot_func <- enrichplot::dotplot(ora_results,
 
 ggplot2::ggsave(ora_dotplot_func_path,
                 plot=enrich_plot_func,
-                width=7.5,
-                height=3,
+                width=8,
+                height=4,
                 device="pdf",
                 dpi=300)
 
