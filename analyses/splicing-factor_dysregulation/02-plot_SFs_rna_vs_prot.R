@@ -35,6 +35,11 @@ if(!dir.exists(plots_dir)){
   dir.create(plots_dir, recursive=TRUE)
 }
 
+## theme for all plots
+# source function for theme for plots survival
+figures_dir <- file.path(root_dir, "figures")
+source(file.path(figures_dir, "theme_for_plots.R"))
+
 # get GSVA scores
 gsva_file <- file.path(root_dir, "analyses", 
                        "sample-psi-clustering", "results", 
@@ -57,6 +62,37 @@ hist_df <- read_tsv(cluster_file) %>%
   select(Kids_First_Biospecimen_ID, cluster, GSVA) %>%
   inner_join(read_tsv(hist_file))
 
+# histology colors
+hist_col <- list("Histology" = 
+                   c("Ependymoma" =                       "#2200ff",       
+                     "Atypical Teratoid Rhabdoid Tumor" = "#4d0d85",       
+                     "Other high-grade glioma" =          "#ffccf5",       
+                     "Low-grade glioma" =                 "#8f8fbf",       
+                     "Meningioma" =                       "#2db398",       
+                     "DIPG or DMG" =                      "#ff40d9",       
+                     "Medulloblastoma" =                  "#a340ff",       
+                     "Other tumor" =                      '#b5b5b5',       
+                     "Mesenchymal tumor" =                "#7fbf00",       
+                     "Craniopharyngioma" =                "#b2502d",       
+                     "Mixed neuronal-glial tumor" =       "#685815",       
+                     "Non-neoplastic tumor" =             "#FFF5EB",       
+                     "Choroid plexus tumor" =             "#00441B",       
+                     "Schwannoma" =                       "#ab7200",       
+                     "Neurofibroma plexiform" =           "#e6ac39",       
+                     "Other CNS embryonal tumor" =        "#b08ccf",       
+                     "Germ cell tumor" =                  "#0074d9"),
+                 "Cluster" = c("1" = "#B2DF8A",
+                               "2" = "#E31A1C",
+                               "3" = "#33A02C",
+                               "4" = "#A6CEE3",
+                               "5" = "#FB9A99",
+                               "6" = "#FDBF6F",
+                               "7" = "#CAB2D6",
+                               "8" = "#FFFF99",
+                               "9" = "#1F78B4",
+                               "10" = "#B15928",
+                               "11" = "#6A3D9A"),
+                 "GSVA" = colorRamp2(c(-1, 0, 1), c("blue", "white", "darkorange")))
 
 ## get CPTAC output table 
 cptac_output_file <- file.path(input_dir,"CPTAC3-pbt.xls") 
@@ -102,7 +138,9 @@ for (each in names) {
 
   cptac_prot <- cptac_data %>%
     dplyr::filter(Assay == "Whole Cell Proteomics")
-    
+  cptac_RNA <- cptac_data %>%
+    dplyr::filter(Assay == "RNA-Seq")
+  
   # preserve gene names for rownames
   rownames <- cptac_prot$display_name
   
@@ -136,39 +174,46 @@ for (each in names) {
     select(Histology, Cluster, GSVA) %>%
     .[colnames(mat), , drop = FALSE]
   
+  combined_prot_top <- cptac_prot %>%
+    dplyr::mutate(display_name = stringr::str_trim(display_name)) %>%
+    dplyr::select(display_name, any_of(hist_df$sample_id)) %>%
+    dplyr::rename(gene = display_name) %>%
+    tidyr::pivot_longer(-gene, names_to = "sample_id", values_to = "protein")
   
-  # histology colors
-  hist_col <- list("Histology" = 
-                c("Ependymoma" =                       "#2200ff",       
-                  "Atypical Teratoid Rhabdoid Tumor" = "#4d0d85",       
-                  "Other high-grade glioma" =          "#ffccf5",       
-                  "Low-grade glioma" =                 "#8f8fbf",       
-                  "Meningioma" =                       "#2db398",       
-                  "DIPG or DMG" =                      "#ff40d9",       
-                  "Medulloblastoma" =                  "#a340ff",       
-                  "Other tumor" =                      '#b5b5b5',       
-                  "Mesenchymal tumor" =                "#7fbf00",       
-                  "Craniopharyngioma" =                "#b2502d",       
-                  "Mixed neuronal-glial tumor" =       "#685815",       
-                  "Non-neoplastic tumor" =             "#FFF5EB",       
-                  "Choroid plexus tumor" =             "#00441B",       
-                  "Schwannoma" =                       "#ab7200",       
-                  "Neurofibroma plexiform" =           "#e6ac39",       
-                  "Other CNS embryonal tumor" =        "#b08ccf",       
-                  "Germ cell tumor" =                  "#0074d9"),
-                "Cluster" = c("1" = "#B2DF8A",
-                              "2" = "#E31A1C",
-                              "3" = "#33A02C",
-                              "4" = "#A6CEE3",
-                              "5" = "#FB9A99",
-                              "6" = "#FDBF6F",
-                              "7" = "#CAB2D6",
-                              "8" = "#FFFF99",
-                              "9" = "#1F78B4",
-                              "10" = "#B15928",
-                              "11" = "#6A3D9A"),
-                "GSVA" = colorRamp2(c(-1, 0, 1), c("blue", "white", "darkorange")))
-column_anno = columnAnnotation(df = hist_data,
+  # average protein score
+  prot_scores <- combined_prot_top %>%
+    dplyr::group_by(sample_id) %>%
+    dplyr::summarise(protein_score = mean(as.numeric(protein), na.rm = TRUE), .groups = "drop")
+  
+  # get GSVA scores from hist_df
+  gsva_scores <- hist_df %>%
+    dplyr::select(sample_id, GSVA, plot_group)
+  
+  # join and compute correlation
+  gsva_prot <- prot_scores %>%
+    dplyr::inner_join(gsva_scores, by = "sample_id")
+  
+  # plot GSVA vs protein scores
+  p_gsva_prot <- ggplot(gsva_prot, aes(x = GSVA, y = protein_score)) +
+    geom_point(aes(color = plot_group),
+               size = 2, alpha = 0.8) +
+    stat_smooth(method = "lm", formula = y ~ x, colour = "red", fill = "pink", linetype = "dashed") +
+    ggpubr::stat_cor(method = "pearson",
+                     label.x = min(gsva_prot$GSVA, na.rm = TRUE),
+                     label.y = max(gsva_prot$protein_score, na.rm = TRUE),
+                     size = 5) +
+    labs(x = "KEGG Spliceosome GSVA score",
+         y = "Mean protein score",
+         color = "Histology") +
+    theme_Publication() +
+    scale_color_manual(values = hist_col$Histology)
+  
+  ggsave(file.path(plots_dir, paste0(each, "_GSVA_vs_protein.pdf")),
+         p_gsva_prot, width = 8, height = 5)
+  
+
+  
+  column_anno = columnAnnotation(df = hist_data,
                                  col = hist_col,
                                  show_legend = TRUE, 
                                  show_annotation_name = TRUE,
@@ -204,9 +249,6 @@ column_anno = columnAnnotation(df = hist_data,
   
   
   # Make correpsonding RNA heatmap
-  cptac_RNA <- cptac_data %>%
-    dplyr::filter(Assay == "RNA-Seq")
-  
   # preserve gene names for rownames
   rownames <- cptac_RNA$display_name
   
