@@ -46,12 +46,12 @@ LRP1B:140993994-140994135	0.103	Disulfide Bond	SE	LRP1B	Inclusion	Tumor Suppress
 NOTCH3:15184294-15184450	0.155	Disulfide Bond	SE	NOTCH3	Inclusion	Both
 PKD1:2116832-2117016	0.162	Disulfide Bond	SE	PKD1	Inclusion	Tumor Suppressor
 PKD1:2116832-2117053	0.148	Disulfide Bond	SE	PKD1	Inclusion	Tumor Suppressor
-DIABLO:122224644-122224748	0.135	signal	SE	DIABLO	Inclusion	Tumor Suppressor
-ECSIT:11519074-11519193	0.174	signal	SE	ECSIT	Inclusion	Oncogene
-ECSIT:11519074-11519193	0.23	signal	SE	ECSIT	Inclusion	Oncogene
-SDHC:161323613-161323670	0.43	signal	SE	SDHC	Inclusion	Tumor Suppressor
-SDHC:161326650-161326768	0.414	signal	SE	SDHC	Inclusion	Tumor Suppressor
-SDHC:161328395-161328497	0.206	signal	SE	SDHC	Inclusion	Tumor Suppressor
+DIABLO:122224644-122224748	0.135	Signal	SE	DIABLO	Inclusion	Tumor Suppressor
+ECSIT:11519074-11519193	0.174	Signal	SE	ECSIT	Inclusion	Oncogene
+ECSIT:11519074-11519193	0.23	Signal	SE	ECSIT	Inclusion	Oncogene
+SDHC:161323613-161323670	0.43	Signal	SE	SDHC	Inclusion	Tumor Suppressor
+SDHC:161326650-161326768	0.414	Signal	SE	SDHC	Inclusion	Tumor Suppressor
+SDHC:161328395-161328497	0.206	Signal	SE	SDHC	Inclusion	Tumor Suppressor
 ABHD14A-ACY1:51978258-51978374	0.223	Protein Domain	SE	ACY1	Inclusion	Tumor Suppressor
 ABHD14A-ACY1:51978258-51978374	0.319	Protein Domain	SE	ACY1	Inclusion	Tumor Suppressor
 ABI2:203376056-203376132	0.198	Protein Domain	SE	ABI2	Inclusion	Tumor Suppressor
@@ -162,7 +162,7 @@ SMARCE1:40631591-40636102	0.784	Modification	RI	SMARCE1	Inclusion	Both
 TCF3:1615284-1615821	0.129	Modification	RI	TCF3	Inclusion	Tumor Suppressor
 TCF3:1615284-1615821	0.297	Modification	RI	TCF3	Inclusion	Tumor Suppressor
 TSC2:2081594-2082504	0.23	Modification	RI	TSC2	Inclusion	Tumor Suppressor
-HSP90B1:103931520-103932418	0.128	signal	RI	HSP90B1	Inclusion	Tumor Suppressor
+HSP90B1:103931520-103932418	0.128	Signal	RI	HSP90B1	Inclusion	Tumor Suppressor
 AKR1B1:134447297-134448061	0.194	Protein Domain	RI	AKR1B1	Inclusion	Tumor Suppressor
 ATF3:212619045-212619555	0.509	Protein Domain	RI	ATF3	Inclusion	Tumor Suppressor
 CIITA:10906498-10909187	0.23	Protein Domain	RI	CIITA	Inclusion	Tumor Suppressor
@@ -244,8 +244,8 @@ FGFR2:121565437-121565704	0.169	Disulfide Bond	SE	FGFR2	Skipping	Oncogene
 NOTCH2:120005328-120005588	0.38	Disulfide Bond	SE	NOTCH2	Skipping	Both
 TNFRSF10B:23043137-23043243	0.135	Disulfide Bond	SE	TNFRSF10B	Skipping	Tumor Suppressor
 TTYH1:54430549-54430605	0.268	Disulfide Bond	SE	TTYH1	Skipping	Oncogene
-SMARCA2:2159813-2159909	0.158	signal	SE	SMARCA2	Skipping	Tumor Suppressor
-TNFRSF10B:23043137-23043243	0.135	signal	SE	TNFRSF10B	Skipping	Tumor Suppressor
+SMARCA2:2159813-2159909	0.158	Signal	SE	SMARCA2	Skipping	Tumor Suppressor
+TNFRSF10B:23043137-23043243	0.135	Signal	SE	TNFRSF10B	Skipping	Tumor Suppressor
 ABRAXAS1:83470202-83470396	0.112	Protein Domain	SE	ABRAXAS1	Skipping	Tumor Suppressor
 ABRAXAS1:83472221-83472288	0.495	Protein Domain	SE	ABRAXAS1	Skipping	Tumor Suppressor
 ADARB1:45184473-45184593	0.137	Protein Domain	SE	ADARB1	Skipping	Tumor Suppressor
