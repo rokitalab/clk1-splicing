@@ -23,4 +23,4 @@ Rscript --vanilla 03-plot-histology-distr-across-clusters.R
 Rscript --vanilla 04-diff_pathways_per_cluster.R
 
 # collate spliceosome GSVA data
-bash 05-generate-spliceosome-summary-file.sh
+bash 05-generate-gsva-summary-file.sh

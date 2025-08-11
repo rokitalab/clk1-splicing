@@ -18,7 +18,9 @@ Rscript --vanilla 01-plot-diffExp_highlowSBI.R
 Rscript --vanilla 02-plot_SFs_rna_vs_prot.R
 
 ## plot boxplot of CLK1 family expression
-Rscript --vanilla 03-plot_CLK_fam_expression.R
+# Rscript --vanilla 03-plot_CLK_fam_expression.R
 
 ## plot SBI vs SF expression
 Rscript --vanilla 04-plot_sbi_vs_splicing_factor_expr.R
+
+rm Rplots.pdf

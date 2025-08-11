@@ -38,3 +38,7 @@ Rscript --vanilla 06-plot-gsva-score-vs-sbi.R
 ## plot SBI and histology
 echo "plotting SBI high/low with histologies"
 Rscript --vanilla 07-plot-sbi-high-low.R 
+
+## plot SBI and cluster
+echo "plotting SBI with cluster"
+Rscript --vanilla 08-plot-sbi-clusters.R 
