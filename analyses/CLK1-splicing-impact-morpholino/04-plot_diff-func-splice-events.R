@@ -66,7 +66,7 @@ psi_comb <- rbind(dpsi_unip_incl,dpsi_unip_skp) %>%
   mutate(Uniprot = case_when(Uniprot == 'disulfid' ~ 'Disulfide Bond',
                              Uniprot == 'domain' ~ 'Protein Domain',
                              Uniprot == 'mod_res' ~ 'Modification',
-                             Uniprot == 'sigmal' ~ 'Signal',
+                             Uniprot == 'signal' ~ 'Signal',
                              .default = Uniprot),
          Uniprot_wrapped = stringr::str_wrap(Uniprot, width = 10)
   )
