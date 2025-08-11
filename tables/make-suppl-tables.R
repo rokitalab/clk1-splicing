@@ -205,7 +205,7 @@ deseq_df <- vroom(deseq2_sf_file) %>%
 # Combine and output
 list_s3_table <- list(A_kegg_spliceosome = kegg_list, 
                       B_hugo_spliceosome = hugo_list,
-                      G_sf_genes = sf_list,
+                      C_sf_genes = sf_list,
                       E_hugo_mutations = hugo_maf,
                       F_sf_mutations = sf_maf,
                       G_high_v_low_sbi_deseq2 = deseq_df)
