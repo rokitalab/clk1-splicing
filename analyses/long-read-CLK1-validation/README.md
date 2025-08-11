@@ -38,6 +38,6 @@ KNS42.CLK1.aln
 │   ├── KNS42.CLK1.processed.txt
 │   └── ont_vs_rmats.ggplot.tsv
 ├── plots
-│   └── isoform-stacked-barplot.pdf
+│   └── isoform-barplot.pdf
 └── run_module.sh
 ```

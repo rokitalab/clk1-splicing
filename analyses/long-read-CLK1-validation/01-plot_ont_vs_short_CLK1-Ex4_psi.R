@@ -1,7 +1,7 @@
 ################################################################################
 # 01-plot_ont_vs_short_CLK1-Ex4_psi.R
 # Plotting script that takes in Exon 4 PSI from short vs ONT reads
-# written by Ammar Naqvi
+# written by Ammar Naqvi, Patricia Sullivan
 #
 # usage: Rscript 01-plot_ont_vs_short_CLK1-Ex4_psi.R
 ################################################################################
@@ -13,6 +13,7 @@ suppressPackageStartupMessages({
   library("viridis")
   library("RColorBrewer")
   library("vroom")
+  library("ggtext")
 })
 
 # Get `magrittr` pipe
@@ -36,7 +37,7 @@ figures_dir <- file.path(root_dir, "figures")
 source(file.path(figures_dir, "theme_for_plots.R"))
 
 ## output plot path
-file_barplot = file.path(plots_dir,"isoform-stacked-barplot.pdf")
+file_barplot = file.path(plots_dir,"isoform-barplot.pdf")
 
 ## retrive stringtie2 results for each cell line
 cl_7316_1763_file = file.path(input_dir,"7316_1763.CLK1.processed.txt")
@@ -140,21 +141,22 @@ cl_KNS42_df <- vroom(cl_KNS42_file,comment = "#",
 cell_lines_df <- rbind(cl_KNS42_df,cl_7316_1769_df,cl_7316_1763_df)
 
 ## make plot
-stacked_barplot <- ggplot(cell_lines_df, aes(fill=Isoform, y=PSI, x=type)) + 
-  geom_bar(position="stack", stat="identity") +
-  scale_fill_manual(values = c("#FFC20A", "#0C7BDC")) +
+barplot <- ggplot(cell_lines_df %>% dplyr::filter(Isoform == "Inclusion"),
+  aes(fill=type, y=PSI, x=type)) + 
+  geom_bar(stat="identity", color = "black") +
+  scale_fill_manual(values = c("#0C7BDC", "#FFC20A")) +
   facet_wrap(~cell_line) +
-  xlab("RNA-Seq sequencing strategy") + 
-  ylab("Percent Spliced In (PSI)") +
+  xlab("RNA-Seq Sequencing Strategy") + 
+  ylab("<i>CLK1</i> Exon 4<br />Percent Spliced In (PSI)") +
+  ylim(c(0,100)) +
   theme_Publication() +
-  guides(fill = guide_legend(title = expression(bold(atop(bolditalic("CLK1")~"exon 4"))))) +
-  theme(legend.title = element_text(margin = margin(b = -10)),  # Adjust the bottom margin of the title
-        legend.spacing.y = unit(-0.3, "cm"))  # Adjust the vertical spacing between the title and the color boxes
-
+  theme(axis.title.y = element_markdown(),
+        legend.position = "none")  
+  
 
 pdf(file_barplot, 
-    width = 6, height = 4)
-stacked_barplot
+    width = 5, height = 4)
+barplot
 dev.off()
 
 
