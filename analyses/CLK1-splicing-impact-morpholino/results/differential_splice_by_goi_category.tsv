@@ -1,393 +1,393 @@
-SpliceID	dPSI	Uniprot	Type	gene	Preference	Uniprot_wrapped	classification
-ARID5B:62057116-62057318	0.21	mod_res	SE	ARID5B	Inclusion	mod_res	Tumor Suppressor
-CDK4:57750922-57751090	0.323	mod_res	SE	CDK4	Inclusion	mod_res	Oncogene
-DDX58:32492390-32492538	0.167	mod_res	SE	DDX58	Inclusion	mod_res	Tumor Suppressor
-DNAJC11:6652828-6652951	0.121	mod_res	SE	DNAJC11	Inclusion	mod_res	Tumor Suppressor
-DNAJC11:6652828-6653387	0.157	mod_res	SE	DNAJC11	Inclusion	mod_res	Tumor Suppressor
-DNMT1:10180777-10180885	0.207	mod_res	SE	DNMT1	Inclusion	mod_res	Both
-EWSR1:29288605-29288755	0.12	mod_res	SE	EWSR1	Inclusion	mod_res	Oncogene
-IKBKE:206493265-206493378	0.161	mod_res	SE	IKBKE	Inclusion	mod_res	Oncogene
-KAT7:49796749-49796926	0.102	mod_res	SE	KAT7	Inclusion	mod_res	Oncogene
-MAP4K4:101860824-101860986	0.204	mod_res	SE	MAP4K4	Inclusion	mod_res	Oncogene
-MGA:41762128-41762362	0.105	mod_res	SE	MGA	Inclusion	mod_res	Tumor Suppressor
-MIDEAS:73721296-73721509	0.117	mod_res	SE	MIDEAS	Inclusion	mod_res	Tumor Suppressor
-MRE11:94492781-94492897	0.371	mod_res	SE	MRE11	Inclusion	mod_res	Tumor Suppressor
-MRE11:94492781-94492906	0.354	mod_res	SE	MRE11	Inclusion	mod_res	Tumor Suppressor
-NFATC2:51523080-51523596	0.189	mod_res	SE	NFATC2	Inclusion	mod_res	Tumor Suppressor
-NFATC2:51523080-51524110	0.382	mod_res	SE	NFATC2	Inclusion	mod_res	Tumor Suppressor
-NUP214:131189052-131189131	0.308	mod_res	SE	NUP214	Inclusion	mod_res	Oncogene
-PAK1:77379893-77379994	0.128	mod_res	SE	PAK1	Inclusion	mod_res	Oncogene
-PBRM1:52615350-52615456	0.203	mod_res	SE	PBRM1	Inclusion	mod_res	Tumor Suppressor
-PHACTR4:28465684-28465849	0.153	mod_res	SE	PHACTR4	Inclusion	mod_res	Tumor Suppressor
-PLD1:171687370-171687584	0.467	mod_res	SE	PLD1	Inclusion	mod_res	Tumor Suppressor
-PLD1:171687370-171687584	0.853	mod_res	SE	PLD1	Inclusion	mod_res	Tumor Suppressor
-PML:74033155-74033422	0.164	mod_res	SE	PML	Inclusion	mod_res	Tumor Suppressor
-PTPN13:86758259-86758349	0.106	mod_res	SE	PTPN13	Inclusion	mod_res	Tumor Suppressor
-QKI:163563419-163563719	0.279	mod_res	SE	QKI	Inclusion	mod_res	Tumor Suppressor
-RAF1:12586274-12587637	0.157	mod_res	SE	RAF1	Inclusion	mod_res	Oncogene
-RAF1:12587590-12587637	0.127	mod_res	SE	RAF1	Inclusion	mod_res	Oncogene
-RASA1:87374162-87374320	0.129	mod_res	SE	RASA1	Inclusion	mod_res	Tumor Suppressor
-SP100:230462434-230462518	0.292	mod_res	SE	SP100	Inclusion	mod_res	Tumor Suppressor
-SPEN:15872815-15873136	0.111	mod_res	SE	SPEN	Inclusion	mod_res	Tumor Suppressor
-TCF4:55461018-55461115	0.115	mod_res	SE	TCF4	Inclusion	mod_res	Tumor Suppressor
-TCF4:55461018-55461115	0.253	mod_res	SE	TCF4	Inclusion	mod_res	Tumor Suppressor
-TET2:105233896-105237351	0.117	mod_res	SE	TET2	Inclusion	mod_res	Tumor Suppressor
-TP53BP1:43421024-43421174	0.258	mod_res	SE	TP53BP1	Inclusion	mod_res	Tumor Suppressor
-ACHE:100892333-100892554	0.118	disulfid	SE	ACHE	Inclusion	disulfid	Tumor Suppressor
-ACHE:100892333-100892643	0.118	disulfid	SE	ACHE	Inclusion	disulfid	Tumor Suppressor
-ACHE:100892333-100892818	0.115	disulfid	SE	ACHE	Inclusion	disulfid	Tumor Suppressor
-CD74:150403120-150403312	0.153	disulfid	SE	CD74	Inclusion	disulfid	Oncogene
-CD74:150403120-150403312	0.763	disulfid	SE	CD74	Inclusion	disulfid	Oncogene
-CD74:150403120-150404767	0.156	disulfid	SE	CD74	Inclusion	disulfid	Oncogene
-CD74:150403120-150404767	0.593	disulfid	SE	CD74	Inclusion	disulfid	Oncogene
-FGFR3:1803691-1803836	0.173	disulfid	SE	FGFR3	Inclusion	disulfid	Oncogene
-FGFR4:177090389-177090653	0.144	disulfid	SE	FGFR4	Inclusion	disulfid	Oncogene
-LRP1B:140993994-140994135	0.103	disulfid	SE	LRP1B	Inclusion	disulfid	Tumor Suppressor
-NOTCH3:15184294-15184450	0.155	disulfid	SE	NOTCH3	Inclusion	disulfid	Both
-PKD1:2116832-2117016	0.162	disulfid	SE	PKD1	Inclusion	disulfid	Tumor Suppressor
-PKD1:2116832-2117053	0.148	disulfid	SE	PKD1	Inclusion	disulfid	Tumor Suppressor
-DIABLO:122224644-122224748	0.135	signal	SE	DIABLO	Inclusion	signal	Tumor Suppressor
-ECSIT:11519074-11519193	0.174	signal	SE	ECSIT	Inclusion	signal	Oncogene
-ECSIT:11519074-11519193	0.23	signal	SE	ECSIT	Inclusion	signal	Oncogene
-SDHC:161323613-161323670	0.43	signal	SE	SDHC	Inclusion	signal	Tumor Suppressor
-SDHC:161326650-161326768	0.414	signal	SE	SDHC	Inclusion	signal	Tumor Suppressor
-SDHC:161328395-161328497	0.206	signal	SE	SDHC	Inclusion	signal	Tumor Suppressor
-ABHD14A-ACY1:51978258-51978374	0.223	domain	SE	ACY1	Inclusion	domain	Tumor Suppressor
-ABHD14A-ACY1:51978258-51978374	0.319	domain	SE	ACY1	Inclusion	domain	Tumor Suppressor
-ABI2:203376056-203376132	0.198	domain	SE	ABI2	Inclusion	domain	Tumor Suppressor
-ACHE:100892333-100892818	0.115	domain	SE	ACHE	Inclusion	domain	Tumor Suppressor
-AHRR:413343-413433	0.176	domain	SE	AHRR	Inclusion	domain	Tumor Suppressor
-AHRR:422728-422858	0.115	domain	SE	AHRR	Inclusion	domain	Tumor Suppressor
-AHRR:422728-422858	0.138	domain	SE	AHRR	Inclusion	domain	Tumor Suppressor
-ARID5B:62057116-62057318	0.21	domain	SE	ARID5B	Inclusion	domain	Tumor Suppressor
-ARID5B:62059266-62059295	0.201	domain	SE	ARID5B	Inclusion	domain	Tumor Suppressor
-ARMC10:103097276-103097348	0.11	domain	SE	ARMC10	Inclusion	domain	Tumor Suppressor
-BRF1:105252506-105252579	0.453	domain	SE	BRF1	Inclusion	domain	Tumor Suppressor
-CD44:35196745-35196874	0.113	domain	SE	CD44	Inclusion	domain	Tumor Suppressor
-CD44:35198147-35198246	0.322	domain	SE	CD44	Inclusion	domain	Tumor Suppressor
-CD44:35201667-35201787	0.205	domain	SE	CD44	Inclusion	domain	Tumor Suppressor
-CD44:35201670-35201787	0.236	domain	SE	CD44	Inclusion	domain	Tumor Suppressor
-CD44:35204511-35204640	0.182	domain	SE	CD44	Inclusion	domain	Tumor Suppressor
-CD44:35204511-35204640	0.214	domain	SE	CD44	Inclusion	domain	Tumor Suppressor
-CD74:150403120-150403312	0.153	domain	SE	CD74	Inclusion	domain	Oncogene
-CD74:150403120-150403312	0.763	domain	SE	CD74	Inclusion	domain	Oncogene
-CD74:150403120-150404767	0.156	domain	SE	CD74	Inclusion	domain	Oncogene
-CD74:150403120-150404767	0.593	domain	SE	CD74	Inclusion	domain	Oncogene
-CDK4:57749453-57749504	0.293	domain	SE	CDK4	Inclusion	domain	Oncogene
-CDK4:57749453-57749504	0.657	domain	SE	CDK4	Inclusion	domain	Oncogene
-CDK4:57750922-57751090	0.323	domain	SE	CDK4	Inclusion	domain	Oncogene
-CDK8:26382813-26382871	0.183	domain	SE	CDK8	Inclusion	domain	Oncogene
-CRBN:3153959-3154075	0.12	domain	SE	CRBN	Inclusion	domain	Tumor Suppressor
-CUL2:35018465-35018760	0.126	domain	SE	CUL2	Inclusion	domain	Tumor Suppressor
-CUL5:108104189-108104902	0.188	domain	SE	CUL5	Inclusion	domain	Tumor Suppressor
-DCUN1D1:182965678-182965753	0.197	domain	SE	DCUN1D1	Inclusion	domain	Oncogene
-DDX58:32492390-32492538	0.167	domain	SE	DDX58	Inclusion	domain	Tumor Suppressor
-DNMT1:10180777-10180885	0.207	domain	SE	DNMT1	Inclusion	domain	Both
-DNMT3A:25239314-25239513	0.296	domain	SE	DNMT3A	Inclusion	domain	Tumor Suppressor
-ELF4:130081255-130081312	0.201	domain	SE	ELF4	Inclusion	domain	Oncogene
-ELF4:130081255-130081539	0.107	domain	SE	ELF4	Inclusion	domain	Oncogene
-ETV6:11825643-11825713	0.171	domain	SE	ETV6	Inclusion	domain	Tumor Suppressor
-EWSR1:29288605-29288755	0.12	domain	SE	EWSR1	Inclusion	domain	Oncogene
-FBXO31:87343597-87343765	0.649	domain	SE	FBXO31	Inclusion	domain	Tumor Suppressor
-FBXO31:87347173-87347250	0.17	domain	SE	FBXO31	Inclusion	domain	Tumor Suppressor
-FGFR3:1803691-1803836	0.173	domain	SE	FGFR3	Inclusion	domain	Oncogene
-FGFR4:177090389-177090653	0.144	domain	SE	FGFR4	Inclusion	domain	Oncogene
-ING4:6656726-6656798	0.414	domain	SE	ING4	Inclusion	domain	Tumor Suppressor
-INPP4B:142314711-142314762	0.151	domain	SE	INPP4B	Inclusion	domain	Tumor Suppressor
-IRF3:49664442-49664673	0.137	domain	SE	IRF3	Inclusion	domain	Tumor Suppressor
-JAK2:5050685-5050831	0.563	domain	SE	JAK2	Inclusion	domain	Oncogene
-KMT2B:35736591-35736827	0.144	domain	SE	KMT2B	Inclusion	domain	Tumor Suppressor
-KMT2D:49024577-49024737	0.149	domain	SE	KMT2D	Inclusion	domain	Tumor Suppressor
-KMT2D:49042088-49042309	0.333	domain	SE	KMT2D	Inclusion	domain	Tumor Suppressor
-LRP1B:140993994-140994135	0.103	domain	SE	LRP1B	Inclusion	domain	Tumor Suppressor
-MAP4K4:101858995-101859082	0.173	domain	SE	MAP4K4	Inclusion	domain	Oncogene
-MAP4K4:101858995-101859082	0.194	domain	SE	MAP4K4	Inclusion	domain	Oncogene
-MAP4K4:101858995-101859082	0.196	domain	SE	MAP4K4	Inclusion	domain	Oncogene
-MAPK10:86090304-86090437	0.612	domain	SE	MAPK10	Inclusion	domain	Tumor Suppressor
-MLH1:37020309-37020463	0.16	domain	SE	MLH1	Inclusion	domain	Tumor Suppressor
-MNT:2394304-2394346	0.29	domain	SE	MNT	Inclusion	domain	Tumor Suppressor
-MSI2:57257469-57257547	0.349	domain	SE	MSI2	Inclusion	domain	Oncogene
-MYD88:38139863-38139998	0.108	domain	SE	MYD88	Inclusion	domain	Oncogene
-NF2:29628657-29628773	0.108	domain	SE	NF2	Inclusion	domain	Tumor Suppressor
-NF2:29636750-29636876	0.153	domain	SE	NF2	Inclusion	domain	Tumor Suppressor
-NFKB1:102533847-102533885	0.104	domain	SE	NFKB1	Inclusion	domain	Tumor Suppressor
-NOTCH3:15184294-15184450	0.155	domain	SE	NOTCH3	Inclusion	domain	Both
-PAK1:77379893-77379994	0.128	domain	SE	PAK1	Inclusion	domain	Oncogene
-PBRM1:52615350-52615456	0.203	domain	SE	PBRM1	Inclusion	domain	Tumor Suppressor
-PER2:238273069-238273191	0.19	domain	SE	PER2	Inclusion	domain	Tumor Suppressor
-PKD1:2116832-2117016	0.162	domain	SE	PKD1	Inclusion	domain	Tumor Suppressor
-PKD1:2116832-2117053	0.148	domain	SE	PKD1	Inclusion	domain	Tumor Suppressor
-PLAAT4:63539515-63539624	0.156	domain	SE	PLAAT4	Inclusion	domain	Tumor Suppressor
-PLCE1:94316546-94316756	0.436	domain	SE	PLCE1	Inclusion	domain	Tumor Suppressor
-PML:74032571-74032715	0.201	domain	SE	PML	Inclusion	domain	Tumor Suppressor
-PML:74033155-74033422	0.164	domain	SE	PML	Inclusion	domain	Tumor Suppressor
-PRDM5:120816831-120816924	0.147	domain	SE	PRDM5	Inclusion	domain	Tumor Suppressor
-PRDM5:120907473-120907557	0.13	domain	SE	PRDM5	Inclusion	domain	Tumor Suppressor
-PRKAA2:56691393-56691487	0.408	domain	SE	PRKAA2	Inclusion	domain	Tumor Suppressor
-PTPN12:77563935-77564195	0.121	domain	SE	PTPN12	Inclusion	domain	Tumor Suppressor
-PTPN12:77583554-77583650	0.397	domain	SE	PTPN12	Inclusion	domain	Tumor Suppressor
-PTPN12:77585542-77585581	0.123	domain	SE	PTPN12	Inclusion	domain	Tumor Suppressor
-PTPN12:77592184-77592256	0.14	domain	SE	PTPN12	Inclusion	domain	Tumor Suppressor
-PTPN13:86758259-86758349	0.106	domain	SE	PTPN13	Inclusion	domain	Tumor Suppressor
-RAD51D:35107365-35107447	0.298	domain	SE	RAD51D	Inclusion	domain	Tumor Suppressor
-RAF1:12586274-12587637	0.157	domain	SE	RAF1	Inclusion	domain	Oncogene
-RAF1:12587590-12587637	0.127	domain	SE	RAF1	Inclusion	domain	Oncogene
-RASA1:87374162-87374320	0.129	domain	SE	RASA1	Inclusion	domain	Tumor Suppressor
-RBM10:47175018-47175092	0.112	domain	SE	RBM10	Inclusion	domain	Tumor Suppressor
-RUNX1:34859473-34859578	0.102	domain	SE	RUNX1	Inclusion	domain	Tumor Suppressor
-SIRT6:4179103-4179286	0.152	domain	SE	SIRT6	Inclusion	domain	Tumor Suppressor
-SPEN:15872815-15873136	0.111	domain	SE	SPEN	Inclusion	domain	Tumor Suppressor
-SS18:26084051-26084175	0.174	domain	SE	SS18	Inclusion	domain	Oncogene
-STRADA:63713459-63713527	0.134	domain	SE	STRADA	Inclusion	domain	Tumor Suppressor
-TAF1:71459149-71459251	0.252	domain	SE	TAF1	Inclusion	domain	Oncogene
-TYK2:10369756-10369877	0.266	domain	SE	TYK2	Inclusion	domain	Oncogene
-USP8:50476848-50476997	0.108	domain	SE	USP8	Inclusion	domain	Oncogene
-VEZT:95282312-95282359	0.311	domain	SE	VEZT	Inclusion	domain	Tumor Suppressor
-VPS53:697203-697294	0.622	domain	SE	VPS53	Inclusion	domain	Tumor Suppressor
-ZBTB48:6585918-6586030	0.196	domain	SE	ZBTB48	Inclusion	domain	Tumor Suppressor
-ABL2:179107717-179109441	0.342	mod_res	RI	ABL2	Inclusion	mod_res	Oncogene
-AKR1B1:134447297-134448061	0.194	mod_res	RI	AKR1B1	Inclusion	mod_res	Tumor Suppressor
-ATF3:212619045-212619555	0.509	mod_res	RI	ATF3	Inclusion	mod_res	Tumor Suppressor
-CTNND1:57805541-57806983	0.113	mod_res	RI	CTNND1	Inclusion	mod_res	Tumor Suppressor
-CUL2:35031490-35032494	0.278	mod_res	RI	CUL2	Inclusion	mod_res	Tumor Suppressor
-DNAJC11:6652828-6654039	0.142	mod_res	RI	DNAJC11	Inclusion	mod_res	Tumor Suppressor
-EZH2:148816683-148818117	0.12	mod_res	RI	EZH2	Inclusion	mod_res	Both
-HINT1:131159295-131162676	0.186	mod_res	RI	HINT1	Inclusion	mod_res	Tumor Suppressor
-HSP90B1:103931520-103932418	0.128	mod_res	RI	HSP90B1	Inclusion	mod_res	Tumor Suppressor
-MAP3K14:45270412-45271221	0.224	mod_res	RI	MAP3K14	Inclusion	mod_res	Oncogene
-RAF1:12585121-12587637	0.215	mod_res	RI	RAF1	Inclusion	mod_res	Oncogene
-RBMX:136872267-136875168	0.227	mod_res	RI	RBMX	Inclusion	mod_res	Tumor Suppressor
-SMAD3:67166530-67166853	0.22	mod_res	RI	SMAD3	Inclusion	mod_res	Tumor Suppressor
-SMARCE1:40631591-40636102	0.784	mod_res	RI	SMARCE1	Inclusion	mod_res	Both
-TCF3:1615284-1615821	0.129	mod_res	RI	TCF3	Inclusion	mod_res	Tumor Suppressor
-TCF3:1615284-1615821	0.297	mod_res	RI	TCF3	Inclusion	mod_res	Tumor Suppressor
-TSC2:2081594-2082504	0.23	mod_res	RI	TSC2	Inclusion	mod_res	Tumor Suppressor
-HSP90B1:103931520-103932418	0.128	signal	RI	HSP90B1	Inclusion	signal	Tumor Suppressor
-AKR1B1:134447297-134448061	0.194	domain	RI	AKR1B1	Inclusion	domain	Tumor Suppressor
-ATF3:212619045-212619555	0.509	domain	RI	ATF3	Inclusion	domain	Tumor Suppressor
-CIITA:10906498-10909187	0.23	domain	RI	CIITA	Inclusion	domain	Tumor Suppressor
-CUL2:35031490-35032494	0.278	domain	RI	CUL2	Inclusion	domain	Tumor Suppressor
-EZH2:148816683-148818117	0.12	domain	RI	EZH2	Inclusion	domain	Both
-HDAC7:47791870-47792669	0.184	domain	RI	HDAC7	Inclusion	domain	Oncogene
-HINT1:131159295-131162676	0.186	domain	RI	HINT1	Inclusion	domain	Tumor Suppressor
-MAP3K14:45270412-45271221	0.224	domain	RI	MAP3K14	Inclusion	domain	Oncogene
-PLCD1:38008457-38009158	0.184	domain	RI	PLCD1	Inclusion	domain	Tumor Suppressor
-POLD1:50415723-50416528	0.103	domain	RI	POLD1	Inclusion	domain	Tumor Suppressor
-RAF1:12585121-12587637	0.215	domain	RI	RAF1	Inclusion	domain	Oncogene
-RAF1:12608765-12609335	0.257	domain	RI	RAF1	Inclusion	domain	Oncogene
-SMAD3:67166530-67166853	0.22	domain	RI	SMAD3	Inclusion	domain	Tumor Suppressor
-SMARCE1:40631591-40636102	0.784	domain	RI	SMARCE1	Inclusion	domain	Both
-TCF3:1615284-1615821	0.129	domain	RI	TCF3	Inclusion	domain	Tumor Suppressor
-TCF3:1615284-1615821	0.297	domain	RI	TCF3	Inclusion	domain	Tumor Suppressor
-BECN1:42823704-42823879	0.23	mod_res	A5SS	BECN1	Inclusion	mod_res	Tumor Suppressor
-DNAJC11:6652828-6654039	0.158	mod_res	A5SS	DNAJC11	Inclusion	mod_res	Tumor Suppressor
-EWSR1:29288605-29291599	0.117	mod_res	A5SS	EWSR1	Inclusion	mod_res	Oncogene
-EZH2:148846469-148846598	0.15	mod_res	A5SS	EZH2	Inclusion	mod_res	Both
-ERBB2:39706989-39707204	0.252	disulfid	A5SS	ERBB2	Inclusion	disulfid	Oncogene
-DDX5:64500986-64501143	0.118	domain	A5SS	DDX5	Inclusion	domain	Oncogene
-DDX5:64500986-64501143	0.403	domain	A5SS	DDX5	Inclusion	domain	Oncogene
-ERBB2:39706989-39707204	0.252	domain	A5SS	ERBB2	Inclusion	domain	Oncogene
-EWSR1:29288605-29291599	0.117	domain	A5SS	EWSR1	Inclusion	domain	Oncogene
-POLD1:50409518-50409666	0.101	domain	A5SS	POLD1	Inclusion	domain	Tumor Suppressor
-DDX5:64500548-64500882	0.119	mod_res	A3SS	DDX5	Inclusion	mod_res	Oncogene
-HSP90B1:103932278-103932418	0.149	mod_res	A3SS	HSP90B1	Inclusion	mod_res	Tumor Suppressor
-LMNA:156114669-156115274	0.275	mod_res	A3SS	LMNA	Inclusion	mod_res	Oncogene
-NFATC2:51523080-51524110	0.211	mod_res	A3SS	NFATC2	Inclusion	mod_res	Tumor Suppressor
-RNF8:37368377-37369218	0.372	mod_res	A3SS	RNF8	Inclusion	mod_res	Tumor Suppressor
-SCG5:32684556-32684669	0.126	mod_res	A3SS	SCG5	Inclusion	mod_res	Oncogene
-SCG5:32684556-32684669	0.126	disulfid	A3SS	SCG5	Inclusion	disulfid	Oncogene
-CYLD:50749548-50750202	0.104	domain	A3SS	CYLD	Inclusion	domain	Tumor Suppressor
-DDX5:64500548-64500882	0.119	domain	A3SS	DDX5	Inclusion	domain	Oncogene
-DMTF1:87182016-87182337	0.14	domain	A3SS	DMTF1	Inclusion	domain	Tumor Suppressor
-DMTF1:87182016-87182337	0.26	domain	A3SS	DMTF1	Inclusion	domain	Tumor Suppressor
-DMTF1:87182055-87182337	0.142	domain	A3SS	DMTF1	Inclusion	domain	Tumor Suppressor
-HACE1:104777012-104777110	0.175	domain	A3SS	HACE1	Inclusion	domain	Tumor Suppressor
-LMNA:156114669-156115274	0.275	domain	A3SS	LMNA	Inclusion	domain	Oncogene
-POLE:132676093-132676204	0.107	domain	A3SS	POLE	Inclusion	domain	Tumor Suppressor
-RBM5:50100531-50103166	0.143	domain	A3SS	RBM5	Inclusion	domain	Tumor Suppressor
-RNF8:37368377-37369218	0.372	domain	A3SS	RNF8	Inclusion	domain	Tumor Suppressor
-RPS6KA4:64368467-64368601	0.133	domain	A3SS	RPS6KA4	Inclusion	domain	Oncogene
-TERT:1278640-1278796	0.254	domain	A3SS	TERT	Inclusion	domain	Oncogene
-AKT2:40236237-40236385	0.105	mod_res	SE	AKT2	Skipping	mod_res	Oncogene
-ATXN2:111510384-111510444	0.362	mod_res	SE	ATXN2	Skipping	mod_res	Tumor Suppressor
-CASP8:201272897-201272942	0.24	mod_res	SE	CASP8	Skipping	mod_res	Tumor Suppressor
-CASP8:201272897-201272942	0.494	mod_res	SE	CASP8	Skipping	mod_res	Tumor Suppressor
-CASP8:201274888-201274953	0.247	mod_res	SE	CASP8	Skipping	mod_res	Tumor Suppressor
-CREM:35179133-35179276	0.564	mod_res	SE	CREM	Skipping	mod_res	Tumor Suppressor
-DENND2B:8729949-8731209	0.141	mod_res	SE	DENND2B	Skipping	mod_res	Tumor Suppressor
-DENND2B:8731122-8731209	0.164	mod_res	SE	DENND2B	Skipping	mod_res	Tumor Suppressor
-ELN:74065693-74065732	0.32	mod_res	SE	ELN	Skipping	mod_res	Oncogene
-GSTP1:67584684-67584772	0.363	mod_res	SE	GSTP1	Skipping	mod_res	Tumor Suppressor
-GTF2I:74718878-74718941	0.109	mod_res	SE	GTF2I	Skipping	mod_res	Oncogene
-KAT5:65713347-65713503	0.232	mod_res	SE	KAT5	Skipping	mod_res	Tumor Suppressor
-KMT2A:118471661-118471985	0.127	mod_res	SE	KMT2A	Skipping	mod_res	Tumor Suppressor
-MAP4K4:101860824-101860986	0.107	mod_res	SE	MAP4K4	Skipping	mod_res	Oncogene
-MKI67:128114927-128116007	0.109	mod_res	SE	MKI67	Skipping	mod_res	Oncogene
-MLLT10:21617111-21617207	0.122	mod_res	SE	MLLT10	Skipping	mod_res	Oncogene
-NEDD4L:58341677-58341797	0.361	mod_res	SE	NEDD4L	Skipping	mod_res	Tumor Suppressor
-PAK1:77349238-77349287	0.105	mod_res	SE	PAK1	Skipping	mod_res	Oncogene
-RBM4:66643449-66644140	0.166	mod_res	SE	RBM4	Skipping	mod_res	Tumor Suppressor
-RPTOR:80923489-80923673	0.269	mod_res	SE	RPTOR	Skipping	mod_res	Oncogene
-SAMHD1:36941038-36941111	0.195	mod_res	SE	SAMHD1	Skipping	mod_res	Tumor Suppressor
-SCYL1:65538269-65538324	0.12	mod_res	SE	SCYL1	Skipping	mod_res	Tumor Suppressor
-SEPTIN4:58526681-58526978	0.128	mod_res	SE	SEPTIN4	Skipping	mod_res	Tumor Suppressor
-SP100:230449560-230449710	0.206	mod_res	SE	SP100	Skipping	mod_res	Tumor Suppressor
-SRGAP3:8990511-8990839	0.108	mod_res	SE	SRGAP3	Skipping	mod_res	Tumor Suppressor
-TSC2:2077597-2077726	0.122	mod_res	SE	TSC2	Skipping	mod_res	Tumor Suppressor
-UBE4B:10106196-10106583	0.563	mod_res	SE	UBE4B	Skipping	mod_res	Tumor Suppressor
-AKT2:40236237-40236385	0.105	disulfid	SE	AKT2	Skipping	disulfid	Oncogene
-CACNA2D3:54879349-54879411	0.12	disulfid	SE	CACNA2D3	Skipping	disulfid	Tumor Suppressor
-CEACAM1:42518947-42519235	0.233	disulfid	SE	CEACAM1	Skipping	disulfid	Tumor Suppressor
-FBLN1:45535255-45535337	0.252	disulfid	SE	FBLN1	Skipping	disulfid	Tumor Suppressor
-FGFR1:38429681-38429948	0.123	disulfid	SE	FGFR1	Skipping	disulfid	Oncogene
-FGFR2:121565437-121565704	0.169	disulfid	SE	FGFR2	Skipping	disulfid	Oncogene
-NOTCH2:120005328-120005588	0.38	disulfid	SE	NOTCH2	Skipping	disulfid	Both
-TNFRSF10B:23043137-23043243	0.135	disulfid	SE	TNFRSF10B	Skipping	disulfid	Tumor Suppressor
-TTYH1:54430549-54430605	0.268	disulfid	SE	TTYH1	Skipping	disulfid	Oncogene
-SMARCA2:2159813-2159909	0.158	signal	SE	SMARCA2	Skipping	signal	Tumor Suppressor
-TNFRSF10B:23043137-23043243	0.135	signal	SE	TNFRSF10B	Skipping	signal	Tumor Suppressor
-ABRAXAS1:83470202-83470396	0.112	domain	SE	ABRAXAS1	Skipping	domain	Tumor Suppressor
-ABRAXAS1:83472221-83472288	0.495	domain	SE	ABRAXAS1	Skipping	domain	Tumor Suppressor
-ADARB1:45184473-45184593	0.137	domain	SE	ADARB1	Skipping	domain	Tumor Suppressor
-AKT2:40236237-40236385	0.105	domain	SE	AKT2	Skipping	domain	Oncogene
-AKT3:243734957-243735116	0.493	domain	SE	AKT3	Skipping	domain	Oncogene
-ASXL1:32371777-32371874	0.146	domain	SE	ASXL1	Skipping	domain	Tumor Suppressor
-ATF3:212619045-212619266	0.407	domain	SE	ATF3	Skipping	domain	Tumor Suppressor
-ATM:108243952-108244118	0.444	domain	SE	ATM	Skipping	domain	Tumor Suppressor
-ATR:142450465-142450602	0.405	domain	SE	ATR	Skipping	domain	Tumor Suppressor
-BCL2L11:111150043-111150147	0.109	domain	SE	BCL2L11	Skipping	domain	Tumor Suppressor
-BIN1:127063932-127064018	0.181	domain	SE	BIN1	Skipping	domain	Tumor Suppressor
-BRAF:140808236-140808316	0.208	domain	SE	BRAF	Skipping	domain	Oncogene
-BRF1:105228819-105228913	0.125	domain	SE	BRF1	Skipping	domain	Tumor Suppressor
-BRF1:105241264-105241414	0.149	domain	SE	BRF1	Skipping	domain	Tumor Suppressor
-CAMTA1:6886239-6886346	0.132	domain	SE	CAMTA1	Skipping	domain	Tumor Suppressor
-CASP2:143300379-143300440	0.113	domain	SE	CASP2	Skipping	domain	Tumor Suppressor
-CCNC:99549311-99549399	0.114	domain	SE	CCNC	Skipping	domain	Tumor Suppressor
-CCNQ:153597421-153597706	0.123	domain	SE	CCNQ	Skipping	domain	Tumor Suppressor
-CD44:35196745-35196874	0.166	domain	SE	CD44	Skipping	domain	Tumor Suppressor
-CD44:35196745-35196874	0.174	domain	SE	CD44	Skipping	domain	Tumor Suppressor
-CD44:35198120-35198246	0.106	domain	SE	CD44	Skipping	domain	Tumor Suppressor
-CD44:35201667-35201787	0.113	domain	SE	CD44	Skipping	domain	Tumor Suppressor
-CD44:35201670-35201787	0.106	domain	SE	CD44	Skipping	domain	Tumor Suppressor
-CD44:35204511-35204640	0.11	domain	SE	CD44	Skipping	domain	Tumor Suppressor
-CD44:35206111-35206243	0.22	domain	SE	CD44	Skipping	domain	Tumor Suppressor
-CD44:35206114-35206243	0.11	domain	SE	CD44	Skipping	domain	Tumor Suppressor
-CD44:35208104-35208206	0.249	domain	SE	CD44	Skipping	domain	Tumor Suppressor
-CEACAM1:42518947-42519235	0.233	domain	SE	CEACAM1	Skipping	domain	Tumor Suppressor
-CREM:35179133-35179276	0.564	domain	SE	CREM	Skipping	domain	Tumor Suppressor
-CSNK1A1:149517793-149517877	0.136	domain	SE	CSNK1A1	Skipping	domain	Tumor Suppressor
-DAB2:39392203-39392463	0.17	domain	SE	DAB2	Skipping	domain	Tumor Suppressor
-DCUN1D1:182963880-182964049	0.342	domain	SE	DCUN1D1	Skipping	domain	Oncogene
-DDX5:64501056-64501143	0.168	domain	SE	DDX5	Skipping	domain	Oncogene
-DLG1:197161639-197161738	0.142	domain	SE	DLG1	Skipping	domain	Tumor Suppressor
-DMD:31177931-31177970	0.21	domain	SE	DMD	Skipping	domain	Tumor Suppressor
-DNMT1:10180186-10180234	0.11	domain	SE	DNMT1	Skipping	domain	Both
-DNMT3B:32806208-32806327	0.491	domain	SE	DNMT3B	Skipping	domain	Tumor Suppressor
-DUSP22:311879-311914	0.278	domain	SE	DUSP22	Skipping	domain	Tumor Suppressor
-ECSIT:11507701-11507729	0.276	domain	SE	ECSIT	Skipping	domain	Oncogene
-ECT2:172755482-172755575	0.166	domain	SE	ECT2	Skipping	domain	Tumor Suppressor
-EDNRB:77900520-77900654	0.208	domain	SE	EDNRB	Skipping	domain	Tumor Suppressor
-EIF4A2:186788309-186788416	0.451	domain	SE	EIF4A2	Skipping	domain	Oncogene
-EIF4A2:186788309-186788420	0.459	domain	SE	EIF4A2	Skipping	domain	Oncogene
-ERCC1:45413962-45414034	0.124	domain	SE	ERCC1	Skipping	domain	Tumor Suppressor
-FANCE:35457915-35457984	0.177	domain	SE	FANCE	Skipping	domain	Tumor Suppressor
-FBLN1:45535255-45535337	0.252	domain	SE	FBLN1	Skipping	domain	Tumor Suppressor
-FGFR1:38429681-38429948	0.123	domain	SE	FGFR1	Skipping	domain	Oncogene
-FGFR2:121565437-121565704	0.169	domain	SE	FGFR2	Skipping	domain	Oncogene
-FYN:111700103-111700268	0.233	domain	SE	FYN	Skipping	domain	Oncogene
-GSTP1:67584684-67584772	0.363	domain	SE	GSTP1	Skipping	domain	Tumor Suppressor
-HINT1:131162028-131162477	0.19	domain	SE	HINT1	Skipping	domain	Tumor Suppressor
-HINT1:131162063-131162477	0.192	domain	SE	HINT1	Skipping	domain	Tumor Suppressor
-HINT1:131162361-131162477	0.202	domain	SE	HINT1	Skipping	domain	Tumor Suppressor
-IKZF2:213056565-213056744	0.243	domain	SE	IKZF2	Skipping	domain	Tumor Suppressor
-IKZF2:213056565-213056744	0.254	domain	SE	IKZF2	Skipping	domain	Tumor Suppressor
-KDM3B:138379583-138379708	0.13	domain	SE	KDM3B	Skipping	domain	Tumor Suppressor
-KRIT1:92213891-92213979	0.449	domain	SE	KRIT1	Skipping	domain	Tumor Suppressor
-MAP3K4:161108950-161109041	0.24	domain	SE	MAP3K4	Skipping	domain	Tumor Suppressor
-MAP4K4:101855976-101856138	0.123	domain	SE	MAP4K4	Skipping	domain	Oncogene
-MAPK9:180279795-180280036	0.209	domain	SE	MAPK9	Skipping	domain	Tumor Suppressor
-MLH1:37017505-37017599	0.598	domain	SE	MLH1	Skipping	domain	Tumor Suppressor
-NEDD4L:58341677-58341797	0.361	domain	SE	NEDD4L	Skipping	domain	Tumor Suppressor
-NFKB1:102533844-102533885	0.151	domain	SE	NFKB1	Skipping	domain	Tumor Suppressor
-NFKB1:102582572-102582634	0.19	domain	SE	NFKB1	Skipping	domain	Tumor Suppressor
-NOTCH2:120005328-120005588	0.38	domain	SE	NOTCH2	Skipping	domain	Both
-NPM1:171406396-171407161	0.176	domain	SE	NPM1	Skipping	domain	Tumor Suppressor
-NSD2:1912090-1912194	0.109	domain	SE	NSD2	Skipping	domain	Oncogene
-PAK1:77349238-77349287	0.105	domain	SE	PAK1	Skipping	domain	Oncogene
-PAX6:31801870-31801912	0.106	domain	SE	PAX6	Skipping	domain	Tumor Suppressor
-PIGA:15331215-15331299	0.236	domain	SE	PIGA	Skipping	domain	Tumor Suppressor
-PLAAT2:63558391-63558660	0.18	domain	SE	PLAAT2	Skipping	domain	Tumor Suppressor
-PLCD1:38008457-38008636	0.143	domain	SE	PLCD1	Skipping	domain	Tumor Suppressor
-PPM1D:60624470-60624689	0.108	domain	SE	PPM1D	Skipping	domain	Oncogene
-PRKCE:45840379-45840551	0.276	domain	SE	PRKCE	Skipping	domain	Tumor Suppressor
-PTPN12:77581426-77581503	0.147	domain	SE	PTPN12	Skipping	domain	Tumor Suppressor
-RAD51C:58705877-58706022	0.298	domain	SE	RAD51C	Skipping	domain	Tumor Suppressor
-RAD51D:35106127-35106249	0.339	domain	SE	RAD51D	Skipping	domain	Tumor Suppressor
-RAD51D:35106987-35107061	0.321	domain	SE	RAD51D	Skipping	domain	Tumor Suppressor
-RAD51D:35106987-35107122	0.199	domain	SE	RAD51D	Skipping	domain	Tumor Suppressor
-RAD51D:35106987-35107122	0.248	domain	SE	RAD51D	Skipping	domain	Tumor Suppressor
-RBM4:66643449-66644140	0.166	domain	SE	RBM4	Skipping	domain	Tumor Suppressor
-REL:60898969-60900884	0.358	domain	SE	REL	Skipping	domain	Oncogene
-RNASEH2B:50927406-50927478	0.392	domain	SE	RNASEH2B	Skipping	domain	Tumor Suppressor
-RPS6KB2:67432352-67432492	0.157	domain	SE	RPS6KB2	Skipping	domain	Oncogene
-RPS6KB2:67432355-67432492	0.127	domain	SE	RPS6KB2	Skipping	domain	Oncogene
-SAMHD1:36941038-36941111	0.195	domain	SE	SAMHD1	Skipping	domain	Tumor Suppressor
-SKP2:36170343-36170442	0.151	domain	SE	SKP2	Skipping	domain	Tumor Suppressor
-SMAD4:51077306-51077419	0.171	domain	SE	SMAD4	Skipping	domain	Tumor Suppressor
-SS18:26080304-26080423	0.385	domain	SE	SS18	Skipping	domain	Oncogene
-SS18:26082362-26082528	0.214	domain	SE	SS18	Skipping	domain	Oncogene
-SS18:26082362-26082528	0.23	domain	SE	SS18	Skipping	domain	Oncogene
-STAG1:136518247-136518415	0.13	domain	SE	STAG1	Skipping	domain	Tumor Suppressor
-TBRG1:124626472-124626609	0.177	domain	SE	TBRG1	Skipping	domain	Tumor Suppressor
-TBRG1:124626472-124626609	0.195	domain	SE	TBRG1	Skipping	domain	Tumor Suppressor
-UHRF2:6492302-6492401	0.25	domain	SE	UHRF2	Skipping	domain	Tumor Suppressor
-UHRF2:6495584-6497103	0.34	domain	SE	UHRF2	Skipping	domain	Tumor Suppressor
-UHRF2:6497048-6497103	0.336	domain	SE	UHRF2	Skipping	domain	Tumor Suppressor
-XPO5:43555835-43555964	0.311	domain	SE	XPO5	Skipping	domain	Tumor Suppressor
-YPEL3:30094997-30095146	0.345	domain	SE	YPEL3	Skipping	domain	Tumor Suppressor
-DNAJC11:6652828-6654039	0.112	mod_res	RI	DNAJC11	Skipping	mod_res	Tumor Suppressor
-EWSR1:29288605-29291599	0.137	mod_res	RI	EWSR1	Skipping	mod_res	Oncogene
-EZH2:148816683-148817391	0.117	mod_res	RI	EZH2	Skipping	mod_res	Both
-HDAC1:32331675-32332242	0.301	mod_res	RI	HDAC1	Skipping	mod_res	Both
-NF1:31229024-31229974	0.163	mod_res	RI	NF1	Skipping	mod_res	Tumor Suppressor
-PML:74034477-74036394	0.128	mod_res	RI	PML	Skipping	mod_res	Tumor Suppressor
-SCYL1:65538269-65538704	0.179	mod_res	RI	SCYL1	Skipping	mod_res	Tumor Suppressor
-SCYL1:65538269-65538704	0.186	mod_res	RI	SCYL1	Skipping	mod_res	Tumor Suppressor
-SLX4:3600978-3602307	0.368	mod_res	RI	SLX4	Skipping	mod_res	Tumor Suppressor
-STK11:1220372-1220717	0.148	mod_res	RI	STK11	Skipping	mod_res	Tumor Suppressor
-ADARB1:45222017-45226560	0.194	domain	RI	ADARB1	Skipping	domain	Tumor Suppressor
-BAX:48960809-48961798	0.17	domain	RI	BAX	Skipping	domain	Tumor Suppressor
-ECSIT:11507456-11508048	0.198	domain	RI	ECSIT	Skipping	domain	Oncogene
-EWSR1:29288605-29291599	0.137	domain	RI	EWSR1	Skipping	domain	Oncogene
-EZH2:148816683-148817391	0.117	domain	RI	EZH2	Skipping	domain	Both
-KRIT1:92242033-92245908	0.271	domain	RI	KRIT1	Skipping	domain	Tumor Suppressor
-MBD6:57524028-57524416	0.156	domain	RI	MBD6	Skipping	domain	Tumor Suppressor
-PKD1:2105321-2106024	0.219	domain	RI	PKD1	Skipping	domain	Tumor Suppressor
-PML:74034477-74036394	0.128	domain	RI	PML	Skipping	domain	Tumor Suppressor
-STK11:1220372-1220717	0.148	domain	RI	STK11	Skipping	domain	Tumor Suppressor
-BANP:87975047-87975207	0.463	mod_res	A5SS	BANP	Skipping	mod_res	Tumor Suppressor
-CASP8:201276826-201277104	0.119	mod_res	A5SS	CASP8	Skipping	mod_res	Tumor Suppressor
-ETF1:138542633-138542936	0.119	mod_res	A5SS	ETF1	Skipping	mod_res	Tumor Suppressor
-PIGA:15331819-15331992	0.108	mod_res	A5SS	PIGA	Skipping	mod_res	Tumor Suppressor
-RAD51C:58692601-58693650	0.15	mod_res	A5SS	RAD51C	Skipping	mod_res	Tumor Suppressor
-BRSK1:55287213-55287303	0.121	domain	A5SS	BRSK1	Skipping	domain	Tumor Suppressor
-CASP8:201276826-201277104	0.119	domain	A5SS	CASP8	Skipping	domain	Tumor Suppressor
-CD74:150405084-150406321	0.22	domain	A5SS	CD74	Skipping	domain	Oncogene
-CD74:150405084-150406321	0.5	domain	A5SS	CD74	Skipping	domain	Oncogene
-CNOT3:54152866-54153082	0.279	domain	A5SS	CNOT3	Skipping	domain	Tumor Suppressor
-ETF1:138542633-138542936	0.119	domain	A5SS	ETF1	Skipping	domain	Tumor Suppressor
-PLCD1:38008457-38009158	0.173	domain	A5SS	PLCD1	Skipping	domain	Tumor Suppressor
-DNAJC11:6652828-6653387	0.115	mod_res	A3SS	DNAJC11	Skipping	mod_res	Tumor Suppressor
-LMNA:156114669-156115274	0.137	mod_res	A3SS	LMNA	Skipping	mod_res	Oncogene
-MOB1A:74172585-74172752	0.123	mod_res	A3SS	MOB1A	Skipping	mod_res	Tumor Suppressor
-NPM1:171406396-171407774	0.178	mod_res	A3SS	NPM1	Skipping	mod_res	Tumor Suppressor
-RACK1:181236936-181237319	0.106	mod_res	A3SS	RACK1	Skipping	mod_res	Tumor Suppressor
-ROBO1:78635772-78636108	0.194	mod_res	A3SS	ROBO1	Skipping	mod_res	Tumor Suppressor
-SCYL1:65538269-65538704	0.169	mod_res	A3SS	SCYL1	Skipping	mod_res	Tumor Suppressor
-ZNF185:152920706-152920748	0.265	mod_res	A3SS	ZNF185	Skipping	mod_res	Tumor Suppressor
-HDAC7:47791870-47792669	0.229	domain	A3SS	HDAC7	Skipping	domain	Oncogene
-LMNA:156114669-156115274	0.137	domain	A3SS	LMNA	Skipping	domain	Oncogene
-NPM1:171406396-171407774	0.178	domain	A3SS	NPM1	Skipping	domain	Tumor Suppressor
-PIK3R2:18166022-18166302	0.181	domain	A3SS	PIK3R2	Skipping	domain	Tumor Suppressor
-PKD1:2105321-2105707	0.192	domain	A3SS	PKD1	Skipping	domain	Tumor Suppressor
-VPS53:667409-670807	0.367	domain	A3SS	VPS53	Skipping	domain	Tumor Suppressor
+SpliceID	dPSI	Uniprot	Type	gene	Preference	classification
+ARID5B:62057116-62057318	0.21	Modification	SE	ARID5B	Inclusion	Tumor Suppressor
+CDK4:57750922-57751090	0.323	Modification	SE	CDK4	Inclusion	Oncogene
+DDX58:32492390-32492538	0.167	Modification	SE	DDX58	Inclusion	Tumor Suppressor
+DNAJC11:6652828-6652951	0.121	Modification	SE	DNAJC11	Inclusion	Tumor Suppressor
+DNAJC11:6652828-6653387	0.157	Modification	SE	DNAJC11	Inclusion	Tumor Suppressor
+DNMT1:10180777-10180885	0.207	Modification	SE	DNMT1	Inclusion	Both
+EWSR1:29288605-29288755	0.12	Modification	SE	EWSR1	Inclusion	Oncogene
+IKBKE:206493265-206493378	0.161	Modification	SE	IKBKE	Inclusion	Oncogene
+KAT7:49796749-49796926	0.102	Modification	SE	KAT7	Inclusion	Oncogene
+MAP4K4:101860824-101860986	0.204	Modification	SE	MAP4K4	Inclusion	Oncogene
+MGA:41762128-41762362	0.105	Modification	SE	MGA	Inclusion	Tumor Suppressor
+MIDEAS:73721296-73721509	0.117	Modification	SE	MIDEAS	Inclusion	Tumor Suppressor
+MRE11:94492781-94492897	0.371	Modification	SE	MRE11	Inclusion	Tumor Suppressor
+MRE11:94492781-94492906	0.354	Modification	SE	MRE11	Inclusion	Tumor Suppressor
+NFATC2:51523080-51523596	0.189	Modification	SE	NFATC2	Inclusion	Tumor Suppressor
+NFATC2:51523080-51524110	0.382	Modification	SE	NFATC2	Inclusion	Tumor Suppressor
+NUP214:131189052-131189131	0.308	Modification	SE	NUP214	Inclusion	Oncogene
+PAK1:77379893-77379994	0.128	Modification	SE	PAK1	Inclusion	Oncogene
+PBRM1:52615350-52615456	0.203	Modification	SE	PBRM1	Inclusion	Tumor Suppressor
+PHACTR4:28465684-28465849	0.153	Modification	SE	PHACTR4	Inclusion	Tumor Suppressor
+PLD1:171687370-171687584	0.467	Modification	SE	PLD1	Inclusion	Tumor Suppressor
+PLD1:171687370-171687584	0.853	Modification	SE	PLD1	Inclusion	Tumor Suppressor
+PML:74033155-74033422	0.164	Modification	SE	PML	Inclusion	Tumor Suppressor
+PTPN13:86758259-86758349	0.106	Modification	SE	PTPN13	Inclusion	Tumor Suppressor
+QKI:163563419-163563719	0.279	Modification	SE	QKI	Inclusion	Tumor Suppressor
+RAF1:12586274-12587637	0.157	Modification	SE	RAF1	Inclusion	Oncogene
+RAF1:12587590-12587637	0.127	Modification	SE	RAF1	Inclusion	Oncogene
+RASA1:87374162-87374320	0.129	Modification	SE	RASA1	Inclusion	Tumor Suppressor
+SP100:230462434-230462518	0.292	Modification	SE	SP100	Inclusion	Tumor Suppressor
+SPEN:15872815-15873136	0.111	Modification	SE	SPEN	Inclusion	Tumor Suppressor
+TCF4:55461018-55461115	0.115	Modification	SE	TCF4	Inclusion	Tumor Suppressor
+TCF4:55461018-55461115	0.253	Modification	SE	TCF4	Inclusion	Tumor Suppressor
+TET2:105233896-105237351	0.117	Modification	SE	TET2	Inclusion	Tumor Suppressor
+TP53BP1:43421024-43421174	0.258	Modification	SE	TP53BP1	Inclusion	Tumor Suppressor
+ACHE:100892333-100892554	0.118	Disulfide Bond	SE	ACHE	Inclusion	Tumor Suppressor
+ACHE:100892333-100892643	0.118	Disulfide Bond	SE	ACHE	Inclusion	Tumor Suppressor
+ACHE:100892333-100892818	0.115	Disulfide Bond	SE	ACHE	Inclusion	Tumor Suppressor
+CD74:150403120-150403312	0.153	Disulfide Bond	SE	CD74	Inclusion	Oncogene
+CD74:150403120-150403312	0.763	Disulfide Bond	SE	CD74	Inclusion	Oncogene
+CD74:150403120-150404767	0.156	Disulfide Bond	SE	CD74	Inclusion	Oncogene
+CD74:150403120-150404767	0.593	Disulfide Bond	SE	CD74	Inclusion	Oncogene
+FGFR3:1803691-1803836	0.173	Disulfide Bond	SE	FGFR3	Inclusion	Oncogene
+FGFR4:177090389-177090653	0.144	Disulfide Bond	SE	FGFR4	Inclusion	Oncogene
+LRP1B:140993994-140994135	0.103	Disulfide Bond	SE	LRP1B	Inclusion	Tumor Suppressor
+NOTCH3:15184294-15184450	0.155	Disulfide Bond	SE	NOTCH3	Inclusion	Both
+PKD1:2116832-2117016	0.162	Disulfide Bond	SE	PKD1	Inclusion	Tumor Suppressor
+PKD1:2116832-2117053	0.148	Disulfide Bond	SE	PKD1	Inclusion	Tumor Suppressor
+DIABLO:122224644-122224748	0.135	Signal	SE	DIABLO	Inclusion	Tumor Suppressor
+ECSIT:11519074-11519193	0.174	Signal	SE	ECSIT	Inclusion	Oncogene
+ECSIT:11519074-11519193	0.23	Signal	SE	ECSIT	Inclusion	Oncogene
+SDHC:161323613-161323670	0.43	Signal	SE	SDHC	Inclusion	Tumor Suppressor
+SDHC:161326650-161326768	0.414	Signal	SE	SDHC	Inclusion	Tumor Suppressor
+SDHC:161328395-161328497	0.206	Signal	SE	SDHC	Inclusion	Tumor Suppressor
+ABHD14A-ACY1:51978258-51978374	0.223	Protein Domain	SE	ACY1	Inclusion	Tumor Suppressor
+ABHD14A-ACY1:51978258-51978374	0.319	Protein Domain	SE	ACY1	Inclusion	Tumor Suppressor
+ABI2:203376056-203376132	0.198	Protein Domain	SE	ABI2	Inclusion	Tumor Suppressor
+ACHE:100892333-100892818	0.115	Protein Domain	SE	ACHE	Inclusion	Tumor Suppressor
+AHRR:413343-413433	0.176	Protein Domain	SE	AHRR	Inclusion	Tumor Suppressor
+AHRR:422728-422858	0.115	Protein Domain	SE	AHRR	Inclusion	Tumor Suppressor
+AHRR:422728-422858	0.138	Protein Domain	SE	AHRR	Inclusion	Tumor Suppressor
+ARID5B:62057116-62057318	0.21	Protein Domain	SE	ARID5B	Inclusion	Tumor Suppressor
+ARID5B:62059266-62059295	0.201	Protein Domain	SE	ARID5B	Inclusion	Tumor Suppressor
+ARMC10:103097276-103097348	0.11	Protein Domain	SE	ARMC10	Inclusion	Tumor Suppressor
+BRF1:105252506-105252579	0.453	Protein Domain	SE	BRF1	Inclusion	Tumor Suppressor
+CD44:35196745-35196874	0.113	Protein Domain	SE	CD44	Inclusion	Tumor Suppressor
+CD44:35198147-35198246	0.322	Protein Domain	SE	CD44	Inclusion	Tumor Suppressor
+CD44:35201667-35201787	0.205	Protein Domain	SE	CD44	Inclusion	Tumor Suppressor
+CD44:35201670-35201787	0.236	Protein Domain	SE	CD44	Inclusion	Tumor Suppressor
+CD44:35204511-35204640	0.182	Protein Domain	SE	CD44	Inclusion	Tumor Suppressor
+CD44:35204511-35204640	0.214	Protein Domain	SE	CD44	Inclusion	Tumor Suppressor
+CD74:150403120-150403312	0.153	Protein Domain	SE	CD74	Inclusion	Oncogene
+CD74:150403120-150403312	0.763	Protein Domain	SE	CD74	Inclusion	Oncogene
+CD74:150403120-150404767	0.156	Protein Domain	SE	CD74	Inclusion	Oncogene
+CD74:150403120-150404767	0.593	Protein Domain	SE	CD74	Inclusion	Oncogene
+CDK4:57749453-57749504	0.293	Protein Domain	SE	CDK4	Inclusion	Oncogene
+CDK4:57749453-57749504	0.657	Protein Domain	SE	CDK4	Inclusion	Oncogene
+CDK4:57750922-57751090	0.323	Protein Domain	SE	CDK4	Inclusion	Oncogene
+CDK8:26382813-26382871	0.183	Protein Domain	SE	CDK8	Inclusion	Oncogene
+CRBN:3153959-3154075	0.12	Protein Domain	SE	CRBN	Inclusion	Tumor Suppressor
+CUL2:35018465-35018760	0.126	Protein Domain	SE	CUL2	Inclusion	Tumor Suppressor
+CUL5:108104189-108104902	0.188	Protein Domain	SE	CUL5	Inclusion	Tumor Suppressor
+DCUN1D1:182965678-182965753	0.197	Protein Domain	SE	DCUN1D1	Inclusion	Oncogene
+DDX58:32492390-32492538	0.167	Protein Domain	SE	DDX58	Inclusion	Tumor Suppressor
+DNMT1:10180777-10180885	0.207	Protein Domain	SE	DNMT1	Inclusion	Both
+DNMT3A:25239314-25239513	0.296	Protein Domain	SE	DNMT3A	Inclusion	Tumor Suppressor
+ELF4:130081255-130081312	0.201	Protein Domain	SE	ELF4	Inclusion	Oncogene
+ELF4:130081255-130081539	0.107	Protein Domain	SE	ELF4	Inclusion	Oncogene
+ETV6:11825643-11825713	0.171	Protein Domain	SE	ETV6	Inclusion	Tumor Suppressor
+EWSR1:29288605-29288755	0.12	Protein Domain	SE	EWSR1	Inclusion	Oncogene
+FBXO31:87343597-87343765	0.649	Protein Domain	SE	FBXO31	Inclusion	Tumor Suppressor
+FBXO31:87347173-87347250	0.17	Protein Domain	SE	FBXO31	Inclusion	Tumor Suppressor
+FGFR3:1803691-1803836	0.173	Protein Domain	SE	FGFR3	Inclusion	Oncogene
+FGFR4:177090389-177090653	0.144	Protein Domain	SE	FGFR4	Inclusion	Oncogene
+ING4:6656726-6656798	0.414	Protein Domain	SE	ING4	Inclusion	Tumor Suppressor
+INPP4B:142314711-142314762	0.151	Protein Domain	SE	INPP4B	Inclusion	Tumor Suppressor
+IRF3:49664442-49664673	0.137	Protein Domain	SE	IRF3	Inclusion	Tumor Suppressor
+JAK2:5050685-5050831	0.563	Protein Domain	SE	JAK2	Inclusion	Oncogene
+KMT2B:35736591-35736827	0.144	Protein Domain	SE	KMT2B	Inclusion	Tumor Suppressor
+KMT2D:49024577-49024737	0.149	Protein Domain	SE	KMT2D	Inclusion	Tumor Suppressor
+KMT2D:49042088-49042309	0.333	Protein Domain	SE	KMT2D	Inclusion	Tumor Suppressor
+LRP1B:140993994-140994135	0.103	Protein Domain	SE	LRP1B	Inclusion	Tumor Suppressor
+MAP4K4:101858995-101859082	0.173	Protein Domain	SE	MAP4K4	Inclusion	Oncogene
+MAP4K4:101858995-101859082	0.194	Protein Domain	SE	MAP4K4	Inclusion	Oncogene
+MAP4K4:101858995-101859082	0.196	Protein Domain	SE	MAP4K4	Inclusion	Oncogene
+MAPK10:86090304-86090437	0.612	Protein Domain	SE	MAPK10	Inclusion	Tumor Suppressor
+MLH1:37020309-37020463	0.16	Protein Domain	SE	MLH1	Inclusion	Tumor Suppressor
+MNT:2394304-2394346	0.29	Protein Domain	SE	MNT	Inclusion	Tumor Suppressor
+MSI2:57257469-57257547	0.349	Protein Domain	SE	MSI2	Inclusion	Oncogene
+MYD88:38139863-38139998	0.108	Protein Domain	SE	MYD88	Inclusion	Oncogene
+NF2:29628657-29628773	0.108	Protein Domain	SE	NF2	Inclusion	Tumor Suppressor
+NF2:29636750-29636876	0.153	Protein Domain	SE	NF2	Inclusion	Tumor Suppressor
+NFKB1:102533847-102533885	0.104	Protein Domain	SE	NFKB1	Inclusion	Tumor Suppressor
+NOTCH3:15184294-15184450	0.155	Protein Domain	SE	NOTCH3	Inclusion	Both
+PAK1:77379893-77379994	0.128	Protein Domain	SE	PAK1	Inclusion	Oncogene
+PBRM1:52615350-52615456	0.203	Protein Domain	SE	PBRM1	Inclusion	Tumor Suppressor
+PER2:238273069-238273191	0.19	Protein Domain	SE	PER2	Inclusion	Tumor Suppressor
+PKD1:2116832-2117016	0.162	Protein Domain	SE	PKD1	Inclusion	Tumor Suppressor
+PKD1:2116832-2117053	0.148	Protein Domain	SE	PKD1	Inclusion	Tumor Suppressor
+PLAAT4:63539515-63539624	0.156	Protein Domain	SE	PLAAT4	Inclusion	Tumor Suppressor
+PLCE1:94316546-94316756	0.436	Protein Domain	SE	PLCE1	Inclusion	Tumor Suppressor
+PML:74032571-74032715	0.201	Protein Domain	SE	PML	Inclusion	Tumor Suppressor
+PML:74033155-74033422	0.164	Protein Domain	SE	PML	Inclusion	Tumor Suppressor
+PRDM5:120816831-120816924	0.147	Protein Domain	SE	PRDM5	Inclusion	Tumor Suppressor
+PRDM5:120907473-120907557	0.13	Protein Domain	SE	PRDM5	Inclusion	Tumor Suppressor
+PRKAA2:56691393-56691487	0.408	Protein Domain	SE	PRKAA2	Inclusion	Tumor Suppressor
+PTPN12:77563935-77564195	0.121	Protein Domain	SE	PTPN12	Inclusion	Tumor Suppressor
+PTPN12:77583554-77583650	0.397	Protein Domain	SE	PTPN12	Inclusion	Tumor Suppressor
+PTPN12:77585542-77585581	0.123	Protein Domain	SE	PTPN12	Inclusion	Tumor Suppressor
+PTPN12:77592184-77592256	0.14	Protein Domain	SE	PTPN12	Inclusion	Tumor Suppressor
+PTPN13:86758259-86758349	0.106	Protein Domain	SE	PTPN13	Inclusion	Tumor Suppressor
+RAD51D:35107365-35107447	0.298	Protein Domain	SE	RAD51D	Inclusion	Tumor Suppressor
+RAF1:12586274-12587637	0.157	Protein Domain	SE	RAF1	Inclusion	Oncogene
+RAF1:12587590-12587637	0.127	Protein Domain	SE	RAF1	Inclusion	Oncogene
+RASA1:87374162-87374320	0.129	Protein Domain	SE	RASA1	Inclusion	Tumor Suppressor
+RBM10:47175018-47175092	0.112	Protein Domain	SE	RBM10	Inclusion	Tumor Suppressor
+RUNX1:34859473-34859578	0.102	Protein Domain	SE	RUNX1	Inclusion	Tumor Suppressor
+SIRT6:4179103-4179286	0.152	Protein Domain	SE	SIRT6	Inclusion	Tumor Suppressor
+SPEN:15872815-15873136	0.111	Protein Domain	SE	SPEN	Inclusion	Tumor Suppressor
+SS18:26084051-26084175	0.174	Protein Domain	SE	SS18	Inclusion	Oncogene
+STRADA:63713459-63713527	0.134	Protein Domain	SE	STRADA	Inclusion	Tumor Suppressor
+TAF1:71459149-71459251	0.252	Protein Domain	SE	TAF1	Inclusion	Oncogene
+TYK2:10369756-10369877	0.266	Protein Domain	SE	TYK2	Inclusion	Oncogene
+USP8:50476848-50476997	0.108	Protein Domain	SE	USP8	Inclusion	Oncogene
+VEZT:95282312-95282359	0.311	Protein Domain	SE	VEZT	Inclusion	Tumor Suppressor
+VPS53:697203-697294	0.622	Protein Domain	SE	VPS53	Inclusion	Tumor Suppressor
+ZBTB48:6585918-6586030	0.196	Protein Domain	SE	ZBTB48	Inclusion	Tumor Suppressor
+ABL2:179107717-179109441	0.342	Modification	RI	ABL2	Inclusion	Oncogene
+AKR1B1:134447297-134448061	0.194	Modification	RI	AKR1B1	Inclusion	Tumor Suppressor
+ATF3:212619045-212619555	0.509	Modification	RI	ATF3	Inclusion	Tumor Suppressor
+CTNND1:57805541-57806983	0.113	Modification	RI	CTNND1	Inclusion	Tumor Suppressor
+CUL2:35031490-35032494	0.278	Modification	RI	CUL2	Inclusion	Tumor Suppressor
+DNAJC11:6652828-6654039	0.142	Modification	RI	DNAJC11	Inclusion	Tumor Suppressor
+EZH2:148816683-148818117	0.12	Modification	RI	EZH2	Inclusion	Both
+HINT1:131159295-131162676	0.186	Modification	RI	HINT1	Inclusion	Tumor Suppressor
+HSP90B1:103931520-103932418	0.128	Modification	RI	HSP90B1	Inclusion	Tumor Suppressor
+MAP3K14:45270412-45271221	0.224	Modification	RI	MAP3K14	Inclusion	Oncogene
+RAF1:12585121-12587637	0.215	Modification	RI	RAF1	Inclusion	Oncogene
+RBMX:136872267-136875168	0.227	Modification	RI	RBMX	Inclusion	Tumor Suppressor
+SMAD3:67166530-67166853	0.22	Modification	RI	SMAD3	Inclusion	Tumor Suppressor
+SMARCE1:40631591-40636102	0.784	Modification	RI	SMARCE1	Inclusion	Both
+TCF3:1615284-1615821	0.129	Modification	RI	TCF3	Inclusion	Tumor Suppressor
+TCF3:1615284-1615821	0.297	Modification	RI	TCF3	Inclusion	Tumor Suppressor
+TSC2:2081594-2082504	0.23	Modification	RI	TSC2	Inclusion	Tumor Suppressor
+HSP90B1:103931520-103932418	0.128	Signal	RI	HSP90B1	Inclusion	Tumor Suppressor
+AKR1B1:134447297-134448061	0.194	Protein Domain	RI	AKR1B1	Inclusion	Tumor Suppressor
+ATF3:212619045-212619555	0.509	Protein Domain	RI	ATF3	Inclusion	Tumor Suppressor
+CIITA:10906498-10909187	0.23	Protein Domain	RI	CIITA	Inclusion	Tumor Suppressor
+CUL2:35031490-35032494	0.278	Protein Domain	RI	CUL2	Inclusion	Tumor Suppressor
+EZH2:148816683-148818117	0.12	Protein Domain	RI	EZH2	Inclusion	Both
+HDAC7:47791870-47792669	0.184	Protein Domain	RI	HDAC7	Inclusion	Oncogene
+HINT1:131159295-131162676	0.186	Protein Domain	RI	HINT1	Inclusion	Tumor Suppressor
+MAP3K14:45270412-45271221	0.224	Protein Domain	RI	MAP3K14	Inclusion	Oncogene
+PLCD1:38008457-38009158	0.184	Protein Domain	RI	PLCD1	Inclusion	Tumor Suppressor
+POLD1:50415723-50416528	0.103	Protein Domain	RI	POLD1	Inclusion	Tumor Suppressor
+RAF1:12585121-12587637	0.215	Protein Domain	RI	RAF1	Inclusion	Oncogene
+RAF1:12608765-12609335	0.257	Protein Domain	RI	RAF1	Inclusion	Oncogene
+SMAD3:67166530-67166853	0.22	Protein Domain	RI	SMAD3	Inclusion	Tumor Suppressor
+SMARCE1:40631591-40636102	0.784	Protein Domain	RI	SMARCE1	Inclusion	Both
+TCF3:1615284-1615821	0.129	Protein Domain	RI	TCF3	Inclusion	Tumor Suppressor
+TCF3:1615284-1615821	0.297	Protein Domain	RI	TCF3	Inclusion	Tumor Suppressor
+BECN1:42823704-42823879	0.23	Modification	A5SS	BECN1	Inclusion	Tumor Suppressor
+DNAJC11:6652828-6654039	0.158	Modification	A5SS	DNAJC11	Inclusion	Tumor Suppressor
+EWSR1:29288605-29291599	0.117	Modification	A5SS	EWSR1	Inclusion	Oncogene
+EZH2:148846469-148846598	0.15	Modification	A5SS	EZH2	Inclusion	Both
+ERBB2:39706989-39707204	0.252	Disulfide Bond	A5SS	ERBB2	Inclusion	Oncogene
+DDX5:64500986-64501143	0.118	Protein Domain	A5SS	DDX5	Inclusion	Oncogene
+DDX5:64500986-64501143	0.403	Protein Domain	A5SS	DDX5	Inclusion	Oncogene
+ERBB2:39706989-39707204	0.252	Protein Domain	A5SS	ERBB2	Inclusion	Oncogene
+EWSR1:29288605-29291599	0.117	Protein Domain	A5SS	EWSR1	Inclusion	Oncogene
+POLD1:50409518-50409666	0.101	Protein Domain	A5SS	POLD1	Inclusion	Tumor Suppressor
+DDX5:64500548-64500882	0.119	Modification	A3SS	DDX5	Inclusion	Oncogene
+HSP90B1:103932278-103932418	0.149	Modification	A3SS	HSP90B1	Inclusion	Tumor Suppressor
+LMNA:156114669-156115274	0.275	Modification	A3SS	LMNA	Inclusion	Oncogene
+NFATC2:51523080-51524110	0.211	Modification	A3SS	NFATC2	Inclusion	Tumor Suppressor
+RNF8:37368377-37369218	0.372	Modification	A3SS	RNF8	Inclusion	Tumor Suppressor
+SCG5:32684556-32684669	0.126	Modification	A3SS	SCG5	Inclusion	Oncogene
+SCG5:32684556-32684669	0.126	Disulfide Bond	A3SS	SCG5	Inclusion	Oncogene
+CYLD:50749548-50750202	0.104	Protein Domain	A3SS	CYLD	Inclusion	Tumor Suppressor
+DDX5:64500548-64500882	0.119	Protein Domain	A3SS	DDX5	Inclusion	Oncogene
+DMTF1:87182016-87182337	0.14	Protein Domain	A3SS	DMTF1	Inclusion	Tumor Suppressor
+DMTF1:87182016-87182337	0.26	Protein Domain	A3SS	DMTF1	Inclusion	Tumor Suppressor
+DMTF1:87182055-87182337	0.142	Protein Domain	A3SS	DMTF1	Inclusion	Tumor Suppressor
+HACE1:104777012-104777110	0.175	Protein Domain	A3SS	HACE1	Inclusion	Tumor Suppressor
+LMNA:156114669-156115274	0.275	Protein Domain	A3SS	LMNA	Inclusion	Oncogene
+POLE:132676093-132676204	0.107	Protein Domain	A3SS	POLE	Inclusion	Tumor Suppressor
+RBM5:50100531-50103166	0.143	Protein Domain	A3SS	RBM5	Inclusion	Tumor Suppressor
+RNF8:37368377-37369218	0.372	Protein Domain	A3SS	RNF8	Inclusion	Tumor Suppressor
+RPS6KA4:64368467-64368601	0.133	Protein Domain	A3SS	RPS6KA4	Inclusion	Oncogene
+TERT:1278640-1278796	0.254	Protein Domain	A3SS	TERT	Inclusion	Oncogene
+AKT2:40236237-40236385	0.105	Modification	SE	AKT2	Skipping	Oncogene
+ATXN2:111510384-111510444	0.362	Modification	SE	ATXN2	Skipping	Tumor Suppressor
+CASP8:201272897-201272942	0.24	Modification	SE	CASP8	Skipping	Tumor Suppressor
+CASP8:201272897-201272942	0.494	Modification	SE	CASP8	Skipping	Tumor Suppressor
+CASP8:201274888-201274953	0.247	Modification	SE	CASP8	Skipping	Tumor Suppressor
+CREM:35179133-35179276	0.564	Modification	SE	CREM	Skipping	Tumor Suppressor
+DENND2B:8729949-8731209	0.141	Modification	SE	DENND2B	Skipping	Tumor Suppressor
+DENND2B:8731122-8731209	0.164	Modification	SE	DENND2B	Skipping	Tumor Suppressor
+ELN:74065693-74065732	0.32	Modification	SE	ELN	Skipping	Oncogene
+GSTP1:67584684-67584772	0.363	Modification	SE	GSTP1	Skipping	Tumor Suppressor
+GTF2I:74718878-74718941	0.109	Modification	SE	GTF2I	Skipping	Oncogene
+KAT5:65713347-65713503	0.232	Modification	SE	KAT5	Skipping	Tumor Suppressor
+KMT2A:118471661-118471985	0.127	Modification	SE	KMT2A	Skipping	Tumor Suppressor
+MAP4K4:101860824-101860986	0.107	Modification	SE	MAP4K4	Skipping	Oncogene
+MKI67:128114927-128116007	0.109	Modification	SE	MKI67	Skipping	Oncogene
+MLLT10:21617111-21617207	0.122	Modification	SE	MLLT10	Skipping	Oncogene
+NEDD4L:58341677-58341797	0.361	Modification	SE	NEDD4L	Skipping	Tumor Suppressor
+PAK1:77349238-77349287	0.105	Modification	SE	PAK1	Skipping	Oncogene
+RBM4:66643449-66644140	0.166	Modification	SE	RBM4	Skipping	Tumor Suppressor
+RPTOR:80923489-80923673	0.269	Modification	SE	RPTOR	Skipping	Oncogene
+SAMHD1:36941038-36941111	0.195	Modification	SE	SAMHD1	Skipping	Tumor Suppressor
+SCYL1:65538269-65538324	0.12	Modification	SE	SCYL1	Skipping	Tumor Suppressor
+SEPTIN4:58526681-58526978	0.128	Modification	SE	SEPTIN4	Skipping	Tumor Suppressor
+SP100:230449560-230449710	0.206	Modification	SE	SP100	Skipping	Tumor Suppressor
+SRGAP3:8990511-8990839	0.108	Modification	SE	SRGAP3	Skipping	Tumor Suppressor
+TSC2:2077597-2077726	0.122	Modification	SE	TSC2	Skipping	Tumor Suppressor
+UBE4B:10106196-10106583	0.563	Modification	SE	UBE4B	Skipping	Tumor Suppressor
+AKT2:40236237-40236385	0.105	Disulfide Bond	SE	AKT2	Skipping	Oncogene
+CACNA2D3:54879349-54879411	0.12	Disulfide Bond	SE	CACNA2D3	Skipping	Tumor Suppressor
+CEACAM1:42518947-42519235	0.233	Disulfide Bond	SE	CEACAM1	Skipping	Tumor Suppressor
+FBLN1:45535255-45535337	0.252	Disulfide Bond	SE	FBLN1	Skipping	Tumor Suppressor
+FGFR1:38429681-38429948	0.123	Disulfide Bond	SE	FGFR1	Skipping	Oncogene
+FGFR2:121565437-121565704	0.169	Disulfide Bond	SE	FGFR2	Skipping	Oncogene
+NOTCH2:120005328-120005588	0.38	Disulfide Bond	SE	NOTCH2	Skipping	Both
+TNFRSF10B:23043137-23043243	0.135	Disulfide Bond	SE	TNFRSF10B	Skipping	Tumor Suppressor
+TTYH1:54430549-54430605	0.268	Disulfide Bond	SE	TTYH1	Skipping	Oncogene
+SMARCA2:2159813-2159909	0.158	Signal	SE	SMARCA2	Skipping	Tumor Suppressor
+TNFRSF10B:23043137-23043243	0.135	Signal	SE	TNFRSF10B	Skipping	Tumor Suppressor
+ABRAXAS1:83470202-83470396	0.112	Protein Domain	SE	ABRAXAS1	Skipping	Tumor Suppressor
+ABRAXAS1:83472221-83472288	0.495	Protein Domain	SE	ABRAXAS1	Skipping	Tumor Suppressor
+ADARB1:45184473-45184593	0.137	Protein Domain	SE	ADARB1	Skipping	Tumor Suppressor
+AKT2:40236237-40236385	0.105	Protein Domain	SE	AKT2	Skipping	Oncogene
+AKT3:243734957-243735116	0.493	Protein Domain	SE	AKT3	Skipping	Oncogene
+ASXL1:32371777-32371874	0.146	Protein Domain	SE	ASXL1	Skipping	Tumor Suppressor
+ATF3:212619045-212619266	0.407	Protein Domain	SE	ATF3	Skipping	Tumor Suppressor
+ATM:108243952-108244118	0.444	Protein Domain	SE	ATM	Skipping	Tumor Suppressor
+ATR:142450465-142450602	0.405	Protein Domain	SE	ATR	Skipping	Tumor Suppressor
+BCL2L11:111150043-111150147	0.109	Protein Domain	SE	BCL2L11	Skipping	Tumor Suppressor
+BIN1:127063932-127064018	0.181	Protein Domain	SE	BIN1	Skipping	Tumor Suppressor
+BRAF:140808236-140808316	0.208	Protein Domain	SE	BRAF	Skipping	Oncogene
+BRF1:105228819-105228913	0.125	Protein Domain	SE	BRF1	Skipping	Tumor Suppressor
+BRF1:105241264-105241414	0.149	Protein Domain	SE	BRF1	Skipping	Tumor Suppressor
+CAMTA1:6886239-6886346	0.132	Protein Domain	SE	CAMTA1	Skipping	Tumor Suppressor
+CASP2:143300379-143300440	0.113	Protein Domain	SE	CASP2	Skipping	Tumor Suppressor
+CCNC:99549311-99549399	0.114	Protein Domain	SE	CCNC	Skipping	Tumor Suppressor
+CCNQ:153597421-153597706	0.123	Protein Domain	SE	CCNQ	Skipping	Tumor Suppressor
+CD44:35196745-35196874	0.166	Protein Domain	SE	CD44	Skipping	Tumor Suppressor
+CD44:35196745-35196874	0.174	Protein Domain	SE	CD44	Skipping	Tumor Suppressor
+CD44:35198120-35198246	0.106	Protein Domain	SE	CD44	Skipping	Tumor Suppressor
+CD44:35201667-35201787	0.113	Protein Domain	SE	CD44	Skipping	Tumor Suppressor
+CD44:35201670-35201787	0.106	Protein Domain	SE	CD44	Skipping	Tumor Suppressor
+CD44:35204511-35204640	0.11	Protein Domain	SE	CD44	Skipping	Tumor Suppressor
+CD44:35206111-35206243	0.22	Protein Domain	SE	CD44	Skipping	Tumor Suppressor
+CD44:35206114-35206243	0.11	Protein Domain	SE	CD44	Skipping	Tumor Suppressor
+CD44:35208104-35208206	0.249	Protein Domain	SE	CD44	Skipping	Tumor Suppressor
+CEACAM1:42518947-42519235	0.233	Protein Domain	SE	CEACAM1	Skipping	Tumor Suppressor
+CREM:35179133-35179276	0.564	Protein Domain	SE	CREM	Skipping	Tumor Suppressor
+CSNK1A1:149517793-149517877	0.136	Protein Domain	SE	CSNK1A1	Skipping	Tumor Suppressor
+DAB2:39392203-39392463	0.17	Protein Domain	SE	DAB2	Skipping	Tumor Suppressor
+DCUN1D1:182963880-182964049	0.342	Protein Domain	SE	DCUN1D1	Skipping	Oncogene
+DDX5:64501056-64501143	0.168	Protein Domain	SE	DDX5	Skipping	Oncogene
+DLG1:197161639-197161738	0.142	Protein Domain	SE	DLG1	Skipping	Tumor Suppressor
+DMD:31177931-31177970	0.21	Protein Domain	SE	DMD	Skipping	Tumor Suppressor
+DNMT1:10180186-10180234	0.11	Protein Domain	SE	DNMT1	Skipping	Both
+DNMT3B:32806208-32806327	0.491	Protein Domain	SE	DNMT3B	Skipping	Tumor Suppressor
+DUSP22:311879-311914	0.278	Protein Domain	SE	DUSP22	Skipping	Tumor Suppressor
+ECSIT:11507701-11507729	0.276	Protein Domain	SE	ECSIT	Skipping	Oncogene
+ECT2:172755482-172755575	0.166	Protein Domain	SE	ECT2	Skipping	Tumor Suppressor
+EDNRB:77900520-77900654	0.208	Protein Domain	SE	EDNRB	Skipping	Tumor Suppressor
+EIF4A2:186788309-186788416	0.451	Protein Domain	SE	EIF4A2	Skipping	Oncogene
+EIF4A2:186788309-186788420	0.459	Protein Domain	SE	EIF4A2	Skipping	Oncogene
+ERCC1:45413962-45414034	0.124	Protein Domain	SE	ERCC1	Skipping	Tumor Suppressor
+FANCE:35457915-35457984	0.177	Protein Domain	SE	FANCE	Skipping	Tumor Suppressor
+FBLN1:45535255-45535337	0.252	Protein Domain	SE	FBLN1	Skipping	Tumor Suppressor
+FGFR1:38429681-38429948	0.123	Protein Domain	SE	FGFR1	Skipping	Oncogene
+FGFR2:121565437-121565704	0.169	Protein Domain	SE	FGFR2	Skipping	Oncogene
+FYN:111700103-111700268	0.233	Protein Domain	SE	FYN	Skipping	Oncogene
+GSTP1:67584684-67584772	0.363	Protein Domain	SE	GSTP1	Skipping	Tumor Suppressor
+HINT1:131162028-131162477	0.19	Protein Domain	SE	HINT1	Skipping	Tumor Suppressor
+HINT1:131162063-131162477	0.192	Protein Domain	SE	HINT1	Skipping	Tumor Suppressor
+HINT1:131162361-131162477	0.202	Protein Domain	SE	HINT1	Skipping	Tumor Suppressor
+IKZF2:213056565-213056744	0.243	Protein Domain	SE	IKZF2	Skipping	Tumor Suppressor
+IKZF2:213056565-213056744	0.254	Protein Domain	SE	IKZF2	Skipping	Tumor Suppressor
+KDM3B:138379583-138379708	0.13	Protein Domain	SE	KDM3B	Skipping	Tumor Suppressor
+KRIT1:92213891-92213979	0.449	Protein Domain	SE	KRIT1	Skipping	Tumor Suppressor
+MAP3K4:161108950-161109041	0.24	Protein Domain	SE	MAP3K4	Skipping	Tumor Suppressor
+MAP4K4:101855976-101856138	0.123	Protein Domain	SE	MAP4K4	Skipping	Oncogene
+MAPK9:180279795-180280036	0.209	Protein Domain	SE	MAPK9	Skipping	Tumor Suppressor
+MLH1:37017505-37017599	0.598	Protein Domain	SE	MLH1	Skipping	Tumor Suppressor
+NEDD4L:58341677-58341797	0.361	Protein Domain	SE	NEDD4L	Skipping	Tumor Suppressor
+NFKB1:102533844-102533885	0.151	Protein Domain	SE	NFKB1	Skipping	Tumor Suppressor
+NFKB1:102582572-102582634	0.19	Protein Domain	SE	NFKB1	Skipping	Tumor Suppressor
+NOTCH2:120005328-120005588	0.38	Protein Domain	SE	NOTCH2	Skipping	Both
+NPM1:171406396-171407161	0.176	Protein Domain	SE	NPM1	Skipping	Tumor Suppressor
+NSD2:1912090-1912194	0.109	Protein Domain	SE	NSD2	Skipping	Oncogene
+PAK1:77349238-77349287	0.105	Protein Domain	SE	PAK1	Skipping	Oncogene
+PAX6:31801870-31801912	0.106	Protein Domain	SE	PAX6	Skipping	Tumor Suppressor
+PIGA:15331215-15331299	0.236	Protein Domain	SE	PIGA	Skipping	Tumor Suppressor
+PLAAT2:63558391-63558660	0.18	Protein Domain	SE	PLAAT2	Skipping	Tumor Suppressor
+PLCD1:38008457-38008636	0.143	Protein Domain	SE	PLCD1	Skipping	Tumor Suppressor
+PPM1D:60624470-60624689	0.108	Protein Domain	SE	PPM1D	Skipping	Oncogene
+PRKCE:45840379-45840551	0.276	Protein Domain	SE	PRKCE	Skipping	Tumor Suppressor
+PTPN12:77581426-77581503	0.147	Protein Domain	SE	PTPN12	Skipping	Tumor Suppressor
+RAD51C:58705877-58706022	0.298	Protein Domain	SE	RAD51C	Skipping	Tumor Suppressor
+RAD51D:35106127-35106249	0.339	Protein Domain	SE	RAD51D	Skipping	Tumor Suppressor
+RAD51D:35106987-35107061	0.321	Protein Domain	SE	RAD51D	Skipping	Tumor Suppressor
+RAD51D:35106987-35107122	0.199	Protein Domain	SE	RAD51D	Skipping	Tumor Suppressor
+RAD51D:35106987-35107122	0.248	Protein Domain	SE	RAD51D	Skipping	Tumor Suppressor
+RBM4:66643449-66644140	0.166	Protein Domain	SE	RBM4	Skipping	Tumor Suppressor
+REL:60898969-60900884	0.358	Protein Domain	SE	REL	Skipping	Oncogene
+RNASEH2B:50927406-50927478	0.392	Protein Domain	SE	RNASEH2B	Skipping	Tumor Suppressor
+RPS6KB2:67432352-67432492	0.157	Protein Domain	SE	RPS6KB2	Skipping	Oncogene
+RPS6KB2:67432355-67432492	0.127	Protein Domain	SE	RPS6KB2	Skipping	Oncogene
+SAMHD1:36941038-36941111	0.195	Protein Domain	SE	SAMHD1	Skipping	Tumor Suppressor
+SKP2:36170343-36170442	0.151	Protein Domain	SE	SKP2	Skipping	Tumor Suppressor
+SMAD4:51077306-51077419	0.171	Protein Domain	SE	SMAD4	Skipping	Tumor Suppressor
+SS18:26080304-26080423	0.385	Protein Domain	SE	SS18	Skipping	Oncogene
+SS18:26082362-26082528	0.214	Protein Domain	SE	SS18	Skipping	Oncogene
+SS18:26082362-26082528	0.23	Protein Domain	SE	SS18	Skipping	Oncogene
+STAG1:136518247-136518415	0.13	Protein Domain	SE	STAG1	Skipping	Tumor Suppressor
+TBRG1:124626472-124626609	0.177	Protein Domain	SE	TBRG1	Skipping	Tumor Suppressor
+TBRG1:124626472-124626609	0.195	Protein Domain	SE	TBRG1	Skipping	Tumor Suppressor
+UHRF2:6492302-6492401	0.25	Protein Domain	SE	UHRF2	Skipping	Tumor Suppressor
+UHRF2:6495584-6497103	0.34	Protein Domain	SE	UHRF2	Skipping	Tumor Suppressor
+UHRF2:6497048-6497103	0.336	Protein Domain	SE	UHRF2	Skipping	Tumor Suppressor
+XPO5:43555835-43555964	0.311	Protein Domain	SE	XPO5	Skipping	Tumor Suppressor
+YPEL3:30094997-30095146	0.345	Protein Domain	SE	YPEL3	Skipping	Tumor Suppressor
+DNAJC11:6652828-6654039	0.112	Modification	RI	DNAJC11	Skipping	Tumor Suppressor
+EWSR1:29288605-29291599	0.137	Modification	RI	EWSR1	Skipping	Oncogene
+EZH2:148816683-148817391	0.117	Modification	RI	EZH2	Skipping	Both
+HDAC1:32331675-32332242	0.301	Modification	RI	HDAC1	Skipping	Both
+NF1:31229024-31229974	0.163	Modification	RI	NF1	Skipping	Tumor Suppressor
+PML:74034477-74036394	0.128	Modification	RI	PML	Skipping	Tumor Suppressor
+SCYL1:65538269-65538704	0.179	Modification	RI	SCYL1	Skipping	Tumor Suppressor
+SCYL1:65538269-65538704	0.186	Modification	RI	SCYL1	Skipping	Tumor Suppressor
+SLX4:3600978-3602307	0.368	Modification	RI	SLX4	Skipping	Tumor Suppressor
+STK11:1220372-1220717	0.148	Modification	RI	STK11	Skipping	Tumor Suppressor
+ADARB1:45222017-45226560	0.194	Protein Domain	RI	ADARB1	Skipping	Tumor Suppressor
+BAX:48960809-48961798	0.17	Protein Domain	RI	BAX	Skipping	Tumor Suppressor
+ECSIT:11507456-11508048	0.198	Protein Domain	RI	ECSIT	Skipping	Oncogene
+EWSR1:29288605-29291599	0.137	Protein Domain	RI	EWSR1	Skipping	Oncogene
+EZH2:148816683-148817391	0.117	Protein Domain	RI	EZH2	Skipping	Both
+KRIT1:92242033-92245908	0.271	Protein Domain	RI	KRIT1	Skipping	Tumor Suppressor
+MBD6:57524028-57524416	0.156	Protein Domain	RI	MBD6	Skipping	Tumor Suppressor
+PKD1:2105321-2106024	0.219	Protein Domain	RI	PKD1	Skipping	Tumor Suppressor
+PML:74034477-74036394	0.128	Protein Domain	RI	PML	Skipping	Tumor Suppressor
+STK11:1220372-1220717	0.148	Protein Domain	RI	STK11	Skipping	Tumor Suppressor
+BANP:87975047-87975207	0.463	Modification	A5SS	BANP	Skipping	Tumor Suppressor
+CASP8:201276826-201277104	0.119	Modification	A5SS	CASP8	Skipping	Tumor Suppressor
+ETF1:138542633-138542936	0.119	Modification	A5SS	ETF1	Skipping	Tumor Suppressor
+PIGA:15331819-15331992	0.108	Modification	A5SS	PIGA	Skipping	Tumor Suppressor
+RAD51C:58692601-58693650	0.15	Modification	A5SS	RAD51C	Skipping	Tumor Suppressor
+BRSK1:55287213-55287303	0.121	Protein Domain	A5SS	BRSK1	Skipping	Tumor Suppressor
+CASP8:201276826-201277104	0.119	Protein Domain	A5SS	CASP8	Skipping	Tumor Suppressor
+CD74:150405084-150406321	0.22	Protein Domain	A5SS	CD74	Skipping	Oncogene
+CD74:150405084-150406321	0.5	Protein Domain	A5SS	CD74	Skipping	Oncogene
+CNOT3:54152866-54153082	0.279	Protein Domain	A5SS	CNOT3	Skipping	Tumor Suppressor
+ETF1:138542633-138542936	0.119	Protein Domain	A5SS	ETF1	Skipping	Tumor Suppressor
+PLCD1:38008457-38009158	0.173	Protein Domain	A5SS	PLCD1	Skipping	Tumor Suppressor
+DNAJC11:6652828-6653387	0.115	Modification	A3SS	DNAJC11	Skipping	Tumor Suppressor
+LMNA:156114669-156115274	0.137	Modification	A3SS	LMNA	Skipping	Oncogene
+MOB1A:74172585-74172752	0.123	Modification	A3SS	MOB1A	Skipping	Tumor Suppressor
+NPM1:171406396-171407774	0.178	Modification	A3SS	NPM1	Skipping	Tumor Suppressor
+RACK1:181236936-181237319	0.106	Modification	A3SS	RACK1	Skipping	Tumor Suppressor
+ROBO1:78635772-78636108	0.194	Modification	A3SS	ROBO1	Skipping	Tumor Suppressor
+SCYL1:65538269-65538704	0.169	Modification	A3SS	SCYL1	Skipping	Tumor Suppressor
+ZNF185:152920706-152920748	0.265	Modification	A3SS	ZNF185	Skipping	Tumor Suppressor
+HDAC7:47791870-47792669	0.229	Protein Domain	A3SS	HDAC7	Skipping	Oncogene
+LMNA:156114669-156115274	0.137	Protein Domain	A3SS	LMNA	Skipping	Oncogene
+NPM1:171406396-171407774	0.178	Protein Domain	A3SS	NPM1	Skipping	Tumor Suppressor
+PIK3R2:18166022-18166302	0.181	Protein Domain	A3SS	PIK3R2	Skipping	Tumor Suppressor
+PKD1:2105321-2105707	0.192	Protein Domain	A3SS	PKD1	Skipping	Tumor Suppressor
+VPS53:667409-670807	0.367	Protein Domain	A3SS	VPS53	Skipping	Tumor Suppressor

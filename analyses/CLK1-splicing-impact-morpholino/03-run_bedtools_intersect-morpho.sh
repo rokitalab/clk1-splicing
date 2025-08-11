@@ -24,7 +24,7 @@ for event in "${events[@]}"; do
     # Intersect with functional site beds
     for functional_site in "mod_res" "disulfid" "signal" "domain"; do
         bedtools intersect -wo -a input/morpho.diff.$event.bed -b ../splicing_events_functional_sites/input/UP000005640_9606_$functional_site.bed | sort -u > results/splicing_events.morpho.$event.intersectUnip$functional_site.wo.txt
-    done
+        done
 
     # Generate ggplot data
     echo -e "SpliceID\tdPSI\tUniprot\tType" > results/splicing_events.morpho.$event.intersectUnip.ggplot.txt
