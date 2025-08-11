@@ -45,6 +45,7 @@ func_sites_SE_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-mo
 func_sites_A5SS_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","splicing_events.morpho.A5SS.intersectUnip.ggplot.txt")
 func_sites_A3SS_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","splicing_events.morpho.A3SS.intersectUnip.ggplot.txt")
 func_sites_RI_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","splicing_events.morpho.RI.intersectUnip.ggplot.txt")
+de_ds_genes_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","de_ds_genes.txt")
 
 cluster_cor_file <- file.path(root_dir, "analyses/splicing-factor_dysregulation/results/se-sbi-sf-expr-correlations.tsv")
 
@@ -139,9 +140,9 @@ cns_regions_df <- purrr::imap_dfr(jsonlite::fromJSON(CNS_match_json),
 
 
 # Combine and output
-list_s1_table <- list(README = readme,
-                      histologies_file = histology_df,
-                      CNS_region_definitions = cns_regions_df
+list_s1_table <- list(A_README = readme,
+                      B_histologies_file = histology_df,
+                      C_CNS_region_definitions = cns_regions_df
 )
 write.xlsx(list_s1_table,
            table_s1_file,
@@ -172,9 +173,9 @@ gsva_df <- read_tsv(gsva) %>%
   arrange(Cluster)
           
 # Combine and output
-list_s2_table <- list(se_events = se_events_df,
-                      clust_memb = cluster_membership_df,
-                      gsva_scores = gsva_df)
+list_s2_table <- list(A_se_events = se_events_df,
+                      B_clust_memb = cluster_membership_df,
+                      C_gsva_scores = gsva_df)
 
 write.xlsx(list_s2_table,
            table_s2_file,
@@ -187,9 +188,11 @@ kegg_rds <- readRDS(kegg_file)
 kegg_list <- kegg_rds$KEGG_SPLICEOSOME
 #tab 2, hugo list
 hugo_list <- read_csv(hugo_file, skip = 1) %>%
-  pull(`Approved symbol`)
+  pull(`Approved symbol`) %>%
+  sort()
+
 #tab 3, sf list
-sf_list <- readLines(sf_list_file) 
+sf_list <- sort(readLines(sf_list_file)) 
 
 # tab 4
 hugo_maf <- read_tsv(hugo_maf_file)
@@ -202,12 +205,12 @@ deseq_df <- vroom(deseq2_sf_file) %>%
   dplyr::select(-Significant)
 
 # Combine and output
-list_s3_table <- list(kegg_spliceosome = kegg_list, 
-                      hugo_spliceosome = hugo_list,
-                      sf_genes = sf_list,
-                      hugo_mutations = hugo_maf,
-                      sf_mutations = sf_maf,
-                      deseq2 = deseq_df)
+list_s3_table <- list(A_kegg_spliceosome = kegg_list, 
+                      B_hugo_spliceosome = hugo_list,
+                      C_sf_genes = sf_list,
+                      D_hugo_mutations = hugo_maf,
+                      E_sf_mutations = sf_maf,
+                      F_high_v_low_sbi_deseq2 = deseq_df)
 
 write.xlsx(list_s3_table,
            table_s3_file,
@@ -232,10 +235,10 @@ kinase_events_df <- vroom(kinase_func_sites_file)
 clk1_ex4_prop_df <- vroom(clk1_ex4_prop)
 
 # Combine and output
-list_s4_table <- list(ds_skipping = ds_events_es_df,
-                      ds_inclusion = ds_events_ei_df,
-                      prioritized_sf_kinases = kinase_events_df,
-                      clk1_ex4_prop = clk1_ex4_prop_df)
+list_s4_table <- list(A_ds_skipping = ds_events_es_df,
+                      B_ds_inclusion = ds_events_ei_df,
+                      C_prioritized_sf_kinases = kinase_events_df,
+                      D_clk1_ex4_prop = clk1_ex4_prop_df)
 
 write.xlsx(list_s4_table,
            table_s4_file,
@@ -245,7 +248,7 @@ write.xlsx(list_s4_table,
 ## Table 5 Cluster expression correlations
 cluster_cor_df <- read_tsv(cluster_cor_file)
 
-list_s5_table <- list(cluster_expression_correlations = cluster_cor_df)
+list_s5_table <- list(A_cluster_exp_cor = cluster_cor_df)
 
 write.xlsx(list_s5_table,
            table_s5_file,
@@ -268,7 +271,7 @@ ds_events_SE_df <- vroom(func_sites_SE_morpho_tsv_file)
 ds_events_A5SS_df <- vroom(func_sites_A5SS_morpho_tsv_file)
 ds_events_A3SS_df <- vroom(func_sites_A3SS_morpho_tsv_file)
 ds_events_RI_df <- vroom(func_sites_RI_morpho_tsv_file)
-cancer_genes_func_df <- vroom(func_sites_goi_file)
+de_ds_genes_file_df <- read_lines(de_ds_genes_file)
 
 primers_df <- vroom(primers_file, delim = "\t")
 
@@ -277,16 +280,16 @@ ds_de_crispr_df <-  vroom(ds_de_crispr_events_file) %>%
 
 consensus_targets_df <- vroom(clk1_consens_targets_file)
 
-list_s6_table <- list(deseq2_morp = deseq2_morpholino_df,
-                      rmats = rmats_df,
-                      ds_SE = ds_events_SE_df,
-                      ds_A5SS = ds_events_A5SS_df,
-                      ds_A3SS = ds_events_A3SS_df,
-                      ds_RI = ds_events_RI_df,
-                      ds_cancer_genes = cancer_genes_func_df,
-                      primers = primers_df,
-                      intersection_de_ds_crispr = ds_de_crispr_df,
-                      consensus_targets = consensus_targets_df)
+list_s6_table <- list(A_deseq2_morp = deseq2_morpholino_df,
+                      B_morph_rmats = rmats_df,
+                      C_ds_SE = ds_events_SE_df,
+                      D_ds_A5SS = ds_events_A5SS_df,
+                      E_ds_A3SS = ds_events_A3SS_df,
+                      F_ds_RI = ds_events_RI_df,
+                      G_de_ds_genes = de_ds_genes_file_df,
+                      H_primers = primers_df,
+                      I_intersect_de_ds_crispr = ds_de_crispr_df,
+                      J_clk1_targets = consensus_targets_df)
 
 write.xlsx(list_s6_table,
            table_s6_file,

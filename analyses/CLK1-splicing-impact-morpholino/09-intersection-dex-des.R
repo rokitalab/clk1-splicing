@@ -80,7 +80,9 @@ intersect <- psi_comb %>%
   inner_join(dex_comb, by='geneSymbol', relationship = "many-to-many",
              suffix = c("_psi", "_de")) %>%
   dplyr::select(geneSymbol, Preference_psi, Preference_de) %>%
-  unique
+  unique()
+
+write_lines(sort(unique(intersect$geneSymbol)), file.path(results_dir, "de_ds_genes.txt"))
 
 total_events <- psi_comb %>%
   full_join(dex_comb, by='geneSymbol', relationship = "many-to-many",
@@ -143,6 +145,7 @@ enrich_plot <- enrichplot::dotplot(ora_results,
   theme_Publication() +
   scale_size(name = "Gene Count") +  
   scale_fill_gradient(low = "darkorange", high = "blue", name = "B-H p-value") +
+  scale_x_continuous(limits = c(0, 0.125)) +   # <---- set limits here
   guides(
     fill = guide_colorbar(title = "B-H p-value", label.position = "right", barwidth = 1, barheight = 4)
   ) 
@@ -235,6 +238,7 @@ enrich_plot_func <- enrichplot::dotplot(ora_results,
   theme_Publication() +
   scale_size(name = "Gene Count") +  
   scale_fill_gradient(low = "darkorange", high = "blue", name = "B-H p-value") +
+  scale_x_continuous(limits = c(0, 0.05)) +   # <---- set limits here
   guides(
     fill = guide_colorbar(title = "B-H p-value", label.position = "right", barwidth = 1, barheight = 4)
   ) 
