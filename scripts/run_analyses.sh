@@ -67,12 +67,12 @@ echo "----------------------------------"
 cd ${analyses_dir}/splicing_events_functional_sites
 bash run_module.sh
 
-## oncoprint (skipping for now)
-#echo "----------------------------------"
-#echo "oncoprint"
-#echo "----------------------------------"
-#cd ${analyses_dir}/oncoprint
-#bash run-oncoprint.sh
+## oncoprint
+echo "----------------------------------"
+echo "oncoprint"
+echo "----------------------------------"
+cd ${analyses_dir}/oncoprint
+bash run-oncoprint.sh
 
 ## CLK1 splicing correlations
 echo "----------------------------------"
@@ -114,3 +114,10 @@ echo "KNS42-cell-line"
 echo "----------------------------------"
 cd ${analyses_dir}/KNS42-cell-line
 bash run_module.sh
+
+## Generate supp tables
+echo "----------------------------------"
+echo "tables"
+echo "----------------------------------"
+cd ${BASEDIR}/tables
+Rscript --vanilla make-suppl-tables.R
