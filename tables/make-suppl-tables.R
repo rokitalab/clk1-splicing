@@ -188,9 +188,11 @@ kegg_rds <- readRDS(kegg_file)
 kegg_list <- kegg_rds$KEGG_SPLICEOSOME
 #tab 2, hugo list
 hugo_list <- read_csv(hugo_file, skip = 1) %>%
-  pull(`Approved symbol`)
+  pull(`Approved symbol`) %>%
+  sort()
+
 #tab 3, sf list
-sf_list <- readLines(sf_list_file) 
+sf_list <- sort(readLines(sf_list_file)) 
 
 # tab 4
 hugo_maf <- read_tsv(hugo_maf_file)
@@ -206,9 +208,9 @@ deseq_df <- vroom(deseq2_sf_file) %>%
 list_s3_table <- list(A_kegg_spliceosome = kegg_list, 
                       B_hugo_spliceosome = hugo_list,
                       C_sf_genes = sf_list,
-                      E_hugo_mutations = hugo_maf,
-                      F_sf_mutations = sf_maf,
-                      G_high_v_low_sbi_deseq2 = deseq_df)
+                      D_hugo_mutations = hugo_maf,
+                      E_sf_mutations = sf_maf,
+                      F_high_v_low_sbi_deseq2 = deseq_df)
 
 write.xlsx(list_s3_table,
            table_s3_file,
