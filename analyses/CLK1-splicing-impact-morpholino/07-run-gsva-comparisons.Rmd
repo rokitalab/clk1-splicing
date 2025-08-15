@@ -193,8 +193,19 @@ top_annot <- df %>%
 anno_col <- list(Treatment = c("Non-targeting Morpholino" = "#FFC20A", "CLK1 Exon 4 Morpholino" = "#0C7BDC"))
 
 # Heatmap annotation
-top_anno = HeatmapAnnotation(df = top_annot,
-                         col = anno_col, show_legend = TRUE)
+top_anno <- HeatmapAnnotation(
+  df = top_annot,
+  col = anno_col,
+  show_legend = TRUE,
+  annotation_legend_param = list(
+    Treatment = list(
+      title = "Treatment",
+      at = c("Non-targeting Morpholino", "CLK1 Exon 4 Morpholino"),
+      labels = c("Non-targeting Morpholino", expression(italic("CLK1")~"Exon 4 Morpholino"))
+    )
+  )
+)
+
  
 # plot
 for (i in 1:length(score_sources)) {
@@ -205,22 +216,41 @@ for (i in 1:length(score_sources)) {
   score_df_summarized <- score_df %>%
     mutate(Treatment = ifelse(grepl("CTRL", sample_id), "Non-targeting Morpholino", "CLK1 Exon 4 Morpholino")) %>%
     group_by(geneset, Treatment) %>%
-    summarise(Mean_GSVA_Score = mean(gsva_score, na.rm = TRUE), .groups = 'drop')
+    summarise(Mean_GSVA_Score = mean(gsva_score, na.rm = TRUE), .groups = 'drop') %>%
+    group_by(geneset) %>%
+  pivot_wider(names_from = Treatment, values_from = Mean_GSVA_Score) %>%
+  # keep rows that have both treatment means
+  filter(!is.na(`CLK1 Exon 4 Morpholino`), !is.na(`Non-targeting Morpholino`)) %>%
+  mutate(
+    GSVA_diff = `CLK1 Exon 4 Morpholino` - `Non-targeting Morpholino`,
+    diff_sign = ifelse(GSVA_diff > 0, "Up in CLK1 Exon 4 Morpholino", "Down in CLK1 Exon 4 Morpholino")  # new column for coloring
+  )
 
 # Re-order
 ordering_metric <- score_df_summarized %>%
-  filter(Treatment == "CLK1 Exon 4 Morpholino") %>%
-  arrange(desc(Mean_GSVA_Score)) %>%
+  arrange(GSVA_diff) %>%
   pull(geneset)
 
 # Apply this ordering to the 'geneset' factor
 score_df_summarized$geneset <- factor(score_df_summarized$geneset, levels = ordering_metric)
 
-  gsva_barplot <- ggplot(score_df_summarized, aes(x = geneset, y = Mean_GSVA_Score, fill = Treatment)) +
+  gsva_barplot <- ggplot(score_df_summarized, aes(x = geneset, y = GSVA_diff, fill = diff_sign)) +
   geom_bar(stat = "identity", position = position_dodge()) +
   theme_Publication() +
-  labs(x = "Geneset", y = "Mean GSVA score") +
-  scale_fill_manual(values = c("Non-targeting Morpholino" = "#FFC20A", "CLK1 Exon 4 Morpholino" = "#0C7BDC")) +
+  labs(x = "Geneset", 
+       y = "GSVA score difference",
+       fill = "Direction") +
+  scale_fill_manual(
+    breaks = c("Down in CLK1 Exon 4 Morpholino", "Up in CLK1 Exon 4 Morpholino"),
+    values = c(
+      "Down in CLK1 Exon 4 Morpholino" = "blue",
+      "Up in CLK1 Exon 4 Morpholino"   = "darkorange"
+    ),
+    labels = c(
+      expression("Down in"~italic("CLK1")~"Exon 4 Morpholino"),
+      expression("Up in"~italic("CLK1")~"Exon 4 Morpholino")
+    )
+  ) +
   coord_flip() +
     theme(legend.position = "top") # Positions the legend at the top
 
@@ -243,7 +273,7 @@ score_df_summarized$geneset <- factor(score_df_summarized$geneset, levels = orde
   }
   else if (i %in% c(3,6,9,12)){
     height <- 3.5
-    width <- 5.5
+    width <- 6
     cell_width <- 3
   }
   
