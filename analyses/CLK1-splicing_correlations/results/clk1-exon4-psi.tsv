@@ -1,0 +1,753 @@
+Kids_First_Biospecimen_ID	plot_group	PSI
+BS_014EVM2D	Low-grade glioma	0.879
+BS_03FT4S8B	Craniopharyngioma	0.821
+BS_0448A413	Mesenchymal tumor	0.903
+BS_052PZFMK	Other high-grade glioma	0.652
+BS_063ERW0R	Low-grade glioma	0.61
+BS_06XH7EVF	Non-neoplastic tumor	0.929
+BS_07ANYSYQ	Ependymoma	0.815
+BS_0BXY0F9N	Ependymoma	0.962
+BS_0C00AYTE	Other high-grade glioma	0.899
+BS_0C7VZC0A	Other high-grade glioma	0.854
+BS_0GDJQANN	Choroid plexus tumor	0.713
+BS_0HW7W7SD	Other CNS embryonal tumor	0.893
+BS_0J9SHHSC	Low-grade glioma	0.909
+BS_0QYS36NR	Ependymoma	0.976
+BS_0RF0EZTV	Neurofibroma plexiform	0.885
+BS_0SCXXM6N	Low-grade glioma	0.746
+BS_0SPCTBZY	Other tumor	0.328
+BS_0T17SY47	Low-grade glioma	0.859
+BS_0VRSD9V3	Choroid plexus tumor	0.874
+BS_0WVJYM9R	Low-grade glioma	0.885
+BS_0X9EGHY2	Low-grade glioma	0.937
+BS_0XEG6SNV	Ependymoma	0.991
+BS_0XHT9W4Q	Other high-grade glioma	0.259
+BS_0Y1BP5A4	Other high-grade glioma	0.451
+BS_0Y66ZBWE	Low-grade glioma	0.82
+BS_15ETQ0E4	Atypical Teratoid Rhabdoid Tumor	0.938
+BS_1607397Q	Other tumor	0.602
+BS_17WYVEEC	Low-grade glioma	0.925
+BS_196BBNEJ	Ependymoma	0.982
+BS_1AYRM596	Medulloblastoma	0.908
+BS_1BJNPHMD	Other high-grade glioma	0.549
+BS_1BWP5MCT	Medulloblastoma	0.84
+BS_1G3WYEN3	Low-grade glioma	0.8
+BS_1HFK0SXV	Craniopharyngioma	0.831
+BS_1HQ76V6D	Other CNS embryonal tumor	0.695
+BS_1J2WQ08M	Ependymoma	0.777
+BS_1JDG6JV5	Low-grade glioma	0.722
+BS_1N9XZXGE	Mesenchymal tumor	0.766
+BS_1NPD7PVG	Mixed neuronal-glial tumor	0.954
+BS_1QNTEZPS	Atypical Teratoid Rhabdoid Tumor	0.821
+BS_1SVVER1H	Schwannoma	0.792
+BS_1T19NFJ8	Non-neoplastic tumor	0.97
+BS_1TWCV047	Medulloblastoma	0.877
+BS_1XJ73KBQ	Mesenchymal tumor	0.914
+BS_1ZVXF5FE	Low-grade glioma	0.557
+BS_21RE8W46	Low-grade glioma	0.734
+BS_23M72ABG	Meningioma	0.964
+BS_23W9EPFE	Mixed neuronal-glial tumor	0.907
+BS_24AHZ9ZW	Low-grade glioma	0.789
+BS_258RRGDM	Mixed neuronal-glial tumor	0.956
+BS_264RCK7G	Mixed neuronal-glial tumor	0.982
+BS_273HKCT4	Mixed neuronal-glial tumor	0.374
+BS_27QE6BV7	Mixed neuronal-glial tumor	0.794
+BS_29006KEX	Germ cell tumor	1
+BS_29CPJ040	Low-grade glioma	0.622
+BS_29X4ZX6Q	Other high-grade glioma	0.814
+BS_2A5R9MEJ	DIPG or DMG	0.923
+BS_2AR3AP0N	Mixed neuronal-glial tumor	0.819
+BS_2EMW8ZG3	Low-grade glioma	0.549
+BS_2EN3X6HB	Other high-grade glioma	0.391
+BS_2HN96129	Schwannoma	0.619
+BS_2HNXVFAS	DIPG or DMG	0.899
+BS_2KJ2YAZR	Low-grade glioma	0.902
+BS_2QGRF15R	Other high-grade glioma	0.832
+BS_2R9TCR03	Low-grade glioma	0.785
+BS_2SFTWNVE	Medulloblastoma	0.802
+BS_2SHWPB5P	Other tumor	1
+BS_2W3NC4K1	Neurofibroma plexiform	0.578
+BS_2WPQ8YCW	Low-grade glioma	0.871
+BS_2XD3MNKD	Non-neoplastic tumor	0.702
+BS_2YCJV2VV	Low-grade glioma	0.969
+BS_2Z1MKS84	Medulloblastoma	0.592
+BS_30VC3R2Q	DIPG or DMG	0.958
+BS_31TF0P1N	Atypical Teratoid Rhabdoid Tumor	0.904
+BS_34201DKZ	Ependymoma	0.947
+BS_37GTVG4N	Other CNS embryonal tumor	0.895
+BS_398KYV92	Meningioma	0.855
+BS_399RPKC9	DIPG or DMG	0.809
+BS_3DCBDJAT	Meningioma	0.851
+BS_3EVSN5QD	Low-grade glioma	0.481
+BS_3F4FQJMR	Ependymoma	0.945
+BS_3F5PR9GS	Medulloblastoma	0.603
+BS_3G3KWY18	Low-grade glioma	0.864
+BS_3KASVCSQ	Germ cell tumor	0.875
+BS_3MS8WVNR	Other high-grade glioma	0.746
+BS_3MYEMXPQ	Medulloblastoma	0.772
+BS_3NNQ6PSB	Other tumor	0.916
+BS_3NWQXPQV	Medulloblastoma	0.74
+BS_3P20Q2C3	Low-grade glioma	0.544
+BS_3PYESPHA	Mixed neuronal-glial tumor	0.798
+BS_3Q0GTSYH	Low-grade glioma	0.842
+BS_3T6X4BPC	Mixed neuronal-glial tumor	0.971
+BS_3TQSE8HF	Low-grade glioma	0.794
+BS_3W07B2TG	Low-grade glioma	0.55
+BS_3X9WMZGJ	Ependymoma	0.962
+BS_3XY76V8T	Mixed neuronal-glial tumor	0.954
+BS_401R3KV0	Low-grade glioma	0.866
+BS_42DY6WS7	Low-grade glioma	0.927
+BS_42Y3YANN	Low-grade glioma	0.754
+BS_44A3ES23	Medulloblastoma	0.702
+BS_45J79YTF	Other high-grade glioma	0.719
+BS_46BZ2NNN	Germ cell tumor	0.717
+BS_470DYRJQ	Low-grade glioma	0.65
+BS_478TN841	Mixed neuronal-glial tumor	0.784
+BS_479S95Q6	Schwannoma	0.766
+BS_49852ZBH	Low-grade glioma	0.773
+BS_49F4RAA4	Other tumor	0.899
+BS_49VCQD19	Neurofibroma plexiform	0.475
+BS_4A45GGSW	Low-grade glioma	0.924
+BS_4B0BAVTX	DIPG or DMG	0.726
+BS_4BWB0FA0	Low-grade glioma	0.905
+BS_4C4MZ4NT	Low-grade glioma	0.897
+BS_4C6B11E4	DIPG or DMG	0.661
+BS_4CP4T22V	Medulloblastoma	0.647
+BS_4D9DD103	Medulloblastoma	0.522
+BS_4E1G7E3G	Atypical Teratoid Rhabdoid Tumor	0.537
+BS_4EN8D8Y4	Low-grade glioma	0.666
+BS_4FZS7TX4	Ependymoma	0.962
+BS_4HQ3T2NC	Low-grade glioma	0.902
+BS_4JWBB28H	Mesenchymal tumor	0.554
+BS_4NF35AF6	Low-grade glioma	0.808
+BS_4NWHYH53	Ependymoma	0.884
+BS_4PH1MBGR	Medulloblastoma	0.887
+BS_4Q3NRFBD	Other high-grade glioma	0.741
+BS_4QW2S1Q8	DIPG or DMG	0.856
+BS_4SCWT0FX	Ependymoma	0.86
+BS_4T0HPZDC	Ependymoma	0.953
+BS_4W1DBAN4	Non-neoplastic tumor	0.891
+BS_4W68NV3M	Medulloblastoma	0.805
+BS_4Y6BCYK5	Low-grade glioma	0.759
+BS_4Z2F4P9N	Low-grade glioma	0.896
+BS_51RA1PGE	DIPG or DMG	0.857
+BS_52426AMF	Low-grade glioma	0.881
+BS_52C576HH	Other high-grade glioma	0.772
+BS_52DAPP1Y	Low-grade glioma	0.574
+BS_52MPKTJH	Other high-grade glioma	0.699
+BS_53GQKVEX	Low-grade glioma	0.702
+BS_55JW3HFM	Mixed neuronal-glial tumor	0.748
+BS_55P8HPYD	Low-grade glioma	0.67
+BS_593HEWBF	Mixed neuronal-glial tumor	0.978
+BS_5965SFPZ	DIPG or DMG	0.732
+BS_5AF6ZNJF	Meningioma	0.956
+BS_5JM573JC	Mixed neuronal-glial tumor	0.846
+BS_5NWDARXG	Low-grade glioma	0.721
+BS_5PEFNDCY	Mixed neuronal-glial tumor	0.829
+BS_5PJCHF6V	Medulloblastoma	0.675
+BS_5PV5N4HQ	Low-grade glioma	0.843
+BS_5VQP0E6K	Medulloblastoma	0.412
+BS_5YJEPPTP	Low-grade glioma	0.721
+BS_60K3EQ9S	Non-neoplastic tumor	0.982
+BS_61E80SD6	Medulloblastoma	0.884
+BS_64HCD9K3	Choroid plexus tumor	0.699
+BS_66ABA973	Low-grade glioma	0.758
+BS_66HQ3E4Z	Low-grade glioma	0.755
+BS_67PX06P3	Mesenchymal tumor	0.993
+BS_680K119G	Mixed neuronal-glial tumor	0.945
+BS_68BW2163	Low-grade glioma	0.843
+BS_699TN5RN	Mixed neuronal-glial tumor	0.629
+BS_6G6C7VPX	Atypical Teratoid Rhabdoid Tumor	0.804
+BS_6H1C1ME9	Ependymoma	0.949
+BS_6HTK4YJP	Germ cell tumor	0.776
+BS_6MY8W3H0	Mixed neuronal-glial tumor	0.9
+BS_6N3AFF66	Low-grade glioma	0.802
+BS_6NRTJSYK	Other tumor	0.658
+BS_6NTXGQAC	Mixed neuronal-glial tumor	0.54
+BS_6R7SFVV2	Other tumor	0.474
+BS_6WP1FHTE	DIPG or DMG	0.841
+BS_6YMJ621P	Meningioma	0.922
+BS_70FFPA51	Meningioma	0.892
+BS_7327SDAQ	Other high-grade glioma	0.722
+BS_742RHK1M	Germ cell tumor	0.916
+BS_74G5K7JF	Ependymoma	0.753
+BS_74GHJS7N	Other high-grade glioma	0.678
+BS_77317DY4	Medulloblastoma	0.774
+BS_775HDFNY	Low-grade glioma	0.741
+BS_77CDMEY4	Mixed neuronal-glial tumor	0.955
+BS_78QX3XDF	Craniopharyngioma	0.836
+BS_7BTZQKYY	Ependymoma	0.954
+BS_7BW0YRPY	Other CNS embryonal tumor	0.694
+BS_7C40TRCY	Medulloblastoma	0.833
+BS_7FWZ518S	Medulloblastoma	0.78
+BS_7G42J2SK	Ependymoma	0.918
+BS_7H4RFCW9	Low-grade glioma	0.925
+BS_7N0B2CY1	Mixed neuronal-glial tumor	0.915
+BS_7P83Z28P	Low-grade glioma	0.696
+BS_7T1J3KET	Craniopharyngioma	0.87
+BS_7XQRH69M	Medulloblastoma	0.583
+BS_7XRN3CFX	Low-grade glioma	0.878
+BS_7Z93ZYMS	Low-grade glioma	0.85
+BS_81SP2HX4	Medulloblastoma	0.447
+BS_84XCR9GG	Other high-grade glioma	0.715
+BS_850BAHH9	Atypical Teratoid Rhabdoid Tumor	0.664
+BS_862NMAR7	DIPG or DMG	0.9
+BS_8D0NYM46	Craniopharyngioma	0.902
+BS_8E8JKP01	Other high-grade glioma	0.487
+BS_8F9BDWY4	Mixed neuronal-glial tumor	0.92
+BS_8J09S6MZ	Schwannoma	0.327
+BS_8J3B6ZB6	Low-grade glioma	0.974
+BS_8PNA0V6R	Other high-grade glioma	0.646
+BS_8Q77HZ4R	Choroid plexus tumor	0.865
+BS_8RHPJ740	Ependymoma	0.948
+BS_8S86CM61	Mesenchymal tumor	0.896
+BS_8SQARNQW	Other high-grade glioma	0.568
+BS_8T7DZV2F	Medulloblastoma	0.386
+BS_8VAZSJEN	Low-grade glioma	0.968
+BS_8WPNFT03	Other tumor	0.979
+BS_8Z3SCKB5	Low-grade glioma	0.604
+BS_8ZP3CBQA	Ependymoma	0.881
+BS_8ZTEXH90	Other high-grade glioma	0.969
+BS_90B22NGP	Atypical Teratoid Rhabdoid Tumor	0.949
+BS_94MT16N2	Low-grade glioma	0.662
+BS_9755PSCS	Low-grade glioma	0.825
+BS_9BJARSX3	Low-grade glioma	0.975
+BS_9E7YVFJM	Other tumor	0.674
+BS_9F09XV62	Low-grade glioma	0.886
+BS_9FHSNVS0	Atypical Teratoid Rhabdoid Tumor	0.785
+BS_9G69F50J	Non-neoplastic tumor	0.782
+BS_9GJ23RHH	Mesenchymal tumor	0.585
+BS_9HSGV9TJ	Low-grade glioma	0.782
+BS_9M5XJ10G	Medulloblastoma	0.631
+BS_9NJHQE9F	Medulloblastoma	0.721
+BS_9NZ2D6AD	Medulloblastoma	0.761
+BS_9P9MB8X8	Low-grade glioma	0.922
+BS_9PB3XH5D	Medulloblastoma	0.916
+BS_9Q6Z6VJC	Low-grade glioma	0.976
+BS_9RT63JD9	Low-grade glioma	0.713
+BS_9SJWWYQ4	Low-grade glioma	0.857
+BS_9TXEDSWB	Other high-grade glioma	0.86
+BS_9V633J1X	Medulloblastoma	0.752
+BS_9XVACXP0	Other high-grade glioma	0.93
+BS_9XWJ88Q1	Non-neoplastic tumor	0.881
+BS_9ZJT0CP0	DIPG or DMG	0.581
+BS_A13BMEF5	Low-grade glioma	0.76
+BS_A14Z8BBK	Medulloblastoma	0.865
+BS_A1VEGWTR	Low-grade glioma	0.881
+BS_A46RDWGM	Low-grade glioma	0.761
+BS_A6NXR7RC	Other high-grade glioma	0.76
+BS_A7MC2KR2	Craniopharyngioma	0.894
+BS_A7Y1Y314	Other high-grade glioma	0.755
+BS_A87NPZAP	Medulloblastoma	0.947
+BS_A89VAPVV	Germ cell tumor	0.949
+BS_A8V685RR	Other high-grade glioma	0.938
+BS_AA164D3A	Non-neoplastic tumor	0.682
+BS_ABYF92Z9	Craniopharyngioma	0.949
+BS_AD4JPN9Q	Mixed neuronal-glial tumor	0.779
+BS_AG3D3435	Low-grade glioma	0.801
+BS_AG4H9S3J	Non-neoplastic tumor	0.397
+BS_AGS1HHGF	Choroid plexus tumor	0.83
+BS_AGTPCRR4	Ependymoma	0.99
+BS_AHEFXG7W	Medulloblastoma	0.754
+BS_AJ6X83G5	Mixed neuronal-glial tumor	0.767
+BS_AKRHBPNZ	Mixed neuronal-glial tumor	0.917
+BS_AM70R8RG	Medulloblastoma	0.686
+BS_AMQGM1V9	Non-neoplastic tumor	0.69
+BS_AMZ70B6F	Medulloblastoma	0.782
+BS_AP0SZ364	Low-grade glioma	0.866
+BS_ARBQDTT5	Low-grade glioma	0.486
+BS_ARFQ1WG3	Mixed neuronal-glial tumor	0.739
+BS_AS4K2YQW	Other high-grade glioma	0.864
+BS_AVYNZHSB	Low-grade glioma	0.925
+BS_AWH9757B	Other high-grade glioma	0.685
+BS_AYAMBZHS	Other high-grade glioma	0.766
+BS_AZN38B7V	Mesenchymal tumor	0.478
+BS_B0SVFK4P	Low-grade glioma	0.938
+BS_B1C6GZ84	DIPG or DMG	0.718
+BS_B1HVNV0T	Atypical Teratoid Rhabdoid Tumor	0.949
+BS_B3M5SGPA	Low-grade glioma	0.834
+BS_B4R7X1KE	Other high-grade glioma	0.698
+BS_B53Z0T1Q	Craniopharyngioma	0.84
+BS_B57327NA	DIPG or DMG	0.846
+BS_B61168DE	Other tumor	0.886
+BS_B6M763JS	Low-grade glioma	0.953
+BS_B741RZY9	Choroid plexus tumor	0.883
+BS_B7GEH89C	Low-grade glioma	0.982
+BS_B7X8VXQ3	Mixed neuronal-glial tumor	0.777
+BS_BA6AZWB3	Medulloblastoma	0.811
+BS_BBAEMXRD	Other high-grade glioma	0.815
+BS_BC936YNZ	Low-grade glioma	0.865
+BS_BHR08WGW	Craniopharyngioma	0.975
+BS_BJDNWMJH	Ependymoma	0.976
+BS_BKQZ550R	Low-grade glioma	0.893
+BS_BKR4E30C	Other high-grade glioma	0.884
+BS_BN986DF6	Low-grade glioma	0.576
+BS_BPSTSCBJ	Low-grade glioma	0.668
+BS_BPWEFR89	Medulloblastoma	0.671
+BS_BSV07M7Z	Medulloblastoma	0.677
+BS_BVSW4GTG	Medulloblastoma	0.807
+BS_BXXJ9P8C	Schwannoma	0.583
+BS_C05FKR8X	Ependymoma	0.659
+BS_C3P5BC92	Craniopharyngioma	0.984
+BS_C41DJZ1F	Other high-grade glioma	0.948
+BS_C51RB0YR	Low-grade glioma	0.771
+BS_C7A2TYAC	Low-grade glioma	0.816
+BS_C80S5N37	Ependymoma	0.832
+BS_CB6VK7PB	Low-grade glioma	0.655
+BS_CGB2WS2A	Low-grade glioma	0.919
+BS_CHDGRYHJ	Medulloblastoma	0.648
+BS_CQEETJ66	Schwannoma	0.886
+BS_CQSAJ7BF	Mixed neuronal-glial tumor	0.593
+BS_CREQ97QC	Mixed neuronal-glial tumor	0.905
+BS_CTR5X93B	Low-grade glioma	0.577
+BS_CV9QNWN7	Other high-grade glioma	0.816
+BS_CVGFNCBJ	Low-grade glioma	0.738
+BS_CXVJK2FY	Ependymoma	0.921
+BS_CYEY58NY	Other tumor	0.782
+BS_CZ3ER8DY	Ependymoma	0.768
+BS_CZ3NA7KV	Ependymoma	0.728
+BS_CZ82ANWP	Mixed neuronal-glial tumor	0.817
+BS_D0BGESQF	Non-neoplastic tumor	0.742
+BS_D0RDN4K5	Other CNS embryonal tumor	0.938
+BS_D144EJRQ	Medulloblastoma	0.774
+BS_D3YBV7KB	Low-grade glioma	0.781
+BS_D5MT05YK	Other high-grade glioma	0.899
+BS_D5NQV7N5	Craniopharyngioma	0.897
+BS_D5P6EZ1M	Schwannoma	0.646
+BS_D6J2BGDJ	Other high-grade glioma	0.645
+BS_D7XRFE0R	DIPG or DMG	0.679
+BS_DBEX7AG2	Mesenchymal tumor	0.974
+BS_DEHJF4C7	Low-grade glioma	0.779
+BS_DFWFBYSN	Medulloblastoma	0.922
+BS_DHA5FMVW	Atypical Teratoid Rhabdoid Tumor	0.686
+BS_DMZP9G1H	Mixed neuronal-glial tumor	0.789
+BS_DPF1CX0G	Low-grade glioma	0.787
+BS_DRD9QXR5	Craniopharyngioma	0.865
+BS_DS438CXE	Other high-grade glioma	0.57
+BS_DSPVSM7D	DIPG or DMG	0.967
+BS_DSS3S5XD	Low-grade glioma	0.87
+BS_DV86M0Y7	Low-grade glioma	0.606
+BS_DVCQ8XDZ	Meningioma	0.929
+BS_DY88N5ZT	Other tumor	0.905
+BS_DY9NTFQR	Non-neoplastic tumor	0.82
+BS_E054DFJN	Craniopharyngioma	0.886
+BS_E1B3BKYA	Low-grade glioma	0.677
+BS_E1CGF3KV	Low-grade glioma	0.941
+BS_E2Z940S4	Meningioma	0.983
+BS_E3BAT4C1	Medulloblastoma	0.769
+BS_E3EJHXQV	Low-grade glioma	0.878
+BS_E4F1D721	Ependymoma	0.876
+BS_E4QK839R	Low-grade glioma	0.869
+BS_EBMCTR80	Low-grade glioma	0.968
+BS_ECNBQ2RA	Other high-grade glioma	0.86
+BS_EF775B3K	Non-neoplastic tumor	0.529
+BS_EFE4YEK3	Medulloblastoma	0.939
+BS_EFEZB0ZH	Low-grade glioma	0.962
+BS_EHVYJAVA	Low-grade glioma	0.791
+BS_EK5PCKY0	Ependymoma	0.61
+BS_EMMF4PZX	Craniopharyngioma	0.94
+BS_EMYET8F4	Ependymoma	0.84
+BS_ENKG5GF3	Neurofibroma plexiform	0.678
+BS_ENX83H9Z	Other high-grade glioma	0.599
+BS_ERJAJ0KA	Mixed neuronal-glial tumor	0.853
+BS_ERWT0ZWE	Medulloblastoma	0.87
+BS_ET8CJXSF	Low-grade glioma	0.63
+BS_EVCAC3NH	Ependymoma	0.722
+BS_EXGBH3TD	Mixed neuronal-glial tumor	0.684
+BS_EXPJQZTH	Other high-grade glioma	0.804
+BS_EXYHZ6D4	Low-grade glioma	NA
+BS_EYSS0ZDS	Low-grade glioma	0.621
+BS_EYYMKWB7	Low-grade glioma	0.928
+BS_F4E8R9VY	Mixed neuronal-glial tumor	0.818
+BS_F6Z5HFWH	Choroid plexus tumor	0.862
+BS_F8N6CFQE	Low-grade glioma	0.855
+BS_F9WKPDFG	Choroid plexus tumor	0.655
+BS_F9Y4Z92G	Other high-grade glioma	0.739
+BS_FAQQ0GCQ	Mixed neuronal-glial tumor	0.607
+BS_FAVRBEW7	Choroid plexus tumor	0.971
+BS_FEV5A0HN	Other high-grade glioma	0.834
+BS_FEYMKEK8	Choroid plexus tumor	0.833
+BS_FGJH1X0S	Other high-grade glioma	0.742
+BS_FJWZ3M7V	Low-grade glioma	0.917
+BS_FKASA3MN	Other high-grade glioma	0.833
+BS_FKDQJJB5	Medulloblastoma	0.76
+BS_FRM9TG02	Neurofibroma plexiform	0.706
+BS_FRZ76GEG	Craniopharyngioma	0.948
+BS_FWMJPKCV	Mixed neuronal-glial tumor	0.737
+BS_FX2P2WEG	Other high-grade glioma	0.886
+BS_FXJY0MNH	DIPG or DMG	0.786
+BS_FYP2B298	Other high-grade glioma	0.111
+BS_FYRDYBMZ	Other high-grade glioma	0.879
+BS_G00FHF3Q	Medulloblastoma	0.631
+BS_G23JJAZY	Ependymoma	0.643
+BS_G5NHSFD4	Other high-grade glioma	0.75
+BS_G5QBBHDV	Low-grade glioma	1
+BS_G7AGNB5G	Low-grade glioma	0.914
+BS_GAGRGSSX	Atypical Teratoid Rhabdoid Tumor	0.881
+BS_GCA4GET3	Low-grade glioma	0.736
+BS_GDHH6T5A	Neurofibroma plexiform	0.871
+BS_GG9W3J9Y	Other high-grade glioma	0.922
+BS_GHNJ4CYC	Low-grade glioma	0.884
+BS_GJNCYABP	Atypical Teratoid Rhabdoid Tumor	0.882
+BS_GMDQK06Q	Craniopharyngioma	0.934
+BS_GMJBGBWB	Craniopharyngioma	0.807
+BS_GNV89A5P	Medulloblastoma	0.81
+BS_GPEGRCCT	Low-grade glioma	0.555
+BS_GR46VD0Q	Low-grade glioma	0.348
+BS_GSVCN2XC	Choroid plexus tumor	0.979
+BS_GTZCFGRZ	Mixed neuronal-glial tumor	0.804
+BS_GV3NZ9QD	Ependymoma	0.721
+BS_GW0GKWMS	DIPG or DMG	0.769
+BS_GYXSDZ56	Low-grade glioma	0.814
+BS_H1XPVS9A	Other high-grade glioma	0.871
+BS_H3FE3TH9	Low-grade glioma	0.963
+BS_H3Y8FWHV	Schwannoma	0.501
+BS_H4B5Y6S0	Medulloblastoma	0.847
+BS_H4NXBD2D	Ependymoma	0.958
+BS_H8A9PSYA	Low-grade glioma	0.824
+BS_H9JYKFTV	Other high-grade glioma	0.795
+BS_HB03GSHF	Medulloblastoma	0.669
+BS_HBJZR69P	Schwannoma	0.693
+BS_HC5M8JTC	Low-grade glioma	0.528
+BS_HCP5C912	Meningioma	0.881
+BS_HD4EJYE3	Medulloblastoma	0.877
+BS_HE57E1RP	Medulloblastoma	0.772
+BS_HF3RNN2T	Medulloblastoma	0.864
+BS_HHPA8NJ2	Medulloblastoma	0.69
+BS_HKZENFDA	Medulloblastoma	0.734
+BS_HQ5BJ6MW	Low-grade glioma	0.973
+BS_HSHN8PBB	Low-grade glioma	0.728
+BS_HTEPAKCM	Medulloblastoma	0.911
+BS_HV8PFRBR	Low-grade glioma	0.603
+BS_HX0S30NE	Low-grade glioma	0.669
+BS_HZE3KYZ1	Medulloblastoma	0.827
+BS_HZRM07TW	Medulloblastoma	0.901
+BS_J1AB8PMA	Medulloblastoma	0.468
+BS_J483EMFP	Atypical Teratoid Rhabdoid Tumor	0.834
+BS_J4GQPZS0	Schwannoma	0.658
+BS_J6VKB1VE	Low-grade glioma	0.691
+BS_J71N7D09	Medulloblastoma	0.71
+BS_J8G4SH4Z	Medulloblastoma	0.64
+BS_J8VX4D17	Ependymoma	0.924
+BS_J9CBGP57	Other high-grade glioma	0.812
+BS_JCPKYHKY	Craniopharyngioma	0.942
+BS_JFB984RG	Medulloblastoma	0.618
+BS_JFEZA9KE	Mesenchymal tumor	0.618
+BS_JG9JZTA9	Low-grade glioma	0.695
+BS_JGPR9SR2	Meningioma	0.822
+BS_JH29M4KG	Low-grade glioma	0.653
+BS_JHGW42S6	Ependymoma	0.987
+BS_JJVH7WR0	Other high-grade glioma	0.859
+BS_JKXA3FQC	Low-grade glioma	0.94
+BS_JMHG7GCN	Low-grade glioma	0.779
+BS_JQXHHK0K	Other high-grade glioma	0.737
+BS_JSPR854S	Neurofibroma plexiform	0.384
+BS_JT82QGXF	Medulloblastoma	0.933
+BS_JTMXAMB7	Medulloblastoma	0.529
+BS_JTWNJ8T7	Other high-grade glioma	0.91
+BS_JVA2NQFF	Low-grade glioma	0.557
+BS_JVW2JJ39	Other high-grade glioma	0.889
+BS_JWCX8R17	Other tumor	0.769
+BS_JWSR581E	Low-grade glioma	0.65
+BS_JX449BF5	Choroid plexus tumor	0.742
+BS_JX7S9MY7	Craniopharyngioma	0.976
+BS_JXNZYGCR	Mixed neuronal-glial tumor	0.804
+BS_JZRM1S3T	Medulloblastoma	0.551
+BS_K17VQECG	Other high-grade glioma	0.695
+BS_K25F4J3V	Atypical Teratoid Rhabdoid Tumor	0.821
+BS_K2FHZGTK	Meningioma	0.959
+BS_K3ER45RV	Medulloblastoma	0.661
+BS_K5802F84	Low-grade glioma	0.758
+BS_K74PZET7	Medulloblastoma	0.552
+BS_K7MVS0Z7	Low-grade glioma	0.802
+BS_K81DR8XG	Medulloblastoma	0.938
+BS_KBT7MQ6H	Ependymoma	0.825
+BS_KDSTG5YY	Ependymoma	0.852
+BS_KEA474HN	Low-grade glioma	0.856
+BS_KF0ZXDER	Meningioma	0.896
+BS_KFD5128N	Other high-grade glioma	0.529
+BS_KK5C8VCK	Choroid plexus tumor	0.863
+BS_KM2EX0K6	Mixed neuronal-glial tumor	0.951
+BS_KN92S7YQ	Medulloblastoma	0.96
+BS_KP735TJ6	Other high-grade glioma	0.937
+BS_KPT2WPHW	Mixed neuronal-glial tumor	0.876
+BS_KQ6ZW085	Other high-grade glioma	0.732
+BS_KSKZ9J7J	Other CNS embryonal tumor	0.755
+BS_KT3C0XCA	Ependymoma	0.684
+BS_KVAJYZ6F	Mixed neuronal-glial tumor	0.896
+BS_KVNGNETA	Medulloblastoma	0.405
+BS_KVV7001W	Mixed neuronal-glial tumor	0.797
+BS_KXCY5BN5	Atypical Teratoid Rhabdoid Tumor	0.298
+BS_KXMYBQ6N	Ependymoma	0.873
+BS_KYF0Q0E7	Medulloblastoma	0.76
+BS_KZPR01BD	Mixed neuronal-glial tumor	0.812
+BS_M026T44Q	Meningioma	0.94
+BS_M0QYNVK8	Other high-grade glioma	0.727
+BS_M0XGZ53Z	Other high-grade glioma	0.911
+BS_M15PW2N0	Medulloblastoma	0.648
+BS_M4NVX721	Mixed neuronal-glial tumor	0.945
+BS_M4TTKPNR	Low-grade glioma	0.983
+BS_M7QJ8VF0	Other tumor	0.914
+BS_M84H3KXA	Medulloblastoma	0.663
+BS_M8M56Z4Y	Low-grade glioma	0.734
+BS_M8WP5T16	Low-grade glioma	0.851
+BS_M9C4RY4P	Schwannoma	0.86
+BS_MA1A3GY0	Non-neoplastic tumor	0.69
+BS_MA2T7ET1	Ependymoma	0.957
+BS_MB7WN0ZB	DIPG or DMG	0.925
+BS_MBSTWZA6	Low-grade glioma	0.942
+BS_MD0937XT	Other high-grade glioma	0.372
+BS_MD3DT41J	Mesenchymal tumor	0.691
+BS_MDBT7S5Z	DIPG or DMG	0.406
+BS_ME3HKN2C	Low-grade glioma	0.673
+BS_MF47B9ZW	Mixed neuronal-glial tumor	0.751
+BS_MF9X3PKH	Low-grade glioma	0.893
+BS_MG78HQDM	Other high-grade glioma	0.853
+BS_MGAMKKBD	Other tumor	0.87
+BS_MMNRZ1EQ	Atypical Teratoid Rhabdoid Tumor	0.854
+BS_MT15SGJN	Ependymoma	0.937
+BS_MVW01FPB	Atypical Teratoid Rhabdoid Tumor	0.625
+BS_MWWZBQ60	DIPG or DMG	0.949
+BS_MY9D8XZ1	Low-grade glioma	0.844
+BS_N0877CX1	Atypical Teratoid Rhabdoid Tumor	0.877
+BS_N1E0H8YQ	Low-grade glioma	0.914
+BS_N210XMKR	Low-grade glioma	0.81
+BS_N4B1SZZH	Medulloblastoma	0.936
+BS_N5B2CZMH	Low-grade glioma	0.569
+BS_N5DVEJXT	Ependymoma	0.825
+BS_N6NE6B3W	Low-grade glioma	0.816
+BS_N8J1DP02	Ependymoma	0.989
+BS_NB5XWMJT	Low-grade glioma	0.778
+BS_NDN62H0S	Non-neoplastic tumor	0.913
+BS_NDRDM2A9	Neurofibroma plexiform	0.511
+BS_NGHK9RZP	Ependymoma	0.692
+BS_NGY0TE6S	Craniopharyngioma	0.836
+BS_NKEAAFMW	Medulloblastoma	0.927
+BS_NKRYMHEP	Medulloblastoma	0.763
+BS_NQB91P48	Low-grade glioma	0.893
+BS_NQFH3GZH	Choroid plexus tumor	0.701
+BS_NR3P3GN2	DIPG or DMG	0.896
+BS_NR9FRY5T	Schwannoma	0.698
+BS_NRFQEQKP	Low-grade glioma	0.905
+BS_NS7GSHB9	Low-grade glioma	0.964
+BS_NT9NZYFD	Mixed neuronal-glial tumor	0.914
+BS_NVKGSMXS	Non-neoplastic tumor	0.951
+BS_NYS8TRCB	Low-grade glioma	0.885
+BS_NZ71XCG3	Medulloblastoma	0.827
+BS_P1AZ9H9A	Other high-grade glioma	0.482
+BS_P44PE00R	Non-neoplastic tumor	0.965
+BS_P4D8Y3S8	Mesenchymal tumor	0.81
+BS_P78SMRBS	Ependymoma	0.971
+BS_P7EY9DXG	Atypical Teratoid Rhabdoid Tumor	0.826
+BS_PENM28KT	Other high-grade glioma	0.856
+BS_PEP9NZXN	Low-grade glioma	0.752
+BS_PGHK1JRW	Atypical Teratoid Rhabdoid Tumor	0.855
+BS_PJ1T8CQR	Other high-grade glioma	0.796
+BS_PJC6FH4Y	DIPG or DMG	0.805
+BS_PJPGVD62	Ependymoma	0.986
+BS_PKK3BZRG	Choroid plexus tumor	0.847
+BS_PN2CE34A	Low-grade glioma	0.992
+BS_PQ7CQFYR	Mixed neuronal-glial tumor	0.833
+BS_PQVTB6BB	Other high-grade glioma	0.605
+BS_PQY28YXA	Other high-grade glioma	0.638
+BS_PRAEF32W	Ependymoma	0.983
+BS_PRR8K9GE	Craniopharyngioma	0.945
+BS_PSW27ZTE	Ependymoma	0.975
+BS_Q2T9ZRM0	Meningioma	0.974
+BS_Q3TBCK4V	Low-grade glioma	0.653
+BS_Q5WZYWCT	Ependymoma	0.982
+BS_Q79NP5YY	Low-grade glioma	0.89
+BS_Q9V7A95C	Mesenchymal tumor	0.71
+BS_QB7YGKN1	Mixed neuronal-glial tumor	0.691
+BS_QBR4WCQ2	Other tumor	0.712
+BS_QC3XCE6X	Low-grade glioma	0.768
+BS_QEYPFYHD	Medulloblastoma	0.924
+BS_QF5VVZX5	Mixed neuronal-glial tumor	0.849
+BS_QH82PBMB	Low-grade glioma	0.533
+BS_QPPPGYP4	Medulloblastoma	0.928
+BS_QRDT19KS	Medulloblastoma	0.873
+BS_QT3NZ2YZ	Other CNS embryonal tumor	0.763
+BS_QTSXW7DA	Low-grade glioma	0.923
+BS_QV51J756	Mixed neuronal-glial tumor	0.806
+BS_QW60M0FE	Meningioma	0.467
+BS_QWNBZ9RJ	Other CNS embryonal tumor	0.915
+BS_QX12J6W1	Atypical Teratoid Rhabdoid Tumor	0.908
+BS_QXKRN6CR	Ependymoma	0.56
+BS_R13X6TMW	Low-grade glioma	0.712
+BS_R244Z0WX	Low-grade glioma	0.752
+BS_R439VVPK	Medulloblastoma	0.606
+BS_R4Y180DM	Mesenchymal tumor	0.602
+BS_R5SNFB5B	Other high-grade glioma	0.789
+BS_R634WKN7	Low-grade glioma	0.942
+BS_R6WNEEE4	Medulloblastoma	0.582
+BS_R7HZCZ8B	Craniopharyngioma	0.891
+BS_RCC8BXVE	Medulloblastoma	0.696
+BS_RCFQ31XF	Ependymoma	0.906
+BS_RD4D5F9F	Medulloblastoma	0.742
+BS_RGPSEMHC	Ependymoma	0.441
+BS_RGSMX7QD	Mixed neuronal-glial tumor	0.891
+BS_RHD7XPNP	Ependymoma	0.985
+BS_RJC3WDD6	Other high-grade glioma	0.685
+BS_RRAEQZ97	Low-grade glioma	0.832
+BS_RSRPX3S8	Medulloblastoma	0.855
+BS_RVSEDNJ4	Mixed neuronal-glial tumor	0.965
+BS_RWJZFTP9	Low-grade glioma	0.653
+BS_RXN5T5YT	DIPG or DMG	0.986
+BS_S1KK7XRH	Low-grade glioma	0.676
+BS_S1M423AB	Medulloblastoma	0.884
+BS_S3MET0JZ	DIPG or DMG	0.624
+BS_S50KQEXV	Low-grade glioma	0.518
+BS_S6B9DVNS	Other high-grade glioma	0.953
+BS_S6NJRR5W	Craniopharyngioma	0.882
+BS_S71RJ8DH	Atypical Teratoid Rhabdoid Tumor	0.745
+BS_SAA624A4	Ependymoma	1
+BS_SB12W1XT	Other high-grade glioma	0.604
+BS_SBFNFZ8B	Non-neoplastic tumor	0.747
+BS_SD8YBRBR	Other high-grade glioma	0.926
+BS_SDA4RMMG	Low-grade glioma	0.979
+BS_SDCNP7MW	Ependymoma	0.94
+BS_SDZY6RZ3	Low-grade glioma	0.732
+BS_SES41DAX	Choroid plexus tumor	0.535
+BS_SFKZSJN1	Low-grade glioma	0.831
+BS_SHMC4902	Low-grade glioma	0.894
+BS_SKGJ5SY9	Medulloblastoma	0.792
+BS_SM8VQFPD	Mixed neuronal-glial tumor	0.837
+BS_SXRS2P6T	Low-grade glioma	0.751
+BS_SY3J3XR9	Other high-grade glioma	0.643
+BS_T0RKFEKR	Low-grade glioma	0.884
+BS_T1DVKKJB	Ependymoma	0.871
+BS_T1QMEH1N	Craniopharyngioma	0.945
+BS_T1W4JA94	Low-grade glioma	0.762
+BS_T2F48Z4E	Other high-grade glioma	0.794
+BS_T2QPMZCM	Low-grade glioma	0.787
+BS_T3H5AY8A	Low-grade glioma	0.656
+BS_T4JFN54G	Low-grade glioma	0.728
+BS_T4P3J13C	Ependymoma	0.985
+BS_T55Y4Z0Y	Low-grade glioma	0.819
+BS_T9A8JJW5	Other high-grade glioma	0.713
+BS_TA9WP4TH	Medulloblastoma	0.768
+BS_TBWYAFSM	Ependymoma	0.961
+BS_TDEFAPNH	Mixed neuronal-glial tumor	0.711
+BS_TE0GVDNG	Medulloblastoma	0.862
+BS_TG93XC55	Mixed neuronal-glial tumor	0.904
+BS_TGS109T3	DIPG or DMG	0.497
+BS_TGW6HC4X	Mixed neuronal-glial tumor	0.771
+BS_THSPSG2Z	Meningioma	0.659
+BS_TNRHHYNC	Ependymoma	0.959
+BS_TPB6WVF4	Other high-grade glioma	0.47
+BS_TQ5QHR17	Neurofibroma plexiform	0.647
+BS_TR2P8KRF	DIPG or DMG	0.611
+BS_TRPXB3AV	Other high-grade glioma	0.292
+BS_TV5B86ZD	Other high-grade glioma	0.604
+BS_TVH33J9Q	Other high-grade glioma	0.763
+BS_TW8DQH8J	Medulloblastoma	0.385
+BS_TXY8QYWA	Ependymoma	0.766
+BS_TXZ7KHTQ	DIPG or DMG	0.712
+BS_TYAYZ9ZW	Medulloblastoma	0.838
+BS_TYQ0N4YP	Other high-grade glioma	0.833
+BS_TZVFR600	Medulloblastoma	0.856
+BS_V0JFAS12	Other high-grade glioma	0.673
+BS_V3Z3DB4N	Other high-grade glioma	0.872
+BS_V4W81SFC	Ependymoma	0.624
+BS_V72GX2AZ	Low-grade glioma	0.536
+BS_V72H4RQS	Medulloblastoma	0.824
+BS_V89HGTET	Low-grade glioma	0.688
+BS_V9HVBBDW	Medulloblastoma	0.963
+BS_VA5T4KAA	Medulloblastoma	0.735
+BS_VF5XWFXD	DIPG or DMG	0.922
+BS_VJ2S5DVS	Ependymoma	0.335
+BS_VJAC9H58	Schwannoma	0.598
+BS_VJVDJABP	Medulloblastoma	0.789
+BS_VKYEM67A	DIPG or DMG	0.751
+BS_VMEX27TN	Medulloblastoma	0.894
+BS_VMMJYN8Z	Mixed neuronal-glial tumor	0.75
+BS_VNE0ZPBS	Non-neoplastic tumor	0.859
+BS_VNK9XYV9	Craniopharyngioma	0.817
+BS_VP3C8WZT	Low-grade glioma	0.813
+BS_VPBMDMQX	Medulloblastoma	0.814
+BS_VR7FR1NE	Low-grade glioma	0.969
+BS_VT6C6N6K	Medulloblastoma	0.877
+BS_VTJ9ESSV	Mixed neuronal-glial tumor	0.832
+BS_VVFBW0YH	Medulloblastoma	0.763
+BS_VXHWZJDC	Germ cell tumor	0.741
+BS_W18SF91A	Non-neoplastic tumor	0.838
+BS_W311713R	Medulloblastoma	0.848
+BS_W36RZSFA	Choroid plexus tumor	0.698
+BS_W41S7B55	Mesenchymal tumor	0.919
+BS_W4HGV6E7	Low-grade glioma	0.936
+BS_W6AC5J3C	Meningioma	0.764
+BS_W7FP2G3F	Mixed neuronal-glial tumor	0.912
+BS_W80TJC27	Ependymoma	0.809
+BS_W9AT0MR7	Medulloblastoma	0.868
+BS_W9N9844Q	Other high-grade glioma	0.658
+BS_WBVSK3MP	Other high-grade glioma	0.604
+BS_WCRKYV0T	Low-grade glioma	0.719
+BS_WE3Q8A73	Choroid plexus tumor	0.967
+BS_WFD0GE5X	Ependymoma	0.993
+BS_WH5HDE0A	Medulloblastoma	0.822
+BS_WHBEXD5H	Other high-grade glioma	0.476
+BS_WJGFDRWK	Mesenchymal tumor	0.937
+BS_WMEHNDSK	Other tumor	0.75
+BS_WQ1YRTAT	Other high-grade glioma	0.842
+BS_WQNXWJXE	Other high-grade glioma	0.87
+BS_WRHDP7WF	Ependymoma	0.837
+BS_WRQHPSXQ	Mixed neuronal-glial tumor	0.849
+BS_WSQMAA33	Germ cell tumor	0.584
+BS_WV0S8N4M	Atypical Teratoid Rhabdoid Tumor	0.783
+BS_WVW3W6ZB	Atypical Teratoid Rhabdoid Tumor	0.7
+BS_WYERXS4G	Ependymoma	0.981
+BS_X0F9AYEC	Low-grade glioma	0.784
+BS_X16PENSA	Low-grade glioma	0.785
+BS_X4X1SFSE	Other high-grade glioma	0.72
+BS_X59HSFGG	Low-grade glioma	0.837
+BS_X67GTEM6	Ependymoma	0.89
+BS_X91K8KMG	Low-grade glioma	0.506
+BS_X9EGD530	Low-grade glioma	0.814
+BS_XF0ZX2B3	Ependymoma	0.892
+BS_XG0DBWVT	DIPG or DMG	0.89
+BS_XGSA3GQE	Low-grade glioma	0.652
+BS_XHCYEE2S	Craniopharyngioma	0.832
+BS_XJTW0P8P	Non-neoplastic tumor	0.777
+BS_XKKB4MZV	Low-grade glioma	0.718
+BS_XQYHPBFS	Ependymoma	0.807
+BS_XZTV0J8W	Mesenchymal tumor	0.794
+BS_Y0PCBNJV	Low-grade glioma	0.843
+BS_Y7F9E2E9	Low-grade glioma	0.675
+BS_YA0KMBRT	Other high-grade glioma	0.93
+BS_YCREDZTJ	Low-grade glioma	0.691
+BS_YEB88D32	Medulloblastoma	0.864
+BS_YEQVW4ND	Low-grade glioma	0.715
+BS_YETBN0RQ	Medulloblastoma	0.431
+BS_YEW22W35	Other high-grade glioma	0.881
+BS_YG0A13JH	Low-grade glioma	0.989
+BS_YH05F9DB	Craniopharyngioma	0.908
+BS_YNEQJ6AH	Mixed neuronal-glial tumor	0.69
+BS_YVMEEBKC	Low-grade glioma	0.636
+BS_YY5B2XDD	Low-grade glioma	0.857
+BS_YZ2Z1Q6Y	Low-grade glioma	0.793
+BS_Z0AVVB1V	Low-grade glioma	0.781
+BS_Z1A875MW	Mixed neuronal-glial tumor	0.866
+BS_Z28VKGNS	Neurofibroma plexiform	0.812
+BS_Z2NWPQKF	Non-neoplastic tumor	0.872
+BS_Z45HD492	Medulloblastoma	0.764
+BS_Z6BWR941	Low-grade glioma	0.762
+BS_Z6MC4N8D	Non-neoplastic tumor	0.633
+BS_Z72QAZC7	Non-neoplastic tumor	0.48
+BS_Z7G68ZS2	Non-neoplastic tumor	0.701
+BS_Z7Y2466H	Low-grade glioma	0.945
+BS_Z85M2R3N	Choroid plexus tumor	0.979
+BS_Z8F3GM85	Other high-grade glioma	0.766
+BS_Z8YZ6QGS	Other high-grade glioma	0.698
+BS_Z9ZS6ZS2	Non-neoplastic tumor	0.814
+BS_ZF34SJGN	Craniopharyngioma	0.884
+BS_ZN8136D9	Choroid plexus tumor	0.969
+BS_ZR96A4FH	Mixed neuronal-glial tumor	0.642
+BS_ZRM0W01M	Low-grade glioma	0.65
+BS_ZTWGFWTX	Low-grade glioma	0.966
+BS_ZV68CES9	Medulloblastoma	0.709
+BS_ZVWE73JZ	DIPG or DMG	0.855
+BS_ZVX2GRD6	Low-grade glioma	0.873
+BS_ZVZDDW2G	Low-grade glioma	0.99
+BS_ZWR9W4FX	Craniopharyngioma	0.833
+BS_ZXYDSBM9	Medulloblastoma	0.831
+BS_ZZMYDZJW	Low-grade glioma	0.989

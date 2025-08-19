@@ -65,7 +65,7 @@ clk1_psi_file <- file.path(root_dir,
                            "analyses", 
                            "CLK1-splicing_correlations", 
                            "results", 
-                           "clk1-exon4-proportion.tsv")
+                           "clk1-exon4-psi.tsv")
 ```
 
 Wrangle data 
