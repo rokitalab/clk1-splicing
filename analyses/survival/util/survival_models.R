@@ -675,12 +675,59 @@ plotForest <- function(model, filter_estimates = TRUE) {
       #remove values for reference
       mutate(value = value)
     
+    # labels_panel <- ggplot(survival_df_spread) +
+    #   aes(x = name, y = term, label = value) + 
+    #   geom_text(hjust = 0, size = 3,
+    #             nudge_x = -0.5) +
+    #   ggpubr::theme_pubr() + 
+    #   # remove axes.
+    #   theme(
+    #     axis.title.x = element_blank(),
+    #     axis.text.x = element_text(face = "bold"),
+    #     axis.ticks.x = element_blank(),
+    #     axis.line.x = element_blank(),
+    #     axis.title.y = element_blank(),
+    #     axis.text.y = element_blank(),
+    #     axis.ticks.y = element_blank(),
+    #     axis.line.y = element_blank(),
+    #     # -26 is as low as we can go before plot starts to get coverd
+    #     plot.margin = margin(6, 0, 6, 0, unit = "pt"),
+    #     #  plot.subtitle = element_text(face = "bold")
+    #   ) +
+    #   scale_x_discrete(labels = c("      HR (95% CI)            ", 
+    #                               "P-value              "),
+    #                    position = "top")
+    
+    # labels_panel <- ggplot(survival_df_spread) +
+    #   aes(x = name, y = term, label = value) + 
+    #   geom_text(hjust = 0, size = 3,
+    #             nudge_x = -0.5) +
+    #   ggpubr::theme_pubr() + 
+    #   theme(
+    #     axis.title.x = element_blank(),
+    #     axis.text.x = element_text(face = "bold"),
+    #     axis.ticks.x = element_blank(),
+    #     axis.line.x = element_blank(),
+    #     axis.title.y = element_blank(),
+    #     axis.text.y = element_blank(),
+    #     axis.ticks.y = element_blank(),
+    #     axis.line.y = element_blank(),
+    #     plot.margin = margin(6, 0, 6, 0, unit = "pt")
+    #   ) +
+    #   scale_x_discrete(
+    #     labels = c("HR (95% CI)            ",
+    #                "P-value                    "),
+    #     position = "top",
+    #     expand = expansion(mult = c(0.2, 0.4)) # add spacing
+    #   )
+    
+    
+    
     labels_panel <- ggplot(survival_df_spread) +
       aes(x = name, y = term, label = value) + 
-      geom_text(hjust = 0, size = 3,
-                nudge_x = -0.5) +
+      geom_text(hjust = 0.5, size = 3,
+                nudge_x = 0) +
       ggpubr::theme_pubr() + 
-      # remove axes.
       theme(
         axis.title.x = element_blank(),
         axis.text.x = element_text(face = "bold"),
@@ -690,13 +737,14 @@ plotForest <- function(model, filter_estimates = TRUE) {
         axis.text.y = element_blank(),
         axis.ticks.y = element_blank(),
         axis.line.y = element_blank(),
-        # -26 is as low as we can go before plot starts to get coverd
-        plot.margin = margin(6, 0, 6, 0, unit = "pt"),
-        #  plot.subtitle = element_text(face = "bold")
+        plot.margin = margin(6, 0, 6, 0, unit = "pt")
       ) +
-      scale_x_discrete(labels = c("      HR (95% CI)            ", 
-                                  "P-value              "),
-                       position = "top")
+      scale_x_discrete(
+        labels = c("HR (95% CI)",
+                   "P-value"),
+        position = "top",
+        expand = expansion(mult = c(0.7, 0.85))) # add spacing
+    
     
     forest_panels <- cowplot::plot_grid(forest_plot, labels_panel, nrow = 1, rel_widths = c(1,0.5), 
                                         scale = 1, align = "h", hjust = 0, ncol = 2)
