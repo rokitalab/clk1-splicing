@@ -380,9 +380,9 @@ cluster6_df <- metadata %>%
       TRUE ~ NA_character_
     )) %>%
   dplyr::mutate(CLK1_TPM_group = fct_relevel(CLK1_TPM_group,
-                                                 c("High CLK1 TPM", "Low CLK1 TPM")),
+                                                 c("Low CLK1 TPM", "High CLK1 TPM")),
                 CLK1_PSI_group = fct_relevel(CLK1_PSI_group,
-                                                 c("High CLK1 PSI", "Low CLK1 PSI")))
+                                                 c("Low CLK1 PSI", "High CLK1 PSI")))
 ```
 
 Generate KM models with `CLK1_TPM_group` as covariate
