@@ -2,7 +2,7 @@
 
 Module authors: Ryan Corbett (@rjcorb), Ammar Naqvi (@naqvia), Jo Lynne Rokita (@jharenza)
 
-The purpose of this module is to assess survival in tumor histologies by overall splicing burden index and CLK1 exon 4 PSI
+The purpose of this module is to assess survival in CNS tumor pediatric patients by cluster, overall splicing burden index, spliceosome GVSA score, and CLK1 TPM and exon 4 PSI.
 
 ## Usage
 ### script to run analysis
@@ -20,142 +20,148 @@ Input files:
 ## Folder content
 * `run-survival-module.sh` shell script to run analysis
 * `01-prepare-survival.Rmd` Merge splicing data with relevant histology data and define survival features
-* `02-run-survival-SIgroup.Rmd` Assess histology-specific survival by splicing burden index (SBI) group (high vs low burden)
-* `03-plot-survival.R` plot SBI survival models
-* `04-survival-hgg-clk1-status.Rmd` Assess survival by CLK1 exon 4 PSI in HGG tumors
-* `05-survival_by_cluster.Rmd` Assess survival by splicing cluster assignment in all histologies, LGG, and HGG
-* `06-run-survival-clk1-status-all.Rmd` Assess survival by CLK1 status
-* `07-plot-survival-clk1-status-all.R` Plot survival by CLK1 status
-* `08-survival_by_cluster_sbi_spliceosome_gsva.Rmd` Plot survival by cluster and SI or GSVA status
+* `02-survival_by_cluster.Rmd` Assess survival by splicing cluster assignment in all histologies, LGG, and HGG
+* `03-survival_by_cluster_sbi_spliceosome_gsva.Rmd` Plot survival by cluster and SI or GSVA status
+* `04-survival_by_cluster_clk1.Rmd` Plot survival by cluster and CLK1 TPM and PSI
 
 ## Directory structure
 ```
 .
 ├── 01-prepare-survival.nb.html
 ├── 01-prepare-survival.Rmd
-├── 02-run-survival-SIgroup.nb.html
-├── 02-run-survival-SIgroup.Rmd
-├── 03-plot-survival.R
-├── 04-survival-hgg-clk1-status.nb.html
-├── 04-survival-hgg-clk1-status.Rmd
-├── 05-survival_by_cluster.nb.html
-├── 05-survival_by_cluster.Rmd
-├── 06-run-survival-clk1-status-all.nb.html
-├── 06-run-survival-clk1-status-all.Rmd
-├── 07-plot-survival-clk1-status-all.R
-├── 08-survival_by_cluster_sbi_spliceosome_gsva.nb.html
-├── 08-survival_by_cluster_sbi_spliceosome_gsva.Rmd
+├── 02-survival_by_cluster.nb.html
+├── 02-survival_by_cluster.Rmd
+├── 03-survival_by_cluster_sbi_spliceosome_gsva.nb.html
+├── 03-survival_by_cluster_sbi_spliceosome_gsva.Rmd
+├── 04-survival_by_cluster_clk1.nb.html
+├── 04-survival_by_cluster_clk1.Rmd
 ├── plots
-│   ├── ATRT
-│   ├── CPG
-│   ├── DMG
-│   ├── EPN
+│   ├── cox_EFS_interaction_terms_resection_lgg_group_cluster_spliceosome_gsva_score_CLK1_Ex4_TPM.pdf
+│   ├── cox_EFS_interaction_terms_resection_lgg_group_cluster_spliceosome_gsva_score_SBI_SE.pdf
+│   ├── forest_add_EFS_cluster6_histology_resection_clk1_psi_group.pdf
+│   ├── forest_add_EFS_cluster6_histology_resection_clk1_psi.pdf
+│   ├── forest_add_EFS_cluster6_histology_resection_clk1_tpm_group.pdf
+│   ├── forest_add_EFS_cluster6_histology_resection_clk1_tpm.pdf
+│   ├── forest_add_EFS_cluster6_histology_resection_spliceosome_group.pdf
 │   ├── forest_add_EFS_HGG_subtype_cluster_assignment_SBI.pdf
 │   ├── forest_add_EFS_HGG_subtype_cluster_assignment_spliceosome_score.pdf
 │   ├── forest_add_EFS_HGG_subtype_cluster_assignment.pdf
 │   ├── forest_add_EFS_LGG_resection_subtype_cluster_assignment_SBI.pdf
 │   ├── forest_add_EFS_LGG_resection_subtype_cluster_assignment_spliceosome_score.pdf
 │   ├── forest_add_EFS_LGG_resection_subtype_cluster_assignment.pdf
+│   ├── forest_add_EFS_resection_lgg_group_cluster_assignment_CLK1_ex4_PSI.pdf
+│   ├── forest_add_EFS_resection_lgg_group_cluster_assignment_CLK1_Ex4_TPM.pdf
+│   ├── forest_add_EFS_resection_lgg_group_cluster_assignment_SBI_CLK1_Ex4_TPM.pdf
 │   ├── forest_add_EFS_resection_lgg_group_cluster_assignment_SBI.pdf
+│   ├── forest_add_EFS_resection_lgg_group_cluster_assignment_spliceosome_score_CLK1_Ex4_TPM.pdf
 │   ├── forest_add_EFS_resection_lgg_group_cluster_assignment_spliceosome_score.pdf
 │   ├── forest_add_EFS_resection_lgg_group_cluster_assignment.pdf
+│   ├── forest_add_OS_cluster6_histology_resection_clk1_psi_group.pdf
+│   ├── forest_add_OS_cluster6_histology_resection_clk1_psi.pdf
+│   ├── forest_add_OS_cluster6_histology_resection_clk1_tpm_group.pdf
+│   ├── forest_add_OS_cluster6_histology_resection_clk1_tpm.pdf
+│   ├── forest_add_OS_cluster6_histology_resection_si.pdf
 │   ├── forest_add_OS_HGG_subtype_cluster_assignment_SBI.pdf
 │   ├── forest_add_OS_HGG_subtype_cluster_assignment_spliceosome_score.pdf
 │   ├── forest_add_OS_HGG_subtype_cluster_assignment.pdf
 │   ├── forest_add_OS_LGG_resection_subtype_cluster_assignment.pdf
+│   ├── forest_add_OS_resection_lgg_group_cluster_assignment_CLK1_ex4_PSI.pdf
+│   ├── forest_add_OS_resection_lgg_group_cluster_assignment_CLK1_Ex4_TPM.pdf
+│   ├── forest_add_OS_resection_lgg_group_cluster_assignment_SBI_CLK1_Ex4_TPM.pdf
 │   ├── forest_add_OS_resection_lgg_group_cluster_assignment_SBI.pdf
+│   ├── forest_add_OS_resection_lgg_group_cluster_assignment_spliceosome_score_CLK1_Ex4_TPM.pdf
 │   ├── forest_add_OS_resection_lgg_group_cluster_assignment_spliceosome_score.pdf
 │   ├── forest_add_OS_resection_lgg_group_cluster_assignment.pdf
-│   ├── forest_DMG_EFS_add_subtype_clk1_status.pdf
-│   ├── forest_DMG_OS_add_subtype_clk1_status.pdf
-│   ├── forest_HGG_DMG_EFS_add_subtype_clk1_status_agedx.pdf
-│   ├── forest_HGG_DMG_EFS_int_subtype_clk1_status_agedx.pdf
-│   ├── forest_HGG_DMG_EFS_subtype_int_clk1_status_agedx.pdf
-│   ├── forest_HGG_DMG_OS_add_subtype_clk1_status.pdf
-│   ├── forest_HGG_DMG_OS_int_subtype_clk1_status_agedx.pdf
-│   ├── forest_HGG_DMG_OS_subtype_int_clk1_status_agedx.pdf
-│   ├── forest_HGG_EFS_add_subtype_clk1_status.pdf
-│   ├── forest_HGG_OS_add_subtype_clk1_status.pdf
-│   ├── forest_int_EFS_resection_lgg_group_cluster_assignment_SI_SE.pdf
+│   ├── forest_int_EFS_resection_lgg_group_cluster_assignment_CLK1_ex4_PSI.pdf
+│   ├── forest_int_EFS_resection_lgg_group_cluster_assignment_CLK1_Ex4_TPM.pdf
+│   ├── forest_int_EFS_resection_lgg_group_cluster_assignment_SBI_SE.pdf
 │   ├── forest_int_EFS_resection_lgg_group_cluster_assignment_spliceosome_gsva_score.pdf
-│   ├── forest_int_OS_resection_lgg_group_cluster_assignment_SI_SE.pdf
+│   ├── forest_int_EFS_resection_lgg_group_cluster_clk1_age.pdf
+│   ├── forest_int_OS_resection_lgg_group_cluster_assignment_CLK1_ex4_PSI.pdf
+│   ├── forest_int_OS_resection_lgg_group_cluster_assignment_CLK1_Ex4_TPM.pdf
+│   ├── forest_int_OS_resection_lgg_group_cluster_assignment_SBI_SE.pdf
 │   ├── forest_int_OS_resection_lgg_group_cluster_assignment_spliceosome_gsva_score.pdf
-│   ├── GNG
-│   ├── HGG
+│   ├── forest_int_OS_resection_lgg_group_cluster_clk1_age.pdf
+│   ├── km_cluster6_EFS_clk1_psi_group.pdf
+│   ├── km_cluster6_EFS_clk1_tpm_group.pdf
 │   ├── km_cluster6_EFS_sbi_group.pdf
 │   ├── km_cluster6_EFS_splice_group.pdf
+│   ├── km_cluster6_OS_clk1_psi_group.pdf
+│   ├── km_cluster6_OS_clk1_tpm_group.pdf
 │   ├── km_cluster6_OS_sbi_group.pdf
 │   ├── km_cluster6_OS_splice_group.pdf
-│   ├── km_DMG_OS_EFS_CLK1_status.pdf
 │   ├── km_EFS_cluster_assignment.pdf
-│   ├── km_HGG_DMG_OS_EFS_CLK1_status.pdf
 │   ├── km_hgg_EFS_cluster_assignment.pdf
 │   ├── km_hgg_EFS_spliceosome_score.pdf
 │   ├── km_hgg_OS_cluster_assignment.pdf
-│   ├── km_HGG_OS_EFS_CLK1_status.pdf
 │   ├── km_hgg_OS_spliceosome_score.pdf
 │   ├── km_lgg_EFS_cluster_assignment.pdf
 │   ├── km_lgg_OS_cluster_assignment.pdf
-│   ├── km_OS_cluster_assignment.pdf
-│   ├── LGG
-│   └── MB
+│   └── km_OS_cluster_assignment.pdf
 ├── README.md
 ├── results
-│   ├── ATRT
-│   ├── cox_DMG_EFS_additive_terms_subtype_clk1_status.RDS
-│   ├── cox_DMG_OS_additive_terms_subtype_clk1_status.RDS
+│   ├── cox_EFS_additive_terms_resection_lgg_group_cluster_CLK1_ex4_PSI.RDS
+│   ├── cox_EFS_additive_terms_resection_lgg_group_cluster_CLK1_Ex4_TPM.RDS
+│   ├── cox_EFS_additive_terms_resection_lgg_group_cluster_SBI_CLK1_Ex4_TPM.RDS
 │   ├── cox_EFS_additive_terms_resection_lgg_group_cluster_SBI.RDS
+│   ├── cox_EFS_additive_terms_resection_lgg_group_cluster_spliceosome_score_CLK1_Ex4_TPM.RDS
 │   ├── cox_EFS_additive_terms_resection_lgg_group_cluster_spliceosome_score.RDS
 │   ├── cox_EFS_additive_terms_resection_lgg_group_cluster.RDS
-│   ├── cox_EFS_interaction_terms_resection_lgg_group_cluster_SI_SE.RDS
+│   ├── cox_EFS_additive_terms_subtype_cluster_clk1_psi_group.RDS
+│   ├── cox_EFS_additive_terms_subtype_cluster_clk1_psi.RDS
+│   ├── cox_EFS_additive_terms_subtype_cluster_clk1_tpm_group.RDS
+│   ├── cox_EFS_additive_terms_subtype_cluster_clk1_tpm.RDS
+│   ├── cox_EFS_interaction_terms_resection_lgg_group_cluster_CLK1_ex4_PSI.RDS
+│   ├── cox_EFS_interaction_terms_resection_lgg_group_cluster_CLK1_Ex4_TPM_age.RDS
+│   ├── cox_EFS_interaction_terms_resection_lgg_group_cluster_CLK1_Ex4_TPM.RDS
+│   ├── cox_EFS_interaction_terms_resection_lgg_group_cluster_SBI_SE.RDS
+│   ├── cox_EFS_interaction_terms_resection_lgg_group_cluster_spliceosome_gsva_score_CLK1_Ex4_TPM.RDS
+│   ├── cox_EFS_interaction_terms_resection_lgg_group_cluster_spliceosome_gsva_score_SBI_SE.RDS
 │   ├── cox_EFS_interaction_terms_resection_lgg_group_cluster_spliceosome_gsva_score.RDS
-│   ├── cox_HGG_EFS_additive_terms_subtype_clk1_status.RDS
 │   ├── cox_hgg_EFS_additive_terms_subtype_cluster_SBI.RDS
 │   ├── cox_hgg_EFS_additive_terms_subtype_cluster_spliceosome_score.RDS
 │   ├── cox_hgg_EFS_additive_terms_subtype_cluster.RDS
-│   ├── cox_HGG_EFS_interaction_terms_subtype_clk1_status_agedx.RDS
-│   ├── cox_HGG_EFS_subtype_interaction_terms_clk1_status_agedx.RDS
-│   ├── cox_HGG_OS_additive_terms_subtype_clk1_status.RDS
 │   ├── cox_hgg_OS_additive_terms_subtype_cluster_SBI.RDS
+│   ├── cox_hgg_OS_additive_terms_subtype_cluster_si_group.RDS
 │   ├── cox_hgg_OS_additive_terms_subtype_cluster_spliceosome_score.RDS
 │   ├── cox_hgg_OS_additive_terms_subtype_cluster.RDS
-│   ├── cox_HGG_OS_interaction_terms_subtype_clk1_status_agedx.RDS
-│   ├── cox_HGG_OS_subtype_interaction_terms_clk1_status_agedx.RDS
 │   ├── cox_lgg_EFS_additive_terms_resection_subtype_cluster_SBI.RDS
 │   ├── cox_lgg_EFS_additive_terms_resection_subtype_cluster_spliceosome_score.RDS
 │   ├── cox_lgg_EFS_additive_terms_resection_subtype_cluster.RDS
 │   ├── cox_lgg_OS_additive_terms_resection_subtype_cluster.RDS
+│   ├── cox_OS_additive_terms_resection_lgg_group_cluster_CLK1_ex4_PSI.RDS
+│   ├── cox_OS_additive_terms_resection_lgg_group_cluster_CLK1_Ex4_TPM.RDS
+│   ├── cox_OS_additive_terms_resection_lgg_group_cluster_SBI_CLK1_Ex4_TPM.RDS
 │   ├── cox_OS_additive_terms_resection_lgg_group_cluster_SBI.RDS
+│   ├── cox_OS_additive_terms_resection_lgg_group_cluster_spliceosome_score_CLK1_Ex4_TPM.RDS
 │   ├── cox_OS_additive_terms_resection_lgg_group_cluster_spliceosome_score.RDS
 │   ├── cox_OS_additive_terms_resection_lgg_group_cluster.RDS
-│   ├── cox_OS_interaction_terms_resection_lgg_group_cluster_SI_SE.RDS
+│   ├── cox_OS_additive_terms_subtype_cluster_clk1_psi_group.RDS
+│   ├── cox_OS_additive_terms_subtype_cluster_clk1_psi.RDS
+│   ├── cox_OS_additive_terms_subtype_cluster_clk1_tpm_group.RDS
+│   ├── cox_OS_additive_terms_subtype_cluster_clk1_tpm.RDS
+│   ├── cox_OS_interaction_terms_resection_lgg_group_cluster_clk1_age.RDS
+│   ├── cox_OS_interaction_terms_resection_lgg_group_cluster_CLK1_ex4_PSI.RDS
+│   ├── cox_OS_interaction_terms_resection_lgg_group_cluster_CLK1_Ex4_TPM.RDS
+│   ├── cox_OS_interaction_terms_resection_lgg_group_cluster_SBI_SE.RDS
 │   ├── cox_OS_interaction_terms_resection_lgg_group_cluster_spliceosome_gsva_score.RDS
-│   ├── CPG
-│   ├── DMG
-│   ├── EPN
-│   ├── GNG
-│   ├── HGG
-│   ├── LGG
+│   ├── logrank_cluster6_EFS_clk1_psi_group.RDS
+│   ├── logrank_cluster6_EFS_clk1_tpm_group.RDS
 │   ├── logrank_cluster6_EFS_SBI.RDS
 │   ├── logrank_cluster6_EFS_splice_group.RDS
+│   ├── logrank_cluster6_OS_clk1_psi_group.RDS
+│   ├── logrank_cluster6_OS_clk1_tpm_group.RDS
 │   ├── logrank_cluster6_OS_SBI.RDS
 │   ├── logrank_cluster6_OS_splice_group.RDS
-│   ├── logrank_DMG_EFS_CLK1_status.RDS
-│   ├── logrank_DMG_OS_CLK1_status.RDS
-│   ├── logrank_HGG_EFS_CLK1_status.RDS
 │   ├── logrank_hgg_EFS_cluster_assignment.RDS
 │   ├── logrank_hgg_EFS_splice_group.RDS
-│   ├── logrank_HGG_OS_CLK1_status.RDS
 │   ├── logrank_hgg_OS_cluster_assignment.RDS
 │   ├── logrank_hgg_OS_splice_group.RDS
-│   ├── logrank_HGG_OS_subtype.RDS
 │   ├── logrank_lgg_EFS_cluster_assignment.RDS
 │   ├── logrank_lgg_OS_cluster_assignment.RDS
 │   ├── logrank_OS_cluster_assignment.RDS
 │   ├── logrankEFS_cluster_assignment.RDS
-│   ├── MB
 │   ├── splicing_indices_with_survival.tsv
-│   ├── subtypes-for-survival-clk1.tsv
 │   └── subtypes-for-survival.tsv
 ├── run-survival-module.sh
 └── util

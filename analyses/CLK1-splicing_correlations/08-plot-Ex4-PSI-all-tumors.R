@@ -116,8 +116,8 @@ clk1_rmats_cohort <- histologies_df %>%
 PSI_output <- clk1_rmats_cohort %>% 
   dplyr::select(Kids_First_Biospecimen_ID, plot_group, IncLevel1) %>%
   dplyr::rename(PSI = IncLevel1) %>%
-  dplyr::mutate(PSI = round(PSI, digits = 2))
-write_tsv(x = PSI_output, file = file.path(results_dir,"clk1-exon4-proportion.tsv"))
+  dplyr::mutate(PSI = round(PSI, digits = 3)) %>%
+write_tsv(file.path(results_dir,"clk1-exon4-psi.tsv"))
 
 exp <- readRDS(expr_file) %>%
   dplyr::select(any_of(histologies_df$Kids_First_Biospecimen_ID))
