@@ -44,10 +44,32 @@ splice_index_RI_file   <- file.path(results_dir, "splicing_index.RI.txt")
 splice_index_A5SS_file <- file.path(results_dir, "splicing_index.A5SS.txt")
 splice_index_A3SS_file <- file.path(results_dir, "splicing_index.A3SS.txt")
 
-splice_index_SE_df   <- readr::read_tsv(splice_index_SE_file)
-splice_index_RI_df   <- readr::read_tsv(splice_index_RI_file)
-splice_index_A5SS_df <- readr::read_tsv(splice_index_A5SS_file)
-splice_index_A3SS_df <- readr::read_tsv(splice_index_A3SS_file)
+splice_index_SE_df  <-  read_tsv(splice_index_SE_file) 
+splice_index_RI_df  <-  read_tsv(splice_index_RI_file) 
+splice_index_A5SS_df  <-  read_tsv(splice_index_A5SS_file) 
+splice_index_A3SS_df  <-  read_tsv(splice_index_A3SS_file) 
+
+# put them in a vector
+si_files <- c(splice_index_SE_file,
+              splice_index_RI_file,
+              splice_index_A5SS_file,
+              splice_index_A3SS_file)
+
+# read and bind together
+si_df <- si_files %>%
+  map_dfr(~ read_tsv(.x, col_types = cols()))
+
+# sum numeric columns by Sample
+si_summary <- si_df %>%
+  group_by(Sample, Histology) %>%
+  summarise(
+    Total    = sum(Total, na.rm = TRUE),
+    AS_neg   = sum(AS_neg, na.rm = TRUE),
+    AS_pos   = sum(AS_pos, na.rm = TRUE),
+    AS_total = sum(AS_total, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  mutate(SI = AS_total / Total)
 
 # read in color palette
 palette_file <- file.path(map_dir, "histologies-plot-group.tsv")
@@ -78,6 +100,7 @@ prepare_data_for_plot <- function(df, grouping_variable = NULL, min_samples = 5)
 }
 
 # create filenames for plots
+file_si_total_plot = "sbi-plot-total-boxplot.pdf"
 file_si_SE_plot = "sbi-plot-SE-boxplot.pdf"
 file_si_RI_plot = "sbi-plot-RI-boxplot.pdf"
 file_si_A5SS_plot = "sbi-plot-A5SS-boxplot.pdf"
@@ -168,6 +191,7 @@ plot_sbi <- function(sbi_df, plot_file,label) {
 }
 
 ## plot SBI for each splicing case
+plot_sbi(si_summary,file_si_total_plot,"Total")
 plot_sbi(splice_index_SE_df,file_si_SE_plot,"SE")
 plot_sbi(splice_index_RI_df,file_si_RI_plot,"RI")
 plot_sbi(splice_index_A5SS_df,file_si_A5SS_plot,"A5SS")
