@@ -69,7 +69,8 @@ si_summary <- si_df %>%
     AS_total = sum(AS_total, na.rm = TRUE),
     .groups = "drop"
   ) %>%
-  mutate(SI = AS_total / Total)
+  mutate(SI = AS_total / Total) %>%
+  write_tsv(file.path(results_dir, "splicing_index.total.txt"))
 
 # read in color palette
 palette_file <- file.path(map_dir, "histologies-plot-group.tsv")
