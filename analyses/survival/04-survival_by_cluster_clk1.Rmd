@@ -117,7 +117,7 @@ metadata <- metadata %>%
     Histology == "Low-grade glioma" ~ "LGG",
     TRUE ~ "non-LGG"
   )) %>%
-  dplyr::mutate(SBI_SE = SI_SE * 10) %>%
+  dplyr::mutate(SBI = SI_Total * 10) %>%
   dplyr::mutate(age_at_diagnosis_years = age_at_diagnosis_days/365.25)
 ```
 
@@ -125,7 +125,7 @@ Generate coxph models including extent of tumor resection, lgg group, cluster as
 
 ```{r}
 add_model_os <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_years+SBI_SE+CLK1_Ex4_TPM",
+                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_years+SBI+CLK1_Ex4_TPM",
                                file.path(results_dir, "cox_OS_additive_terms_resection_lgg_group_cluster_SBI_CLK1_Ex4_TPM.RDS"),
                                "multivariate",
                                years_col = "OS_years",
@@ -141,7 +141,7 @@ ggsave(file.path(plot_dir, "forest_add_OS_resection_lgg_group_cluster_assignment
        device = "pdf")
 
 add_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_years+SBI_SE+CLK1_Ex4_TPM",
+                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_years+SBI+CLK1_Ex4_TPM",
                                file.path(results_dir, "cox_EFS_additive_terms_resection_lgg_group_cluster_SBI_CLK1_Ex4_TPM.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
@@ -236,7 +236,7 @@ ggsave(file.path(plot_dir, "forest_add_EFS_resection_lgg_group_cluster_assignmen
 Interaction with GSVA, SBI, CLK1
 
 ```{r Interaction models with GSVA, SBI, CLK1}
-models <- c("spliceosome_gsva_score", "SBI_SE", "CLK1_Ex4_TPM", "CLK1_ex4_PSI")
+models <- c("spliceosome_gsva_score", "SBI", "CLK1_Ex4_TPM", "CLK1_ex4_PSI")
 # by cluster
 for (each in models) {
   int_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
@@ -305,7 +305,7 @@ for (each in models) {
          width = 10, height = 6, units = "in",
          device = "pdf")
 
-models2 <- c("SBI_SE", "CLK1_Ex4_TPM")
+models2 <- c("SBI", "CLK1_Ex4_TPM")
 for (each in models2) {
   #### by spliceosome_gsva_score
   int_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
