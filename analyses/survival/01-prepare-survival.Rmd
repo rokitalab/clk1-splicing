@@ -43,7 +43,7 @@ sbi_A3SS_file <- file.path(root_dir, "analyses", "splicing_index", "results", "s
 sbi_A5SS_file <- file.path(root_dir, "analyses", "splicing_index", "results", "splicing_index.A5SS.txt")
 sbi_RI_file <- file.path(root_dir, "analyses", "splicing_index", "results", "splicing_index.RI.txt")
 sbi_SE_file <- file.path(root_dir, "analyses", "splicing_index", "results", "splicing_index.SE.txt")
-
+sbi_total_file <- file.path(root_dir, "analyses", "splicing_index", "results", "splicing_index.total.txt")
 histologies_file <- file.path(data_dir, "histologies-plot-group.tsv")
 
 ```
@@ -66,11 +66,15 @@ si_RI <- read_tsv(sbi_RI_file) %>%
 si_SE <- read_tsv(sbi_SE_file) %>%
   rename("Kids_First_Biospecimen_ID"= Sample,
          SI_SE = SI)
+si_total <- read_tsv(sbi_total_file) %>%
+  rename("Kids_First_Biospecimen_ID"= Sample,
+         SI_Total = SI)
 
 splice_index <- si_A3SS %>%
   left_join(si_A5SS[,c("Kids_First_Biospecimen_ID", "SI_A5SS")]) %>%
   left_join(si_RI[,c("Kids_First_Biospecimen_ID", "SI_RI")]) %>%
-  left_join(si_SE[,c("Kids_First_Biospecimen_ID", "SI_SE")])
+  left_join(si_SE[,c("Kids_First_Biospecimen_ID", "SI_SE")]) %>%
+  left_join(si_total[,c("Kids_First_Biospecimen_ID", "SI_Total")])
 
 ```
 
