@@ -43,7 +43,7 @@ volc_file <-  "enhancedVolcano-sbi.pdf"
 gene_sign_list_file <- "diffSFs_sig_genes.txt"
 
 ## get and setup input files
-sbi_coding_file  <- file.path(root_dir, "analyses/splicing_index/results/splicing_index.SE.txt")
+sbi_coding_file  <- file.path(root_dir, "analyses/splicing_index/results/splicing_index.total.txt")
 
 indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
 indep_df <- read_tsv(indep_file)
