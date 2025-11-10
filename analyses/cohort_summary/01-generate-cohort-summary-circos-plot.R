@@ -98,7 +98,13 @@ under40_df <- hist_update %>%
   )
 
 # add cancer/plot group mapping file 
-map_file <- read_tsv(file.path(input_dir, "plot-mapping.tsv"))
+map_file <- read_tsv(file.path(input_dir, "plot-mapping.tsv")) %>%
+  mutate(plot_group = case_when(
+    plot_group == "DIPG or DMG" ~ "Diffuse midline glioma",
+    plot_group == "Other tumor" ~ "Rare CNS tumor",
+    plot_group == "Atypical Teratoid Rhabdoid Tumor" ~ "Atypical teratoid rhabdoid tumor", # make lowercase
+    TRUE ~ plot_group
+  ))
 
 # add plot mapping file and old plot groups, export this.
 combined_plot_map <- under40_df %>%
