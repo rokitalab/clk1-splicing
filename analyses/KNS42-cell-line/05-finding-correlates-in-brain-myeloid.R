@@ -378,3 +378,41 @@ write_tsv(
   gene_table,
   file.path(results_dir, "CLK1_correlated_genes_comprehensive.tsv")
 )
+
+## GO Enrichment
+# Load required libraries
+library(dplyr)
+library(clusterProfiler)
+library(org.Hs.eg.db)
+
+# Subset genes with cell_lines == "Both"
+both_genes <- gene_table %>%
+  filter(cell_lines == "Both") %>%
+  distinct(gene) %>%
+  pull(gene)
+
+# Convert gene symbols to Entrez IDs for GO enrichment
+gene_ids <- bitr(both_genes,
+                 fromType = "SYMBOL",
+                 toType = "ENTREZID",
+                 OrgDb = org.Hs.eg.db)
+
+# Run overrepresentation analysis (ORA) for GO Biological Process
+ego <- enrichGO(
+  gene          = gene_ids$ENTREZID,
+  OrgDb         = org.Hs.eg.db,
+  keyType       = "ENTREZID",
+  ont           = "BP",
+  pAdjustMethod = "BH",
+  qvalueCutoff  = 0.05,
+  readable      = TRUE
+)
+
+# View top enriched terms
+head(ego)
+
+# Optional: visualize top results
+library(enrichplot)
+plot_gp<- dotplot(ego, showCategory = 10, title = "GO BP Enrichment (Both lineages)")
+ggsave(file.path(plots_dir,"GO_BP_dotplot.pdf"), plot_gp, width = 7, height = 7, useDingbats = FALSE)
+
