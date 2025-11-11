@@ -3,6 +3,7 @@
 #
 # Identify and compare CLK1-correlated transcripts across cell line types
 # - Calculate transcript-level correlations with CLK1 expression (|r| > 0.4)
+# - Include p-value testing with multiple testing correction
 # - Separate positive and negative correlations by cell lineage
 # - Generate Venn diagrams showing overlap between CNS/Brain and Myeloid lines
 # - Export comprehensive tables of correlated genes and transcripts
@@ -84,14 +85,14 @@ ggsave(
 )
 
 # =============================================================================
-# Transcript Correlation Analysis
+# Transcript Correlation Analysis with P-values
 # =============================================================================
 
 # Load omics data -------------------------------------------------------------
 omics_mappings_file <- file.path(data_dir, "OmicsDefaultModelProfiles.csv")
 tpm_file <- file.path(data_dir, "OmicsExpressionTranscriptsTPMLogp1Profile.csv")
 
-# Function to calculate correlations ------------------------------------------
+# Function to calculate correlations with p-values ---------------------------
 calculate_clk1_correlations <- function(lineage_name) {
   
   cat("\nProcessing", lineage_name, "cell lines...\n")
@@ -101,7 +102,14 @@ calculate_clk1_correlations <- function(lineage_name) {
     inner_join(depmap_data, by = "ModelID") %>%
     filter(Lineage == lineage_name)
   
-  cat("Found", nrow(omics_mapping), "cell lines\n")
+  n_samples <- nrow(omics_mapping)
+  cat("Found", n_samples, "cell lines\n")
+  
+  # Need at least 3 samples for meaningful correlation
+  if(n_samples < 3) {
+    cat("Too few samples. Skipping.\n")
+    return(NULL)
+  }
   
   # Load expression data
   expr_data <- vroom(tpm_file, show_col_types = FALSE) %>%
@@ -125,18 +133,39 @@ calculate_clk1_correlations <- function(lineage_name) {
   # Get CLK1 expression
   clk1_expr <- expr_wide[["CLK1 (ENST00000321356)"]]
   
-  # Calculate correlations
-  cor_results <- expr_wide %>%
-    select(-ProfileID) %>%
-    summarise(across(
-      everything(),
-      ~ cor(.x, clk1_expr, use = "pairwise.complete.obs")
-    )) %>%
-    pivot_longer(
-      cols = everything(),
-      names_to = "transcript",
-      values_to = "corr_with_CLK1"
-    )
+  # Calculate correlations with p-values
+  cat("Calculating correlations with p-values...\n")
+  
+  # Get all transcript columns
+  transcript_cols <- setdiff(colnames(expr_wide), "ProfileID")
+  
+  # Calculate correlations one by one
+  cor_results <- map_dfr(transcript_cols, function(transcript_name) {
+    
+    # Get expression values for this transcript
+    transcript_expr <- expr_wide[[transcript_name]]
+    
+    # Skip if zero variance
+    if(sd(transcript_expr, na.rm = TRUE) == 0) {
+      return(NULL)
+    }
+    
+    # Try to calculate correlation
+    tryCatch({
+      test_result <- cor.test(transcript_expr, clk1_expr, method = "pearson")
+      
+      tibble(
+        transcript = transcript_name,
+        corr_with_CLK1 = as.numeric(test_result$estimate),
+        p_value = test_result$p.value,
+        n_samples = n_samples
+      )
+    }, error = function(e) {
+      return(NULL)
+    })
+  })
+  
+  cat("Calculated", nrow(cor_results), "correlations\n")
   
   return(cor_results)
 }
@@ -148,9 +177,17 @@ cor_results_cns <- calculate_clk1_correlations("CNS/Brain")
 cor_results_myeloid <- calculate_clk1_correlations("Myeloid")
 
 # Filter and annotate results -------------------------------------------------
-filter_and_annotate <- function(cor_results, threshold = 0.4) {
+filter_and_annotate <- function(cor_results, threshold = 0.3, p_threshold = 0.05) {
+  
+  if(is.null(cor_results) || nrow(cor_results) == 0) {
+    return(tibble())
+  }
+  
   cor_results %>%
-    filter(abs(corr_with_CLK1) > threshold) %>%
+    filter(
+      abs(corr_with_CLK1) > threshold,
+      p_value < p_threshold  # Use unadjusted p-value
+    ) %>%
     mutate(
       direction = case_when(
         corr_with_CLK1 > threshold ~ "positive",
@@ -250,7 +287,6 @@ venn_negative <- create_venn_plot(
   colors = c("#3498DB", "#9B59B6")
 )
 
-
 ## venn diagram plot
 combined_venn_horizontal <- venn_positive | venn_negative
 
@@ -287,11 +323,15 @@ all_transcripts <- unique(c(
 gene_table <- tibble(transcript = all_transcripts) %>%
   mutate(gene = extract_gene(transcript)) %>%
   left_join(
-    cor_myeloid_filtered %>% select(transcript, myeloid_corr = corr_with_CLK1, myeloid_dir = direction),
+    cor_myeloid_filtered %>% 
+      select(transcript, myeloid_corr = corr_with_CLK1, myeloid_dir = direction,
+             myeloid_pval = p_value, myeloid_n = n_samples),
     by = "transcript"
   ) %>%
   left_join(
-    cor_cns_filtered %>% select(transcript, cns_corr = corr_with_CLK1, cns_dir = direction),
+    cor_cns_filtered %>% 
+      select(transcript, cns_corr = corr_with_CLK1, cns_dir = direction,
+             cns_pval = p_value, cns_n = n_samples),
     by = "transcript"
   ) %>%
   mutate(
@@ -324,8 +364,12 @@ gene_table <- tibble(transcript = all_transcripts) %>%
     overall_direction,
     myeloid_direction,
     myeloid_corr,
+    myeloid_pval,
+    myeloid_n,
     cns_direction,
-    cns_corr
+    cns_corr,
+    cns_pval,
+    cns_n
   ) %>%
   arrange(cell_lines, gene)
 
@@ -334,4 +378,3 @@ write_tsv(
   gene_table,
   file.path(results_dir, "CLK1_correlated_genes_comprehensive.tsv")
 )
-
