@@ -386,33 +386,44 @@ library(clusterProfiler)
 library(org.Hs.eg.db)
 
 # Subset genes with cell_lines == "Both"
-both_genes <- gene_table %>%
-  filter(cell_lines == "Both") %>%
-  distinct(gene) %>%
-  pull(gene)
+# Define a helper function to get Entrez IDs
+get_entrez_ids <- function(genes) {
+  bitr(
+    genes,
+    fromType = "SYMBOL",
+    toType = "ENTREZID",
+    OrgDb = org.Hs.eg.db
+  )$ENTREZID
+}
 
-# Convert gene symbols to Entrez IDs for GO enrichment
-gene_ids <- bitr(both_genes,
-                 fromType = "SYMBOL",
-                 toType = "ENTREZID",
-                 OrgDb = org.Hs.eg.db)
+# Background universe: all genes tested
+background_genes <- unique(gene_table$gene)
+background_ids <- get_entrez_ids(background_genes)
 
-# Run overrepresentation analysis (ORA) for GO Biological Process
-ego <- enrichGO(
-  gene          = gene_ids$ENTREZID,
-  OrgDb         = org.Hs.eg.db,
-  keyType       = "ENTREZID",
-  ont           = "BP",
-  pAdjustMethod = "BH",
-  qvalueCutoff  = 0.05,
-  readable      = TRUE
-)
+# Subset genes
+genes_both    <- gene_table %>% filter(cell_lines == "Both") %>% distinct(gene) %>% pull(gene)
+genes_cns     <- gene_table %>% filter(cell_lines == "CNS/Brain")  %>% distinct(gene) %>% pull(gene)
+genes_myeloid <- gene_table %>% filter(cell_lines == "Myeloid") %>% distinct(gene) %>% pull(gene)
 
-# View top enriched terms
-head(ego)
+run_go_enrichment <- function(gene_list, universe_ids, ont="BP") {
+  enrichGO(
+    gene          = get_entrez_ids(gene_list),
+    universe      = universe_ids,
+    OrgDb         = org.Hs.eg.db,
+    keyType       = "ENTREZID",
+    ont           = ont,
+    pAdjustMethod = "BH",
+    pvalueCutoff  = 0.05,
+    qvalueCutoff  = 0.05,
+    readable      = TRUE
+  )
+}
 
-# Optional: visualize top results
-library(enrichplot)
-plot_gp<- dotplot(ego, showCategory = 10, title = "GO BP Enrichment (Both lineages)")
-ggsave(file.path(plots_dir,"GO_BP_dotplot.pdf"), plot_gp, width = 7, height = 7, useDingbats = FALSE)
+ego_both    <- run_go_enrichment(genes_both, universe_ids = background_ids)
+ego_cns     <- run_go_enrichment(genes_cns, universe_ids = background_ids)
+ego_myeloid <- run_go_enrichment(genes_myeloid, universe_ids = background_ids)
 
+# Save plots as high-res PDF
+ggsave(file.path(plots_dir,"GO_BP_dotplot_Both.pdf"), p_both, width = 7, height = 7, useDingbats = FALSE)
+ggsave(file.path(plots_dir,"GO_BP_dotplot_CNS.pdf"), p_cns, width = 7, height = 7, useDingbats = FALSE)
+ggsave(file.path(plots_dir,"GO_BP_dotplot_Myeloid.pdf"), p_myeloid, width = 7, height = 7, useDingbats = FALSE)
