@@ -424,6 +424,6 @@ ego_cns     <- run_go_enrichment(genes_cns, universe_ids = background_ids)
 ego_myeloid <- run_go_enrichment(genes_myeloid, universe_ids = background_ids)
 
 # Save plots as high-res PDF
-ggsave(file.path(plots_dir,"GO_BP_dotplot_Both.pdf"), p_both, width = 7, height = 7, useDingbats = FALSE)
-ggsave(file.path(plots_dir,"GO_BP_dotplot_CNS.pdf"), p_cns, width = 7, height = 7, useDingbats = FALSE)
-ggsave(file.path(plots_dir,"GO_BP_dotplot_Myeloid.pdf"), p_myeloid, width = 7, height = 7, useDingbats = FALSE)
+ggsave(file.path(plots_dir,"GO_BP_dotplot_Both.pdf"), p_both, width = 16, height = 6, useDingbats = FALSE)
+ggsave(file.path(plots_dir,"GO_BP_dotplot_CNS.pdf"), p_cns, width = 16, height = 6, useDingbats = FALSE)
+ggsave(file.path(plots_dir,"GO_BP_dotplot_Myeloid.pdf"), p_myeloid, width = 16, height = 6, useDingbats = FALSE)
