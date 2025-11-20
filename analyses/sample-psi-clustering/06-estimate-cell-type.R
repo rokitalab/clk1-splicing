@@ -45,9 +45,10 @@ ct_res <- brainCells(expr, nMarker = 50, species = "human") %>%
          Oligodendrocytes = oli,
          OPCs = opc) %>%
   rownames_to_column(var = "Kids_First_Biospecimen_ID") %>%
-  left_join(hist) 
+  write_tsv(file.path(results_dir, "cell-proportion-estimate-stranded.tsv"))
 
 cell_types_long <- ct_res %>%
+  left_join(hist) %>%
   pivot_longer(cols = c(Astrocytes, Endothelial, Microglia, Neurons, Oligodendrocytes, OPCs),
                names_to = "cell_type", values_to = "proportion_estimates")
 
