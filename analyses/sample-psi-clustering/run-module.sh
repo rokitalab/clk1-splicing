@@ -24,3 +24,6 @@ Rscript --vanilla 04-diff_pathways_per_cluster.R
 
 # collate spliceosome GSVA data
 bash 05-generate-gsva-summary-file.sh
+
+# estimate brain cell type proportion
+Rscript --vanilla 06-estimate-cell-type.R
