@@ -50,6 +50,7 @@ RUN R -e 'BiocManager::install(c( \
   "AnnotationDbi", \
   "Biobase", \
   "Biostrings", \
+  "BRETIGEA", \
   "broom", \
   "circlize", \
   "COINr", \
