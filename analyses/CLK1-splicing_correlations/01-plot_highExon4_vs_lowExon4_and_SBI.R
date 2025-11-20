@@ -27,7 +27,7 @@ input_dir   <- file.path(root_dir, "analyses", "splicing_index", "results")
 
 
 # Specify file paths
-sbi_file <-  file.path(input_dir,"splicing_index.SE.txt")
+sbi_file <-  file.path(input_dir,"splicing_index.total.txt")
 clin_file  <- file.path(hist_dir,"histologies-plot-group.tsv")
 rmats_file <- file.path(results_dir, "clk1-splice-events-rmats.tsv")
 indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")

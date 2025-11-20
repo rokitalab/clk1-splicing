@@ -44,6 +44,10 @@ psi_mat <- psi_mat %>%
   t() %>%
   as.data.frame() 
 
+#remove NA strings which resulted in duplicated psi values
+psi_mat <- psi_mat[!grepl("NA-NA_NA-NA_NA-NA", rownames(psi_mat)), ]
+
+
 # define vector of n variable events to test for clustering
 n_events <- c(1000, 5000)
 
@@ -74,10 +78,19 @@ for (library in names(library_type)){
   # loop through number of events
   for (n in n_events){
     
+    
+    # Define a helper: TRUE if cell contains at least one number
+    has_number <- function(x) {
+      !is.na(x) & grepl("[0-9]", x)
+    }
+  
     # filter for samples and splice events reported in at least 25% of samples
     cluster_mat <- psi_mat[,colnames(psi_mat) %in% library_type[[library]]]
-    cluster_mat <- cluster_mat[rowSums(!is.na(cluster_mat)) > ncol(cluster_mat)*0.25,]
-  
+    #cluster_mat <- cluster_mat[rowSums(!is.na(cluster_mat)) > ncol(cluster_mat)*0.25,]
+    cluster_mat <- cluster_mat[
+      rowSums(apply(cluster_mat, 2, has_number)) > ncol(cluster_mat) * 0.25,
+    ]
+    
     # pull splice IDs with the highest variance
     psi_vars <- apply(cluster_mat, 1, var, na.rm = TRUE)
     var_splice_ids <- names(sort(psi_vars, decreasing = TRUE))[1:n]
