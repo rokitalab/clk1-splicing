@@ -18,6 +18,7 @@ bash run-module.sh
 * 03-plot-histology-distr-across-clusters.R; assess hist and subtype distribution across clusters
 * 04-diff_pathways_per_cluster.R; assess pathway enrichment across clusters
 * 05-generate-gsva-summary-file.sh; collate GSVA data
+* 06-estimate-cell-type.R; estimate brain cell type proportion
 
 # Input files
 * lgg-braf-fusion-breakpoint-annotation.tsv; LGG BRAF fusion-positive BS IDs annotated with KIAA1549::BRAF fusion breakpoint group. Pulled from [pbta-germline-somatic repo](https://github.com/diskin-lab-chop/pbta-germline-somatic/blob/main/analyses/survival/input/lgg-braf-fusion-breakpoint-annotation.tsv)
@@ -32,6 +33,7 @@ bash run-module.sh
 ├── 03-plot-histology-distr-across-clusters.R
 ├── 04-diff_pathways_per_cluster.R
 ├── 05-generate-gsva-summary-file.sh
+├── 06-estimate-cell-type.R
 ├── README.md
 ├── input
 │   ├── genesets.tsv
@@ -43,6 +45,7 @@ bash run-module.sh
 │   ├── atrt-sample-cluster-subtype-enr-top-1000-events-poly-A_stranded.pdf
 │   ├── atrt-sample-cluster-subtype-enr-top-1000-events-stranded.pdf
 │   ├── atrt-sample-cluster-subtype-enr-top-5000-events-all_libraries.pdf
+│   ├── cell-proportion-estimate-stranded.pdf
 │   ├── atrt-sample-cluster-subtype-enr-top-5000-events-stranded.pdf
 │   ├── cluster_membership-subtypes_poly-A-stranded.pdf
 │   ├── cluster_membership-subtypes_stranded.pdf
@@ -87,6 +90,7 @@ bash run-module.sh
 │   └── top5_pathways_stranded.pdf
 ├── results
 │   ├── all_gsva_de_results_stranded.tsv
+│   ├── cell-proportion-estimate-stranded.tsv
 │   ├── cluster_10_pathway_stranded.tsv
 │   ├── cluster_11_pathway_stranded.tsv
 │   ├── cluster_1_pathway_poly-A-stranded.tsv
