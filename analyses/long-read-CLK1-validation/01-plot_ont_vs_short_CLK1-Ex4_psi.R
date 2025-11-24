@@ -152,11 +152,40 @@ barplot <- ggplot(cell_lines_df %>% dplyr::filter(Isoform == "Inclusion"),
   theme_Publication() +
   theme(axis.title.y = element_markdown(),
         legend.position = "none")  
+
+paired_plot <- ggplot(
+  cell_lines_df %>% dplyr::filter(Isoform == "Inclusion"),
+  aes(x = type, y = PSI, group = cell_line, color = type)
+) +
+  geom_line(linewidth = 1.2, color = "black") +
+  geom_point(size = 6, shape = 21, stroke = 0.6,
+             aes(fill = type), color = "black") +
+  scale_fill_manual(values = c("long" = "#0C7BDC", "short" = "#FFC20A")) +
+  scale_color_manual(values = c("long" = "#0C7BDC", "short" = "#FFC20A")) +
+  scale_y_continuous(
+    limits = c(0,100),
+    breaks = seq(0, 100, by = 25)   # more ticks for visual precision
+  ) +
+  facet_wrap(~cell_line) +
+  xlab("RNA-Seq Sequencing Strategy") +
+  ylab("<i>CLK1</i> Exon 4<br />Percent Spliced In (PSI)") +
+  theme_Publication() +
+  theme(
+    axis.title.y = element_markdown(),
+    legend.position = "none"
+  )
+
   
 
 pdf(file_barplot, 
     width = 5, height = 4)
 barplot
+dev.off()
+
+paired_plot_file = file.path(plots_dir,"paired-isoform-barplot.pdf")
+pdf(paired_plot_file, 
+    width = 5, height = 4)
+paired_plot
 dev.off()
 
 
