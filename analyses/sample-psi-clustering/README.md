@@ -19,6 +19,7 @@ bash run-module.sh
 * 04-diff_pathways_per_cluster.R; assess pathway enrichment across clusters
 * 05-generate-gsva-summary-file.sh; collate GSVA data
 * 06-estimate-cell-type.R; estimate brain cell type proportion
+* 07-plot-cell-fraction-enr-across-clusters.R; plot enrichment of cell type fraction groups within clusters
 
 # Input files
 * lgg-braf-fusion-breakpoint-annotation.tsv; LGG BRAF fusion-positive BS IDs annotated with KIAA1549::BRAF fusion breakpoint group. Pulled from [pbta-germline-somatic repo](https://github.com/diskin-lab-chop/pbta-germline-somatic/blob/main/analyses/survival/input/lgg-braf-fusion-breakpoint-annotation.tsv)
@@ -34,7 +35,7 @@ bash run-module.sh
 ├── 04-diff_pathways_per_cluster.R
 ├── 05-generate-gsva-summary-file.sh
 ├── 06-estimate-cell-type.R
-├── README.md
+├── 07-plot-cell-fraction-enr-across-clusters.R
 ├── input
 │   ├── genesets.tsv
 │   ├── lgg-braf-fusion-breakpoint-annotation.tsv
@@ -42,15 +43,16 @@ bash run-module.sh
 │   └── subtype_hex.tsv
 ├── plots
 │   ├── atrt-sample-cluster-subtype-enr-top-1000-events-all_libraries.pdf
-│   ├── atrt-sample-cluster-subtype-enr-top-1000-events-poly-A_stranded.pdf
 │   ├── atrt-sample-cluster-subtype-enr-top-1000-events-stranded.pdf
 │   ├── atrt-sample-cluster-subtype-enr-top-5000-events-all_libraries.pdf
-│   ├── cell-proportion-estimate-stranded.pdf
 │   ├── atrt-sample-cluster-subtype-enr-top-5000-events-stranded.pdf
-│   ├── cluster_membership-subtypes_poly-A-stranded.pdf
-│   ├── cluster_membership-subtypes_stranded.pdf
+│   ├── brain-cell-type-fraction-cluster-enr-heatmap-stranded.pdf
+│   ├── brain-cell-type-fraction-hgg-cluster-enr-heatmap-stranded.pdf
+│   ├── cell-proportion-estimate-stranded.pdf
 │   ├── cluster_membership_poly-A-stranded.pdf
 │   ├── cluster_membership_stranded.pdf
+│   ├── cluster_membership-subtypes_poly-A-stranded.pdf
+│   ├── cluster_membership-subtypes_stranded.pdf
 │   ├── hgg-dmg-sample-cluster-subtype-enr-top-1000-events-all_libraries.pdf
 │   ├── hgg-dmg-sample-cluster-subtype-enr-top-1000-events-poly-A_stranded.pdf
 │   ├── hgg-dmg-sample-cluster-subtype-enr-top-1000-events-stranded.pdf
@@ -88,13 +90,14 @@ bash run-module.sh
 │   ├── sample-psi-heatmap-top-5000-events-stranded.pdf
 │   ├── top5_pathways_poly-A-stranded.pdf
 │   └── top5_pathways_stranded.pdf
+├── README.md
 ├── results
 │   ├── all_gsva_de_results_stranded.tsv
 │   ├── cell-proportion-estimate-stranded.tsv
-│   ├── cluster_10_pathway_stranded.tsv
-│   ├── cluster_11_pathway_stranded.tsv
 │   ├── cluster_1_pathway_poly-A-stranded.tsv
 │   ├── cluster_1_pathway_stranded.tsv
+│   ├── cluster_10_pathway_stranded.tsv
+│   ├── cluster_11_pathway_stranded.tsv
 │   ├── cluster_2_pathway_poly-A-stranded.tsv
 │   ├── cluster_2_pathway_stranded.tsv
 │   ├── cluster_3_pathway_poly-A-stranded.tsv
@@ -118,7 +121,6 @@ bash run-module.sh
 │   ├── lgg-braf-fusion-cluster-membership-stranded.tsv
 │   ├── mb-subgroup-cluster-membership-poly-A-stranded.tsv
 │   ├── mb-subgroup-cluster-membership-stranded.tsv
-│   ├── pbta-splice-event-psis.RDS
 │   ├── psi-matrix-top-1000-events-all_libraries.rds
 │   ├── psi-matrix-top-1000-events-poly-A_stranded.rds
 │   ├── psi-matrix-top-1000-events-stranded.rds
