@@ -7,10 +7,11 @@
 
 ## libraries 
 suppressPackageStartupMessages({
-  library("tidyverse")
-  library("vroom")
-  library("circlize")
-  library("ComplexHeatmap")
+  library(tidyverse)
+  library(limma)
+  library(Biobase)
+  library(performance)
+  library(ggforce)
 })
 
 # Get `magrittr` pipe
@@ -72,8 +73,8 @@ cell_fraction_df <- read_tsv(cell_fraction_file) %>%
 
 # join cell fraction group assignments to cluster df
 stranded_cluster_df <- stranded_cluster_df %>%
-  left_join(cell_fraction_df %>% 
-              dplyr::select(contains(c("Kids_First_Biospecimen_ID", "group"))),
+  left_join(cell_fraction_df, 
+         #     dplyr::select(contains(c("Kids_First_Biospecimen_ID", "group"))),
             by = c("sample_id" = "Kids_First_Biospecimen_ID"))
 
 # Generate cluster enrichment plots for each cell type
@@ -193,6 +194,95 @@ pdf(file.path(plots_dir,
 draw(hgg_ht_list)
 
 dev.off()
+
+
+## plot cell fractions within histologies by cluster assignment
+
+pdf(NULL)
+
+stranded_cluster_long_df <- stranded_cluster_df %>%
+  dplyr::select(sample_id, plot_group, plot_group_hex,
+                cluster,
+                Astrocytes, Endothelial, Microglia,
+                Neurons, Oligodendrocytes, OPCs) %>%
+  pivot_longer(c(Astrocytes, Endothelial, Microglia,
+                 Neurons, Oligodendrocytes, OPCs), 
+               names_to = "Cell_type",
+               values_to = "proportion_estimates")
+  
+plot_cols <- stranded_cluster_long_df %>%
+  distinct(plot_group, plot_group_hex) %>%
+  deframe()
+
+# plot HGG/DMG cell type proportions by cluster 
+hgg_barplot <- stranded_cluster_long_df %>%
+  dplyr::mutate(cluster = as.factor(cluster)) %>%
+  dplyr::filter(plot_group %in% c("DIPG or DMG", "Other high-grade glioma"),
+                cluster %in% c(2, 4, 6, 8)) %>%
+  
+  ggplot(aes(x = cluster, y = proportion_estimates, fill = plot_group)) +
+  geom_boxplot(outlier.shape = NA) +
+  geom_sina(alpha = 0.7, shape = 21) +
+  theme_Publication() +
+  facet_wrap(~ Cell_type, scales = "free_y", ncol = 3) +
+  theme(axis.text.x = element_text(angle = 65, hjust = 1),
+       # legend.position = "none",
+        panel.background = element_blank(),
+  ) +
+  stat_compare_means(method = "wilcox",
+                     comparisons = list(c("6", "2"),
+                                        c("6", "4"),
+                                        c("6", "8")),
+                     label = "p.signif",
+                     method.args = list(alternative = "two.sided"),
+                     step.increase = 0.15) + 
+  scale_fill_manual(values = plot_cols) +
+  scale_y_continuous(expand = expansion(mult = .1)) +
+  xlab("Cluster") +
+  ylab("Cell type proportion estimate") +
+  labs(fill = "Histology")
+
+ggsave(file.path(plots_dir,
+                 "hgg-dmg-cell-proportions-by-cluster.pdf"),
+       hgg_barplot,
+       width = 10, height = 6)
+
+# plot cluster 6 cell proportions by histology
+cluster6_barplot <- stranded_cluster_long_df %>%
+  dplyr::mutate(cluster = as.factor(cluster)) %>%
+  dplyr::filter(cluster == 6,
+                !plot_group %in% c("Low-grade glioma",
+                                   "Mesenchymal tumor")
+                ) %>%
+  
+  ggplot(aes(x = plot_group, y = proportion_estimates, fill = plot_group)) +
+  geom_boxplot(outlier.shape = NA,
+               alpha = 0.75) +
+  geom_sina(alpha = 0.7, shape = 21) +
+  theme_Publication() +
+  facet_wrap(~ Cell_type, scales = "free_y", ncol = 3) +
+  theme(axis.text.x = element_text(angle = 65, hjust = 1),
+        legend.position = "none",
+        panel.background = element_blank(),
+  ) +
+  stat_compare_means(method = "wilcox",
+                     comparisons = list(c("DIPG or DMG", "Other high-grade glioma"),
+                                        c("DIPG or DMG", "Ependymoma"),
+                                        c("DIPG or DMG", "Other CNS embryonal tumor"),
+                                        c("DIPG or DMG", "Atypical Teratoid Rhabdoid Tumor")),
+                     label = "p.signif",
+                     method.args = list(alternative = "two.sided"),
+                     step.increase = 0.15) +
+  scale_fill_manual(values = plot_cols) +
+  scale_y_continuous(expand = expansion(mult = .2)) +
+  xlab("Cluster") +
+  ylab("Cell type proportion estimate")
+
+ggsave(file.path(plots_dir,
+                 "cluster6-cell-proportions-by-hist.pdf"),
+       cluster6_barplot,
+       width = 7, height = 8)
+  
 
 # print session info
 sessionInfo()
