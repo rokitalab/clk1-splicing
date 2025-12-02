@@ -19,6 +19,9 @@ suppressPackageStartupMessages({
   library(ggthemes)
   library(ggforce)
   library(patchwork)
+  library(dplyr)
+  library(clusterProfiler)
+  library(org.Hs.eg.db)
 })
 
 # Setup directories -----------------------------------------------------------
@@ -127,7 +130,7 @@ calculate_clk1_correlations <- function(lineage_name) {
   
   # Convert back to wide format for correlation
   expr_wide <- expr_long %>%
-    select(ProfileID, transcript, expression) %>%
+    dplyr::select(ProfileID, transcript, expression) %>%
     pivot_wider(names_from = transcript, values_from = expression)
   
   # Get CLK1 expression
@@ -324,13 +327,13 @@ gene_table <- tibble(transcript = all_transcripts) %>%
   mutate(gene = extract_gene(transcript)) %>%
   left_join(
     cor_myeloid_filtered %>% 
-      select(transcript, myeloid_corr = corr_with_CLK1, myeloid_dir = direction,
+      dplyr::select(transcript, myeloid_corr = corr_with_CLK1, myeloid_dir = direction,
              myeloid_pval = p_value, myeloid_n = n_samples),
     by = "transcript"
   ) %>%
   left_join(
     cor_cns_filtered %>% 
-      select(transcript, cns_corr = corr_with_CLK1, cns_dir = direction,
+      dplyr::select(transcript, cns_corr = corr_with_CLK1, cns_dir = direction,
              cns_pval = p_value, cns_n = n_samples),
     by = "transcript"
   ) %>%
@@ -357,7 +360,7 @@ gene_table <- tibble(transcript = all_transcripts) %>%
     cns_direction = ifelse(!is.na(cns_dir), cns_dir, "not_significant")
   ) %>%
   # Reorder columns for clarity
-  select(
+  dplyr::select(
     gene,
     transcript,
     cell_lines,
@@ -381,9 +384,7 @@ write_tsv(
 
 ## GO Enrichment
 # Load required libraries
-library(dplyr)
-library(clusterProfiler)
-library(org.Hs.eg.db)
+
 
 # Subset genes with cell_lines == "Both"
 # Define a helper function to get Entrez IDs
@@ -419,9 +420,38 @@ run_go_enrichment <- function(gene_list, universe_ids, ont="BP") {
   )
 }
 
+plot_go_dot <- function(ego_object, top_n = 15, title = "GO Enrichment") {
+  df <- ego_object@result %>%
+    arrange(p.adjust) %>%
+    slice_head(n = top_n) %>%
+    mutate(Description = fct_reorder(Description, GeneRatio))
+  
+  ggplot(df, aes(x = GeneRatio, y = Description, size = Count, color = -log10(p.adjust))) +
+    geom_point(alpha = 0.9) +
+    scale_color_gradient(low = "#91c3fc", high = "#08306b", name = expression(-log[10]("Adj. P"))) +
+    scale_size(range = c(3, 10)) +
+    labs(
+      x = "Gene Ratio",
+      y = NULL,
+      title = title
+    ) +
+    theme_minimal(base_size = 14, base_family = "Helvetica") +
+    theme(
+      plot.title = element_text(hjust = 0.5, face = "bold"),
+      legend.position = "right",
+      panel.grid.major.y = element_blank(),
+      panel.grid.minor = element_blank()
+    )
+}
+
 ego_both    <- run_go_enrichment(genes_both, universe_ids = background_ids)
 ego_cns     <- run_go_enrichment(genes_cns, universe_ids = background_ids)
 ego_myeloid <- run_go_enrichment(genes_myeloid, universe_ids = background_ids)
+
+# Generate plots
+p_both    <- plot_go_dot(ego_both, title = "GO Enrichment — Shared (Both lineages)")
+p_cns     <- plot_go_dot(ego_cns, title = "GO Enrichment — CNS-only")
+p_myeloid <- plot_go_dot(ego_myeloid, title = "GO Enrichment — Myeloid-only")
 
 # Save plots as high-res PDF
 ggsave(file.path(plots_dir,"GO_BP_dotplot_Both.pdf"), p_both, width = 16, height = 6, useDingbats = FALSE)
