@@ -69,6 +69,7 @@ RUN R -e 'BiocManager::install(c( \
   "fgsea", \
   "fpc", \
   "ggpubr", \
+  "ggridges", \
   "ggstatsplot", \
   "ggthemes", \
   "ggVennDiagram", \
