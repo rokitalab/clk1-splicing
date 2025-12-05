@@ -12,6 +12,9 @@ suppressPackageStartupMessages({
   library(Biobase)
   library(performance)
   library(ggforce)
+  library(circlize)
+  library(ComplexHeatmap)
+  library(ggpubr)
 })
 
 # Get `magrittr` pipe
