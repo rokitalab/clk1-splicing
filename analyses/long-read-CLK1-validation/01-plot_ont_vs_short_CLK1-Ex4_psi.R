@@ -38,6 +38,7 @@ source(file.path(figures_dir, "theme_for_plots.R"))
 
 ## output plot path
 file_barplot = file.path(plots_dir,"isoform-barplot.pdf")
+file_barplot = file.path(plots_dir,"isoform-barplot.pdf")
 
 ## retrive stringtie2 results for each cell line
 cl_7316_1763_file = file.path(input_dir,"7316_1763.CLK1.processed.txt")
@@ -152,13 +153,3 @@ barplot <- ggplot(cell_lines_df %>% dplyr::filter(Isoform == "Inclusion"),
   theme_Publication() +
   theme(axis.title.y = element_markdown(),
         legend.position = "none")  
-  
-
-pdf(file_barplot, 
-    width = 5, height = 4)
-barplot
-dev.off()
-
-
-
-
