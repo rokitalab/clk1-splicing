@@ -31,7 +31,7 @@ df_long <- types %>%
   left_join(cluster_df) %>%
   pivot_longer(
     cols = all_of(cell_types), 
-    names_to = "CellType", 
+    names_to = "Cell Type", 
     values_to = "Score"
   ) %>%
   mutate(cluster = as.factor(cluster))
@@ -45,7 +45,7 @@ hist_colors <- setNames(group_colors$plot_group_hex, group_colors$plot_group)
 
 pdf(file.path(plot_dir, "celltype_dist_by_cluster_histology.pdf"), height = 10, width = 16)
 ggplot(df_long,
-       aes(x = Score, y = CellType, fill = plot_group)) +
+       aes(x = Score, y = `Cell Type`, fill = plot_group)) +
   geom_density_ridges(alpha = 0.5) +
   facet_wrap(~ cluster, scales = "free_x", nrow = 4) +
   scale_fill_manual(values = hist_colors) +
