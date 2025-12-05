@@ -28,7 +28,8 @@ samples <- read_tsv(indep_file) %>%
 
 # Load rmats, filter for samples of interest and SE events, and select relevant columns
 rmats <- data.table::fread(rmats_file) %>%
-  dplyr::filter(sample_id %in% samples) %>%
+  dplyr::filter(sample_id %in% samples,
+                splicing_case == "SE") %>%
   dplyr::select(sample_id, geneSymbol, chr,
                 strand, exonStart_0base, exonEnd,
                 upstreamES, upstreamEE,

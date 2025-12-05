@@ -53,12 +53,12 @@ hist_rna_df  <-  read_tsv(clin_file) %>%
 
 hgg_bs_id <- hist_rna_df %>%
   # Select only "RNA-Seq" samples
-  filter(plot_group %in% c("DIPG or DMG", "Other high-grade glioma")) %>%
+  filter(plot_group %in% c("Diffuse midline glioma", "Other high-grade glioma")) %>%
   pull(Kids_First_Biospecimen_ID)
 
 dmg_bs_id <- hist_rna_df %>%
   # Select only "RNA-Seq" samples
-  filter(plot_group == "DIPG or DMG") %>%
+  filter(plot_group == "Diffuse midline glioma") %>%
   pull(Kids_First_Biospecimen_ID)
 
 other_hgg_bs_id <- hist_rna_df %>%
