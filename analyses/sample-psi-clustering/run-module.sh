@@ -28,5 +28,8 @@ bash 05-generate-gsva-summary-file.sh
 # estimate brain cell type proportion
 Rscript --vanilla 06-estimate-cell-type.R
 
+# plot distribution of cell types by cluster and histology
+Rscript --vanilla 07-plot-celltype-dist-by-cluster-histology.R
+
 # plot cell type enrichment within clusters
-Rscript --vanilla 07-plot-cell-fraction-enr-across-clusters.R
+Rscript --vanilla 08-plot-cell-fraction-enr-across-clusters.R

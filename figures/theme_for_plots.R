@@ -7,7 +7,7 @@ theme_Publication <- function(base_size=15, base_family="Helvetica") {
     + theme(plot.title = element_text(face = "bold",
                                       size = rel(1.2), hjust = 0.5),
             text = element_text(),
-            panel.background = element_rect(colour = NA),
+            panel.background = element_blank(),
             plot.background = element_rect(colour = NA),
             panel.border = element_rect(colour = NA),
             axis.title = element_text(face = "bold",size = rel(1)),

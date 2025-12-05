@@ -19,7 +19,8 @@ bash run-module.sh
 * 04-diff_pathways_per_cluster.R; assess pathway enrichment across clusters
 * 05-generate-gsva-summary-file.sh; collate GSVA data
 * 06-estimate-cell-type.R; estimate brain cell type proportion
-* 07-plot-cell-fraction-enr-across-clusters.R; plot enrichment of cell type fraction groups within clusters
+* 07-plot-celltype-dist-by-cluster-histology.R; ridge plots for cell type distribution by cluster and histology
+* 08-plot-cell-fraction-enr-across-clusters.R; plot enrichment of cell type fraction groups within clusters
 
 # Input files
 * lgg-braf-fusion-breakpoint-annotation.tsv; LGG BRAF fusion-positive BS IDs annotated with KIAA1549::BRAF fusion breakpoint group. Pulled from [pbta-germline-somatic repo](https://github.com/diskin-lab-chop/pbta-germline-somatic/blob/main/analyses/survival/input/lgg-braf-fusion-breakpoint-annotation.tsv)
@@ -35,7 +36,9 @@ bash run-module.sh
 ├── 04-diff_pathways_per_cluster.R
 ├── 05-generate-gsva-summary-file.sh
 ├── 06-estimate-cell-type.R
-├── 07-plot-cell-fraction-enr-across-clusters.R
+├── 07-plot-celltype-dist-by-cluster-histology.R
+├── 08-plot-cell-fraction-enr-across-clusters.R
+├── README.md
 ├── input
 │   ├── genesets.tsv
 │   ├── lgg-braf-fusion-breakpoint-annotation.tsv
@@ -49,6 +52,10 @@ bash run-module.sh
 │   ├── brain-cell-type-fraction-cluster-enr-heatmap-stranded.pdf
 │   ├── brain-cell-type-fraction-hgg-cluster-enr-heatmap-stranded.pdf
 │   ├── cell-proportion-estimate-stranded.pdf
+│   ├── cell-proportion-estimate-stranded.pdf
+│   ├── celltype_dist_by_cluster_histology.pdf
+│   ├── cluster_membership-subtypes_poly-A-stranded.pdf
+│   ├── cluster_membership-subtypes_stranded.pdf
 │   ├── cluster_membership_poly-A-stranded.pdf
 │   ├── cluster_membership_stranded.pdf
 │   ├── cluster_membership-subtypes_poly-A-stranded.pdf
