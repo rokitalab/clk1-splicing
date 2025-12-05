@@ -43,12 +43,12 @@ volc_file <-  "enhancedVolcano-sbi.pdf"
 gene_sign_list_file <- "diffSFs_sig_genes.txt"
 
 ## get and setup input files
-sbi_coding_file  <- file.path(root_dir, "analyses/splicing_index/results/splicing_index.SE.txt")
+sbi_coding_file  <- file.path(root_dir, "analyses/splicing_index/results/splicing_index.total.txt")
 
 indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
 indep_df <- read_tsv(indep_file)
 
-clin_file <- file.path(data_dir, "histologies-plot-group.tsv")
+clin_file <- file.path(hist_dir, "histologies-plot-group.tsv")
 clin_tab  <-  read_tsv(clin_file) %>%
   filter(cohort == "PBTA",
          RNA_library == 'stranded',
@@ -62,12 +62,12 @@ sf_list <- readr::read_lines(sf_file)
 
 hgg_bs_id <- clin_tab %>%
   # Select only "RNA-Seq" samples
-  filter(plot_group %in% c("DIPG or DMG", "Other high-grade glioma")) %>%
+  filter(plot_group %in% c("Diffuse midline glioma", "Other high-grade glioma")) %>%
   pull(Kids_First_Biospecimen_ID)
 
 dmg_bs_id <- clin_tab %>%
   # Select only "RNA-Seq" samples
-  filter(plot_group == "DIPG or DMG") %>%
+  filter(plot_group == "Diffuse midline glioma") %>%
   pull(Kids_First_Biospecimen_ID)
 
 other_hgg_bs_id <- clin_tab %>%
