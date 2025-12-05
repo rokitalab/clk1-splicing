@@ -19,11 +19,11 @@ bash download_data.sh
 ### Docker set-up
 #### Pull docker image
 ```
-docker pull pgc-images.sbgenomics.com/rokita-lab/pbta-splicing:v1.0.1
+docker pull --platform linux/amd64 pgc-images.sbgenomics.com/rokita-lab/pbta-splicing:v1.0.3
 ```
 #### docker run
 ```
-docker run --platform linux/amd64 --name <CONTAINER_NAME> -d -e PASSWORD=pass -p 8787:8787 -v $PWD:/home/rstudio/clk1-splicing pgc-images.sbgenomics.com/rokita-lab/pbta-splicing:v1.0.1
+docker run --platform linux/amd64 --name <CONTAINER_NAME> -d -e PASSWORD=pass -p 8787:8787 -v $PWD:/home/rstudio/clk1-splicing pgc-images.sbgenomics.com/rokita-lab/pbta-splicing:v1.0.3
 ```
 #### docker execute
 ```
