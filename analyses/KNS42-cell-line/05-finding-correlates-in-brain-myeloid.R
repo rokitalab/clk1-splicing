@@ -49,7 +49,7 @@ set.seed(2023)
 # Load DepMap CRISPR data -----------------------------------------------------
 depmap_file <- file.path(data_dir, "CLK1-CRISPR-DepMap-score.csv")
 depmap_data <- vroom(depmap_file, show_col_types = FALSE) %>%
-  rename(
+  dplyr::rename(
     ModelID = `Depmap ID`,
     `Cell line` = `Cell Line Name`,
     Histology = `Lineage Subtype`,
@@ -62,30 +62,6 @@ depmap_glioma <- depmap_data %>%
 
 depmap_data_KNS42 <- depmap_glioma %>%
   filter(`Cell line` == "KNS42")
-
-# Plot CLK1 dependency scores -------------------------------------------------
-gene_score_plot <- ggplot(
-  data = depmap_glioma,
-  aes(x = reorder(`Cell line`, CRISPR_Score), y = CRISPR_Score)
-) +
-  geom_point(size = 3, colour = "gray89") +
-  geom_point(size = 3, colour = "gray50", pch = 21) +
-  geom_point(data = depmap_data_KNS42, colour = "red", size = 3) +
-  geom_point(data = depmap_data_KNS42, colour = "black", size = 3, pch = 21) +
-  labs(
-    title = "CLK1 Perturbation",
-    x = "Cell Line",
-    y = "CRISPR Dependency Score"
-  ) +
-  theme_Publication() +
-  theme(axis.text.x = element_text(angle = 75, hjust = 1, size = 8))
-
-# Save plot
-ggsave(
-  file.path(plots_dir, "depmap_score_CLK1_vs_score_KNS42.pdf"),
-  gene_score_plot,
-  height = 4, width = 7.5
-)
 
 # =============================================================================
 # Transcript Correlation Analysis with P-values
@@ -116,7 +92,7 @@ calculate_clk1_correlations <- function(lineage_name) {
   
   # Load expression data
   expr_data <- vroom(tpm_file, show_col_types = FALSE) %>%
-    rename(ProfileID = `...1`) %>%
+    dplyr::rename(ProfileID = `...1`) %>%
     inner_join(omics_mapping, by = "ProfileID")
   
   # Convert to long format
@@ -383,8 +359,6 @@ write_tsv(
 )
 
 ## GO Enrichment
-# Load required libraries
-
 
 # Subset genes with cell_lines == "Both"
 # Define a helper function to get Entrez IDs
