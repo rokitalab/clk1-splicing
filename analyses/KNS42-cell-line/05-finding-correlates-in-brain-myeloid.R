@@ -394,28 +394,31 @@ run_go_enrichment <- function(gene_list, universe_ids, ont="BP") {
   )
 }
 
-plot_go_dot <- function(ego_object, top_n = 15, title = "GO Enrichment") {
-  df <- ego_object@result %>%
-    arrange(p.adjust) %>%
-    slice_head(n = top_n) %>%
-    mutate(Description = fct_reorder(Description, GeneRatio))
-  
-  ggplot(df, aes(x = GeneRatio, y = Description, size = Count, color = -log10(p.adjust))) +
-    geom_point(alpha = 0.9) +
-    scale_color_gradient(low = "#91c3fc", high = "#08306b", name = expression(-log[10]("Adj. P"))) +
-    scale_size(range = c(3, 10)) +
-    labs(
-      x = "Gene Ratio",
-      y = NULL,
-      title = title
-    ) +
-    theme_minimal(base_size = 14, base_family = "Helvetica") +
-    theme(
-      plot.title = element_text(hjust = 0.5, face = "bold"),
-      legend.position = "right",
-      panel.grid.major.y = element_blank(),
-      panel.grid.minor = element_blank()
+plot_go_dot <- function(ego_object, top_n = 15, title = "GO Enrichment", plot_path = "", height = 6, width = 8, label_char = 30) {
+ 
+  options(enrichplot.colours = c("darkorange","blue"))
+  plot <- enrichplot::dotplot(ego_object,
+                              x = "GeneRatio",
+                              size = "Count",
+                              color = "p.adjust",
+                              label_format = label_char,
+                              showCategory = top_n) +   
+    labs(y = "Pathway",
+         x = "Gene Ratio",
+         title = title) +
+    theme_Publication() +
+    scale_size(name = "Gene Count") +  
+    scale_fill_gradient(low = "darkorange", high = "blue", name = "B-H p-value") +
+    guides(
+      fill = guide_colorbar(title = "B-H p-value", label.position = "right", barwidth = 1, barheight = 4)
     )
+  
+  ggplot2::ggsave(plot_path,
+                  plot=plot,
+                  width=width,
+                  height=height,
+                  device="pdf",
+                  dpi=300)
 }
 
 ego_both    <- run_go_enrichment(genes_both, universe_ids = background_ids)
@@ -423,11 +426,6 @@ ego_cns     <- run_go_enrichment(genes_cns, universe_ids = background_ids)
 ego_myeloid <- run_go_enrichment(genes_myeloid, universe_ids = background_ids)
 
 # Generate plots
-p_both    <- plot_go_dot(ego_both, title = "GO Enrichment — Shared (Both lineages)")
-p_cns     <- plot_go_dot(ego_cns, title = "GO Enrichment — CNS-only")
-p_myeloid <- plot_go_dot(ego_myeloid, title = "GO Enrichment — Myeloid-only")
-
-# Save plots as high-res PDF
-ggsave(file.path(plots_dir,"GO_BP_dotplot_Both.pdf"), p_both, width = 16, height = 6, useDingbats = FALSE)
-ggsave(file.path(plots_dir,"GO_BP_dotplot_CNS.pdf"), p_cns, width = 16, height = 6, useDingbats = FALSE)
-ggsave(file.path(plots_dir,"GO_BP_dotplot_Myeloid.pdf"), p_myeloid, width = 16, height = 6, useDingbats = FALSE)
+plot_go_dot(ego_both, title = "GO Enrichment — Shared (Both lineages)", plot_path = file.path(plots_dir,"GO_BP_dotplot_Both.pdf"), height = 6, width = 9, label_char = 50)
+plot_go_dot(ego_cns, title = "GO Enrichment — CNS-only", plot_path = file.path(plots_dir,"GO_BP_dotplot_CNS.pdf"), height = 4)
+plot_go_dot(ego_myeloid, title = "GO Enrichment — Myeloid-only", plot_path = file.path(plots_dir,"GO_BP_dotplot_Myeloid.pdf"))
