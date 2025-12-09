@@ -51,9 +51,19 @@ splice_index_A3SS_df <- readr::read_tsv(splice_index_A3SS_file)
 
 # read in color palette
 palette_file <- file.path(map_dir, "histologies-plot-group.tsv")
+intron_file <- file.path(root_dir, "analyses", "CLK1-splicing_correlations", "input", "pbta-rna-high-intron-samples.tsv")
 
-palette_df <- read_tsv(palette_file) %>%
+## intron high
+intron_df <- read_tsv(intron_file)
+
+palette_hist <- read_tsv(palette_file) %>%
+  dplyr::mutate(intron_high = ifelse(Kids_First_Biospecimen_ID %in% intron_df$Kids_First_Biospecimen_ID, "yes", "no"),
+                plot_group = ifelse(intron_high == "yes", "Intron High", plot_group),
+                plot_group_hex = ifelse(plot_group == "Intron High", "#000000", plot_group_hex)) %>%
   dplyr::rename(Histology = plot_group) %>%
+  select(Sample = Kids_First_Biospecimen_ID, Histology)
+
+palette_df <- palette_hist %>%
   select(Histology, plot_group_hex) %>%
   unique()
 
@@ -86,6 +96,8 @@ file_si_A3SS_plot = "sbi-plot-A3SS-boxplot.pdf"
 plot_sbi <- function(sbi_df, plot_file,label) {
   
   si_cdf_plot <- sbi_df %>%
+    select(-Histology) %>%
+    left_join(palette_hist) %>%
     as_tibble() %>%
     select(Sample, SI, Histology) %>%
     left_join(palette_df) %>%

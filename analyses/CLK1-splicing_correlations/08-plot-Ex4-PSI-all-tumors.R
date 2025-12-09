@@ -50,6 +50,7 @@ pedr_rmats <- file.path(data_dir,"GSE243682-normal-splice-events-rmats.tsv.gz")
 cluster_file <- file.path(root_dir, "analyses",
                           "sample-psi-clustering", "results",
                           "sample-cluster-metadata-top-5000-events-stranded.tsv")
+intron_file <- file.path(input_dir, "pbta-rna-high-intron-samples.tsv")
 
 ## output files for final plots
 hgg_plot_file <- file.path(plots_dir,"all_hgg_CLK1_exon4_inclusion_fraction_hgg_stacked.pdf")
@@ -84,15 +85,23 @@ add_TPM_values <- function(df, matrix) {
   return(df)
 }
 
+## intron high
+intron_df <- read_tsv(intron_file)
+
 ## load histologies info
 histologies_df  <-  read_tsv(clin_file) %>%
   filter(cohort == "PBTA",
          experimental_strategy == "RNA-Seq",
          RNA_library=='stranded',
-         Kids_First_Biospecimen_ID %in% indep_df$Kids_First_Biospecimen_ID)
+         Kids_First_Biospecimen_ID %in% indep_df$Kids_First_Biospecimen_ID) %>%
+  dplyr::mutate(intron_high = ifelse(Kids_First_Biospecimen_ID %in% intron_df$Kids_First_Biospecimen_ID, "yes", "no"),
+                plot_group = ifelse(intron_high == "yes", "Intron High", plot_group),
+                plot_group_hex = ifelse(plot_group == "Intron High", "#000000", plot_group_hex))
+
 
 ## load in clusters
 cluster_df <- read_tsv(cluster_file) %>%
+  select(-c(plot_group, plot_group_hex)) %>%
   dplyr::rename(Kids_First_Biospecimen_ID = sample_id) %>%
   dplyr::mutate(cluster = factor(cluster))
 
@@ -114,7 +123,7 @@ clk1_rmats_cohort <- histologies_df %>%
   inner_join(cluster_df)
   
 PSI_output <- clk1_rmats_cohort %>% 
-  dplyr::select(Kids_First_Biospecimen_ID, plot_group, IncLevel1) %>%
+  dplyr::select(Kids_First_Biospecimen_ID, plot_group, IncLevel1, intron_high) %>%
   dplyr::rename(PSI = IncLevel1) %>%
   dplyr::mutate(PSI = round(PSI, digits = 3)) %>%
 write_tsv(file.path(results_dir,"clk1-exon4-psi.tsv"))
