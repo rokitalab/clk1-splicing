@@ -41,28 +41,18 @@ names(plotgroup_palette) <- unique(histologies$plot_group)
 # transpose psi matrix
 psi_mat <- psi_mat %>%
   column_to_rownames("sample_id") %>%
-  t() %>%
-  as.data.frame() 
+  t()
+ # as.data.frame() 
 
 # define vector of n variable events to test for clustering
-n_events <- c(1000, 5000)
+n_events <- c(10000)
 
 # extract stranded and poly-A stranded libraries to cluster separately
 stranded_samples <- histologies %>%
   dplyr::filter(RNA_library == "stranded") %>%
   pull(Kids_First_Biospecimen_ID)
 
-polya_stranded_samples <- histologies %>%
-  dplyr::filter(RNA_library == "poly-A stranded") %>%
-  pull(Kids_First_Biospecimen_ID)
-
-all_samples <- histologies %>%
-  dplyr::filter(experimental_strategy == "RNA-Seq") %>%
-  pull(Kids_First_Biospecimen_ID)
-
-library_type <- list("stranded" = stranded_samples,
-                     "poly-A_stranded" = polya_stranded_samples,
-                     "all_libraries" = all_samples)
+library_type <- list("stranded" = stranded_samples)
 
 pdf(NULL)
 
@@ -76,8 +66,8 @@ for (library in names(library_type)){
     
     # filter for samples and splice events reported in at least 25% of samples
     cluster_mat <- psi_mat[,colnames(psi_mat) %in% library_type[[library]]]
-    cluster_mat <- cluster_mat[rowSums(!is.na(cluster_mat)) > ncol(cluster_mat)*0.25,]
-    
+    cluster_mat <- cluster_mat[rowSums(!is.na(cluster_mat)) > ncol(cluster_mat)*0.5,]
+
     # pull splice IDs with the highest variance
     psi_vars <- apply(cluster_mat, 1, var, na.rm = TRUE)
     var_splice_ids <- names(sort(psi_vars, decreasing = TRUE))[1:n]
@@ -94,9 +84,7 @@ for (library in names(library_type)){
     hc <- hclust(dist_matrix, method = "ward.D2")
     
     # choose optimal number of clusters, which has been previously assessed and are defined here for each library type and 
-    clusters <- cutree(hc, k = ifelse(n == 1000, 9,
-                                      ifelse(n == 5000 & library == "stranded", 11, 
-                                             ifelse(n = 5000 & library == "poly-A stranded", 7, 9))))
+    clusters <- cutree(hc, k = 10)
     
     # create df of cluster assignment by sample
     cluster_assignment_df <- data.frame(sample_id = names(clusters),
@@ -203,7 +191,7 @@ for (library in names(library_type)){
     # HGG
     hgg_df <- cluster_df %>%
       dplyr::filter(plot_group %in% c("Other high-grade glioma",
-                                      "DIPG or DMG"),
+                                      "Diffuse midline glioma"),
                     !is.na(molecular_subtype),
                     !grepl("To be classified", molecular_subtype)) %>%
       dplyr::mutate(molecular_subtype = str_replace(molecular_subtype, ", TP53", "")) %>%
@@ -275,7 +263,7 @@ for (library in names(library_type)){
     
     # ATRT
     atrt_df <- cluster_df %>%
-      dplyr::filter(plot_group %in% c("Atypical Teratoid Rhabdoid Tumor"),
+      dplyr::filter(plot_group %in% c("Atypical teratoid rhabdoid tumor"),
                     !is.na(molecular_subtype),
                     !grepl("To be classified", molecular_subtype))
     

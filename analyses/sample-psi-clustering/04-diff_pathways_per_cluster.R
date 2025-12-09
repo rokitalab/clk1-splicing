@@ -19,7 +19,6 @@ expr_file <- file.path(data_dir,
                        "gene-expression-rsem-tpm-collapsed.rds")
 
 stranded_cluster_file <- file.path(results_dir, "sample-cluster-metadata-top-5000-events-stranded.tsv")
-polyA_cluster_file <- file.path(results_dir, "sample-cluster-metadata-top-5000-events-poly-A_stranded.tsv")
 
 geneSet_file <- file.path(results_dir, "hallmark_kegg_splice_geneset_mrna.rds")
 
@@ -29,9 +28,8 @@ expr <- readRDS(expr_file)
 pathways <- readRDS(geneSet_file)
 
 # define list of cluster file paths
-cluster_files <- c(stranded_cluster_file,
-                   polyA_cluster_file)
-names(cluster_files) <- c("stranded", "poly-A-stranded")
+cluster_files <- c(stranded_cluster_file)
+names(cluster_files) <- c("stranded")
 
 # loop through cluster files to run GSVA and plot differentially expressed pathways
 for (libtype in names(cluster_files)){

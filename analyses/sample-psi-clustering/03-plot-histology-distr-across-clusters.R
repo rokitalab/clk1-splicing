@@ -39,18 +39,18 @@ source(file.path(analysis_dir, "util", "heatmap_function.R"))
 
 ## filepaths 
 stranded_cluster_file <- file.path(results_dir, "sample-cluster-metadata-top-5000-events-stranded.tsv")
-polyA_cluster_file <- file.path(results_dir, "sample-cluster-metadata-top-5000-events-poly-A_stranded.tsv")
 
 subtype_hex <- file.path(input_dir, "subtype_hex.tsv")
 
 # Wrangle data
-histologies <- read_tsv(file.path(data_dir, "v11", "histologies-plot-group.tsv"))
+histologies <- read_tsv(file.path(root_dir, "analyses",
+                                  "cohort_summary", "results",
+                                  "histologies-plot-group.tsv"))
 subtype_hex_codes <- read_tsv(subtype_hex)
 
 # define list of cluster file paths
-cluster_files <- c(stranded_cluster_file,
-                   polyA_cluster_file)
-names(cluster_files) <- c("stranded", "poly-A-stranded")
+cluster_files <- c(stranded_cluster_file)
+names(cluster_files) <- c("stranded")
 
 # loop through cluster files to plot histology and subtype distributions
 for (type in names(cluster_files)){
@@ -116,12 +116,12 @@ for (type in names(cluster_files)){
   # subset to only those plot groups: ATRT, MB, LGG, HGG, EPN
   hist_subset <- histologies_df %>%
     filter(plot_group %in% c("Medulloblastoma", 
-                             "Atypical Teratoid Rhabdoid Tumor",
+                             "Atypical teratoid rhabdoid tumor",
                              "Low-grade glioma",
                              "Other high-grade glioma",
-                             "DIPG or DMG")) %>%
+                             "Diffuse midline glioma")) %>%
     mutate(plot_group = case_when(plot_group %in% c("Other high-grade glioma",
-                                                    "DIPG or DMG") ~ "High-grade glioma",
+                                                    "Diffuse midline glioma") ~ "High-grade glioma",
                                   TRUE ~ plot_group))
   
   cols <- subtype_hex_codes$hex_code
