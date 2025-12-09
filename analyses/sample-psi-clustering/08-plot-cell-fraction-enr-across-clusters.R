@@ -221,7 +221,7 @@ plot_cols <- stranded_cluster_long_df %>%
 hgg_barplot <- stranded_cluster_long_df %>%
   dplyr::mutate(cluster = as.factor(cluster)) %>%
   dplyr::filter(plot_group %in% c("Diffuse midline glioma", "Other high-grade glioma"),
-                cluster %in% c(2, 3, 6, 7, 8)) %>%
+                cluster %in% c(2, 6, 7)) %>%
   
   ggplot(aes(x = cluster, y = proportion_estimates, fill = plot_group)) +
   geom_boxplot(outlier.shape = NA) +
@@ -233,10 +233,8 @@ hgg_barplot <- stranded_cluster_long_df %>%
         panel.background = element_blank(),
   ) +
   stat_compare_means(method = "wilcox",
-                     comparisons = list(c("8", "2"),
-                                        c("8", "3"),
-                                        c("8", "6"),
-                                        c("8", "7")),
+                     comparisons = list(c("7", "2"),
+                                        c("7", "6")),
                      label = "p.signif",
                      method.args = list(alternative = "two.sided"),
                      step.increase = 0.15) + 
@@ -252,13 +250,12 @@ ggsave(file.path(plots_dir,
        width = 10, height = 6)
 
 # plot cluster 8 cell proportions by histology
-cluster8_barplot <- stranded_cluster_long_df %>%
+cluster7_barplot <- stranded_cluster_long_df %>%
   dplyr::mutate(cluster = as.factor(cluster)) %>%
-  dplyr::filter(cluster == 8,
-                !plot_group %in% c("Mesenchymal tumor",
-                                   "Craniopharyngioma",
-                                   "Ependymoma",
-                                   "Other CNS embryonal tumor")
+  dplyr::filter(cluster == 7,
+                plot_group %in% c("Diffuse midline glioma",
+                                   "Low-grade glioma",
+                                   "Other high-grade glioma")
                 ) %>%
   
   ggplot(aes(x = plot_group, y = proportion_estimates, fill = plot_group)) +
@@ -284,8 +281,8 @@ cluster8_barplot <- stranded_cluster_long_df %>%
   ylab("Cell type proportion estimate")
 
 ggsave(file.path(plots_dir,
-                 "cluster8-cell-proportions-by-hist.pdf"),
-       cluster8_barplot,
+                 "cluster7-cell-proportions-by-hist.pdf"),
+       cluster7_barplot,
        width = 7, height = 8)
   
 

@@ -27,8 +27,6 @@ histologies_file <- file.path(root_dir, "analyses",
                               "cohort_summary", "results",
                               "histologies-plot-group.tsv")
 
-opc_hist_file <- file.path(data_dir, "histologies.tsv")
-
 # wrangle data
 
 psi_mat <- readRDS(psi_mat_file)
@@ -42,7 +40,6 @@ names(plotgroup_palette) <- unique(histologies$plot_group)
 psi_mat <- psi_mat %>%
   column_to_rownames("sample_id") %>%
   t()
- # as.data.frame() 
 
 # define vector of n variable events to test for clustering
 n_events <- 5000
@@ -66,7 +63,7 @@ for (library in names(library_type)){
     
     # filter for samples and splice events reported in at least 25% of samples
     cluster_mat <- psi_mat[,colnames(psi_mat) %in% library_type[[library]]]
-    cluster_mat <- cluster_mat[rowSums(!is.na(cluster_mat)) > ncol(cluster_mat)*0.5,]
+    cluster_mat <- cluster_mat[rowSums(!is.na(cluster_mat)) > ncol(cluster_mat)*0.25,]
 
     # pull splice IDs with the highest variance
     psi_vars <- apply(cluster_mat, 1, var, na.rm = TRUE)
