@@ -30,3 +30,6 @@ Rscript --vanilla 06-estimate-cell-type.R
 
 # plot distribution of cell types by cluster and histology
 Rscript --vanilla 07-plot-celltype-dist-by-cluster-histology.R
+
+# plot cell type enrichment within clusters
+Rscript --vanilla 08-plot-cell-fraction-enr-across-clusters.R
