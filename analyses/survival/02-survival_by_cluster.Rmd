@@ -76,7 +76,7 @@ metadata <- metadata %>%
   dplyr::mutate(cluster = fct_relevel(cluster,
                                                paste0("Cluster ", 1:n_clust))) %>%
   dplyr::mutate(lgg_group = case_when(
-    Histology == "Low-grade glioma" ~ "LGG",
+    plot_group == "Low-grade glioma" ~ "LGG",
     TRUE ~ "non-LGG"
   ))
 ```
@@ -86,7 +86,7 @@ Define colors for clusters
 ```{r}
 # define colors for clusters
 cluster_cols <- c("#B2DF8A","#E31A1C","#33A02C","#A6CEE3","#FB9A99","#FDBF6F",
-                    "#CAB2D6","#FFFF99","#1F78B4","#B15928","#6A3D9A")
+                    "#CAB2D6","#1F78B4","#B15928","#6A3D9A","#FFFF99")
 names(cluster_cols) <- glue::glue("Cluster {1:length(cluster_cols)}")
 ```
 
@@ -185,7 +185,7 @@ Subset `metadata` for LGG, and only include clusters with >= 10 samples
 
 ```{r}
 lgg <- metadata %>%
-  dplyr::filter(Histology == "Low-grade glioma") %>%
+  dplyr::filter(plot_group == "Low-grade glioma") %>%
   dplyr::mutate(cluster = factor(cluster)) %>%
   dplyr::mutate(mol_sub_group = fct_relevel(mol_sub_group, c("Wildtype", "BRAF V600E", "BRAF fusion",
                                                                 "Other alteration", "SEGA"
@@ -306,7 +306,7 @@ Subset `metadata` for HGG and retain cluster with n >= 10
 
 ```{r}
 hgg <- metadata %>%
-  dplyr::filter(Histology %in% c("Other high-grade glioma", "DIPG or DMG")) %>%
+  dplyr::filter(plot_group %in% c("Other high-grade glioma", "Diffuse midline glioma")) %>%
   dplyr::mutate(cluster = factor(cluster)) %>%
   dplyr::mutate(mol_sub_group = fct_relevel(mol_sub_group, c("HGG, H3 wildtype", "HGG, H3 wildtype, TP53",
                                                              "DMG, H3 K28", "DMG, H3 K28, TP53",

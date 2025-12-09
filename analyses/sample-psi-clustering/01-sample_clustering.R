@@ -45,7 +45,7 @@ psi_mat <- psi_mat %>%
  # as.data.frame() 
 
 # define vector of n variable events to test for clustering
-n_events <- c(10000)
+n_events <- 5000
 
 # extract stranded and poly-A stranded libraries to cluster separately
 stranded_samples <- histologies %>%
