@@ -37,6 +37,8 @@ file_circos_plot <- file.path(analysis_dir, "plots", "cohort_circos.pdf")
 
 
 # Load datasets and pre-process
+remove_bsids <- read_lines(file.path(input_dir, "ambiguous-rna-library.txt"), skip = 1)
+
 hist_df <- read_tsv(file.path(data_dir,"histologies.tsv"), guess_max = 100000) %>%
   # mutate ages at dx (7316-851 is 17)
   mutate(age_at_diagnosis_days = case_when(Kids_First_Participant_ID == "PT_AEDWCP8Z" ~
@@ -48,7 +50,8 @@ hist_df <- read_tsv(file.path(data_dir,"histologies.tsv"), guess_max = 100000) %
   filter(cohort == "PBTA",
          !broad_histology %in% c("Eye tumor", "Hematologic malignancy", "Mixed tumor"),
          !is.na(pathology_diagnosis),
-         !composition %in% c("Derived Cell Line", "Patient Derived Xenograft")) %>%
+         !composition %in% c("Derived Cell Line", "Patient Derived Xenograft"),
+         !Kids_First_Biospecimen_ID %in% remove_bsids) %>%
   # collapse reported gender to 3 groups
   mutate(reported_gender = case_when(reported_gender == "Not Reported" ~ "Unknown",
                                      TRUE ~ reported_gender),
