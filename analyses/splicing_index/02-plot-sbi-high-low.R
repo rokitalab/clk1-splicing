@@ -1,10 +1,10 @@
 ################################################################################
-# 07-plot-sbi-high-low.R
+# 02-plot-sbi-high-low.R
 # script that takes in SBI tsv files and plots levels by histology
 #
 # written by Ammar Naqvi, Jo Lynne Rokita, Patricia Sullivan
 #
-# usage: Rscript 07-plot-sbi-high-low.R
+# usage: Rscript 02-plot-sbi-high-low.R
 ################################################################################
 
 suppressPackageStartupMessages({

@@ -15,8 +15,11 @@ perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file 
 # gzip diff files
 gzip -f results/*diff*.txt
 
+## plot SBI and histology
+echo "plotting SBI high/low by histology"
+Rscript --vanilla 02-plot-sbi-high-low.R 
+
 ## plot tumors based on high vs low SBI
-echo "plotting SBI high/low"
 Rscript --vanilla 03-identify_and_plot_histologies_by_SBI.R
 
 ## plot distrubution of splicing types/cases
@@ -31,10 +34,6 @@ Rscript --vanilla 05-plot-tmb-vs-sbi.R
 echo "plotting GVSA vs SBI"
 Rscript --vanilla 06-plot-gsva-score-vs-sbi.R
 
-## plot SBI and histology
-echo "plotting SBI high/low with histologies"
-Rscript --vanilla 07-plot-sbi-high-low.R 
-
 ## plot SBI and cluster
 echo "plotting SBI with cluster"
-Rscript --vanilla 08-plot-sbi-clusters.R 
+Rscript --vanilla 07-plot-sbi-clusters.R 

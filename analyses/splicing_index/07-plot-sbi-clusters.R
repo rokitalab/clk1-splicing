@@ -1,10 +1,10 @@
 ################################################################################
-# 08-plot-sbi-clusters.R
+# 07-plot-sbi-clusters.R
 # script that takes in SBI tsv files and plots levels by cluster
 #
 # written by Ammar Naqvi, Jo Lynne Rokita, Patricia Sullivan
 #
-# usage: Rscript 08-plot-sbi-clusters.R
+# usage: Rscript 07-plot-sbi-clusters.R
 ################################################################################
 
 suppressPackageStartupMessages({
