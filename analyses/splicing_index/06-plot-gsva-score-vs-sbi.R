@@ -23,7 +23,8 @@ input_dir   <- file.path(analysis_dir, "input")
 results_dir <- file.path(analysis_dir, "results")
 plots_dir   <- file.path(analysis_dir, "plots")
 figures_dir <- file.path(root_dir, "figures")
-
+hist_dir <- file.path(root_dir, "analyses", "cohort_summary", "histologies-plot-group.tsv")
+  
 # Source function for plots theme
 source(file.path(figures_dir, "theme_for_plots.R"))
 
@@ -37,7 +38,7 @@ if(!dir.exists(results_dir)){
 }
 
 # file paths
-clin_file  <- file.path(data_dir,
+clin_file  <- file.path(hist_dir,
                         "histologies-plot-group.tsv")
 sbi_file <- file.path(root_dir,
                       "analyses", 

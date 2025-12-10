@@ -31,6 +31,7 @@ analysis_dir <- file.path(root_dir, "analyses", "splicing-factor_dysregulation")
 results_dir <- file.path(analysis_dir, "results")
 plots_dir <- file.path(analysis_dir, "plots")
 input_dir <- file.path(analysis_dir, "input")
+hist_dir <- file.path(root_dir, "analyses", "cohort_summary", "results")
 
 source(file.path(root_dir, "figures", "theme_for_plots.R"))
 
@@ -43,6 +44,8 @@ sbi_total_file <- file.path(root_dir, "analyses",
 expr_file <- file.path(data_dir, "gene-expression-rsem-tpm-collapsed.rds")
 expr_trans_file <- file.path(data_dir,"rna-isoform-expression-rsem-tpm.rds")
 
+hist_file <- file.path(file.path(hist_dir, "histologies-plot-group.tsv"))
+
 cluster_file <- file.path(root_dir, "analyses",
                           "sample-psi-clustering", 
                           "results",
@@ -54,11 +57,15 @@ rmats_file <- file.path(data_dir, "clk1-splice-events-rmats.tsv")
 
 # Wrangle data
 sbi_df <- read_tsv(sbi_total_file)
+hist_df <- read_tsv(hist_file) %>%
+  select(sample_id = Kids_First_Biospecimen_ID, plot_group, plot_group_hex)
 
 expr <- readRDS(expr_file)
 expr_trans <- readRDS(expr_trans_file)
 
-cluster_df <- read_tsv(cluster_file)
+cluster_df <- read_tsv(cluster_file) %>%
+  select(-c(plot_group, plot_group_hex)) %>%
+  inner_join(hist_df)
 
 sfs <- read_lines(sf_file)
 # some sfs have trailing "$" at end of gene name. Remove: 

@@ -38,8 +38,8 @@ corplot_sbi_vs_tmb_by_cg_file <- file.path(plots_dir, "corplot_sbi-tmb-by-cg.pdf
 indep_rna_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
 indep_wgs_file <- file.path(data_dir, "independent-specimens.wgswxspanel.primary.prefer.wgs.tsv")
 tmb_coding_file  <- file.path(data_dir,"snv-mutation-tmb-coding.tsv") # OPC v15 TMB file
-sbi_coding_file  <- file.path(results_dir,"splicing_index.SE.txt")
-palette_file <- file.path(data_dir,"histologies-plot-group.tsv") 
+sbi_coding_file  <- file.path(results_dir,"splicing_index.total.txt")
+palette_file <- file.path(map_dir,"histologies-plot-group.tsv") 
 
 # read in files
 hist_pal <- read_tsv(palette_file) %>%
@@ -176,7 +176,7 @@ by_hist <- quantile_data %>%
                                SI < lower_quantile ~ "Low",
                                TRUE ~ "Mid")) %>%
   filter(SBI_level != "Mid") %>%
-  filter(plot_group != "Other tumor",
+  filter(plot_group != "Rare CNS tumor",
          plot_group != "Non−neoplastic tumor")
 
 # relevel for plotting
@@ -195,7 +195,7 @@ pdf(boxplot_sbi_vs_tmb_by_cg_file, width = 12.5, height = 5.5)
 ggplot(by_hist, aes(SBI_level, log10(tmb))) +  
   ggforce::geom_sina(aes(color = SBI_level, alpha = 0.4), pch = 16, size = 4, method="density") +
   geom_boxplot(outlier.shape = NA, color = "black", size = 0.5, coef = 0, aes(alpha = 0.4)) +
-  stat_compare_means(label.y = 2,size = 3) + 
+  stat_compare_means(label.y = 2,size = 2) + 
   facet_wrap("plot_group", labeller = labeller(plot_group = label_wrap_gen(width = 18)), nrow  = 2) +
   scale_color_manual(name = "SBI_level", values = c(High = "#0C7BDC", Low = "#FFC20A")) + 
   theme_Publication() + 
@@ -207,7 +207,7 @@ dev.off()
 
 # plot cancer group corplots
 sbi_tmb_no_hyper_subset <- sbi_tmb_no_hyper %>%
-  filter(plot_group != "Other tumor",
+  filter(plot_group != "Rare CNS tumor",
          plot_group != "Non−neoplastic tumor")
 
 pdf(corplot_sbi_vs_tmb_by_cg_file, width = 16, height = 8)
