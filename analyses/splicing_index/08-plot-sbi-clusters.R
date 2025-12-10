@@ -50,11 +50,13 @@ splice_index_SE_file   <- file.path(results_dir, "splicing_index.SE.txt")
 splice_index_RI_file   <- file.path(results_dir, "splicing_index.RI.txt")
 splice_index_A5SS_file <- file.path(results_dir, "splicing_index.A5SS.txt")
 splice_index_A3SS_file <- file.path(results_dir, "splicing_index.A3SS.txt")
+splice_index_total_file <- file.path(results_dir, "splicing_index.total.txt")
 
 splice_index_SE_df   <- readr::read_tsv(splice_index_SE_file)
 splice_index_RI_df   <- readr::read_tsv(splice_index_RI_file)
 splice_index_A5SS_df <- readr::read_tsv(splice_index_A5SS_file)
 splice_index_A3SS_df <- readr::read_tsv(splice_index_A3SS_file)
+splice_index_total_df <- readr::read_tsv(splice_index_total_file)
 
 # read in color palette
 palette_file <- file.path(map_dir, "histologies-plot-group.tsv")
@@ -89,6 +91,7 @@ file_si_SE_plot = "clusters-sbi-plot-SE-boxplot.pdf"
 file_si_RI_plot = "clusters-sbi-plot-RI-boxplot.pdf"
 file_si_A5SS_plot = "clusters-sbi-plot-A5SS-boxplot.pdf"
 file_si_A3SS_plot = "clusters-sbi-plot-A3SS-boxplot.pdf"
+file_si_total_plot = "clusters-sbi-plot-total-boxplot.pdf"
 
 # define colors for clusters
 cluster_cols <- c("#B2DF8A","#E31A1C","#33A02C","#A6CEE3","#FB9A99","#FDBF6F",
@@ -105,8 +108,6 @@ plot_sbi <- function(sbi_df, plot_file,label) {
     select(Sample, SI, cluster, plot_group, plot_group_hex, Histology) %>%
     # Perform calculations needed for plot
     prepare_data_for_plot(grouping_variable = cluster) %>%
-    # remove "Other" cancer group
-    # filter(Histology != "Other") %>%
     # Order cancer groups by median TMB
     mutate(cluster = factor(cluster)) 
   
@@ -172,3 +173,4 @@ plot_sbi(splice_index_SE_df,file_si_SE_plot,"SE")
 plot_sbi(splice_index_RI_df,file_si_RI_plot,"RI")
 plot_sbi(splice_index_A5SS_df,file_si_A5SS_plot,"A5SS")
 plot_sbi(splice_index_A3SS_df,file_si_A3SS_plot,"A3SS")
+plot_sbi(splice_index_total_df, file_si_total_plot, "Total")

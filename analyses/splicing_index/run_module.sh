@@ -1,23 +1,19 @@
 #!/bin/sh
 
 ## histology and rmats file
-hist_file="../../data/histologies-plot-group.tsv"
+hist_file="../../analyses/cohort_summary/results/histologies-plot-group.tsv"
 rmats_file="../../data/splice-events-rmats.tsv.gz"
 indep_samples="../../data/independent-specimens.rnaseqpanel.primary.tsv"
 
 
 ## process PSI and generate SBI tables
-perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples A3SS
-perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples A5SS
-perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples RI
-perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples SE
+#perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples A3SS
+#perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples A5SS
+#perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples RI
+#perl 01-generate_splicing-index_and_diff-events_table.pl $hist_file $rmats_file $indep_samples SE
 
 # gzip diff files
-gzip -f results/*diff*.txt
-
-## plot values (SBI) generated from above script in CDF plot
-echo "creating SBI CDF plots"
-Rscript --vanilla 02-plot_splicing_burden_index.R
+#gzip -f results/*diff*.txt
 
 ## plot tumors based on high vs low SBI
 echo "plotting SBI high/low"
