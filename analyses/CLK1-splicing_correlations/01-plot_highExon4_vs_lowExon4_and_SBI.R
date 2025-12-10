@@ -136,7 +136,7 @@ for (lib in library_types){
       theme_Publication()
 
     # Save plot pdf
-    pdf(file.path(plots_dir, paste0(each, "_SBI_high_vs_low_CLK1_", lib, ".pdf")), height = 4, width = 4.5)
+    pdf(file.path(plots_dir, paste0(each, "_SBI_high_vs_low_CLK1_", lib, ".pdf")), height = 4.5, width = 4.5)
     print(boxplot_sbi_vs_incl)
     dev.off()
   }

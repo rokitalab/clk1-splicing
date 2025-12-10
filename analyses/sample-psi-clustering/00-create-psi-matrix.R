@@ -36,7 +36,6 @@ rmats <- data.table::fread(rmats_file) %>%
                 downstreamES, downstreamEE,
                 IncLevel1)
 
-
 # create splice_id column
 rmats <- rmats %>%
   dplyr::mutate(exonStart_0base = exonStart_0base + 1) %>%
