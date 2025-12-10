@@ -1,6 +1,6 @@
 ################################################################################
 # 04-plot_sbi_vs_splicing_factor_expr.R
-# script that calculates pearson correlation coefficients between SE SBI and splicing factor (SF) gene expression within identified clusters and tumor histologies
+# script that calculates pearson correlation coefficients between Total SBI and splicing factor (SF) gene expression within identified clusters and tumor histologies
 #
 # written by Ryan Corbett, Patricia Sullivan
 #
@@ -31,17 +31,20 @@ analysis_dir <- file.path(root_dir, "analyses", "splicing-factor_dysregulation")
 results_dir <- file.path(analysis_dir, "results")
 plots_dir <- file.path(analysis_dir, "plots")
 input_dir <- file.path(analysis_dir, "input")
+hist_dir <- file.path(root_dir, "analyses", "cohort_summary", "results")
 
 source(file.path(root_dir, "figures", "theme_for_plots.R"))
 
 # set file paths
-sbi_se_file <- file.path(root_dir, "analyses", 
+sbi_total_file <- file.path(root_dir, "analyses", 
                          "splicing_index",
                          "results",
-                         "splicing_index.SE.txt")
+                         "splicing_index.total.txt")
 
 expr_file <- file.path(data_dir, "gene-expression-rsem-tpm-collapsed.rds")
 expr_trans_file <- file.path(data_dir,"rna-isoform-expression-rsem-tpm.rds")
+
+hist_file <- file.path(file.path(hist_dir, "histologies-plot-group.tsv"))
 
 cluster_file <- file.path(root_dir, "analyses",
                           "sample-psi-clustering", 
@@ -53,19 +56,23 @@ sf_file <- file.path(input_dir, "splicing_factors.txt")
 rmats_file <- file.path(data_dir, "clk1-splice-events-rmats.tsv")
 
 # Wrangle data
-sbi_se <- read_tsv(sbi_se_file)
+sbi_df <- read_tsv(sbi_total_file)
+hist_df <- read_tsv(hist_file) %>%
+  select(sample_id = Kids_First_Biospecimen_ID, plot_group, plot_group_hex)
 
 expr <- readRDS(expr_file)
 expr_trans <- readRDS(expr_trans_file)
 
-cluster_df <- read_tsv(cluster_file)
+cluster_df <- read_tsv(cluster_file) %>%
+  select(-c(plot_group, plot_group_hex)) %>%
+  inner_join(hist_df)
 
 sfs <- read_lines(sf_file)
 # some sfs have trailing "$" at end of gene name. Remove: 
 sfs <- str_remove(sfs, "[$]")
 
 # append cluster assignments to SBI df:
-sbi_se <- sbi_se %>%
+sbi_df <- sbi_df %>%
   left_join(cluster_df, by = c("Sample" = "sample_id"))
 
 # subset expr matrix to only include SFs:
@@ -84,7 +91,7 @@ p_mat <- cor_mat
 for (clust in colnames(cor_mat)){
   
   # subset sbi df for cluster of interest
-  sbi_sub <- sbi_se %>%
+  sbi_sub <- sbi_df %>%
     dplyr::filter(cluster == clust)
   
   # loop through SFs
@@ -188,7 +195,7 @@ clk1_ex4_expr <- expr_trans %>%
                                          plot_group_hex),
             by = c("Sample" = "sample_id")) %>%
   dplyr::filter(!is.na(cluster)) %>%
-  left_join(sbi_se %>% dplyr::select("Sample", "SI"))
+  left_join(sbi_df %>% dplyr::select("Sample", "SI"))
 
 # extract CLK1 expression and append cluster, sbi info
 clk1_expr <- sf_expr %>%
@@ -206,7 +213,7 @@ clk1_expr <- sf_expr %>%
                                          plot_group_hex),
             by = c("Sample" = "sample_id")) %>%
   dplyr::filter(!is.na(cluster)) %>%
-  left_join(sbi_se %>% dplyr::select("Sample", "SI"))
+  left_join(sbi_df %>% dplyr::select("Sample", "SI"))
 
 # define plot group palette
 plotgroup_palette <- unique(clk1_expr$plot_group_hex)
@@ -224,7 +231,7 @@ plot1 <- clk1_expr %>%
               fill = "pink",
               linetype="dashed") +
   labs(x = expression(bold(Log[2] ~ bolditalic("CLK1") ~ "TPM")),
-       y = expression(bold(Log[2] ~ "SE SBI")),
+       y = expression(bold(Log[2] ~ "SBI")),
        color = "Histology") + 
   stat_cor(method = "pearson",
            label.x = 2.2, label.y = -2.5, size = 5) +
@@ -251,7 +258,7 @@ clk1_expr %>%
               fill = "pink",
               linetype="dashed") +
   labs(x = expression(bold(Log[2] ~ bolditalic("CLK1") ~ "TPM")),
-       y = expression(bold(Log[2] ~ "SE SBI")),
+       y = expression(bold(Log[2] ~ "SBI")),
        color = "Histology") + 
   stat_cor(method = "pearson",
            label.x = 0, label.y = -2.5, size = 3) +
@@ -278,7 +285,7 @@ clk1_expr %>%
               fill = "pink",
               linetype="dashed") +
   labs(x = expression(bold(Log[2] ~ bolditalic("CLK1") ~ "TPM")),
-       y = expression(bold(Log[2] ~ "SE SBI")),
+       y = expression(bold(Log[2] ~ "SBI")),
        color = "Histology") + 
   stat_cor(method = "pearson",
            label.x = 0, label.y = -2, size = 3) +
@@ -325,7 +332,7 @@ clk1_expr %>%
               fill = "pink",
               linetype="dashed") +
   labs(x = expression(bolditalic("CLK1") ~ bold("exon 4 PSI")),
-       y = expression(bold(Log[2] ~ "SE SBI")),
+       y = expression(bold(Log[2] ~ "SBI")),
        color = "Histology") + 
   stat_cor(method = "pearson",
            label.x = 0.1, label.y = -2.5, size = 5) +

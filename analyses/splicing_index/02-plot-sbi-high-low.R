@@ -1,10 +1,10 @@
 ################################################################################
-# 07-plot-sbi-high-low.R
+# 02-plot-sbi-high-low.R
 # script that takes in SBI tsv files and plots levels by histology
 #
 # written by Ammar Naqvi, Jo Lynne Rokita, Patricia Sullivan
 #
-# usage: Rscript 07-plot-sbi-high-low.R
+# usage: Rscript 02-plot-sbi-high-low.R
 ################################################################################
 
 suppressPackageStartupMessages({
@@ -44,17 +44,40 @@ splice_index_RI_file   <- file.path(results_dir, "splicing_index.RI.txt")
 splice_index_A5SS_file <- file.path(results_dir, "splicing_index.A5SS.txt")
 splice_index_A3SS_file <- file.path(results_dir, "splicing_index.A3SS.txt")
 
-splice_index_SE_df   <- readr::read_tsv(splice_index_SE_file)
-splice_index_RI_df   <- readr::read_tsv(splice_index_RI_file)
-splice_index_A5SS_df <- readr::read_tsv(splice_index_A5SS_file)
-splice_index_A3SS_df <- readr::read_tsv(splice_index_A3SS_file)
+splice_index_SE_df  <-  read_tsv(splice_index_SE_file) 
+splice_index_RI_df  <-  read_tsv(splice_index_RI_file) 
+splice_index_A5SS_df  <-  read_tsv(splice_index_A5SS_file) 
+splice_index_A3SS_df  <-  read_tsv(splice_index_A3SS_file) 
+
+# put them in a vector
+si_files <- c(splice_index_SE_file,
+              splice_index_RI_file,
+              splice_index_A5SS_file,
+              splice_index_A3SS_file)
+
+# read and bind together
+si_df <- si_files %>%
+  map_dfr(~ read_tsv(.x, col_types = cols()))
+
+# sum numeric columns by Sample
+si_summary <- si_df %>%
+  group_by(Sample, Histology) %>%
+  summarise(
+    Total    = sum(Total, na.rm = TRUE),
+    AS_neg   = sum(AS_neg, na.rm = TRUE),
+    AS_pos   = sum(AS_pos, na.rm = TRUE),
+    AS_total = sum(AS_total, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  mutate(SI = AS_total / Total) %>%
+  write_tsv(file.path(results_dir, "splicing_index.total.txt"))
 
 # read in color palette
 palette_file <- file.path(map_dir, "histologies-plot-group.tsv")
 
 palette_df <- read_tsv(palette_file) %>%
   dplyr::rename(Histology = plot_group) %>%
-  select(Histology, plot_group_hex) %>%
+  select(Histology, plot_group_hex, Sample = Kids_First_Biospecimen_ID) %>%
   unique()
 
 binary_palette_file <- file.path(palette_dir, "binary_color_palette.tsv")
@@ -78,6 +101,7 @@ prepare_data_for_plot <- function(df, grouping_variable = NULL, min_samples = 5)
 }
 
 # create filenames for plots
+file_si_total_plot = "sbi-plot-total-boxplot.pdf"
 file_si_SE_plot = "sbi-plot-SE-boxplot.pdf"
 file_si_RI_plot = "sbi-plot-RI-boxplot.pdf"
 file_si_A5SS_plot = "sbi-plot-A5SS-boxplot.pdf"
@@ -87,7 +111,7 @@ plot_sbi <- function(sbi_df, plot_file,label) {
   
   si_cdf_plot <- sbi_df %>%
     as_tibble() %>%
-    select(Sample, SI, Histology) %>%
+    select(Sample, SI) %>%
     left_join(palette_df) %>%
     drop_na(Histology) %>%
     # Perform calculations needed for plot
@@ -146,11 +170,11 @@ plot_sbi <- function(sbi_df, plot_file,label) {
     # Histology fill
     scale_fill_manual(values = plot_colors)
   
-  if(label == "SE") {
+  if(label == "Total") {
     # Scale to max value (for main figure)
     p2 <- p + coord_cartesian(ylim = c(0, max(si_cdf_plot$SI)+0.01)) +
 	  scale_y_continuous(breaks = c(0, lower_sbi, upper_sbi, 0.1, 0.15, 0.2),
-                             labels = c("0", "Low SBI", "High SBI", "0.1", "0.15", "0.2"))
+                       labels = c("0", "Low SBI", "High SBI", "0.1", "0.15", "0.2"))
 
     ggsave(filename = paste0("scale-",plot_file), path = plots_dir, plot = p2,
          height = 6, width = 8, useDingbats = FALSE)
@@ -159,8 +183,8 @@ plot_sbi <- function(sbi_df, plot_file,label) {
   # Scale to same max value and sqrt y-axis to see lower values (for supp figure)
   p <- p + coord_cartesian(ylim = c(0, 0.4)) +
 	  scale_y_continuous(trans = "sqrt",
-			     breaks = c(0, lower_sbi, upper_sbi, 0.1, 0.2, 0.3, 0.4),
-                             labels = c("0", "Low SBI", "High SBI", "0.1", "0.2", "0.3", "0.4"))
+			                 breaks = c(0, lower_sbi, upper_sbi, 0.1, 0.2, 0.3, 0.4),
+                       labels = c("0", "Low SBI", "High SBI", "0.1", "0.2", "0.3", "0.4"))
 
   # Save plots
   ggsave(filename = plot_file, path = plots_dir, plot = p,
@@ -168,6 +192,7 @@ plot_sbi <- function(sbi_df, plot_file,label) {
 }
 
 ## plot SBI for each splicing case
+plot_sbi(si_summary,file_si_total_plot,"Total")
 plot_sbi(splice_index_SE_df,file_si_SE_plot,"SE")
 plot_sbi(splice_index_RI_df,file_si_RI_plot,"RI")
 plot_sbi(splice_index_A5SS_df,file_si_A5SS_plot,"A5SS")

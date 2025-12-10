@@ -36,7 +36,7 @@ if(!interactive()) pdf(NULL)
 barplot_path <- file.path(plots_dir, "hist_by_sbi_level_barplot.pdf")
 
 ## get and setup input files
-sbi_coding_file  <- file.path(results_dir,"splicing_index.SE.txt")
+sbi_coding_file  <- file.path(results_dir,"splicing_index.total.txt")
 palette_file <- file.path(map_dir,"histologies-plot-group.tsv") 
 
 # read in files, join palette with sbi file
@@ -85,8 +85,8 @@ plot_df <- clin_df_w_highSBI %>%
   left_join(hist_n) %>%
   # calc percent
   mutate(perc_low = Low_SBI/n*100,
-         perc_high = High_SBI/n*100,
-         Histology = fct_reorder(Histology, High_SBI)) %>%
+         perc_high = High_SBI/n*100) %>%
+        # Histology = fct_reorder(Histology, High_SBI)) %>%
   dplyr::rename(`High SE SBI (%)` = perc_high,
                 `Low SE SBI (%)` = perc_low) 
 
