@@ -114,7 +114,7 @@ metadata <- metadata %>%
   dplyr::mutate(cluster = fct_relevel(cluster,
                                                paste0("Cluster ", 1:n_clust))) %>%
   dplyr::mutate(lgg_group = case_when(
-    Histology == "Low-grade glioma" ~ "LGG",
+    plot_group == "Low-grade glioma" ~ "LGG",
     TRUE ~ "non-LGG"
   )) %>%
   dplyr::mutate(SBI = SI_Total * 10) %>%
@@ -365,11 +365,11 @@ ggsave(file.path(plot_dir, "forest_add_OS_resection_lgg_group_cluster_assignment
 
 
 
-Filter for cluster 6
+Filter for cluster 7
 
 ```{r}
-cluster6_df <- metadata %>%
-  dplyr::filter(cluster == "Cluster 6",
+cluster7_df <- metadata %>%
+  dplyr::filter(cluster == "Cluster 7",
                 !is.na(EFS_days)) %>%
   dplyr::mutate(CLK1_TPM_group = case_when(
       CLK1_Ex4_TPM > summary(CLK1_Ex4_TPM)["3rd Qu."] ~ "High CLK1 TPM",
@@ -389,8 +389,8 @@ Generate KM models with `CLK1_TPM_group` as covariate
 
 ```{r}
 # Generate kaplan meier survival models for OS and EFS, and save outputs
-c6_clk_tpm_kap_os <- survival_analysis(
-  metadata  = cluster6_df %>% 
+c7_clk_tpm_kap_os <- survival_analysis(
+  metadata  = cluster7_df %>% 
     dplyr::filter(!is.na(CLK1_TPM_group)),
   ind_var = "CLK1_TPM_group",
   test = "kap.meier",
@@ -399,11 +399,11 @@ c6_clk_tpm_kap_os <- survival_analysis(
   status_col = "OS_status"
 )
 
-readr::write_rds(c6_clk_tpm_kap_os,
-                 file.path(results_dir, "logrank_cluster6_OS_clk1_tpm_group.RDS"))
+readr::write_rds(c7_clk_tpm_kap_os,
+                 file.path(results_dir, "logrank_cluster7_OS_clk1_tpm_group.RDS"))
 
-c6_clk_tpm_kap_efs <- survival_analysis(
-  metadata  = cluster6_df %>% 
+c7_clk_tpm_kap_efs <- survival_analysis(
+  metadata  = cluster7_df %>% 
     dplyr::filter(!is.na(CLK1_TPM_group)),
   ind_var = "CLK1_TPM_group",
   test = "kap.meier",
@@ -412,8 +412,8 @@ c6_clk_tpm_kap_efs <- survival_analysis(
   status_col = "EFS_status"
 )
 
-readr::write_rds(c6_clk_tpm_kap_efs,
-                 file.path(results_dir, "logrank_cluster6_EFS_clk1_tpm_group.RDS"))
+readr::write_rds(c7_clk_tpm_kap_efs,
+                 file.path(results_dir, "logrank_cluster7_EFS_clk1_tpm_group.RDS"))
 ```
 
 
@@ -421,8 +421,8 @@ Generate KM models with `CLK1_PSI_group` as covariate
 
 ```{r}
 # Generate kaplan meier survival models for OS and EFS, and save outputs
-c6_clk_psi_kap_os <- survival_analysis(
-  metadata  = cluster6_df %>% 
+c7_clk_psi_kap_os <- survival_analysis(
+  metadata  = cluster7_df %>% 
     dplyr::filter(!is.na(CLK1_PSI_group)),
   ind_var = "CLK1_PSI_group",
   test = "kap.meier",
@@ -431,11 +431,11 @@ c6_clk_psi_kap_os <- survival_analysis(
   status_col = "OS_status"
 )
 
-readr::write_rds(c6_clk_psi_kap_os,
-                 file.path(results_dir, "logrank_cluster6_OS_clk1_psi_group.RDS"))
+readr::write_rds(c7_clk_psi_kap_os,
+                 file.path(results_dir, "logrank_cluster7_OS_clk1_psi_group.RDS"))
 
-c6_clk_psi_kap_efs <- survival_analysis(
-  metadata  = cluster6_df %>% 
+c7_clk_psi_kap_efs <- survival_analysis(
+  metadata  = cluster7_df %>% 
     dplyr::filter(!is.na(CLK1_PSI_group)),
   ind_var = "CLK1_PSI_group",
   test = "kap.meier",
@@ -444,54 +444,54 @@ c6_clk_psi_kap_efs <- survival_analysis(
   status_col = "EFS_status"
 )
 
-readr::write_rds(c6_clk_psi_kap_efs,
-                 file.path(results_dir, "logrank_cluster6_EFS_clk1_psi_group.RDS"))
+readr::write_rds(c7_clk_psi_kap_efs,
+                 file.path(results_dir, "logrank_cluster7_EFS_clk1_psi_group.RDS"))
 ```
 
-Generate Cluster 6 KM SI_group plots
+Generate cluster 7 KM SI_group plots
 
 ```{r}
-km_c6_clk_tpm_os_plot <- plotKM(model = c6_clk_tpm_kap_os,
+km_c7_clk_tpm_os_plot <- plotKM(model = c7_clk_tpm_kap_os,
                     variable = "CLK1_TPM_group",
                     combined = F, 
-                    title = "Cluster 6, overall survival",
+                    title = "Cluster 7, overall survival",
                     p_pos = "topright")
 
-ggsave(file.path(plot_dir, "km_cluster6_OS_clk1_tpm_group.pdf"),
-       km_c6_clk_tpm_os_plot,
+ggsave(file.path(plot_dir, "km_cluster7_OS_clk1_tpm_group.pdf"),
+       km_c7_clk_tpm_os_plot,
        width = 8, height = 5, units = "in",
        device = "pdf")
 
-km_c6_clk1_tpm_efs_plot <- plotKM(model = c6_clk_tpm_kap_efs,
+km_c7_clk1_tpm_efs_plot <- plotKM(model = c7_clk_tpm_kap_efs,
                     variable = "CLK1_TPM_group",
                     combined = F, 
-                    title = "Cluster 6, event-free survival",
+                    title = "Cluster 7, event-free survival",
                     p_pos = "topright")
 
-ggsave(file.path(plot_dir, "km_cluster6_EFS_clk1_tpm_group.pdf"), 
-       km_c6_clk1_tpm_efs_plot,
+ggsave(file.path(plot_dir, "km_cluster7_EFS_clk1_tpm_group.pdf"), 
+       km_c7_clk1_tpm_efs_plot,
        width = 8, height = 5, units = "in",
        device = "pdf")
 
-km_c6_clk1_psi_os_plot <- plotKM(model = c6_clk_psi_kap_os,
+km_c7_clk1_psi_os_plot <- plotKM(model = c7_clk_psi_kap_os,
                     variable = "CLK1_PSI_group",
                     combined = F, 
-                    title = "Cluster 6, overall survival",
+                    title = "Cluster 7, overall survival",
                     p_pos = "topright")
 
-ggsave(file.path(plot_dir, "km_cluster6_OS_clk1_psi_group.pdf"),
-       km_c6_clk1_psi_os_plot,
+ggsave(file.path(plot_dir, "km_cluster7_OS_clk1_psi_group.pdf"),
+       km_c7_clk1_psi_os_plot,
        width = 8, height = 5, units = "in",
        device = "pdf")
 
-km_c6_clk1_psi_efs_plot <- plotKM(model = c6_clk_psi_kap_efs,
+km_c7_clk1_psi_efs_plot <- plotKM(model = c7_clk_psi_kap_efs,
                     variable = "CLK1_PSI_group",
                     combined = F, 
-                    title = "Cluster 6, event-free survival",
+                    title = "Cluster 7, event-free survival",
                     p_pos = "topright")
 
-ggsave(file.path(plot_dir, "km_cluster6_EFS_clk1_psi_group.pdf"), 
-       km_c6_clk1_psi_efs_plot,
+ggsave(file.path(plot_dir, "km_cluster7_EFS_clk1_psi_group.pdf"), 
+       km_c7_clk1_psi_efs_plot,
        width = 8, height = 5, units = "in",
        device = "pdf")
 
@@ -500,42 +500,42 @@ ggsave(file.path(plot_dir, "km_cluster6_EFS_clk1_psi_group.pdf"),
 Assess EFS and OS by CLK1 TPM group in multivariate models and generate forest plots
 
 ```{r}
-add_model_c6_efs <- fit_save_model(cluster6_df %>% 
+add_model_c7_efs <- fit_save_model(cluster7_df %>% 
                                       dplyr::filter(extent_of_tumor_resection != "Unavailable",
                                                     CLK1_TPM_group %in% c("High CLK1 TPM", "Low CLK1 TPM")) %>%
-                                      dplyr::mutate(Histology = fct_relevel(Histology,
+                                      dplyr::mutate(plot_group = fct_relevel(plot_group,
                                                                             c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                                                               "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
                                                                               "Other CNS embryonal tumor", "Low-grade glioma"))),
-                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+Histology+CLK1_TPM_group",
+                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_TPM_group",
                                file.path(results_dir, "cox_EFS_additive_terms_subtype_cluster_clk1_tpm_group.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
                                status_col = "EFS_status")
 
-forest_c6_clk1_efs <- plotForest(readRDS(file.path(results_dir, "cox_EFS_additive_terms_subtype_cluster_clk1_tpm_group.RDS")))
+forest_c7_clk1_efs <- plotForest(readRDS(file.path(results_dir, "cox_EFS_additive_terms_subtype_cluster_clk1_tpm_group.RDS")))
 
-ggsave(file.path(plot_dir, "forest_add_EFS_cluster6_histology_resection_clk1_tpm_group.pdf"),
-       forest_c6_clk1_efs,
+ggsave(file.path(plot_dir, "forest_add_EFS_cluster7_histology_resection_clk1_tpm_group.pdf"),
+       forest_c7_clk1_efs,
        width = 9, height = 4, units = "in",
        device = "pdf")
 
-add_model_c6_os <- fit_save_model(cluster6_df %>% 
+add_model_c7_os <- fit_save_model(cluster7_df %>% 
                                     dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")) %>%
-                                    dplyr::mutate(Histology = fct_relevel(Histology,
+                                    dplyr::mutate(plot_group = fct_relevel(plot_group,
                                                                             c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                                                               "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
                                                                               "Other CNS embryonal tumor", "Low-grade glioma"))),
-                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+Histology+CLK1_TPM_group",
+                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_TPM_group",
                                file.path(results_dir, "cox_OS_additive_terms_subtype_cluster_clk1_tpm_group.RDS"),
                                "multivariate",
                                years_col = "OS_years",
                                status_col = "OS_status")
 
-forest_c6_clk1_os <- plotForest(readRDS(file.path(results_dir, "cox_OS_additive_terms_subtype_cluster_clk1_tpm_group.RDS")))
+forest_c7_clk1_os <- plotForest(readRDS(file.path(results_dir, "cox_OS_additive_terms_subtype_cluster_clk1_tpm_group.RDS")))
 
-ggsave(file.path(plot_dir, "forest_add_OS_cluster6_histology_resection_clk1_tpm_group.pdf"),
-       forest_c6_clk1_os,
+ggsave(file.path(plot_dir, "forest_add_OS_cluster7_histology_resection_clk1_tpm_group.pdf"),
+       forest_c7_clk1_os,
        width = 9, height = 4, units = "in",
        device = "pdf")
 ```
@@ -543,42 +543,42 @@ ggsave(file.path(plot_dir, "forest_add_OS_cluster6_histology_resection_clk1_tpm_
 Assess EFS and OS by CLK1 PSI group in multivariate models and generate forest plots
 
 ```{r}
-add_model_c6_efs <- fit_save_model(cluster6_df %>% 
+add_model_c7_efs <- fit_save_model(cluster7_df %>% 
                                       dplyr::filter(extent_of_tumor_resection != "Unavailable",
                                                     CLK1_PSI_group %in% c("High CLK1 PSI", "Low CLK1 PSI")) %>%
-                                      dplyr::mutate(Histology = fct_relevel(Histology,
+                                      dplyr::mutate(plot_group = fct_relevel(plot_group,
                                                                             c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                                                               "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
                                                                               "Other CNS embryonal tumor", "Low-grade glioma"))),
-                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+Histology+CLK1_PSI_group",
+                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_PSI_group",
                                file.path(results_dir, "cox_EFS_additive_terms_subtype_cluster_clk1_psi_group.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
                                status_col = "EFS_status")
 
-forest_c6_clk1_efs <- plotForest(readRDS(file.path(results_dir, "cox_EFS_additive_terms_subtype_cluster_clk1_psi_group.RDS")))
+forest_c7_clk1_efs <- plotForest(readRDS(file.path(results_dir, "cox_EFS_additive_terms_subtype_cluster_clk1_psi_group.RDS")))
 
-ggsave(file.path(plot_dir, "forest_add_EFS_cluster6_histology_resection_clk1_psi_group.pdf"),
-       forest_c6_clk1_efs,
+ggsave(file.path(plot_dir, "forest_add_EFS_cluster7_histology_resection_clk1_psi_group.pdf"),
+       forest_c7_clk1_efs,
        width = 9, height = 4, units = "in",
        device = "pdf")
 
-add_model_c6_os <- fit_save_model(cluster6_df %>% 
+add_model_c7_os <- fit_save_model(cluster7_df %>% 
                                     dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")) %>%
-                                    dplyr::mutate(Histology = fct_relevel(Histology,
+                                    dplyr::mutate(plot_group = fct_relevel(plot_group,
                                                                             c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                                                               "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
                                                                               "Other CNS embryonal tumor", "Low-grade glioma"))),
-                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+Histology+CLK1_PSI_group",
+                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_PSI_group",
                                file.path(results_dir, "cox_OS_additive_terms_subtype_cluster_clk1_psi_group.RDS"),
                                "multivariate",
                                years_col = "OS_years",
                                status_col = "OS_status")
 
-forest_c6_clk1_os <- plotForest(readRDS(file.path(results_dir, "cox_OS_additive_terms_subtype_cluster_clk1_psi_group.RDS")))
+forest_c7_clk1_os <- plotForest(readRDS(file.path(results_dir, "cox_OS_additive_terms_subtype_cluster_clk1_psi_group.RDS")))
 
-ggsave(file.path(plot_dir, "forest_add_OS_cluster6_histology_resection_clk1_psi_group.pdf"),
-       forest_c6_clk1_os,
+ggsave(file.path(plot_dir, "forest_add_OS_cluster7_histology_resection_clk1_psi_group.pdf"),
+       forest_c7_clk1_os,
        width = 9, height = 4, units = "in",
        device = "pdf")
 ```
@@ -586,41 +586,41 @@ ggsave(file.path(plot_dir, "forest_add_OS_cluster6_histology_resection_clk1_psi_
 Assess EFS and OS by CLK1 ex 4 TPM in multivariate models and generate forest plots
 
 ```{r}
-add_model_c6_efs <- fit_save_model(cluster6_df %>% 
+add_model_c7_efs <- fit_save_model(cluster7_df %>% 
                                       dplyr::filter(extent_of_tumor_resection != "Unavailable") %>%
-                                      dplyr::mutate(Histology = fct_relevel(Histology,
+                                      dplyr::mutate(plot_group = fct_relevel(plot_group,
                                                                             c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                                                               "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
                                                                               "Other CNS embryonal tumor", "Low-grade glioma"))),
-                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+Histology+CLK1_Ex4_TPM",
+                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_Ex4_TPM",
                                file.path(results_dir, "cox_EFS_additive_terms_subtype_cluster_clk1_tpm.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
                                status_col = "EFS_status")
 
-forest_c6_clk1_efs <- plotForest(readRDS(file.path(results_dir, "cox_EFS_additive_terms_subtype_cluster_clk1_tpm.RDS")))
+forest_c7_clk1_efs <- plotForest(readRDS(file.path(results_dir, "cox_EFS_additive_terms_subtype_cluster_clk1_tpm.RDS")))
 
-ggsave(file.path(plot_dir, "forest_add_EFS_cluster6_histology_resection_clk1_tpm.pdf"),
-       forest_c6_clk1_efs,
+ggsave(file.path(plot_dir, "forest_add_EFS_cluster7_histology_resection_clk1_tpm.pdf"),
+       forest_c7_clk1_efs,
        width = 9, height = 4, units = "in",
        device = "pdf")
 
-add_model_c6_os <- fit_save_model(cluster6_df %>% 
+add_model_c7_os <- fit_save_model(cluster7_df %>% 
                                     dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")) %>%
-                                    dplyr::mutate(Histology = fct_relevel(Histology,
+                                    dplyr::mutate(plot_group = fct_relevel(plot_group,
                                                                             c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                                                               "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
                                                                               "Other CNS embryonal tumor", "Low-grade glioma"))),
-                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+Histology+CLK1_Ex4_TPM",
+                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_Ex4_TPM",
                                file.path(results_dir, "cox_OS_additive_terms_subtype_cluster_clk1_tpm.RDS"),
                                "multivariate",
                                years_col = "OS_years",
                                status_col = "OS_status")
 
-forest_c6_clk1_os <- plotForest(readRDS(file.path(results_dir, "cox_OS_additive_terms_subtype_cluster_clk1_tpm.RDS")))
+forest_c7_clk1_os <- plotForest(readRDS(file.path(results_dir, "cox_OS_additive_terms_subtype_cluster_clk1_tpm.RDS")))
 
-ggsave(file.path(plot_dir, "forest_add_OS_cluster6_histology_resection_clk1_tpm.pdf"),
-       forest_c6_clk1_os,
+ggsave(file.path(plot_dir, "forest_add_OS_cluster7_histology_resection_clk1_tpm.pdf"),
+       forest_c7_clk1_os,
        width = 9, height = 4, units = "in",
        device = "pdf")
 ```
@@ -628,41 +628,41 @@ ggsave(file.path(plot_dir, "forest_add_OS_cluster6_histology_resection_clk1_tpm.
 Assess EFS and OS by CLK1 ex 4 PSI in multivariate models and generate forest plots
 
 ```{r}
-add_model_c6_efs <- fit_save_model(cluster6_df %>% 
+add_model_c7_efs <- fit_save_model(cluster7_df %>% 
                                       dplyr::filter(extent_of_tumor_resection != "Unavailable") %>%
-                                      dplyr::mutate(Histology = fct_relevel(Histology,
+                                      dplyr::mutate(plot_group = fct_relevel(plot_group,
                                                                             c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                                                               "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
                                                                               "Other CNS embryonal tumor", "Low-grade glioma"))),
-                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+Histology+CLK1_ex4_PSI",
+                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_ex4_PSI",
                                file.path(results_dir, "cox_EFS_additive_terms_subtype_cluster_clk1_psi.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
                                status_col = "EFS_status")
 
-forest_c6_clk1_efs <- plotForest(readRDS(file.path(results_dir, "cox_EFS_additive_terms_subtype_cluster_clk1_psi.RDS")))
+forest_c7_clk1_efs <- plotForest(readRDS(file.path(results_dir, "cox_EFS_additive_terms_subtype_cluster_clk1_psi.RDS")))
 
-ggsave(file.path(plot_dir, "forest_add_EFS_cluster6_histology_resection_clk1_psi.pdf"),
-       forest_c6_clk1_efs,
+ggsave(file.path(plot_dir, "forest_add_EFS_cluster7_histology_resection_clk1_psi.pdf"),
+       forest_c7_clk1_efs,
        width = 9, height = 4, units = "in",
        device = "pdf")
 
-add_model_c6_os <- fit_save_model(cluster6_df %>% 
+add_model_c7_os <- fit_save_model(cluster7_df %>% 
                                     dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")) %>%
-                                    dplyr::mutate(Histology = fct_relevel(Histology,
+                                    dplyr::mutate(plot_group = fct_relevel(plot_group,
                                                                             c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
                                                                               "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
                                                                               "Other CNS embryonal tumor", "Low-grade glioma"))),
-                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+Histology+CLK1_ex4_PSI",
+                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_ex4_PSI",
                                file.path(results_dir, "cox_OS_additive_terms_subtype_cluster_clk1_psi.RDS"),
                                "multivariate",
                                years_col = "OS_years",
                                status_col = "OS_status")
 
-forest_c6_clk1_os <- plotForest(readRDS(file.path(results_dir, "cox_OS_additive_terms_subtype_cluster_clk1_psi.RDS")))
+forest_c7_clk1_os <- plotForest(readRDS(file.path(results_dir, "cox_OS_additive_terms_subtype_cluster_clk1_psi.RDS")))
 
-ggsave(file.path(plot_dir, "forest_add_OS_cluster6_histology_resection_clk1_psi.pdf"),
-       forest_c6_clk1_os,
+ggsave(file.path(plot_dir, "forest_add_OS_cluster7_histology_resection_clk1_psi.pdf"),
+       forest_c7_clk1_os,
        width = 9, height = 4, units = "in",
        device = "pdf")
 ```

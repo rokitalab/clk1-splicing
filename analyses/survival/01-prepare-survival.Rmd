@@ -44,8 +44,10 @@ sbi_A5SS_file <- file.path(root_dir, "analyses", "splicing_index", "results", "s
 sbi_RI_file <- file.path(root_dir, "analyses", "splicing_index", "results", "splicing_index.RI.txt")
 sbi_SE_file <- file.path(root_dir, "analyses", "splicing_index", "results", "splicing_index.SE.txt")
 sbi_total_file <- file.path(root_dir, "analyses", "splicing_index", "results", "splicing_index.total.txt")
-histologies_file <- file.path(data_dir, "histologies-plot-group.tsv")
 
+histologies_file <- file.path(root_dir, "analyses",
+                              "cohort_summary", "results",
+                              "histologies-plot-group.tsv")
 ```
 
 Read in splicing index file, histologies, and updated survival files
@@ -92,7 +94,9 @@ splice_index <- splice_index %>%
                     "extent_of_tumor_resection", 
                     "EFS_days", "EFS_event_type", 
                     "OS_days", "OS_status",
-                    "age_at_diagnosis_days")]) %>%
+                    "age_at_diagnosis_days",
+                    "plot_group",
+                    "plot_group_hex")]) %>%
   distinct(Kids_First_Participant_ID, .keep_all = T) %>%
   dplyr::mutate(EFS_days = as.numeric(EFS_days),
          OS_days = as.numeric(OS_days),
