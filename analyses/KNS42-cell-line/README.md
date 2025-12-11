@@ -20,6 +20,7 @@ input/qpcr-raw-triplicates.tsv
 ```02-plot_cell-proliferation-assay-res.R``` plots the results from the cell proliferation assay of treated vs ctrl/untreated cells<br>
 ```03-plot-qPCR-results.R``` visualizes qRT-PCR results
 ```04-prioritization-depmap-morph.R``` investigates the prioritization of functional splice events, clk1 targets, and depmap dependencies
+```05-finding-correlates-in-brain-myeloid.R``` identifies and compares CLK1-correlated transcripts across cell line types
 
 Current DepMap Release data, including CRISPR Screens, PRISM Drug Screens, Copy Number, Mutation, Expression, and Fusions
 DepMap, Broad (2024). DepMap 24Q4 Public. Figshare+. Dataset. https://doi.org/10.25452/figshare.plus.27993248.v1
@@ -32,6 +33,7 @@ DepMap, Broad (2024). DepMap 24Q4 Public. Figshare+. Dataset. https://doi.org/10
 ├── 02-plot_cell-viability-assay-res.R
 ├── 03-plot-qPCR-results.R
 ├── 04-prioritization-depmap-morph.R
+├── 05-finding-correlates-in-brain-myeloid.R
 ├── README.md
 ├── input
 │   ├── 2023-03-22 162604_JLRmod_20240218.xls
