@@ -23,7 +23,6 @@ suppressPackageStartupMessages({
 root_dir <- rprojroot::find_root(rprojroot::has_dir(".git"))
 data_dir <- file.path(root_dir, "data")
 analysis_dir <- file.path(root_dir, "analyses", "splicing_index")
-map_dir <- file.path(root_dir, "analyses", "cohort_summary", "results")
 palette_dir <- file.path(root_dir, "palettes")
 results_dir <- file.path(analysis_dir, "results")
 plots_dir <- file.path(analysis_dir, "plots")
@@ -59,7 +58,7 @@ splice_index_A3SS_df <- readr::read_tsv(splice_index_A3SS_file)
 splice_index_total_df <- readr::read_tsv(splice_index_total_file)
 
 # read in color palette
-palette_file <- file.path(map_dir, "histologies-plot-group.tsv")
+palette_file <- file.path(data_dir, "histologies-plot-group.tsv")
 
 palette_df <- read_tsv(palette_file) %>%
   dplyr::rename(Histology = plot_group) %>%
@@ -96,7 +95,7 @@ file_si_total_plot = "clusters-sbi-plot-total-boxplot.pdf"
 # define colors for clusters
 cluster_cols <- c("#B2DF8A","#E31A1C","#33A02C","#A6CEE3","#FB9A99","#FDBF6F",
                   "#CAB2D6","#FFFF99","#1F78B4","#B15928","#6A3D9A","#FF7F00",
-                  "#2ef4ca","#f4cced","#bd18ea")
+                  "#2ef4ca","#f4cced")
 names(cluster_cols) <- 1:length(cluster_cols)
 cluster_cols <- cluster_cols[1:length(unique(cluster_df$cluster))]
 
@@ -134,16 +133,6 @@ plot_sbi <- function(sbi_df, plot_file,label) {
     
     # Data
   p <- p +   
-    # Yellow shading from 0 to lower_sbi
-    #annotate("rect", xmin = -Inf, xmax = Inf, ymin = 0, ymax = lower_sbi,
-    #        fill = "#fac50c", alpha = 0.3) +
-    #geom_hline(yintercept = lower_sbi, linetype = "dashed", color = "#fac50c", size = 1) +
-    
-    # Blue shading from upper_sbi to top of the plot
-    #annotate("rect", xmin = -Inf, xmax = Inf, ymin = upper_sbi, ymax = Inf,
-    #    fill = "#2a81e2", alpha = 0.1) +
-    #geom_hline(yintercept = upper_sbi, linetype = "dashed", color = "#2a81e2", size = 1) +
-    
     # Data
     geom_boxplot(aes(fill = cluster), color = "black", alpha = 0.5, outlier.shape = NA, show.legend = FALSE) +
     geom_sina(aes(fill = plot_group, group = cluster),

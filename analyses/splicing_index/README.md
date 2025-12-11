@@ -1,6 +1,6 @@
 # Splicing Index
 
-Module authors: Ammar Naqvi (@naqvia), Jo Lynne Rokita (@jharenza)
+Module authors: Ammar Naqvi (@naqvia), Jo Lynne Rokita (@jharenza), Patricia Sullivan (@pj-sullivan)
 
 The purpose of this module is to compute the splicing index of each tumor (proportion of mis-spliced events)
 
@@ -12,7 +12,7 @@ bash run_module.sh
 ```
 Input files (`data` folder, or TMB in `input` folder):
 ```
-histologies.tsv
+histologies-plot-group.tsv
 splice-events-rmats.tsv.gz
 independent-specimens.rnaseqpanel.primary-plus.tsv
 independent-specimens.rnaseqpanel.primary-plus.tsv
