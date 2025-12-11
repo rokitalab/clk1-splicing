@@ -31,7 +31,6 @@ analysis_dir <- file.path(root_dir, "analyses", "splicing-factor_dysregulation")
 results_dir <- file.path(analysis_dir, "results")
 plots_dir <- file.path(analysis_dir, "plots")
 input_dir <- file.path(analysis_dir, "input")
-hist_dir <- file.path(root_dir, "analyses", "cohort_summary", "results")
 
 source(file.path(root_dir, "figures", "theme_for_plots.R"))
 
@@ -44,7 +43,7 @@ sbi_total_file <- file.path(root_dir, "analyses",
 expr_file <- file.path(data_dir, "gene-expression-rsem-tpm-collapsed.rds")
 expr_trans_file <- file.path(data_dir,"rna-isoform-expression-rsem-tpm.rds")
 
-hist_file <- file.path(file.path(hist_dir, "histologies-plot-group.tsv"))
+hist_file <- file.path(file.path(data_dir, "histologies-plot-group.tsv"))
 
 cluster_file <- file.path(root_dir, "analyses",
                           "sample-psi-clustering", 

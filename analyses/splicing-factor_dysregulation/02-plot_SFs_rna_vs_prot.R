@@ -51,8 +51,7 @@ gsva_df <- read_tsv(gsva_file) %>%
   mutate(score = round(score, 1))
 
 # get histology info
-hist_file <- file.path(root_dir, "analyses", "cohort_summary",
-                       "results", "histologies-plot-group.tsv")
+hist_file <- file.path(data_dir, "histologies-plot-group.tsv")
 cluster_file <- file.path(root_dir, "analyses", 
                           "sample-psi-clustering", "results", 
                           "sample-cluster-metadata-top-5000-events-stranded.tsv")

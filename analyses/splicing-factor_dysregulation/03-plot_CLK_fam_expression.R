@@ -29,7 +29,6 @@ analysis_dir <- file.path(root_dir, "analyses", "splicing-factor_dysregulation")
 input_dir   <- file.path(analysis_dir, "input")
 results_dir <- file.path(analysis_dir, "results")
 plots_dir   <- file.path(analysis_dir, "plots")
-hist_dir <- file.path(root_dir, "analyses", "cohort_summary", "results")
 
 ## theme for all plots
 # source function for theme for plots survival
@@ -41,7 +40,7 @@ source(file.path(figures_dir, "theme_for_plots.R"))
 indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
 indep_df <- read_tsv(indep_file)
 
-clin_file <- file.path(hist_dir,
+clin_file <- file.path(data_dir,
                        "histologies-plot-group.tsv")
 clin_tab  <-  read_tsv(clin_file) %>%
   filter(cohort == "PBTA",
