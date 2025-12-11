@@ -84,7 +84,7 @@ Modifications:
 └── splice-events-rmats.tsv.gz
 ```
 
-## past releease (v11)
+## past release (v11)
 - Data release date: 2024-09-18
 - Data release update (CNV consensus file): 2024-07-07
 - OpenPedCan (OPC) data release date: 2024-01-03 (v13)
