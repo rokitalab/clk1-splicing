@@ -8,13 +8,7 @@
 ## libraries
 suppressPackageStartupMessages({
   library(tidyverse)
-  library(maftools)
-  library(vroom)
   library(data.table)
-  library(ComplexHeatmap)
-  library(circlize)
-  library(gtools)
-  
 })
 
 # Get `magrittr` pipe
