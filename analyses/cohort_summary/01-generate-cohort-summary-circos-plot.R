@@ -37,8 +37,6 @@ file_circos_plot <- file.path(analysis_dir, "plots", "cohort_circos.pdf")
 
 
 # Load datasets and pre-process
-remove_bsids <- read_lines(file.path(input_dir, "ambiguous-rna-library.txt"), skip = 1)
-
 hist_df <- read_tsv(file.path(data_dir,"histologies.tsv"), guess_max = 100000) %>%
   # mutate ages at dx (7316-851 is 17)
   mutate(age_at_diagnosis_days = case_when(Kids_First_Participant_ID == "PT_AEDWCP8Z" ~
@@ -50,8 +48,7 @@ hist_df <- read_tsv(file.path(data_dir,"histologies.tsv"), guess_max = 100000) %
   filter(cohort == "PBTA",
          !broad_histology %in% c("Eye tumor", "Hematologic malignancy", "Mixed tumor"),
          !is.na(pathology_diagnosis),
-         !composition %in% c("Derived Cell Line", "Patient Derived Xenograft"),
-         !Kids_First_Biospecimen_ID %in% remove_bsids) %>%
+         !composition %in% c("Derived Cell Line", "Patient Derived Xenograft")) %>%
   # collapse reported gender to 3 groups
   mutate(reported_gender = case_when(reported_gender == "Not Reported" ~ "Unknown",
                                      TRUE ~ reported_gender),
@@ -100,6 +97,32 @@ under40_df <- hist_update %>%
               (sub_cohort != "PNOC" & is.na(age_at_diagnosis_days) & age_at_event_days < (365.25*40))
   )
 
+# filter using independent specimens file and stranded cohort
+remove_bsids <- read_lines(file.path(input_dir, "ambiguous-rna-library.txt"), skip = 1)
+
+independent_specimens_rna <- read_tsv(file.path(data_dir,"independent-specimens.rnaseqpanel.primary.tsv")) %>%
+  left_join(under40_df[,c("Kids_First_Biospecimen_ID", "match_id", "RNA_library")]) %>%
+  filter(cohort == "PBTA",
+         experimental_strategy == "RNA-Seq",
+         RNA_library == "stranded",
+         !Kids_First_Biospecimen_ID %in% remove_bsids)
+
+independent_specimens_dna <- read_tsv(file.path(data_dir,"independent-specimens.wgswxspanel.primary.prefer.wgs.tsv")) %>%
+  left_join(under40_df[,c("Kids_First_Biospecimen_ID", "match_id")]) %>%
+  filter(match_id %in% independent_specimens_rna$match_id)
+
+independent_specimens_methyl <- read_tsv(file.path(data_dir,"independent-specimens.methyl.primary.tsv")) %>%
+  left_join(under40_df[,c("Kids_First_Biospecimen_ID", "match_id")]) %>%
+  filter(match_id %in% independent_specimens_rna$match_id)
+
+independent_specimens <- under40_df %>%
+  filter((experimental_strategy == "RNA-Seq" & Kids_First_Biospecimen_ID %in% independent_specimens_rna$Kids_First_Biospecimen_ID) |
+         (experimental_strategy == "Methylation" & Kids_First_Biospecimen_ID %in% independent_specimens_methyl$Kids_First_Biospecimen_ID) |
+         (experimental_strategy %in% c("WGS", "WXS", "Targeted Sequencing") & Kids_First_Biospecimen_ID %in% independent_specimens_dna$Kids_First_Biospecimen_ID) |
+         (experimental_strategy %in% c("Phospho-Proteomics", "Whole Cell Proteomics") & match_id %in% independent_specimens_rna$match_id))
+
+table(independent_specimens$experimental_strategy)
+
 # add cancer/plot group mapping file 
 map_file <- read_tsv(file.path(input_dir, "plot-mapping.tsv")) %>%
   mutate(plot_group = case_when(
@@ -110,7 +133,7 @@ map_file <- read_tsv(file.path(input_dir, "plot-mapping.tsv")) %>%
   ))
 
 # add plot mapping file and old plot groups, export this.
-combined_plot_map <- under40_df %>%
+combined_plot_map <- independent_specimens %>%
   full_join(map_file, by = c("broad_histology", "cancer_group")) %>%
   select(names(map_file)) %>%
   unique() %>%
@@ -118,27 +141,13 @@ combined_plot_map <- under40_df %>%
   write_tsv(file.path(results_dir, "plot_mapping.tsv"))
 
 # add plot mapping to histology df
-combined_hist_map <- under40_df %>%
+combined_hist_map <- independent_specimens %>%
   left_join(map_file, by = c("broad_histology", "cancer_group")) %>%
   write_tsv(file.path(results_dir, "histologies-plot-group.tsv"))
 
-combined_hist_map <- combined_hist_map %>%
-  filter(experimental_strategy == "RNA-Seq",
-         RNA_library == "stranded",
-         !is.na(pathology_diagnosis))
-
-## filter using independent specimens file 
-independent_specimens_df <- read_tsv(file.path(data_dir,"independent-specimens.rnaseqpanel.primary.tsv")) %>%
-  filter(cohort == "PBTA",
-         experimental_strategy == "RNA-Seq",
-         Kids_First_Biospecimen_ID %in% combined_hist_map$Kids_First_Biospecimen_ID)
-
-intersect(hist_NAs_df$Kids_First_Biospecimen_ID, independent_specimens_df$Kids_First_Biospecimen_ID)
-
-# Merge both meta datasets
+# Filter to just RNA-Seq samples for plotting
 hist_indep_df <- combined_hist_map %>%
-  right_join(independent_specimens_df, by="Kids_First_Biospecimen_ID") %>% 
-  unique()
+  filter(experimental_strategy == "RNA-Seq")
 
 uniq_plot_cols <- combined_plot_map %>%
   select(plot_group, plot_group_hex) %>%
@@ -232,6 +241,3 @@ draw(lgd_list2, x = unit(129, "mm"), y = unit(95, "mm"))
 draw(lgd_list3, x = unit(125, "mm"), y = unit(63, "mm"))
 circos.clear()
 dev.off()
-
-
-
