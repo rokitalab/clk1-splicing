@@ -135,7 +135,7 @@ while(<FIL>)
 
   ## create unique ID for splicing change
 
-  my $splice_id = $gene.":".$Start."-".$End."_".$prevES."-".$prevEE."_".$nextES."-".$nextEE;
+  my $splice_id = $splice_case."=".$gene.":".$Start."-".$End."_".$prevES."-".$prevEE."_".$nextES."-".$nextEE;
   $splice_id=~s/\.0//g;
 
   $inc_levels{$splice_id}{$bs_id} = $inc_level;
@@ -217,7 +217,7 @@ my @ab_splicing_events_neg_uniq = do { my %seen; grep { !$seen{$_}++ } @ab_splic
 my $output_file = "results/recurrent_splice_events_by_histology.tsv";
 open(TAB,">".$output_file) || die("Cannot Open File");
 
-print TAB "splicing_event\thistology\tsplice_case\ttype\tfreq\n";
+print TAB "splicing_event\thistology\ttype\tfreq\n";
 
 ## save and report skipping events
 foreach $hist (@broad_hist_uniq)
@@ -234,7 +234,7 @@ foreach $hist (@broad_hist_uniq)
 
 
           {
-            print TAB "$event\t$hist\t$splice_case\tinclusion\t$event_count\n";
+            print TAB "$event\t$hist\tinclusion\t$event_count\n";
 
 
 
@@ -256,7 +256,7 @@ foreach $hist (@broad_hist_uniq)
           if( ($event_count) >= 2 )
 
           {
-            print TAB "$event\t$hist\t$splice_case\tskipping\t$event_count\n";
+            print TAB "$event\t$hist\tskipping\t$event_count\n";
 
           }
         }
