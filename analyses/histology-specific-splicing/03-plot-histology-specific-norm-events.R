@@ -24,7 +24,6 @@ root_dir <- rprojroot::find_root(rprojroot::has_dir(".git"))
 data_dir <- file.path(root_dir, "data")
 analysis_dir <- file.path(root_dir, "analyses", "histology-specific-splicing")
 results_dir <- file.path(analysis_dir, "results")
-cohort_sum_dir <- file.path(root_dir, "analyses", "cohort_summary")
 
 plots_dir <- file.path(analysis_dir, "plots")
 if(!dir.exists(plots_dir)){
@@ -36,59 +35,79 @@ figures_dir <- file.path(root_dir, "figures")
 source(file.path(figures_dir, "theme_for_plots.R"))
 
 # input file for colors
-palette_file <- file.path(cohort_sum_dir, "results", "histologies-plot-group.tsv")
-se_event_file <- file.path(results_dir, "unique_events.SE.tsv")
+palette_file <- file.path(data_dir, "histologies-plot-group.tsv")
+event_file <- file.path(results_dir, "unique_events.tsv")
 
-histology_df <- vroom(palette_file)
-se_events <- vroom(se_event_file) %>% 
-  rename(plot_group=Histology) %>% 
-  extract(SpliceID, into = c("SpliceID", "Event"), regex = "^(.*)_(inclusion|skipping)$") %>%
-  mutate(Event = str_to_title(Event)) %>%
-  count(plot_group, Event) %>%
-  rename(unique_hits = n)
-
-## filter using independent specimens file
-independent_specimens_df <- read_tsv(file.path(data_dir,"independent-specimens.rnaseqpanel.primary.tsv")) %>%
-  filter(cohort == "PBTA",
-         experimental_strategy == "RNA-Seq")
-
-# Merge both meta datasets
-hist_indep_df <- histology_df %>%
-  right_join(independent_specimens_df, by="Kids_First_Biospecimen_ID") %>% 
-  unique() %>%
-  filter(!is.na(plot_group),
-         RNA_library == "stranded") %>%  # Remove rows with NA in plot_group
+## filter and count histologies
+hist_df <- vroom(palette_file) %>%
+  filter(experimental_strategy == "RNA-Seq") %>%
   count(plot_group) %>%
   rename(Total = n)
 
-colnames(se_events)
-
-combined_df <- inner_join(se_events, hist_indep_df, by='plot_group') %>%
+events <- vroom(event_file) %>% 
+  rename(plot_group=Histology) %>% 
+  extract(SpliceID, into = c("Case", "SpliceID", "Event"), regex = "^(.*)=(.*)_(inclusion|skipping)$")
+  
+## inclusion vs skipping
+incl_skip <- events %>% 
+  mutate(Event = str_to_title(Event)) %>%
+  count(plot_group, Event) %>%
+  rename(unique_hits = n) %>%
+  inner_join(hist_df, by='plot_group') %>%
   mutate(norm_unique = unique_hits / Total)
 
-
 # Sort the data frame in descending order by avg_unique of Skipping events
-group_order <- combined_df %>%
+group_order <- incl_skip %>%
   group_by(plot_group) %>%
   summarise(norm_unique_total = sum(norm_unique)) %>%
   arrange(norm_unique_total) %>%
   pull(plot_group)
 
-
 # Create the side-by-side bar plot with custom colors
-avg_uniq_plot <- ggplot(combined_df, aes(x = fct_relevel(plot_group, group_order), y = norm_unique, fill = Event)) +
+incl_uniq_plot <- ggplot(incl_skip, aes(x = fct_relevel(plot_group, group_order), y = norm_unique, fill = Event)) +
   geom_bar(stat = "identity", position = position_dodge()) +
-  scale_fill_manual(name = "SE Event", values = c(Skipping = "#0C7BDC", Inclusion = "#FFC20A"))+ 
-  labs(x = "Histology",
+  scale_fill_manual(name = "Splicing Event", values = c(Skipping = "#0C7BDC", Inclusion = "#FFC20A"))+   labs(x = "Histology",
        y = "Unique Recurrent\nSplice Events per Patient") +
   theme_Publication() + 
-  ylim(c(0,max(combined_df$norm_unique)+2))+
+  ylim(c(0,max(incl_skip$norm_unique)+2))+
   coord_flip()+
   theme(legend.position = "top",
         legend.direction = "horizontal")
-  
+
 # Save plot
-pdf(file.path(plots_dir,"avg-uniq-hits.pdf"), height = 7, width = 7)
-print(avg_uniq_plot)
+pdf(file.path(plots_dir,"norm-uniq-hits-inclusion-or-skipping.pdf"), height = 7, width = 7)
+print(incl_uniq_plot)
+dev.off()
+
+
+## splicing cases
+splicing_case <- events %>% 
+  count(plot_group, Case) %>%
+  rename(unique_hits = n) %>%
+  inner_join(hist_df, by='plot_group') %>%
+  mutate(norm_unique = unique_hits / Total,
+         Case = factor(Case, levels = c("RI", "A5SS", "A3SS", "SE")))
+
+group_order <- splicing_case %>%
+  group_by(plot_group) %>%
+  summarise(norm_unique_total = sum(norm_unique)) %>%
+  arrange(norm_unique_total) %>%
+  pull(plot_group)
+
+# Create the side-by-side bar plot with custom colors
+case_uniq_plot <- ggplot(splicing_case, aes(x = fct_relevel(plot_group, group_order), y = norm_unique, fill = Case)) +
+  geom_bar(stat = "identity", position = position_stack()) +
+  scale_fill_manual(name = "Splicing Case", values = c(SE = "#0C7BDC", RI = "#00A5A5", A3SS = "#FFC20A", A5SS = "#E04C2F"))+ 
+  labs(x = "Histology",
+       y = "Unique Recurrent\nSplice Events per Patient") +
+  theme_Publication() + 
+  coord_flip()+
+  theme(legend.position = c(0.4, 1.04), # shift legend to the left to fit
+        legend.direction = "horizontal") +
+  guides(fill = guide_legend(reverse = TRUE))
+
+# Save plot
+pdf(file.path(plots_dir,"norm-uniq-hits-case.pdf"), height = 7, width = 7)
+print(case_uniq_plot)
 dev.off()
 
