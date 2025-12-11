@@ -69,7 +69,7 @@ incl_uniq_plot <- ggplot(incl_skip, aes(x = fct_relevel(plot_group, group_order)
   scale_fill_manual(name = "Splicing Event", values = c(Skipping = "#0C7BDC", Inclusion = "#FFC20A"))+   labs(x = "Histology",
        y = "Unique Recurrent\nSplice Events per Patient") +
   theme_Publication() + 
-  ylim(c(0,max(combined_df$norm_unique)+2))+
+  ylim(c(0,max(incl_skip$norm_unique)+2))+
   coord_flip()+
   theme(legend.position = "top",
         legend.direction = "horizontal")
