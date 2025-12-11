@@ -24,7 +24,6 @@ root_dir <- rprojroot::find_root(rprojroot::has_dir(".git"))
 data_dir <- file.path(root_dir, "data")
 analysis_dir <- file.path(root_dir, "analyses", "histology-specific-splicing")
 results_dir <- file.path(analysis_dir, "results")
-cohort_sum_dir <- file.path(root_dir, "analyses", "cohort_summary")
 
 plots_dir <- file.path(analysis_dir, "plots")
 if(!dir.exists(plots_dir)){
@@ -32,17 +31,17 @@ if(!dir.exists(plots_dir)){
 }
 
 # input file for colors
-palette_file <- file.path(cohort_sum_dir, "results", "histologies-plot-group.tsv")
+palette_file <- file.path(data_dir, "histologies-plot-group.tsv")
 
 ## output files for final plots
-upsetR_plot_file <- file.path(analysis_dir, "plots", "upsetR_histology-specific.SE.pdf")
-uniq_tsv_out <- file.path(results_dir, "unique_events.SE.tsv")
+upsetR_plot_file <- file.path(analysis_dir, "plots", "upsetR_histology-specific.pdf")
+uniq_tsv_out <- file.path(results_dir, "unique_events.tsv")
 
 # Load the data using vroom
 palette_df <- read_tsv(palette_file)
 splice_event_df <- vroom::vroom(file.path(results_dir, "recurrent_splice_events_by_histology.tsv"), delim = "\t", trim_ws = TRUE, col_names = TRUE)
 
-## make list out of all SE events
+## make list out of all events
 list_for_upsetR <- splice_event_df %>%
   dplyr::mutate(event_type = paste(splicing_event, type, sep = "_")) %>%
   dplyr::select(histology, event_type) %>%
@@ -73,7 +72,7 @@ histology_frequencies <- splice_event_df %>%
 ordered_histologies <- histology_frequencies$histology
 cols <- cols[ordered_histologies]
 
-se_events <- upset(fromList(list_for_upsetR), 
+events <- upset(fromList(list_for_upsetR), 
       keep.order = TRUE, 
       mainbar.y.label = "", 
       main.bar.color = "black",
@@ -84,18 +83,18 @@ se_events <- upset(fromList(list_for_upsetR),
       shade.color = "aliceblue",
       #text scale
       # c(intersection size title, intersection size tick labels, set size title, set size tick labels, set names, numbers above bars)
-      text.scale = c(2,2,2,1.8,2,0), 
+      text.scale = c(2,2,2,1.3,1.7,0), 
       point.size = 3, 
       line.size = 1.2,  
       nsets = 17, 
       empty.intersections = "on")
 
-
 # Generate the UpSetR plot
 # Save plot
 pdf(upsetR_plot_file, height = 8, width = 10)
-print(se_events)
+print(events)
 dev.off()
+
 
 # Create an empty list to store the results
 unique_items_list <- vector("list", length(list_for_upsetR))
