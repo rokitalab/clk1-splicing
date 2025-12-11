@@ -23,8 +23,7 @@ input_dir   <- file.path(analysis_dir, "input")
 results_dir <- file.path(analysis_dir, "results")
 plots_dir   <- file.path(analysis_dir, "plots")
 figures_dir <- file.path(root_dir, "figures")
-hist_dir <- file.path(root_dir, "analyses", "cohort_summary", "results")
-  
+
 # Source function for plots theme
 source(file.path(figures_dir, "theme_for_plots.R"))
 
@@ -38,7 +37,7 @@ if(!dir.exists(results_dir)){
 }
 
 # file paths
-clin_file  <- file.path(hist_dir,
+clin_file  <- file.path(data_dir,
                         "histologies-plot-group.tsv")
 sbi_file <- file.path(results_dir,
                       "splicing_index.total.txt")
@@ -146,11 +145,11 @@ gsva_scores_df %>%
        y = "Spliceosome GSVA Score") + 
   stat_cor(method = "pearson",
            label.x = -6.5, label.y = 1, size = 3) +
-  facet_wrap(~cluster, nrow = 3) + 
+  facet_wrap(~cluster, nrow = 2) + 
   theme_Publication()
 
 ggsave(file.path(plots_dir, "corplot-sbi-vs-gsva-spliceosome-by-cluster.pdf"),
-       width = 10, height = 9)
+       width = 12, height = 6)
 
 
 ## print session info
