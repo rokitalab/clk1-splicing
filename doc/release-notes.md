@@ -1,5 +1,5 @@
 # release notes
-## past releease (v12)
+## current releease (v12)
 - Data release date: 2025-12-10
 - status: available
 
