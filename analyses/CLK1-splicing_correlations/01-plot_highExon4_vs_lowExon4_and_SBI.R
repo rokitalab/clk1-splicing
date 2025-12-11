@@ -27,7 +27,7 @@ input_dir   <- file.path(root_dir, "analyses", "splicing_index", "results")
 
 
 # Specify file paths
-sbi_file <-  file.path(input_dir,"splicing_index.SE.txt")
+sbi_file <-  file.path(input_dir,"splicing_index.total.txt")
 clin_file  <- file.path(hist_dir,"histologies-plot-group.tsv")
 rmats_file <- file.path(results_dir, "clk1-splice-events-rmats.tsv")
 indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
@@ -53,12 +53,12 @@ hist_rna_df  <-  read_tsv(clin_file) %>%
 
 hgg_bs_id <- hist_rna_df %>%
   # Select only "RNA-Seq" samples
-  filter(plot_group %in% c("DIPG or DMG", "Other high-grade glioma")) %>%
+  filter(plot_group %in% c("Diffuse midline glioma", "Other high-grade glioma")) %>%
   pull(Kids_First_Biospecimen_ID)
 
 dmg_bs_id <- hist_rna_df %>%
   # Select only "RNA-Seq" samples
-  filter(plot_group == "DIPG or DMG") %>%
+  filter(plot_group == "Diffuse midline glioma") %>%
   pull(Kids_First_Biospecimen_ID)
 
 other_hgg_bs_id <- hist_rna_df %>%
@@ -136,7 +136,7 @@ for (lib in library_types){
       theme_Publication()
 
     # Save plot pdf
-    pdf(file.path(plots_dir, paste0(each, "_SBI_high_vs_low_CLK1_", lib, ".pdf")), height = 4, width = 4.5)
+    pdf(file.path(plots_dir, paste0(each, "_SBI_high_vs_low_CLK1_", lib, ".pdf")), height = 4.5, width = 4.5)
     print(boxplot_sbi_vs_incl)
     dev.off()
   }

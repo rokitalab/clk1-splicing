@@ -87,10 +87,10 @@ metadata <- metadata %>%
   dplyr::mutate(cluster = fct_relevel(cluster,
                                                paste0("Cluster ", 1:n_clust))) %>%
   dplyr::mutate(lgg_group = case_when(
-    Histology == "Low-grade glioma" ~ "LGG",
+    plot_group == "Low-grade glioma" ~ "LGG",
     TRUE ~ "non-LGG"
   )) %>%
-  dplyr::mutate(SBI_SE = SI_SE * 10) %>%
+  dplyr::mutate(SBI = SI_Total * 10) %>%
   dplyr::mutate(age_at_diagnosis_years = age_at_diagnosis_days/365.25)
 ```
 
@@ -98,7 +98,7 @@ Generate coxph models including extent of tumor resection, lgg group, and cluste
 
 ```{r}
 add_model_os <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_years+SBI_SE",
+                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_years+SBI",
                                file.path(results_dir, "cox_OS_additive_terms_resection_lgg_group_cluster_SBI.RDS"),
                                "multivariate",
                                years_col = "OS_years",
@@ -114,7 +114,7 @@ ggsave(file.path(plot_dir, "forest_add_OS_resection_lgg_group_cluster_assignment
        device = "pdf")
 
 add_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_years+SBI_SE",
+                              terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_years+SBI",
                                file.path(results_dir, "cox_EFS_additive_terms_resection_lgg_group_cluster_SBI.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
@@ -151,7 +151,7 @@ ggsave(file.path(plot_dir, "forest_add_OS_resection_lgg_group_cluster_assignment
 
 
 ```{r Interaction models with GSVA and SBI}
-models <- c("spliceosome_gsva_score", "SBI_SE")
+models <- c("spliceosome_gsva_score", "SBI")
 
 for (each in models) {
   int_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
@@ -209,7 +209,7 @@ Subset `metadata` for LGG, and only include clusters with >= 10 samples
 
 ```{r}
 lgg <- metadata %>%
-  dplyr::filter(Histology == "Low-grade glioma") %>%
+  dplyr::filter(plot_group == "Low-grade glioma") %>%
   dplyr::mutate(cluster = factor(cluster)) %>%
   dplyr::mutate(mol_sub_group = fct_relevel(mol_sub_group, c("Wildtype", "BRAF V600E", "BRAF fusion",
                                                                 "Other alteration", "SEGA"
@@ -225,7 +225,7 @@ lgg <- lgg %>%
     dplyr::mutate(cluster = factor(cluster))
 ```
 
-Generate coxph models including covariates `extent_of_tumor_resection`, `mol_sub_group`, `cluster`, and `SBI_SE` and plot
+Generate coxph models including covariates `extent_of_tumor_resection`, `mol_sub_group`, `cluster`, and `SBI` and plot
 
 ```{r}
 # identify LGG clusters
@@ -238,7 +238,7 @@ lgg_clusters <- metadata %>%
 
 
 add_model_lgg_efs <- fit_save_model(lgg[!lgg$cluster %in% lgg_clusters & !lgg$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
-                              terms = "extent_of_tumor_resection+mol_sub_group+cluster+age_at_diagnosis_years+SBI_SE",
+                              terms = "extent_of_tumor_resection+mol_sub_group+cluster+age_at_diagnosis_years+SBI",
                                file.path(results_dir, "cox_lgg_EFS_additive_terms_resection_subtype_cluster_SBI.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
@@ -255,7 +255,7 @@ ggsave(file.path(plot_dir, "forest_add_EFS_LGG_resection_subtype_cluster_assignm
 ```
 
 
-repeat analysis replacing `SBI_SE` with `spliceosome_gsva_score`
+repeat analysis replacing `SBI` with `spliceosome_gsva_score`
 
 ```{r}
 add_model_lgg_efs <- fit_save_model(lgg[!lgg$cluster %in% lgg_clusters & !lgg$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
@@ -279,7 +279,7 @@ Subset `metadata` for HGG and retain cluster with n >= 10
 
 ```{r}
 hgg <- metadata %>%
-  dplyr::filter(Histology %in% c("Other high-grade glioma", "DIPG or DMG")) %>%
+  dplyr::filter(plot_group %in% c("Other high-grade glioma", "Diffuse midline glioma")) %>%
   dplyr::mutate(cluster = factor(cluster)) %>%
   dplyr::mutate(mol_sub_group = fct_relevel(mol_sub_group, c("HGG, H3 wildtype", "HGG, H3 wildtype, TP53",
                                                              "DMG, H3 K28", "DMG, H3 K28, TP53",
@@ -299,8 +299,8 @@ hgg <- hgg %>%
   filter(cluster %in% retain_clusters_hgg) %>%
   dplyr::mutate(cluster = factor(cluster)) %>%
     dplyr::mutate(SI_group = case_when(
-      SBI_SE > summary(SBI_SE)["3rd Qu."] ~ "High SBI",
-      SBI_SE < summary(SBI_SE)["1st Qu."] ~ "Low SBI",
+      SBI > summary(SBI)["3rd Qu."] ~ "High SBI",
+      SBI < summary(SBI)["1st Qu."] ~ "Low SBI",
       TRUE ~ NA_character_
     )) %>%
   dplyr::mutate(spliceosome_group = case_when(
@@ -374,11 +374,11 @@ ggsave(file.path(plot_dir, "km_hgg_EFS_spliceosome_score.pdf"),
        device = "pdf")
 ```
 
-Generate coxph models for HGG including covariates `mol_sub_group` `cluster`, and `SBI_SE`, and plot
+Generate coxph models for HGG including covariates `mol_sub_group` `cluster`, and `SBI`, and plot
 
 ```{r}
 add_model_hgg_os <- fit_save_model(hgg,
-                              terms = "mol_sub_group+cluster+age_at_diagnosis_years+SBI_SE",
+                              terms = "mol_sub_group+age_at_diagnosis_years+SBI",
                                file.path(results_dir, "cox_hgg_OS_additive_terms_subtype_cluster_SBI.RDS"),
                                "multivariate",
                                years_col = "OS_years",
@@ -394,7 +394,7 @@ ggsave(file.path(plot_dir, "forest_add_OS_HGG_subtype_cluster_assignment_SBI.pdf
        device = "pdf")
 
 add_model_hgg_efs <- fit_save_model(hgg,
-                              terms = "mol_sub_group+cluster+age_at_diagnosis_years+SBI_SE",
+                              terms = "mol_sub_group+age_at_diagnosis_years+SBI",
                                file.path(results_dir, "cox_hgg_EFS_additive_terms_subtype_cluster_SBI.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
@@ -408,11 +408,11 @@ ggsave(file.path(plot_dir, "forest_add_EFS_HGG_subtype_cluster_assignment_SBI.pd
        device = "pdf")
 ```
 
-Repeat analysis replacing `SBI_SE` with `spliceosome_gsva_score`
+Repeat analysis replacing `SBI` with `spliceosome_gsva_score`
 
 ```{r}
 add_model_hgg_os <- fit_save_model(hgg,
-                              terms = "mol_sub_group+cluster+age_at_diagnosis_years+spliceosome_gsva_score",
+                              terms = "mol_sub_group+age_at_diagnosis_years+spliceosome_gsva_score",
                                file.path(results_dir, "cox_hgg_OS_additive_terms_subtype_cluster_spliceosome_score.RDS"),
                                "multivariate",
                                years_col = "OS_years",
@@ -428,7 +428,7 @@ ggsave(file.path(plot_dir, "forest_add_OS_HGG_subtype_cluster_assignment_spliceo
        device = "pdf")
 
 add_model_hgg_efs <- fit_save_model(hgg,
-                              terms = "mol_sub_group+cluster+age_at_diagnosis_years+spliceosome_gsva_score",
+                              terms = "mol_sub_group+age_at_diagnosis_years+spliceosome_gsva_score",
                                file.path(results_dir, "cox_hgg_EFS_additive_terms_subtype_cluster_spliceosome_score.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
@@ -441,15 +441,15 @@ ggsave(file.path(plot_dir, "forest_add_EFS_HGG_subtype_cluster_assignment_splice
        width = 9, height = 5, units = "in",
        device = "pdf")
 ```
-Filter for cluster 6
+Filter for cluster 7
 
 ```{r}
-cluster6_df <- metadata %>%
-  dplyr::filter(cluster == "Cluster 6",
+cluster7_df <- metadata %>%
+  dplyr::filter(cluster == "Cluster 7",
                 !is.na(EFS_days)) %>%
   dplyr::mutate(SI_group = case_when(
-      SBI_SE > summary(SBI_SE)["3rd Qu."] ~ "High SBI",
-      SBI_SE < summary(SBI_SE)["1st Qu."] ~ "Low SBI",
+      SBI > summary(SBI)["3rd Qu."] ~ "High SBI",
+      SBI < summary(SBI)["1st Qu."] ~ "Low SBI",
       TRUE ~ NA_character_
     )) %>%
   dplyr::mutate(spliceosome_group = case_when(
@@ -471,8 +471,8 @@ Generate KM models with `SI_group` as covariate
 
 ```{r}
 # Generate kaplan meier survival models for OS and EFS, and save outputs
-c6_si_kap_os <- survival_analysis(
-  metadata  = cluster6_df %>% dplyr::filter(!is.na(SI_group)),
+c7_si_kap_os <- survival_analysis(
+  metadata  = cluster7_df %>% dplyr::filter(!is.na(SI_group)),
   ind_var = "SI_group",
   test = "kap.meier",
   metadata_sample_col = "Kids_First_Biospecimen_ID",
@@ -480,11 +480,11 @@ c6_si_kap_os <- survival_analysis(
   status_col = "OS_status"
 )
 
-readr::write_rds(c6_si_kap_os,
-                 file.path(results_dir, "logrank_cluster6_OS_SBI.RDS"))
+readr::write_rds(c7_si_kap_os,
+                 file.path(results_dir, "logrank_cluster7_OS_SBI.RDS"))
 
-c6_si_kap_efs <- survival_analysis(
-  metadata  = cluster6_df %>% dplyr::filter(!is.na(SI_group)),
+c7_si_kap_efs <- survival_analysis(
+  metadata  = cluster7_df %>% dplyr::filter(!is.na(SI_group)),
   ind_var = "SI_group",
   test = "kap.meier",
   metadata_sample_col = "Kids_First_Biospecimen_ID",
@@ -492,32 +492,32 @@ c6_si_kap_efs <- survival_analysis(
   status_col = "EFS_status"
 )
 
-readr::write_rds(c6_si_kap_efs,
-                 file.path(results_dir, "logrank_cluster6_EFS_SBI.RDS"))
+readr::write_rds(c7_si_kap_efs,
+                 file.path(results_dir, "logrank_cluster7_EFS_SBI.RDS"))
 ```
 
-Generate Cluster 6 KM SI_group plots
+Generate Cluster 7 KM SI_group plots
 
 ```{r}
-km_c6_si_os_plot <- plotKM(model = c6_si_kap_os,
+km_c7_si_os_plot <- plotKM(model = c7_si_kap_os,
                     variable = "SI_group",
                     combined = F, 
-                    title = "Cluster 6, overall survival",
+                    title = "Cluster 7, overall survival",
                     p_pos = "topright")
 
-ggsave(file.path(plot_dir, "km_cluster6_OS_sbi_group.pdf"),
-       km_c6_si_os_plot,
+ggsave(file.path(plot_dir, "km_cluster7_OS_sbi_group.pdf"),
+       km_c7_si_os_plot,
        width = 8, height = 5, units = "in",
        device = "pdf")
 
-km_c6_si_efs_plot <- plotKM(model = c6_si_kap_efs,
+km_c7_si_efs_plot <- plotKM(model = c7_si_kap_efs,
                     variable = "SI_group",
                     combined = F, 
-                    title = "Cluster 6, event-free survival",
+                    title = "Cluster 7, event-free survival",
                     p_pos = "topright")
 
-ggsave(file.path(plot_dir, "km_cluster6_EFS_sbi_group.pdf"), 
-       km_c6_si_efs_plot,
+ggsave(file.path(plot_dir, "km_cluster7_EFS_sbi_group.pdf"), 
+       km_c7_si_efs_plot,
        width = 8, height = 5, units = "in",
        device = "pdf")
 ```
@@ -527,8 +527,8 @@ Generate KM models with `spliceosome_group` as covariate
 
 ```{r}
 # Generate kaplan meier survival models for OS and EFS, and save outputs
-c6_splice_kap_os <- survival_analysis(
-  metadata  = cluster6_df %>% 
+c7_splice_kap_os <- survival_analysis(
+  metadata  = cluster7_df %>% 
     dplyr::filter(spliceosome_group %in% c("Splice GSVA 4th Q", "Splice GSVA 1st Q")) %>%
     dplyr::mutate(spliceosome_group = factor(spliceosome_group,
                                                   levels = c("Splice GSVA 1st Q", "Splice GSVA 4th Q"))),
@@ -539,11 +539,11 @@ c6_splice_kap_os <- survival_analysis(
   status_col = "OS_status"
 )
 
-readr::write_rds(c6_splice_kap_os,
-                 file.path(results_dir, "logrank_cluster6_OS_splice_group.RDS"))
+readr::write_rds(c7_splice_kap_os,
+                 file.path(results_dir, "logrank_cluster7_OS_splice_group.RDS"))
 
-c6_splice_kap_efs <- survival_analysis(
-  metadata  = cluster6_df %>% 
+c7_splice_kap_efs <- survival_analysis(
+  metadata  = cluster7_df %>% 
     dplyr::filter(spliceosome_group %in% c("Splice GSVA 4th Q", "Splice GSVA 1st Q")) %>%
     dplyr::mutate(spliceosome_group = factor(spliceosome_group,
                                                   levels = c("Splice GSVA 1st Q", "Splice GSVA 4th Q"))),
@@ -554,74 +554,74 @@ c6_splice_kap_efs <- survival_analysis(
   status_col = "EFS_status"
 )
 
-readr::write_rds(c6_splice_kap_efs,
-                 file.path(results_dir, "logrank_cluster6_EFS_splice_group.RDS"))
+readr::write_rds(c7_splice_kap_efs,
+                 file.path(results_dir, "logrank_cluster7_EFS_splice_group.RDS"))
 ```
 
-Generate Cluster 6 KM spliceosome_group plots
+Generate Cluster 7 KM spliceosome_group plots
 
 ```{r}
-km_c6_splice_os_plot <- plotKM(model = c6_splice_kap_os,
+km_c7_splice_os_plot <- plotKM(model = c7_splice_kap_os,
                     variable = "spliceosome_group",
                     combined = F, 
-                    title = "Cluster 6, overall survival",
+                    title = "Cluster 7, overall survival",
                     p_pos = "topright")
 
-ggsave(file.path(plot_dir, "km_cluster6_OS_splice_group.pdf"),
-       km_c6_splice_os_plot,
+ggsave(file.path(plot_dir, "km_cluster7_OS_splice_group.pdf"),
+       km_c7_splice_os_plot,
        width = 9, height = 5, units = "in",
        device = "pdf")
 
-km_c6_splice_efs_plot <- plotKM(model = c6_splice_kap_efs,
+km_c7_splice_efs_plot <- plotKM(model = c7_splice_kap_efs,
                     variable = "spliceosome_group",
                     combined = F, 
-                    title = "Cluster 6, event-free survival",
+                    title = "Cluster 7, event-free survival",
                     p_pos = "topright")
 
-ggsave(file.path(plot_dir, "km_cluster6_EFS_splice_group.pdf"), 
-       km_c6_splice_efs_plot,
+ggsave(file.path(plot_dir, "km_cluster7_EFS_splice_group.pdf"), 
+       km_c7_splice_efs_plot,
        width = 9, height = 5, units = "in",
        device = "pdf")
 ```
 Assess EFS and OS by SBI or spliceosome GSVA score in multivariate models and generate forest plots
 
 ```{r}
-add_model_c6_efs <- fit_save_model(cluster6_df %>% 
+add_model_c7_efs <- fit_save_model(cluster7_df %>% 
                                       dplyr::filter(extent_of_tumor_resection != "Unavailable",
                                                     spliceosome_group %in% c("Splice GSVA 4th Q", "Splice GSVA 1st Q")) %>%
-                                      dplyr::mutate(Histology = fct_relevel(Histology,
+                                      dplyr::mutate(plot_group = fct_relevel(plot_group,
                                                                             c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
-                                                                              "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
+                                                                              "Diffuse midline glioma", "Ependymoma", "Mesenchymal tumor",
                                                                               "Other CNS embryonal tumor", "Low-grade glioma"))),
-                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+Histology+spliceosome_group",
+                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+spliceosome_group",
                                file.path(results_dir, "cox_hgg_EFS_additive_terms_subtype_cluster_spliceosome_score.RDS"),
                                "multivariate",
                                years_col = "EFS_years",
                                status_col = "EFS_status")
 
-forest_c6_spliceosome_efs <- plotForest(readRDS(file.path(results_dir, "cox_hgg_EFS_additive_terms_subtype_cluster_spliceosome_score.RDS")))
+forest_c7_spliceosome_efs <- plotForest(readRDS(file.path(results_dir, "cox_hgg_EFS_additive_terms_subtype_cluster_spliceosome_score.RDS")))
 
-ggsave(file.path(plot_dir, "forest_add_EFS_cluster6_histology_resection_spliceosome_group.pdf"),
-       forest_c6_spliceosome_efs,
+ggsave(file.path(plot_dir, "forest_add_EFS_cluster7_histology_resection_spliceosome_group.pdf"),
+       forest_c7_spliceosome_efs,
        width = 9, height = 4, units = "in",
        device = "pdf")
 
-add_model_c6_os <- fit_save_model(cluster6_df %>% 
+add_model_c7_os <- fit_save_model(cluster7_df %>% 
                                     dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")) %>%
-                                    dplyr::mutate(Histology = fct_relevel(Histology,
+                                    dplyr::mutate(plot_group = fct_relevel(plot_group,
                                                                             c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
-                                                                              "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
+                                                                              "Diffuse midline glioma", "Ependymoma", "Mesenchymal tumor",
                                                                               "Other CNS embryonal tumor", "Low-grade glioma"))),
-                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+Histology+SBI_SE",
+                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+SBI",
                                file.path(results_dir, "cox_hgg_OS_additive_terms_subtype_cluster_si_group.RDS"),
                                "multivariate",
                                years_col = "OS_years",
                                status_col = "OS_status")
 
-forest_c6_si_os <- plotForest(readRDS(file.path(results_dir, "cox_hgg_OS_additive_terms_subtype_cluster_si_group.RDS")))
+forest_c7_si_os <- plotForest(readRDS(file.path(results_dir, "cox_hgg_OS_additive_terms_subtype_cluster_si_group.RDS")))
 
-ggsave(file.path(plot_dir, "forest_add_OS_cluster6_histology_resection_si.pdf"),
-       forest_c6_si_os,
+ggsave(file.path(plot_dir, "forest_add_OS_cluster7_histology_resection_si.pdf"),
+       forest_c7_si_os,
        width = 9, height = 4, units = "in",
        device = "pdf")
 ```

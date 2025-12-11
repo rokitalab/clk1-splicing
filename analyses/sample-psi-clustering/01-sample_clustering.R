@@ -23,11 +23,7 @@ source(file.path(analysis_dir,
 psi_mat_file <- file.path(results_dir,
                           "pbta-splice-event-psis.RDS")
 
-histologies_file <- file.path(root_dir, "analyses",
-                         "cohort_summary", "results",
-                         "histologies-plot-group.tsv")
-
-opc_hist_file <- file.path(data_dir, "histologies.tsv")
+histologies_file <- file.path(root_dir, "analyses", "cohort_summary", "results", "histologies-plot-group.tsv")
 
 # wrangle data
 
@@ -41,28 +37,17 @@ names(plotgroup_palette) <- unique(histologies$plot_group)
 # transpose psi matrix
 psi_mat <- psi_mat %>%
   column_to_rownames("sample_id") %>%
-  t() %>%
-  as.data.frame() 
+  t()
 
 # define vector of n variable events to test for clustering
-n_events <- c(1000, 5000)
+n_events <- 5000
 
 # extract stranded and poly-A stranded libraries to cluster separately
 stranded_samples <- histologies %>%
   dplyr::filter(RNA_library == "stranded") %>%
   pull(Kids_First_Biospecimen_ID)
 
-polya_stranded_samples <- histologies %>%
-  dplyr::filter(RNA_library == "poly-A stranded") %>%
-  pull(Kids_First_Biospecimen_ID)
-
-all_samples <- histologies %>%
-  dplyr::filter(experimental_strategy == "RNA-Seq") %>%
-  pull(Kids_First_Biospecimen_ID)
-
-library_type <- list("stranded" = stranded_samples,
-                     "poly-A_stranded" = polya_stranded_samples,
-                     "all_libraries" = all_samples)
+library_type <- list("stranded" = stranded_samples)
 
 pdf(NULL)
 
@@ -70,14 +55,14 @@ pdf(NULL)
 
 # loop through library strategies
 for (library in names(library_type)){
-
+  
   # loop through number of events
   for (n in n_events){
     
     # filter for samples and splice events reported in at least 25% of samples
     cluster_mat <- psi_mat[,colnames(psi_mat) %in% library_type[[library]]]
     cluster_mat <- cluster_mat[rowSums(!is.na(cluster_mat)) > ncol(cluster_mat)*0.25,]
-  
+
     # pull splice IDs with the highest variance
     psi_vars <- apply(cluster_mat, 1, var, na.rm = TRUE)
     var_splice_ids <- names(sort(psi_vars, decreasing = TRUE))[1:n]
@@ -92,12 +77,10 @@ for (library in names(library_type)){
     
     # perform clustering using ward.D2 method
     hc <- hclust(dist_matrix, method = "ward.D2")
-  
+    
     # choose optimal number of clusters, which has been previously assessed and are defined here for each library type and 
-    clusters <- cutree(hc, k = ifelse(n == 1000, 9,
-                                      ifelse(n == 5000 & library == "stranded", 11, 
-                                             ifelse(n = 5000 & library == "poly-A stranded", 7, 9))))
-
+    clusters <- cutree(hc, k = 10)
+    
     # create df of cluster assignment by sample
     cluster_assignment_df <- data.frame(sample_id = names(clusters),
                                         cluster = clusters)
@@ -131,8 +114,8 @@ for (library in names(library_type)){
     
     # define colors for clusters
     cluster_cols <- c("#B2DF8A","#E31A1C","#33A02C","#A6CEE3","#FB9A99","#FDBF6F",
-                        "#CAB2D6","#FFFF99","#1F78B4","#B15928","#6A3D9A","#FF7F00",
-                        "#2ef4ca","#f4cced","#bd18ea")
+                      "#CAB2D6","#FFFF99","#1F78B4","#B15928","#6A3D9A","#FF7F00",
+                      "#2ef4ca","#f4cced","#bd18ea")
     names(cluster_cols) <- 1:length(cluster_cols)
     cluster_cols <- cluster_cols[1:length(unique(clusters))]
     
@@ -172,15 +155,15 @@ for (library in names(library_type)){
                   use_raster = FALSE,
                   heatmap_legend_param = list(legend_gp = gpar(fontsize = 10),
                                               labels_gp = gpar(fontsize = 10)))
-
+    
     pdf(NULL)
-
+    
     pdf(file.path(plot_dir,
                   glue::glue("sample-psi-heatmap-top-{n}-events-{library}.pdf")),
         width = 7, height = 7)
-
+    
     print(ht)
-
+    
     dev.off()
     
     # plot enrichment of tumor histologies within clusters
@@ -203,7 +186,7 @@ for (library in names(library_type)){
     # HGG
     hgg_df <- cluster_df %>%
       dplyr::filter(plot_group %in% c("Other high-grade glioma",
-                                      "DIPG or DMG"),
+                                      "Diffuse midline glioma"),
                     !is.na(molecular_subtype),
                     !grepl("To be classified", molecular_subtype)) %>%
       dplyr::mutate(molecular_subtype = str_replace(molecular_subtype, ", TP53", "")) %>%
@@ -213,10 +196,10 @@ for (library in names(library_type)){
       ))
     
     hgg_enr <- plot_enr(hgg_df, 
-                              "mol_sub_group", "cluster",
-                              sort(unique(hgg_df$mol_sub_group)),
-                              unique(hgg_df$cluster),
-                              padjust = TRUE)
+                        "mol_sub_group", "cluster",
+                        sort(unique(hgg_df$mol_sub_group)),
+                        unique(hgg_df$cluster),
+                        padjust = TRUE)
     
     pdf(file.path(plot_dir, 
                   glue::glue("hgg-dmg-sample-cluster-subtype-enr-top-{n}-events-{library}.pdf")),
@@ -260,10 +243,10 @@ for (library in names(library_type)){
                     !is.na(molecular_subtype))
     
     mb_enr <- plot_enr(mb_df, 
-                        "molecular_subtype", "cluster",
-                        sort(unique(mb_df$molecular_subtype)),
-                        unique(mb_df$cluster),
-                        padjust = TRUE)
+                       "molecular_subtype", "cluster",
+                       sort(unique(mb_df$molecular_subtype)),
+                       unique(mb_df$cluster),
+                       padjust = TRUE)
     
     pdf(file.path(plot_dir, 
                   glue::glue("mb-sample-cluster-subtype-enr-top-{n}-events-{library}.pdf")),
@@ -275,17 +258,17 @@ for (library in names(library_type)){
     
     # ATRT
     atrt_df <- cluster_df %>%
-      dplyr::filter(plot_group %in% c("Atypical Teratoid Rhabdoid Tumor"),
+      dplyr::filter(plot_group %in% c("Atypical teratoid rhabdoid tumor"),
                     !is.na(molecular_subtype),
                     !grepl("To be classified", molecular_subtype))
     
     if (library != "poly-A_stranded"){
-    
+      
       atrt_enr <- plot_enr(atrt_df, 
-                         "molecular_subtype", "cluster",
-                         sort(unique(atrt_df$molecular_subtype)),
-                         unique(atrt_df$cluster),
-                         padjust = TRUE)
+                           "molecular_subtype", "cluster",
+                           sort(unique(atrt_df$molecular_subtype)),
+                           unique(atrt_df$cluster),
+                           padjust = TRUE)
       
       pdf(file.path(plot_dir, 
                     glue::glue("atrt-sample-cluster-subtype-enr-top-{n}-events-{library}.pdf")),
@@ -300,8 +283,8 @@ for (library in names(library_type)){
     # save psi matrix 
     
     saveRDS(cluster_mat,
-              file.path(results_dir,
-                        glue::glue("psi-matrix-top-{n}-events-{library}.rds")))
+            file.path(results_dir,
+                      glue::glue("psi-matrix-top-{n}-events-{library}.rds")))
     write_tsv(cluster_df,
               file.path(results_dir,
                         glue::glue("sample-cluster-metadata-top-{n}-events-{library}.tsv")))
@@ -312,4 +295,3 @@ for (library in names(library_type)){
 
 # print session info
 sessionInfo()
-
