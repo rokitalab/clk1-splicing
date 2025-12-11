@@ -41,7 +41,8 @@ source(file.path(figures_dir, "theme_for_plots.R"))
 indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
 indep_df <- read_tsv(indep_file)
 
-clin_file <- file.path(data_dir, "histologies-plot-group.tsv")
+clin_file <- file.path(hist_dir,
+                       "histologies-plot-group.tsv")
 clin_tab  <-  read_tsv(clin_file) %>%
   filter(cohort == "PBTA",
          RNA_library == 'stranded',
@@ -52,18 +53,18 @@ clust_df <- read_tsv(clust_file)
 
 hgg_bs_id <- clin_tab %>%
   # Select only "RNA-Seq" samples
-  filter(plot_group %in% c("DIPG or DMG", "Other high-grade glioma")) %>%
+  filter(plot_group %in% c("Diffuse midline glioma", "Other high-grade glioma")) %>%
   pull(Kids_First_Biospecimen_ID)
 
-cluster6_bs_id <- clust_df %>%
-  filter(cluster == 6) %>%
+cluster7_bs_id <- clust_df %>%
+  filter(cluster == 7) %>%
   pull(sample_id)
 
 sf_list <- c("CLK1", "CLK2", "CLK3", "CLK4","SRPK1")
 
 file_gene_counts = file.path(data_dir,"gene-expression-rsem-tpm-collapsed.rds")
 
-bs_list <- list("all_hgg" = hgg_bs_id, "cluster6" = cluster6_bs_id)
+bs_list <- list("all_hgg" = hgg_bs_id, "cluster7" = cluster7_bs_id)
 names <- names(bs_list)
 
 for (each in names) {

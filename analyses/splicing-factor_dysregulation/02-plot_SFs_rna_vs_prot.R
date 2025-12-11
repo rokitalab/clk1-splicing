@@ -44,34 +44,36 @@ source(file.path(figures_dir, "theme_for_plots.R"))
 gsva_file <- file.path(root_dir, "analyses", 
                        "sample-psi-clustering", "results", 
                        "gsva_output_stranded.tsv")
+
 gsva_df <- read_tsv(gsva_file) %>%
   filter(geneset == "KEGG_SPLICEOSOME") %>%
-  select(sample_id, score) %>%
+  dplyr::select(sample_id, score) %>%
   mutate(score = round(score, 1))
 
 # get histology info
-hist_file <- file.path(root_dir, "data", "histologies-plot-group.tsv")
+hist_file <- file.path(root_dir, "analyses", "cohort_summary",
+                       "results", "histologies-plot-group.tsv")
 cluster_file <- file.path(root_dir, "analyses", 
                           "sample-psi-clustering", "results", 
                           "sample-cluster-metadata-top-5000-events-stranded.tsv")
 
 hist_df <- read_tsv(cluster_file) %>%
   inner_join(gsva_df) %>%
-  rename(Kids_First_Biospecimen_ID = sample_id,
+  dplyr::rename(Kids_First_Biospecimen_ID = sample_id,
          GSVA = score) %>%
-  select(Kids_First_Biospecimen_ID, cluster, GSVA) %>%
+  dplyr::select(Kids_First_Biospecimen_ID, cluster, GSVA) %>%
   inner_join(read_tsv(hist_file))
 
 # histology colors
 hist_col <- list("Histology" = 
                    c("Ependymoma" =                       "#2200ff",       
-                     "Atypical Teratoid Rhabdoid Tumor" = "#4d0d85",       
+                     "Atypical teratoid rhabdoid tumor" = "#4d0d85",       
                      "Other high-grade glioma" =          "#ffccf5",       
                      "Low-grade glioma" =                 "#8f8fbf",       
                      "Meningioma" =                       "#2db398",       
-                     "DIPG or DMG" =                      "#ff40d9",       
+                     "Diffuse midline glioma" =           "#ff40d9",       
                      "Medulloblastoma" =                  "#a340ff",       
-                     "Other tumor" =                      '#b5b5b5',       
+                     "Rare CNS tumor" =                   '#b5b5b5',       
                      "Mesenchymal tumor" =                "#7fbf00",       
                      "Craniopharyngioma" =                "#b2502d",       
                      "Mixed neuronal-glial tumor" =       "#685815",       
@@ -90,8 +92,7 @@ hist_col <- list("Histology" =
                                "7" = "#CAB2D6",
                                "8" = "#FFFF99",
                                "9" = "#1F78B4",
-                               "10" = "#B15928",
-                               "11" = "#6A3D9A"),
+                               "10" = "#B15928"),
                  "GSVA" = colorRamp2(c(-1, 0, 1), c("blue", "white", "darkorange")))
 
 ## get CPTAC output table 
@@ -167,11 +168,11 @@ for (each in names) {
   hist_data <- hist_df %>%
     filter(sample_id %in% colnames(mat)) %>%
     distinct(sample_id, cluster, plot_group, GSVA) %>%
-    rename(Histology = plot_group,
+    dplyr::rename(Histology = plot_group,
            Cluster = cluster) %>%
     mutate(Cluster = factor(Cluster, levels = as.character(1:11))) %>%
     column_to_rownames("sample_id") %>% 
-    select(Histology, Cluster, GSVA) %>%
+    dplyr::select(Histology, Cluster, GSVA) %>%
     .[colnames(mat), , drop = FALSE]
   
   combined_prot_top <- cptac_prot %>%
