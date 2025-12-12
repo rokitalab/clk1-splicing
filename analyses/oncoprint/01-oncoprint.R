@@ -41,8 +41,7 @@ if(!dir.exists(results_dir)){
 ## input files
 cons_maf_file <- file.path(data_dir,"snv-consensus-plus-hotspots.maf.tsv.gz")
 tumor_only_maf_file <- file.path(data_dir,"snv-mutect2-tumor-only-plus-hotspots.maf.tsv.gz")
-clin_file <- file.path(root_dir, "analyses", "cohort_summary", "results", "histologies-plot-group.tsv")
-indep_rna_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
+clin_file <- file.path(data_dir, "histologies-plot-group.tsv")
 goi_file <- file.path(input_dir,"oncoprint-goi-lists-OpenPedCan-gencode-v39.csv")
 tmb_file <- file.path(input_dir, "snv-mutation-tmb-coding.tsv")
 cnv_file <- file.path(data_dir, "consensus_wgs_plus_freec_wxs_plus_freec_tumor_only.tsv.gz")
@@ -73,18 +72,13 @@ goi <- read_csv(goi_file) %>%
 cluster_df <- read_tsv(cluster_file) %>%
   rename(Kids_First_Biospecimen_ID = sample_id)
 
-indep_rna_df <- vroom(indep_rna_file) %>% 
-  dplyr::filter(cohort == 'PBTA') %>%
-  # get match id for DNA samples
-  left_join(histologies_df[,c("Kids_First_Biospecimen_ID", "match_id", "plot_group", "RNA_library")]) %>%
-  filter(RNA_library == "stranded") %>%
+cohort_hist <- histologies_df %>% 
+  filter(experimental_strategy == "RNA-Seq") %>%
   left_join(cluster_df %>% dplyr::select(Kids_First_Biospecimen_ID, cluster))
 
 matched_dna_samples <- histologies_df %>%
   filter(experimental_strategy %in% c("WGS", "WXS", "Targeted Panel"),
-         is.na(RNA_library),
-         !is.na(pathology_diagnosis),
-         match_id %in% indep_rna_df$match_id)
+         match_id %in% cohort_hist$match_id)
 
 tmb_df <- read_tsv(tmb_file) %>%
   filter(Tumor_Sample_Barcode %in% matched_dna_samples$Kids_First_Biospecimen_ID) %>%
@@ -92,9 +86,7 @@ tmb_df <- read_tsv(tmb_file) %>%
   left_join(histologies_df[c("Kids_First_Biospecimen_ID", "match_id")]) %>%
   mutate(tmb_status = case_when(tmb <10 ~ "Normal",
                                 tmb >=10 & tmb < 100 ~ "Hypermutant",
-                                tmb >= 100 ~ "Ultra-hypermutant")) %>%
-  # remove WXS for a sample we have WGS for
-  filter(Kids_First_Biospecimen_ID != "BS_QF7M4SHH")
+                                tmb >= 100 ~ "Ultra-hypermutant"))
 
 # read in cnv file and reformat to add to maf
 cnv_df <- read_tsv(cnv_file) %>%
@@ -112,8 +104,8 @@ cnv_df <- read_tsv(cnv_file) %>%
 
 # read in fusion file and reformat to add to maf
 fus_df <- read_tsv(fus_file) %>%
-  # select only goi, DNA samples of interest
-  filter(Sample %in% indep_rna_df$Kids_First_Biospecimen_ID) %>%
+  # select only goi, RNA samples of interest
+  filter(Sample %in% cohort_hist$Kids_First_Biospecimen_ID) %>%
   mutate(Variant_Classification = "Fusion") %>%
   dplyr::rename(Kids_First_Biospecimen_ID = Sample) %>%
   select(Kids_First_Biospecimen_ID, Gene1A, Gene1B, Gene2A, Gene2B, Variant_Classification) %>%
@@ -158,10 +150,10 @@ maf <- cons_maf %>%
   bind_rows(tumor_only_maf) %>% 
   dplyr::mutate(vaf = t_alt_count / (t_ref_count + t_alt_count))
 
-## filter maf for samples with RNA splicing + HGGs
+## filter maf for samples with RNA splicing
 maf_filtered <- maf %>%
   dplyr::filter(Hugo_Symbol %in% goi,
-                Tumor_Sample_Barcode  %in% matched_dna_samples$Kids_First_Biospecimen_ID,
+                Tumor_Sample_Barcode %in% matched_dna_samples$Kids_First_Biospecimen_ID,
                 Variant_Classification %in% names(colors)) %>%
   dplyr::mutate(keep = case_when(Variant_Classification == "Missense_Mutation" & (grepl("dam", PolyPhen) | grepl("deleterious\\(", SIFT)) ~ "yes",
                                  Variant_Classification == "Missense_Mutation" & PolyPhen == "" & SIFT == "" ~ "yes",
@@ -204,11 +196,8 @@ gene_matrix <- gene_matrix %>%
   select(-c(Sort_Order, Hugo_Symbol)) 
 
 # mutate the dataframe for plotting
-histologies_df_sorted <- histologies_df %>%
-  inner_join(cluster_df) %>%
+histologies_df_sorted <- cohort_hist %>%
   select(match_id, plot_group, cancer_predisposition, reported_gender, molecular_subtype, CNS_region, cluster) %>%
-  left_join(indep_rna_df %>% dplyr::select(match_id, cluster)) %>%
-  unique() %>%
   group_by(match_id, plot_group, cancer_predisposition, reported_gender, molecular_subtype, cluster) %>%
   summarise(CNS_region = str_c(unique(na.omit(CNS_region)), collapse = ","),
             .groups = "drop") %>%
@@ -239,7 +228,7 @@ histologies_df_sorted2 <- histologies_df_sorted %>%
 # write out metadata
 histologies_df_sorted2 %>%
   rownames_to_column(var = "match_id") %>%
-  left_join(unique(histologies_df[,c("match_id", "Kids_First_Participant_ID")])) %>%
+  left_join(unique(cohort_hist[,c("match_id", "Kids_First_Participant_ID")])) %>%
 write_tsv(file.path(results_dir, "oncoprint_sample_metadata.tsv"))
 
 loc_cols <- c("#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", "#AA4499", "#44AA99", "#882255", "#6699CC")
@@ -255,13 +244,13 @@ ha = HeatmapAnnotation(name = "annotation",
                                       "Female" = "pink",
                                       "Unknown" = "whitesmoke"),
                          "Histology" = c("Ependymoma" =                       "#2200ff",       
-                                         "Atypical Teratoid Rhabdoid Tumor" = "#4d0d85",       
+                                         "Atypical teratoid rhabdoid tumor" = "#4d0d85",       
                                          "Other high-grade glioma" =          "#ffccf5",       
                                          "Low-grade glioma" =                 "#8f8fbf",       
                                          "Meningioma" =                       "#2db398",       
-                                         "DIPG or DMG" =                      "#ff40d9",       
+                                         "Diffuse midline glioma" =           "#ff40d9",       
                                          "Medulloblastoma" =                  "#a340ff",       
-                                         "Other tumor" =                      '#b5b5b5',       
+                                         "Rare CNS tumor" =                   '#b5b5b5',       
                                          "Mesenchymal tumor" =                "#7fbf00",       
                                          "Craniopharyngioma" =                "#b2502d",       
                                          "Mixed neuronal-glial tumor" =       "#685815",       
@@ -353,13 +342,13 @@ for (group_n in unique(histologies_df_sorted2$Cluster)) {
                                         "Female" = "pink",
                                         "Unknown" = "whitesmoke"),
                            "Histology" = c("Ependymoma" =                       "#2200ff",       
-                                           "Atypical Teratoid Rhabdoid Tumor" = "#4d0d85",       
+                                           "Atypical teratoid rhabdoid tumor" = "#4d0d85",       
                                            "Other high-grade glioma" =          "#ffccf5",       
                                            "Low-grade glioma" =                 "#8f8fbf",       
                                            "Meningioma" =                       "#2db398",       
-                                           "DIPG or DMG" =                      "#ff40d9",       
+                                           "Diffuse midline glioma" =           "#ff40d9",       
                                            "Medulloblastoma" =                  "#a340ff",       
-                                           "Other tumor" =                      '#b5b5b5',       
+                                           "Rare CNS tumor" =                   '#b5b5b5',       
                                            "Mesenchymal tumor" =                "#7fbf00",       
                                            "Craniopharyngioma" =                "#b2502d",       
                                            "Mixed neuronal-glial tumor" =       "#685815",       
