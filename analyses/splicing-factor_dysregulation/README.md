@@ -29,39 +29,42 @@ bash run_module.sh
 ├── 02-plot_SFs_rna_vs_prot.R
 ├── 03-plot_CLK_fam_expression.R
 ├── 04-plot_sbi_vs_splicing_factor_expr.R
+├── README.md
 ├── input
+│   ├── CPTAC3-pbt.xls
 │   ├── CPTAC3-pbt_SF_family.xls
 │   ├── CPTAC3-pbt_SFs.xls
-│   ├── CPTAC3-pbt.xls
 │   └── splicing_factors.txt
 ├── plots
-│   ├── all_hgg-barplot-sbi-SFs.pdf
 │   ├── all_hgg-CLK1-tpms-CLK-SPRK1-kinases.pdf
+│   ├── all_hgg-barplot-sbi-SFs.pdf
 │   ├── all_hgg-enhancedVolcano-sbi.pdf
-│   ├── cluster6-barplot-sbi-SFs.pdf
-│   ├── cluster6-CLK1-tpms-CLK-SPRK1-kinases.pdf
-│   ├── cluster6-enhancedVolcano-sbi.pdf
+│   ├── cluster7-CLK1-tpms-CLK-SPRK1-kinases.pdf
+│   ├── cluster7-barplot-sbi-SFs.pdf
+│   ├── cluster7-enhancedVolcano-sbi.pdf
 │   ├── dmg-barplot-sbi-SFs.pdf
 │   ├── dmg-enhancedVolcano-sbi.pdf
-│   ├── hugo-SF_protein_heatmap.pdf
 │   ├── hugo-SF_RNA_heatmap.pdf
-│   ├── kegg_splice-SF_protein_heatmap.pdf
+│   ├── hugo-SF_protein_heatmap.pdf
+│   ├── hugo_GSVA_vs_protein.pdf
 │   ├── kegg_splice-SF_RNA_heatmap.pdf
+│   ├── kegg_splice-SF_protein_heatmap.pdf
+│   ├── kegg_splice_GSVA_vs_protein.pdf
 │   ├── other_hgg-barplot-sbi-SFs.pdf
 │   ├── other_hgg-enhancedVolcano-sbi.pdf
 │   ├── sbi-sf-correlation-heatmap-byCluster.pdf
-│   ├── sbi-vs-clk1-ex4-psi-cluster6.pdf
-│   ├── sbi-vs-clk1-ex4-psi-other-clusters.pdf
+│   ├── sbi-vs-clk1-ex4-psi-by-cluster.pdf
+│   ├── sbi-vs-clk1-tpm-by-cluster.pdf
 │   ├── sbi-vs-clk1-tpm-byHist.pdf
-│   ├── sbi-vs-clk1-tpm-cluster6.pdf
-│   ├── sbi-vs-clk1-tpm-other-clusters.pdf
-│   ├── sf-SF_protein_heatmap.pdf
+│   ├── sbi-vs-clk1-tpm-cluster7.pdf
 │   ├── sf-SF_RNA_heatmap.pdf
-│   └── sf-SF_RNA_vs_protein_levels_heatmap.pdf
-├── README.md
+│   ├── sf-SF_protein_heatmap.pdf
+│   ├── sf_GSVA_vs_protein.pdf
+│   ├── tpm-vs-clk1-ex4-psi-by-cluster.pdf
+│   └── tpm-vs-clk1-ex4-psi-cluster7.pdf
 ├── results
 │   ├── all_hgg-diffSFs_sig_genes.txt
-│   ├── cluster6-diffSFs_sig_genes.txt
+│   ├── cluster7-diffSFs_sig_genes.txt
 │   ├── dmg-diffSFs_sig_genes.txt
 │   ├── other_hgg-diffSFs_sig_genes.txt
 │   └── se-sbi-sf-expr-correlations.tsv

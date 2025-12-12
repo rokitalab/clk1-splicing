@@ -30,7 +30,6 @@ analysis_dir <- file.path(root_dir, "analyses", "splicing-factor_dysregulation")
 input_dir   <- file.path(analysis_dir, "input")
 results_dir <- file.path(analysis_dir, "results")
 plots_dir   <- file.path(analysis_dir, "plots")
-hist_dir <- file.path(root_dir, "analyses", "cohort_summary", "results")
 
 ## theme for all plots
 # source function for theme for plots survival
@@ -48,7 +47,7 @@ sbi_coding_file  <- file.path(root_dir, "analyses/splicing_index/results/splicin
 indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
 indep_df <- read_tsv(indep_file)
 
-clin_file <- file.path(hist_dir, "histologies-plot-group.tsv")
+clin_file <- file.path(data_dir, "histologies-plot-group.tsv")
 clin_tab  <-  read_tsv(clin_file) %>%
   filter(cohort == "PBTA",
          RNA_library == 'stranded',
@@ -78,8 +77,8 @@ other_hgg_bs_id <- clin_tab %>%
 clust_file <- file.path(root_dir, "analyses/sample-psi-clustering/results/sample-cluster-metadata-top-5000-events-stranded.tsv")
 clust_df <- read_tsv(clust_file)
 
-cluster6_bs_id <- clust_df %>%
-  filter(cluster == 6) %>%
+cluster7_bs_id <- clust_df %>%
+  filter(cluster == 7) %>%
   pull(sample_id)
 
 # read in files, join palette with sbi file
@@ -87,7 +86,7 @@ sbi_coding_df  <-  readr::read_tsv(sbi_coding_file, comment = "#") %>%
   dplyr::rename(Kids_First_Biospecimen_ID = Sample) %>%
   filter(Kids_First_Biospecimen_ID %in% clin_tab$Kids_First_Biospecimen_ID)
 
-bs_list <- list("all_hgg" = hgg_bs_id, "dmg" = dmg_bs_id, "other_hgg" = other_hgg_bs_id, "cluster6" = cluster6_bs_id)
+bs_list <- list("all_cohort" = clin_tab$Kids_First_Biospecimen_ID,  "all_hgg" = hgg_bs_id, "dmg" = dmg_bs_id, "other_hgg" = other_hgg_bs_id, "cluster7" = cluster7_bs_id)
 names <- names(bs_list)
 
 for (each in names) {
@@ -95,7 +94,7 @@ for (each in names) {
   # Filter the DataFrame based on current group's IDs
   new_sbi_df <- sbi_coding_df %>%
     filter(Kids_First_Biospecimen_ID %in% bs_list[[each]])
-
+  
   ## compute quartiles to define high vs low SBI tumors
   quartiles_sbi <- quantile(new_sbi_df$SI, probs=c(.25, .75), na.rm = FALSE)
   lower_sbi <- quartiles_sbi[1]
@@ -170,7 +169,7 @@ for (each in names) {
   
   # Attempt to override axis titles post-hoc
   volc_hgg_plot <- volc_hgg_plot + labs(x = expression(bold(Log[2] * " Fold Change")), 
-                      y = expression(bold("-Log"[10] * " p-value")))
+                                        y = expression(bold("-Log"[10] * " p-value")))
   
   
   ## write significant genes to table for subsequent correlation analyses
