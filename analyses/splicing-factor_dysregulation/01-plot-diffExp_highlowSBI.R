@@ -86,7 +86,7 @@ sbi_coding_df  <-  readr::read_tsv(sbi_coding_file, comment = "#") %>%
   dplyr::rename(Kids_First_Biospecimen_ID = Sample) %>%
   filter(Kids_First_Biospecimen_ID %in% clin_tab$Kids_First_Biospecimen_ID)
 
-bs_list <- list("all_hgg" = hgg_bs_id, "dmg" = dmg_bs_id, "other_hgg" = other_hgg_bs_id, "cluster7" = cluster7_bs_id)
+bs_list <- list("all_cohort" = clin_tab$Kids_First_Biospecimen_ID,  "all_hgg" = hgg_bs_id, "dmg" = dmg_bs_id, "other_hgg" = other_hgg_bs_id, "cluster7" = cluster7_bs_id)
 names <- names(bs_list)
 
 for (each in names) {
@@ -94,7 +94,7 @@ for (each in names) {
   # Filter the DataFrame based on current group's IDs
   new_sbi_df <- sbi_coding_df %>%
     filter(Kids_First_Biospecimen_ID %in% bs_list[[each]])
-
+  
   ## compute quartiles to define high vs low SBI tumors
   quartiles_sbi <- quantile(new_sbi_df$SI, probs=c(.25, .75), na.rm = FALSE)
   lower_sbi <- quartiles_sbi[1]
@@ -169,7 +169,7 @@ for (each in names) {
   
   # Attempt to override axis titles post-hoc
   volc_hgg_plot <- volc_hgg_plot + labs(x = expression(bold(Log[2] * " Fold Change")), 
-                      y = expression(bold("-Log"[10] * " p-value")))
+                                        y = expression(bold("-Log"[10] * " p-value")))
   
   
   ## write significant genes to table for subsequent correlation analyses

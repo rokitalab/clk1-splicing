@@ -36,9 +36,9 @@ source(file.path(root_dir, "figures", "theme_for_plots.R"))
 
 # set file paths
 sbi_total_file <- file.path(root_dir, "analyses", 
-                         "splicing_index",
-                         "results",
-                         "splicing_index.total.txt")
+                            "splicing_index",
+                            "results",
+                            "splicing_index.total.txt")
 
 expr_file <- file.path(data_dir, "gene-expression-rsem-tpm-collapsed.rds")
 expr_trans_file <- file.path(data_dir,"rna-isoform-expression-rsem-tpm.rds")
@@ -77,105 +77,121 @@ sbi_df <- sbi_df %>%
 # subset expr matrix to only include SFs:
 sf_expr <- expr[rownames(expr) %in% sfs,]
 
-# define empty matrix to store SBI-SF expr correlation coefficients and p-values for each cluster
-cor_mat <- matrix(0,
-                  nrow(sf_expr),
-                  length(unique(cluster_df$plot_group)),
-                  dimnames = list(rownames(sf_expr),
-                                  sort(unique(cluster_df$plot_group))))
+vars <- list(clusters = unique(cluster_df$cluster),
+             plot_groups = unique(cluster_df$plot_group))
 
-p_mat <- cor_mat
-
-# loop through clusters
-for (clust in colnames(cor_mat)){
+for (group in names(vars)){
   
-  # subset sbi df for cluster of interest
-  sbi_sub <- sbi_df %>%
-    dplyr::filter(plot_group == clust)
+  groups <- vars[[group]]
   
-  # loop through SFs
-  for (sf in rownames(cor_mat)){
+  cor_mat <- matrix(0,
+                    nrow(sf_expr),
+                    length(groups),
+                    dimnames = list(rownames(sf_expr),
+                                    sort(groups)))
+  
+  p_mat <- cor_mat
+  
+  # loop through levels of group
+  for (level in colnames(cor_mat)){
     
-    # calculate pearson correlation coefficients and p-values
-    cor_mat[sf,clust] <- cor.test(log2(sbi_sub$SI),
+    if (group == "plot_groups"){
+      
+      sbi_sub <- sbi_df %>%
+        dplyr::filter(plot_group == level)
+      
+    } else {
+      
+      sbi_sub <- sbi_df %>%
+        dplyr::filter(cluster == level)
+      
+    }
+    
+    # loop through SFs
+    for (sf in rownames(cor_mat)){
+      
+      # calculate pearson correlation coefficients and p-values
+      cor_mat[sf,level] <- cor.test(log2(sbi_sub$SI),
+                                    log2(unlist(sf_expr[sf,sbi_sub$Sample])),
+                                    method = "pearson")$estimate
+      p_mat[sf,level] <- cor.test(log2(sbi_sub$SI),
                                   log2(unlist(sf_expr[sf,sbi_sub$Sample])),
-                                  method = "pearson")$estimate
-    p_mat[sf,clust] <- cor.test(log2(sbi_sub$SI),
-                                log2(unlist(sf_expr[sf,sbi_sub$Sample])),
-                                method = "pearson")$p.value
+                                  method = "pearson")$p.value
+      
+    }
     
   }
   
+  # calculate by-cluster false discovery rates
+  fdr_mat <- apply(p_mat, 2, function(x) p.adjust(x, "BH"))
+  
+  # For plotting, we can limit to most significantly correlated SFs
+  gois_level <- unique(as.vector(apply(fdr_mat, 2, function(x) head(names(sort(x)), n = 5))))
+  plot_mat <- cor_mat[gois_level,]
+  plot_mat <- plot_mat[rowSums(is.nan(plot_mat)) == 0,]
+  
+  fdr_plot_mat <- fdr_mat[rownames(plot_mat),]
+  
+  col_fun <- colorRamp2(c(-1, 0, 1), c("blue", "white", "red"))
+  
+  # Create the heatmap
+  heatmap <- Heatmap(t(plot_mat),
+                     name = "Pearson\nCorrelation",
+                     col = col_fun,
+                     show_row_names = TRUE,
+                     show_column_names = TRUE,
+                     cluster_rows = TRUE,
+                     cluster_columns = TRUE,
+                     cell_fun = function(j, i, x, y, w, h, fill) {
+                       if(t(fdr_plot_mat)[i, j] < 1e-5) {
+                         grid.text("**", x, y)
+                       } else if(t(fdr_plot_mat)[i, j] < 0.05) {
+                         grid.text("*", x, y)
+                       }
+                     }
+  )
+  
+  # save to output
+  pdf(NULL)
+  pdf(file.path(plots_dir, glue::glue("sbi-sf-correlation-heatmap-by-{group}.pdf")),
+      width = 14, height = 5)
+  
+  print(heatmap)
+  
+  dev.off()
+  
+  # Merge correlation stats and write to output
+  sbi_sf_cor_df <- cor_mat %>%
+    as.data.frame() %>%
+    rownames_to_column("gene_symbol") %>%
+    pivot_longer(-gene_symbol,
+                 names_to = group,
+                 values_to = "pearson_r")
+  
+  sbi_sf_p_df <- p_mat %>%
+    as.data.frame() %>%
+    rownames_to_column("gene_symbol") %>%
+    pivot_longer(-gene_symbol,
+                 names_to = group,
+                 values_to = "pearson_pvalue")
+  
+  sbi_sf_fdr_df <- fdr_mat %>%
+    as.data.frame() %>%
+    rownames_to_column("gene_symbol") %>%
+    pivot_longer(-gene_symbol,
+                 names_to = group,
+                 values_to = "pearson_fdr")
+  
+  sbi_sf_cor_df <- sbi_sf_cor_df %>%
+    left_join(sbi_sf_p_df) %>%
+    left_join(sbi_sf_fdr_df) %>%
+    arrange(desc(pearson_r))
+  
+  write_tsv(sbi_sf_cor_df,
+            file.path(results_dir,
+                      glue::glue("total-sbi-sf-expr-correlations-{group}.tsv")))
+  
 }
-
-# calculate by-cluster false discovery rates
-fdr_mat <- apply(p_mat, 2, function(x) p.adjust(x, "BH"))
-
-# For plotting, we can limit to most significantly correlated SFs
-gois_cluster <- unique(as.vector(apply(fdr_mat, 2, function(x) head(names(sort(x)), n = 5))))
-plot_mat <- cor_mat[gois_cluster,]
-plot_mat <- plot_mat[rowSums(is.nan(plot_mat)) == 0,]
-
-fdr_plot_mat <- fdr_mat[rownames(plot_mat),]
-
-col_fun <- colorRamp2(c(-1, 0, 1), c("blue", "white", "red"))
-
-# Create the heatmap
-cluster_heatmap <- Heatmap(t(plot_mat),
-                           name = "Pearson\nCorrelation",
-                           col = col_fun,
-                           show_row_names = TRUE,
-                           show_column_names = TRUE,
-                           cluster_rows = TRUE,
-                           cluster_columns = TRUE,
-                           cell_fun = function(j, i, x, y, w, h, fill) {
-                             if(t(fdr_plot_mat)[i, j] < 1e-5) {
-                               grid.text("**", x, y)
-                             } else if(t(fdr_plot_mat)[i, j] < 0.05) {
-                               grid.text("*", x, y)
-                             }
-                           }
-)
-
-# save to output
-pdf(NULL)
-pdf(file.path(plots_dir, "sbi-sf-correlation-heatmap-byCluster.pdf"),
-    width = 13, height = 4)
-
-print(cluster_heatmap)
-
-dev.off()
-
-# Merge correlation stats and write to output
-sbi_sf_cor_df <- cor_mat %>%
-  as.data.frame() %>%
-  rownames_to_column("gene_symbol") %>%
-  pivot_longer(-gene_symbol,
-               names_to = "cluster",
-               values_to = "pearson_r")
-
-sbi_sf_p_df <- p_mat %>%
-  as.data.frame() %>%
-  rownames_to_column("gene_symbol") %>%
-  pivot_longer(-gene_symbol,
-               names_to = "cluster",
-               values_to = "pearson_pvalue")
-
-sbi_sf_fdr_df <- fdr_mat %>%
-  as.data.frame() %>%
-  rownames_to_column("gene_symbol") %>%
-  pivot_longer(-gene_symbol,
-               names_to = "cluster",
-               values_to = "pearson_fdr")
-
-sbi_sf_cor_df <- sbi_sf_cor_df %>%
-  left_join(sbi_sf_p_df) %>%
-  left_join(sbi_sf_fdr_df) %>%
-  arrange(desc(pearson_r))
-
-write_tsv(sbi_sf_cor_df,
-          file.path(results_dir,
-                    "se-sbi-sf-expr-correlations.tsv"))
 
 clk1_ex4_expr <- expr_trans %>%
   filter(grepl("^CLK1", gene_symbol)) %>%
