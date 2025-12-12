@@ -36,12 +36,17 @@ file_splice_pattern_plot  <- file.path(analysis_dir, "plots", "splicing_pattern_
 #file_splice_pattern_plot_other_HGG  <- file.path(analysis_dir, "plots", "splicing_pattern_plot-other-HGG.pdf")
 #file_splice_pattern_plot_DMG  <- file.path(analysis_dir, "plots", "splicing_pattern_plot-DMG.pdf")
 
-file_psi <- file.path(results_dir,"splice_events.diff.SE.txt")
-file_psi_func_incl <- file.path(results_dir,"splicing_events.SE.total.pos.intersectunip.ggplot.txt") 
-file_psi_func_skip <-file.path(results_dir,"splicing_events.SE.total.neg.intersectunip.ggplot.txt") 
+total_diff_events_se <- vroom(file.path(results_dir,"splice_events.diff.SE.txt"))
+total_diff_events_ri <- vroom(file.path(results_dir,"splice_events.diff.RI.txt"))
+total_diff_events_a3ss <- vroom(file.path(results_dir,"splice_events.diff.A3SS.txt"))
+total_diff_events_a5ss <- vroom(file.path(results_dir,"splice_events.diff.A5SS.txt"))
+psi_tab <- bind_rows(total_diff_events_se, total_diff_events_ri, total_diff_events_a3ss, total_diff_events_a5ss)
+
+file_psi_func_incl <- file.path(results_dir,"splicing_events.total.pos.intersectunip.ggplot.txt") 
+file_psi_func_skip <-file.path(results_dir,"splicing_events.total.neg.intersectunip.ggplot.txt") 
 
 create_splice_pattern_plot <- function(psi_tab_file, psi_func_incl_file, psi_func_skip_file, output_file) {
-  psi_tab <- read_tsv(psi_tab_file)
+
   psi_skip  <- psi_tab %>% dplyr::filter(Type=="Skipping")
   psi_incl  <- psi_tab %>% dplyr::filter(Type=="Inclusion")
   psi_incl_func <- read_tsv(psi_func_incl_file)
@@ -119,4 +124,4 @@ create_splice_pattern_plot <- function(psi_tab_file, psi_func_incl_file, psi_fun
 }
 
 # Example usage
-create_splice_pattern_plot(file_psi, file_psi_func_incl, file_psi_func_skip, file_splice_pattern_plot)
+create_splice_pattern_plot(psi_tab, file_psi_func_incl, file_psi_func_skip, file_splice_pattern_plot)
