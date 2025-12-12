@@ -37,8 +37,7 @@ if(!dir.exists(plots_dir)){
 
 ##theme for all plots
 # source function for theme for plots survival
-figures_dir <- file.path(root_dir, "figures")
-source(file.path(figures_dir, "theme_for_plots.R"))
+source(file.path(root_dir, "figures", "theme_for_plots.R"))
 
 ## output files for final plots
 file_dpsi_plot <- file.path(analysis_dir, "plots", "dPSI_across_functional_sites.pdf")
@@ -48,18 +47,18 @@ kinases_functional_sites = file.path(results_dir,"kinases-functional_sites.tsv")
 sf_kinases_functional_sites = file.path(results_dir,"splicing-factor-kinases-functional_sites.tsv")
 
 ## retrieve psi values from tables
-file_psi_pos_func <- file.path(results_dir,"splicing_events.SE.total.pos.intersectunip.ggplot.txt")
-file_psi_neg_func <- file.path(results_dir,"splicing_events.SE.total.neg.intersectunip.ggplot.txt")
+file_psi_pos_func <- file.path(results_dir,"splicing_events.total.pos.intersectunip.ggplot.txt")
+file_psi_neg_func <- file.path(results_dir,"splicing_events.total.neg.intersectunip.ggplot.txt")
 
 ## histologies
-hist_indep_rna_df <- vroom(file.path(data_dir,"histologies.tsv"))
+hist_indep_rna_df <- vroom(file.path(data_dir,"histologies-plot-group.tsv"))
 
 ## clusters
 cluster_file <- file.path(root_dir, "analyses",
                           "sample-psi-clustering", "results",
                           "sample-cluster-metadata-top-5000-events-stranded.tsv")
-cluster6_bs_id <- read_tsv(cluster_file) %>%
-  filter(cluster == 6) %>%
+cluster7_bs_id <- read_tsv(cluster_file) %>%
+  filter(cluster == 7) %>%
   pull(sample_id)
 
 ## splicing factors 
@@ -119,7 +118,7 @@ known_kinase_df <-read.delim(system.file("extdata", "genelistreference.txt", pac
   dplyr::filter(type=='Kinase')
 
 psi_unip_kinase <- dplyr::inner_join(psi_comb, known_kinase_df, by='gene') 
-counts_psi_unip_kinase <- psi_unip_kinase %>% dplyr::count(Preference )
+counts_psi_unip_kinase <- psi_unip_kinase %>% dplyr::count(Preference)
 
 ## make sina plot
 set.seed(45)
@@ -185,7 +184,8 @@ enrich_skip_plot <- enrichplot::dotplot(ora_skip_results,
                                    label_format = 30,
                                    showCategory = 15) +   
   labs(y = "Pathway",
-       x = "Gene Ratio") +
+       x = "Gene Ratio",
+       title = "Skipping Events") +
   theme_Publication() +
   scale_size(name = "Gene Count") +  
   scale_fill_gradient(low = "darkorange", high = "blue", name = "B-H p-value") +
@@ -202,7 +202,8 @@ enrich_incl_plot <- enrichplot::dotplot(ora_incl_results,
                                         label_format = 30,
                                         showCategory = 15) +   
   labs(y = "Pathway",
-       x = "Gene Ratio") +
+       x = "Gene Ratio",
+       title = "Inclusion Events") +
   theme_Publication() +
   scale_size(name = "Gene Count") +  
   scale_fill_gradient(low = "darkorange", high = "blue", name = "B-H p-value") +
@@ -212,8 +213,8 @@ enrich_incl_plot <- enrichplot::dotplot(ora_incl_results,
 
 
 ## since kegg pathways have and show more enrichment, we will save those
-plot_pathways <- plot_grid(enrich_skip_plot,enrich_incl_plot,align="hv",
-                                labels = c('Exon Skipping', 'Exon Inclusion'))
+plot_pathways <- plot_grid(enrich_skip_plot,enrich_incl_plot,align="hv")
+
 ## save ORA dotplot
 ggplot2::ggsave(filename = ora_dotplot_path,
                 plot = plot_pathways, 
@@ -230,39 +231,27 @@ kinase_incl_pref <- kinase_incl_pref %>%
   unique()
 
 kinase_pref <- rbind(kinase_skip_pref, kinase_incl_pref) %>% 
-  dplyr::select(SpliceID,dPSI,Uniprot, gene, Preference,`Exon Coordinates`)
+  dplyr::select(splicing_case,SpliceID,dPSI,Uniprot, gene, Preference,`Exon Coordinates`)
 
 
-total_diff_events <- vroom(file.path(results_dir,"splice_events.diff.SE.txt")) %>%
+# Load in differential splicing events entries
+total_diff_events_se <- vroom(file.path(results_dir,"splice_events.diff.SE.txt"))
+total_diff_events_ri <- vroom(file.path(results_dir,"splice_events.diff.RI.txt"))
+total_diff_events_a3ss <- vroom(file.path(results_dir,"splice_events.diff.A3SS.txt"))
+total_diff_events_a5ss <- vroom(file.path(results_dir,"splice_events.diff.A5SS.txt"))
+
+total_diff_events <- bind_rows(total_diff_events_se, total_diff_events_ri, total_diff_events_a3ss, total_diff_events_a5ss) %>%
   dplyr::rename(SpliceID="Splice ID") %>%
   dplyr::count(SpliceID)  %>% 
   inner_join(kinase_pref,by="SpliceID") %>%
   dplyr::rename('Frequency'=n) %>%
   filter(Frequency > 1) # Add recurrence filter
-  #dplyr::mutate(Baseline_freq=69-Frequency) # 69 samples in cluster - I don't think its used 
 
 # read in exp file
-#clin_file  <- file.path(hist_dir,"histologies-plot-group.tsv")
 expr_file <- file.path(data_dir,"gene-expression-rsem-tpm-collapsed.rds")
 
-
-## load histologies info for HGG subtypes
-#hgg_bs_id <- vroom(clin_file) %>%
-#  # Select only "RNA-Seq" samples
-#  filter(plot_group %in% c("DIPG or DMG", "Other high-grade glioma")) %>%
-#  pull(Kids_First_Biospecimen_ID)
-
-
-#histologies_df  <-  read_tsv(clin_file) %>%
-#  filter(cohort == "PBTA",
-#         experimental_strategy == "RNA-Seq",
-#         RNA_library=='stranded',
-#         plot_group %in% c("DIPG or DMG", "Other high-grade glioma") ) %>%
-#  pull(Kids_First_Biospecimen_ID)
-
-
 exp <- readRDS(expr_file) %>%
-  dplyr::select(any_of(cluster6_bs_id)) %>%
+  dplyr::select(any_of(hist_indep_rna_df$Kids_First_Biospecimen_ID)) %>%
   mutate(gene = rownames(.)) %>%
   dplyr::filter(gene %in% total_diff_events$gene) %>%
   dplyr::rowwise() %>%  # Ensure you use parentheses here

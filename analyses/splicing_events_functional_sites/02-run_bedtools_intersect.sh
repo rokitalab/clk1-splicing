@@ -11,7 +11,10 @@ output_dir="results/"
 bed_files=("UP000005640_9606_mod_res.bed" "UP000005640_9606_disulfid.bed" "UP000005640_9606_signal.bed" "UP000005640_9606_domain.bed")
 
 # Define the splicing event files
-splicing_event_files=("splicing_events.SE.total.pos.bed" "splicing_events.SE.total.neg.bed")
+splicing_event_files=("splicing_events.SE.total.pos.bed" "splicing_events.SE.total.neg.bed"
+                      "splicing_events.RI.total.pos.bed" "splicing_events.RI.total.neg.bed"
+                      "splicing_events.A3SS.total.pos.bed" "splicing_events.A3SS.total.neg.bed"
+                      "splicing_events.A5SS.total.pos.bed" "splicing_events.A5SS.total.neg.bed")
 
 # Loop through each splicing event file and bed file combination
 for splicing_file in "${splicing_event_files[@]}"; do

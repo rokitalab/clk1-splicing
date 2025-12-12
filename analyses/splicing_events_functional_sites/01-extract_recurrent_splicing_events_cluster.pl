@@ -2,7 +2,7 @@
 
 use Statistics::Lite qw(:all);
 ############################################################################################################
-# 03-generate_splicing-index_and_diff-events_table.SE.pl
+# 01-extract_recurrent_splicing_events_cluster.pl
 #
 # Compute splicing index for each sample and generate splicing burden index tables
 ############################################################################################################
@@ -215,7 +215,7 @@ else{
 foreach my $sample(@bs_ids_uniq)
 {
   # Only reports on cluster 6 values
-  next unless $bs_id_cluster{$sample} == 6;
+  # next unless $bs_id_cluster{$sample} == 6;
   foreach my $splice_event(@splicing_events_uniq)
   {
     ## look at splicing events that are present in sample and are recurrent

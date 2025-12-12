@@ -10,9 +10,7 @@ script_directory="$(perl -e 'use File::Basename;
   print dirname(abs_path(@ARGV[0]));' -- "$0")"
 cd "$script_directory" || exit
 
-## histology input file (column orders important)
-#input_file="../cohort_summary/results/histologies-plot-group.tsv"
-#primary_specimens="../../data/independent-specimens.rnaseqpanel.primary.tsv"
+## input files
 rmats_file="../../data/splice-events-rmats.tsv.gz"
 cluster_file="../sample-psi-clustering/results/sample-cluster-metadata-top-5000-events-stranded.tsv"
 
@@ -46,5 +44,5 @@ Rscript --vanilla 05-plot-splice-patterns.R
 find results/ -type f ! -name 'line_count.txt' -exec wc -l {} + > results/line_count.txt
 
 ##rm intermediatery files
-rm results/splicing_events*.wo.txt
-rm results/*bed
+#rm results/splicing_events*.wo.txt
+#rm results/*bed
