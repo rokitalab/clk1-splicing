@@ -26,7 +26,6 @@ analysis_dir <- file.path(root_dir, "analyses", "CLK1-splicing_correlations")
 input_dir   <- file.path(analysis_dir, "input")
 results_dir <- file.path(analysis_dir, "results")
 plots_dir   <- file.path(analysis_dir, "plots")
-hist_dir <- file.path(root_dir, "analyses", "cohort_summary", "results")
 
 ## create plots dir if it doesn't exist
 if(!dir.exists(plots_dir)){
@@ -43,7 +42,7 @@ source(file.path(figures_dir, "theme_for_plots.R"))
 
 ## input files
 rmats_file <- file.path(results_dir,"clk1-splice-events-rmats.tsv")
-clin_file  <- file.path(hist_dir,"histologies-plot-group.tsv")
+clin_file  <- file.path(data_dir,"histologies-plot-group.tsv")
 expr_file <- file.path(data_dir,"gene-expression-rsem-tpm-collapsed.rds")
 gtex_rmats <- file.path(data_dir,"gtex-brain-under40-harmonized-splice-events-rmats.SE.tsv.gz")
 pedr_rmats <- file.path(data_dir,"GSE243682-normal-splice-events-rmats.tsv.gz")
@@ -145,19 +144,36 @@ cluster_cols <- c("#B2DF8A","#E31A1C","#33A02C","#A6CEE3","#FB9A99","#FDBF6F",
 names(cluster_cols) <- 1:length(cluster_cols)
 cluster_cols <- cluster_cols[1:length(cluster_cols)]
 
-# Plot with pairwise comparison results and mean labels
-boxplot_tpm<- ggplot(var_exp_filt,
-                     aes(reorder(plot_group, IncLevel1), IncLevel1, fill = plot_group)) +
-  geom_boxplot(outlier.shape = NA, alpha = 0.5) +
-  geom_jitter(width = 0.2, size = 2, shape = 21, color = "black", alpha = 0.7) + # Add actual data points
-  labs(x = "Histology", y = "<i>CLK1</i> Exon 4 PSI") +
-  theme_Publication() + 
-  theme(legend.position = "none", 
-        axis.text.x = element_text(angle = 75, hjust = 1),
-        axis.title.y = element_markdown()) +
-  scale_fill_manual(values = hist_colors) +
-  scale_x_discrete(labels = function(x) sapply(x, function(l) str_wrap(l, width = 22))) # Wrap x-axis labels 
+# compute ordering vector for clk1 plot by median
+x_levels <- var_exp_filt %>%
+  transmute(plot_group, IncLevel1 = as.numeric(IncLevel1)) %>%   # local coercion only
+  group_by(plot_group) %>%
+  summarise(
+    med = median(IncLevel1, na.rm = TRUE),
+    n   = sum(!is.na(IncLevel1)),
+    .groups = "drop"
+  ) %>%
+  arrange(med, desc(n), plot_group) %>%  # tie-breakers make it stable
+  pull(plot_group)
 
+boxplot_tpm <- ggplot(
+  var_exp_filt,
+  aes(x = plot_group, y = as.numeric(IncLevel1), fill = plot_group)
+) +
+  geom_boxplot(outlier.shape = NA, alpha = 0.5) +
+  geom_jitter(width = 0.2, size = 2, shape = 21, color = "black", alpha = 0.7) +
+  labs(x = "Histology", y = "<i>CLK1</i> Exon 4 PSI") +
+  theme_Publication() +
+  theme(
+    legend.position = "none",
+    axis.text.x = element_text(angle = 75, hjust = 1),
+    axis.title.y = element_markdown()
+  ) +
+  scale_fill_manual(values = hist_colors) +
+  scale_x_discrete(
+    limits = x_levels,
+    labels = function(x) sapply(x, function(l) str_wrap(l, width = 22))
+  )
 boxplot_tpm_cluster <- ggplot(var_exp_filt, aes(x = cluster, y = IncLevel1)) +
   geom_boxplot(aes(fill = cluster, group = cluster), outlier.shape = NA, alpha = 0.5) +
   geom_jitter(aes(fill = plot_group), width = 0.2, size = 2, shape = 21, color = "black", alpha = 0.7) + # Add actual data points
