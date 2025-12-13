@@ -52,7 +52,7 @@ indep_rna_df <- read_tsv(indep_rna_file)
 
 # extract HGG samples, retain stranded libraries, and filter for independent specimens
 hist_rna <- cohort_df %>% 
-  filter(plot_group %in% c("DIPG or DMG", "Other high-grade glioma"),
+  filter(plot_group %in% c("Diffuse midline glioma", "Other high-grade glioma"),
          RNA_library == "stranded",
          cohort == "PBTA",
          Kids_First_Biospecimen_ID %in% indep_rna_df$Kids_First_Biospecimen_ID) %>%
@@ -79,13 +79,13 @@ clk1_rmats <- read_tsv(clk1_psi_file) %>%
 
 # define proteomics and phosphoproteomics-specific histologies files
 hist_proteo <- cohort_df %>%
-  dplyr::filter(plot_group %in% c("DIPG or DMG", "Other high-grade glioma"),
+  dplyr::filter(plot_group %in% c("Diffuse midline glioma", "Other high-grade glioma"),
                 experimental_strategy %in% c("Whole Cell Proteomics")) %>%
   dplyr::select(Kids_First_Biospecimen_ID, match_id) %>%
   dplyr::rename(Kids_First_Biospecimen_ID_proteo = Kids_First_Biospecimen_ID)
 
 hist_phospho <- cohort_df %>%
-  dplyr::filter(plot_group %in% c("DIPG or DMG", "Other high-grade glioma"),
+  dplyr::filter(plot_group %in% c("Diffuse midline glioma", "Other high-grade glioma"),
                 experimental_strategy %in% c("Phospho-Proteomics")) %>%
   dplyr::select(Kids_First_Biospecimen_ID, match_id) %>%
   dplyr::rename(Kids_First_Biospecimen_ID_phospho = Kids_First_Biospecimen_ID)
@@ -194,7 +194,7 @@ write_tsv(mol_df,
 
 # Define DIPG/DMG and other HGG ids
 dmg_ids <- hist_rna %>%
-  dplyr::filter(plot_group == "DIPG or DMG") %>%
+  dplyr::filter(plot_group == "Diffuse midline glioma") %>%
   pull(match_id)
 
 hgg_ids <- hist_rna %>%
@@ -279,9 +279,9 @@ row_annot <- expr_cor_mat %>%
 rownames(row_annot) <- rownames(expr_cor_mat)
 
 # rename cor mat colnames for plotting
-colnames(incl_cor_mat)[1:2] <- c("DIPG or DMG", "Other HGG")
-colnames(expr_cor_mat)[1:2]  <- c("DIPG or DMG", "Other HGG")
-colnames(ex4_expr_cor_mat)[1:2]  <- c("DIPG or DMG", "Other HGG")
+colnames(incl_cor_mat)[1:2] <- c("Diffuse midline glioma", "Other HGG")
+colnames(expr_cor_mat)[1:2]  <- c("Diffuse midline glioma", "Other HGG")
+colnames(ex4_expr_cor_mat)[1:2]  <- c("Diffuse midline glioma", "Other HGG")
 
 # create Heatmap row annotation for feature type
 anno_col <- list(Feature = c("RNA log2Exp" = "#DC3220", "Total Protein z-score" = "#005AB5", "Phospho-Protein z-score" = "#40B0A6"))
