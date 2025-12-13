@@ -66,45 +66,16 @@ gtex_rmats <- vroom(gtex_rmats_file) %>%
   select(sample_id, geneSymbol, IncLevel1) %>%
   dplyr::rename(gene_symbol=geneSymbol)
 
-cluster6_bs_id <- read_tsv(cluster_file) %>%
-	filter(cluster == 6) %>%
+all_bs_id <- read_tsv(cluster_file) %>%
 	pull(sample_id)
 
 indep_df <- read_tsv(indep_file)
 hist_indep_rna_df  <-  read_tsv(clin_file) %>%
   filter(cohort == "PBTA",
-         #grepl("poly", RNA_library),
-         #Kids_First_Biospecimen_ID %in% indep_df$Kids_First_Biospecimen_ID)
-	 Kids_First_Biospecimen_ID %in% cluster6_bs_id)
+	 Kids_First_Biospecimen_ID %in% all_bs_id)
 
 gtex_brain <- read_tsv(gtex_hist_file)  %>% 
   dplyr::filter(gtex_group == "Brain")
-
-#metadata_astrocytes = read_csv(astro_metadata_file) %>% 
-#  #filter(cell_type=="Astrocyte") %>%
-#  select(cell_type,Run) %>%
-#  dplyr::rename(Kids_First_Biospecimen_ID=Run,
-#                plot_group=cell_type) %>%
-#    dplyr::mutate(plot_group=str_replace_all(plot_group, "Adult","Young")) %>%
-#  unique()
-
-#clk4_transcr_counts_astro <- readRDS(astro_trans_file) %>%
-#  filter(grepl("^CLK1", gene_symbol)) %>%
-#  mutate(
-#    transcript_id = case_when(
-#      transcript_id %in% c("ENST00000321356.9", "ENST00000434813.3", "ENST00000409403.6") ~ "Exon 4",  # Rename specified transcripts
-#      TRUE ~ "Other"  # All other transcripts are renamed to "Other"
-#    )
-#  ) %>%
-#  group_by(transcript_id) %>%
-#  summarise(across(starts_with("SRR"), sum, na.rm = TRUE)) %>%
-#  pivot_longer(
-#    cols = -transcript_id,
-#    names_to = "Kids_First_Biospecimen_ID",
-#    values_to = "TPM"
-#  ) %>%
-#  inner_join(metadata_astrocytes, by='Kids_First_Biospecimen_ID') %>%
-#  mutate(group="Cell Type Controls")
 
 
 all_clk4_transcr_counts <- readRDS(expr_tpm_tumor_file) %>%
@@ -125,7 +96,7 @@ all_clk4_transcr_counts <- readRDS(expr_tpm_tumor_file) %>%
   inner_join(hist_indep_rna_df, by="Kids_First_Biospecimen_ID") %>%
   mutate(
     age_years = age_at_diagnosis_days / 365,
-    group = "Cluster 6",
+    group = "PBTA",
     plot_group = cut(
       age_years,
       breaks = c(0, 14, 18, 39),
@@ -270,7 +241,7 @@ transcript_expr_CLK1_combined_df$plot_group <- factor(
 )
 
 color_pal <- c(
-  "Cluster 6" = "#FDBF6F",
+  "PBTA" = "#FDBF6F",
   "Evo-Devo" = "mediumseagreen",
   "GTEx" = "#6ca6da")
 

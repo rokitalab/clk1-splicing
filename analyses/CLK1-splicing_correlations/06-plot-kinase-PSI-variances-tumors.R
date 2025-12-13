@@ -25,7 +25,6 @@ analysis_dir <- file.path(root_dir, "analyses", "CLK1-splicing_correlations")
 input_dir   <- file.path(analysis_dir, "input")
 results_dir <- file.path(analysis_dir, "results")
 plots_dir   <- file.path(analysis_dir, "plots")
-hist_dir <- file.path(root_dir, "analyses", "cohort_summary", "results")
 
 ## create plots dir if it doesn't exist
 if(!dir.exists(plots_dir)){
@@ -44,7 +43,7 @@ source(file.path(figures_dir, "theme_for_plots.R"))
 rmats_file <- file.path(data_dir,"splice-events-rmats.tsv.gz")
 clk1_rmats_file <- file.path(results_dir,"splice-events-rmats.tsv")
 
-clin_file  <- file.path(hist_dir,"histologies-plot-group.tsv")
+clin_file  <- file.path(data_dir,"histologies-plot-group.tsv")
 expr_file <- file.path(data_dir,"gene-expression-rsem-tpm-collapsed.rds")
 
 ## output files for final plots

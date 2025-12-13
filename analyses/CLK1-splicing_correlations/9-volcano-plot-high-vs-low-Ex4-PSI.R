@@ -14,9 +14,10 @@ suppressPackageStartupMessages({
   library(data.table)
   library(DESeq2)
   library(EnhancedVolcano)
-  library("msigdbr")
-  library("org.Hs.eg.db")
-  library("DOSE")
+  library(msigdbr)
+  library(org.Hs.eg.db)
+  library(DOSE)
+  library(clusterProfiler)
 })
 
 
@@ -26,14 +27,13 @@ root_dir <- rprojroot::find_root(rprojroot::has_dir(".git"))
 data_dir <- file.path(root_dir, "data")
 analysis_dir <- file.path(root_dir, "analyses", "CLK1-splicing_correlations")
 results_dir <- file.path(analysis_dir, "results")
-hist_dir <- file.path(root_dir, "analyses", "cohort_summary", "results")
 figures_dir <- file.path(root_dir, "figures")
 input_dir   <- file.path(root_dir, "analyses", "splicing_index", "results")
 
 
 # Specify file paths
-sbi_file <-  file.path(input_dir,"splicing_index.SE.txt")
-clin_file  <- file.path(hist_dir,"histologies-plot-group.tsv")
+sbi_file <-  file.path(input_dir,"splicing_index.total.txt")
+clin_file  <- file.path(data_dir,"histologies-plot-group.tsv")
 rmats_file <- file.path(data_dir, "clk1-splice-events-rmats.tsv")
 indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
 file_gene_counts <- file.path(data_dir,"gene-counts-rsem-expected_count-collapsed.rds")  
@@ -45,11 +45,6 @@ plots_dir   <- file.path(analysis_dir, "plots")
 # Source function for plots theme
 source(file.path(figures_dir, "theme_for_plots.R"))
 
-# Path to save file as
-hgg_plot_file <- file.path(plots_dir,"all_hgg_boxplot_SBI_high_vs_low_CLK1.pdf")
-dmg_plot_file <- file.path(plots_dir,"dmg_boxplot_SBI_high_vs_low_CLK1.pdf")
-other_hgg_plot_file <- file.path(plots_dir,"other_hgg_boxplot_SBI_high_vs_low_CLK1.pdf")
-
 ## Load clinical file
 indep_df <- read_tsv(indep_file)
 
@@ -57,14 +52,17 @@ hist_rna_df  <-  read_tsv(clin_file) %>%
   filter(cohort == "PBTA",
          Kids_First_Biospecimen_ID %in% indep_df$Kids_First_Biospecimen_ID)
 
+all_bs_id <- hist_rna_df %>%
+  pull(Kids_First_Biospecimen_ID)
+
 hgg_bs_id <- hist_rna_df %>%
   # Select only "RNA-Seq" samples
-  filter(plot_group %in% c("DIPG or DMG", "Other high-grade glioma")) %>%
+  filter(plot_group %in% c("Diffuse midline glioma", "Other high-grade glioma")) %>%
   pull(Kids_First_Biospecimen_ID)
 
 dmg_bs_id <- hist_rna_df %>%
   # Select only "RNA-Seq" samples
-  filter(plot_group == "DIPG or DMG") %>%
+  filter(plot_group == "Diffuse midline glioma") %>%
   pull(Kids_First_Biospecimen_ID)
 
 other_hgg_bs_id <- hist_rna_df %>%
@@ -72,8 +70,8 @@ other_hgg_bs_id <- hist_rna_df %>%
   pull(Kids_First_Biospecimen_ID)
 
 # List of sample ID groups and corresponding names for output files
-sample_id_groups <- list(hgg_bs_id = hgg_bs_id, dmg_bs_id = dmg_bs_id, other_hgg_bs_id = other_hgg_bs_id)
-output_names <- c("All", "DMGs", "Other HGGs")
+sample_id_groups <- list(all_bs_id = all_bs_id, hgg_bs_id = hgg_bs_id, dmg_bs_id = dmg_bs_id, other_hgg_bs_id = other_hgg_bs_id)
+output_names <- c("PBTA", "all HGGs", "DMGs", "Other HGGs")
 
 # Function to process each sample ID group and save the plot
 process_rmats_data <- function(sample_ids, name) {
@@ -84,11 +82,10 @@ process_rmats_data <- function(sample_ids, name) {
     filter(sample_id %in% sample_ids)
   
   # List of sample_ids to match for "low" low ones that are differentially spliced
-  low_sample_ids <- c(
-    "BS_0XHT9W4Q", "BS_17ZSMXFH", "BS_2EN3X6HB", "BS_7PVJ6Q3D",
-    "BS_9Y1K14Q5", "BS_FYP2B298", "BS_MD0937XT", "BS_MDBT7S5Z",
-    "BS_N6TQBQ8M", "BS_NPMEGFW8", "BS_TRPXB3AV", "BS_XM1AHBDJ"
-  )
+  low_sample_ids <- rmats_df %>%
+    arrange(IncLevel1) %>%
+    head(0.10*nrow(.)) %>%
+    pull(sample_id)
   
   # Step 1: Label entries with matching sample IDs as "low"
   rmats_labeled_df <- rmats_df %>%
@@ -114,8 +111,6 @@ process_rmats_data <- function(sample_ids, name) {
     dplyr::select(-PSI_high) %>%
     filter(!is.na(PSI))
   
-  #print(rmats_final_df)
-  
   count_data <- readRDS(file_gene_counts) %>%
     dplyr::select(any_of(rmats_final_df$sample_id)) %>%
     mutate(gene = rownames(.)) %>%
@@ -138,7 +133,7 @@ process_rmats_data <- function(sample_ids, name) {
   volc_hgg_plot <- EnhancedVolcano(res,
                                    lab = gsub("ENSG[1234567890]+[.][1234567890]+_", "", res$gene),
                                    x = 'log2FoldChange', y = 'padj',
-                                   title = paste('High vs Low', name, 'Ex4 HGGs'),
+                                   title = paste('High vs Low CLK1 Exon 4', name),
                                    subtitle = NULL,
                                    caption = NULL,
                                    pCutoff = 0.05, 
@@ -159,9 +154,6 @@ process_rmats_data <- function(sample_ids, name) {
   ggsave(filename = file.path(plots_dir, paste0(name, "_volcano_plot.pdf")),
          plot = volc_hgg_plot, width = 8, height = 6)
   
-  
-   library("clusterProfiler")
-   
   ## outplut file for plot
   ora_dotplot_func_path <- file.path(plots_dir, paste0("high_low_ex4_diff-genes-ora-dotplot-",name,".pdf"))
    
@@ -204,11 +196,9 @@ process_rmats_data <- function(sample_ids, name) {
   ggplot2::ggsave(ora_dotplot_func_path,
                   plot=enrich_plot_func,
                   width=7.5,
-                  height=4,
+                  height=5,
                   device="pdf",
                   dpi=300)
-  detach("package:clusterProfiler", unload = TRUE)
-   
   return(volc_hgg_plot)
 }
 
