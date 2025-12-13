@@ -37,8 +37,7 @@ source(file.path(figures_dir, "theme_for_plots.R"))
 
 ## define input files
 indep_rna_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
-cohort_file <- file.path(root_dir, "analyses", "cohort_summary",
-                         "results", "histologies-plot-group.tsv")
+cohort_file <- file.path(data_dir, "histologies-plot-group.tsv")
 rsem_tpm <- file.path(data_dir,"gene-expression-rsem-tpm-collapsed.rds")
 clk1_psi_file <- file.path(results_dir, "clk1-exon4-psi-hgg.tsv")
 isoform_file <- file.path(data_dir, "rna-isoform-expression-rsem-tpm.rds")

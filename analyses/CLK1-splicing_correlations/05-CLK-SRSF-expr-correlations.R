@@ -37,8 +37,7 @@ rsem_tpm <- file.path(data_dir,"gene-expression-rsem-tpm-collapsed.rds")
 isoform_file <- file.path(data_dir, "rna-isoform-expression-rsem-tpm.rds")
 rmats_file <- file.path(data_dir, "clk1-splice-events-rmats.tsv")
 
-cohort_file <- file.path(root_dir, "analyses", "cohort_summary",
-                         "results", "histologies-plot-group.tsv")
+cohort_file <- file.path(data_dir, "histologies-plot-group.tsv")
 
 ## read in histology file and count data
 ## filter histology file for all HGG, only stranded samples
@@ -47,7 +46,7 @@ indep_rna_df <- read_tsv(indep_rna_file)
 
 # extract hgg samples in indepenent specimens file, add plot_group
 all_hgg_bsids <- cohort_df %>% 
-  filter(plot_group %in% c("DIPG or DMG", "Other high-grade glioma"),
+  filter(plot_group %in% c("Diffuse midline glioma", "Other high-grade glioma"),
          RNA_library == "stranded",
          cohort == "PBTA",
       Kids_First_Biospecimen_ID %in% indep_rna_df$Kids_First_Biospecimen_ID) %>%
@@ -114,7 +113,7 @@ for (goi in names(goi_list)) {
     else if (brain_region == "midline"){
       # take only midline bs ids
       bs_id_list <- all_hgg_bsids %>%
-        filter(plot_group == "DIPG or DMG") %>%
+        filter(plot_group == "Diffuse midline glioma") %>%
         pull(Kids_First_Biospecimen_ID)
     }
     
@@ -203,7 +202,7 @@ for (clk in clk_list) {
     else if (brain_region == "midline"){
       # take only midline bs ids
       bs_id_list <- all_hgg_bsids %>%
-        filter(plot_group == "DIPG or DMG") %>%
+        filter(plot_group == "Diffuse midline glioma") %>%
         pull(Kids_First_Biospecimen_ID)
     }
     
@@ -291,7 +290,7 @@ for (brain_region in region_list) {
   else if (brain_region == "midline"){
     # take only midline bs ids
     bs_id_list <- all_hgg_bsids %>%
-      filter(plot_group == "DIPG or DMG") %>%
+      filter(plot_group == "Diffuse midline glioma") %>%
       pull(Kids_First_Biospecimen_ID)
   }
   
