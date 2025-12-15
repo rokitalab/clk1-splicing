@@ -1,8 +1,8 @@
 ################################################################################
-# 08-volcano-plot-high-vs-low-Ex4-PSI.R
+# 09-volcano-plot-high-vs-low-Ex4-PSI.R
 # written by Ammar Naqvi 
 #
-# usage: Rscript 08-volcano-plot-high-vs-low-Ex4-PSI.R
+# usage: Rscript 09-volcano-plot-high-vs-low-Ex4-PSI.R
 ################################################################################
 
 # Load libraries

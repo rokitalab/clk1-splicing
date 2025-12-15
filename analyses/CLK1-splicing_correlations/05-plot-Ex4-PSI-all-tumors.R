@@ -1,9 +1,9 @@
 ################################################################################
-# 08-plot-Ex4-PSI-all-tumors.R
+# 05-plot-Ex4-PSI-all-tumors.R
 # script that plots CLK1 exon 4 PSI variations across tumors and ctrls
 # written by Ammar Naqvi, Patricia Sullivan
 #
-# usage: Rscript 08-plot-Ex4-PSI-all-tumors.R
+# usage: Rscript 05-plot-Ex4-PSI-all-tumors.R
 ################################################################################
 
 suppressPackageStartupMessages({

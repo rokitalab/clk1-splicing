@@ -1,9 +1,9 @@
 ################################################################################
-# 10-plot-clk1-ex4-transcripts-hgg-normals 
+# 07-plot-clk1-ex4-transcripts-hgg-normals 
 # Plot CLK1 exon 4 transcript expression with normals/ctrls
 #
 # written by Ammar S Naqvi, Patricia Sullivan
-# Usage: Rscript 10-plot-clk1-ex4-transcripts-hgg-normals
+# Usage: Rscript 07-plot-clk1-ex4-transcripts-hgg-normals
 ################################################################################
 
 # Load libraries

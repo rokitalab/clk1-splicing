@@ -14,15 +14,15 @@ bash run_module.sh
 ## Folder content
 * `run_module.sh` shell script to run analysis
 * `00-subset-CLK1-from-rMATs.R` subset rMATs output for CLK1
-* `01-plot_highExon4_vs_lowExon4_and_SBI.R` correlate high vs low levels of overall splicing burden with CLK1 exon 4 inclusion levels
+* `01-plot_CLK1_highExon4_vs_lowExon4_and_SBI.R` correlate high vs low levels of overall splicing burden with CLK1 exon 4 inclusion levels
 * `02-plot_splicing_vs_expr.R` correlate CLK1 exon 4 inclusion levels with RNA expression, including CLK1, SRSF1, SRSF2, SRSF10
 * `03-CLK-SRSF-expr-correlations.R` generates scatter plots of CLK and SRSF transcript abundance vs. CLK1 exon 4 PSI and transcript abundance
 * `04-CLK1-psi-expr-SRSF-expr-prot-phospho-heatmap.R` generates summary heatmap of spearman correlation coefficients between CLK1 PSI and transcript abundance against CLK and SRSF RNA, total protein, and phosphoprotein expression
 * `05-plot-Ex4-PSI-all-tumors.R` plot CLK1 Ex 4 PSIs across tumors
 * `06-plot-kinase-PSI-variances-tumors.R` plot CLK1 Ex 4 and all splicing factor kinase PSIs that are functional and differential
-* `7-plot-clk1-ex4-transcripts-normals.R` plot CLK1 Ex 4 transcripts proportion in tumors and control samples
-* `8-plot-clk1-ex4-transcripts-by-age.R` plots CLK1 exon 4 PSI variations across tumors by age
-* `9-volcano-plot-high-vs-low-Ex4-PSI.R` compare high vs low Exon 4 PSI samples
+* `07-plot-clk1-ex4-transcripts-normals.R` plot CLK1 Ex 4 transcripts proportion in tumors and control samples
+* `08-plot-clk1-ex4-transcripts-by-age.R` plots CLK1 exon 4 PSI variations across tumors by age
+* `09-volcano-plot-high-vs-low-Ex4-PSI.R` compare high vs low Exon 4 PSI samples
 
 ## Directory structure
 ```
@@ -34,9 +34,9 @@ bash run_module.sh
 ├── 04-CLK1-psi-expr-SRSF-expr-prot-phospho-heatmap.R
 ├── 05-plot-Ex4-PSI-all-tumors.R
 ├── 06-plot-kinase-PSI-variances-tumors.R
-├── 7-plot-clk1-ex4-transcripts-normals.R
-├── 8-plot-clk1-ex4-transcripts-by-age.R
-├── 9-volcano-plot-high-vs-low-Ex4-PSI.R
+├── 07-plot-clk1-ex4-transcripts-normals.R
+├── 08-plot-clk1-ex4-transcripts-by-age.R
+├── 09-volcano-plot-high-vs-low-Ex4-PSI.R
 ├── README.md
 ├── archive
 │   ├── 08-CLK1-impact-NF1-splicing.Rmd

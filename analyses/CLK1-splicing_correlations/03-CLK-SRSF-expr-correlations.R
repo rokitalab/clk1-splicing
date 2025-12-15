@@ -1,8 +1,8 @@
 ################################################################################
-# 05-CLK-SRSF-expr-correlations.R
+# 03-CLK-SRSF-expr-correlations.R
 # Plot scatter and compute R for CLK1 expression and PSI values for HGGs
 # written by Ryan Corbett
-# Usage: Rscript 05-CLK-SRSF-expr-correlations.R
+# Usage: Rscript 03-CLK-SRSF-expr-correlations.R
 ################################################################################
 
 ## load libraries

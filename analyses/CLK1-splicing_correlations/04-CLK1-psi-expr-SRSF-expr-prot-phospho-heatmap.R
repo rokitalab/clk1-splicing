@@ -1,8 +1,8 @@
 ################################################################################
-# 06-CLK1-psi-expr-SRSF-expr-prot-phospho-heatmap.R
+# 04-CLK1-psi-expr-SRSF-expr-prot-phospho-heatmap.R
 # Generate heatmap of correlation coefficients between CLK1 features (PSI, Expr) and CLK1 and SRSF RNA, protein, and phosphoprotein expression
 # written by Ryan Corbett
-# Usage: Rscript 06-CLK1-psi-expr-SRSF-expr-prot-phospho-heatmap.R
+# Usage: Rscript 04-CLK1-psi-expr-SRSF-expr-prot-phospho-heatmap.R
 ################################################################################
 
 ## load libraries
