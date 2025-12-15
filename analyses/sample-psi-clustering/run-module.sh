@@ -33,3 +33,7 @@ Rscript --vanilla 07-plot-celltype-dist-by-cluster-histology.R
 
 # plot cell type enrichment within clusters
 Rscript --vanilla 08-plot-cell-fraction-enr-across-clusters.R
+
+# calculate the PSI variance due to cell type
+Rscript --vanilla 09-cell-type-PSI-variance.R
+
