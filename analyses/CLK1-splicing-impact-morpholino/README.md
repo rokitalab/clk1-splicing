@@ -11,7 +11,6 @@ bash run_module.sh
 ```
 
 ## Folder content
-* `00-get-splice-transcripts.R` identifies the transcripts which are being spliced, using the rMATs morpholino results file
 * `01-diffExpr-ctrl_vs_morph.R` performs differential expression analysis on ctrl vs treated cells using DESeq2. It also subsets based on genes of interests (transcription factors, kinases, etc)
 * `02-plot_diff-splice-events.R` plots PSI distributions of differential splice events
 * `03-run_bedtools_intersect-morpho.sh` formats rMATs output into bed format, and runs bedtools to intersect with uniprot db files
@@ -20,14 +19,12 @@ bash run_module.sh
 * `06-conduct-gsva-analysis.R` performs GSVA on CLK1 morpholino and control morpholino DE and DS events. DS events are delineated by all functional events or all functional events in onco/tsgs. This module uses HALLMARK, KEGG, and DNA repair pathways from https://pubmed.ncbi.nlm.nih.gov/29617664/.
 * `07-run-gsva-comparisons.Rmd` performs CLK1 morpholino vs non targeting morpholino cell line treatment comparisons of GSVA scores HALLMARK, KEGG, and DNA repair pathways from https://pubmed.ncbi.nlm.nih.gov/29617664/.
 * `08-intersection-dex-des.R` intersects dysregulated genes to assess overlap between genes that are both differentially spliced and expressed. Generates Venn diagram and performs ORA of overlapping genes.
-* `08-plot_total-splicing-cases.R` plots number of splicing events per type per treatment.
 * `09-intersection-dex-des.R` intersects dysregulated genes to assess overlap between genes that are both differentially spliced and expressed. Generates Venn diagram and performs ORA of overlapping genes.
 * `10-crispr-screen-intersection.R` plots the intersection of CLK1 targets and genes that are essential in HGGs (via CRISPR scores obtained from [CCMA](https://data.mendeley.com/datasets/rnfs539pfw/3), doi: 10.17632/rnfs539pfw.3)
 
 ## Directory structure
 ```
 .
-├── 00-get-splice-transcripts.R
 ├── 01-diffExpr-ctrl_vs_morph.R
 ├── 02-plot_diff-splice-events.R
 ├── 03-run_bedtools_intersect-morpho.sh
@@ -36,9 +33,9 @@ bash run_module.sh
 ├── 06-conduct-gsva-analysis.R
 ├── 07-run-gsva-comparisons.Rmd
 ├── 07-run-gsva-comparisons.html
-├── 08-plot_total-splicing-cases.R
-├── 09-intersection-dex-des.R
-├── 10-crispr-screen-intersection.R
+├── 08-intersection-dex-des.R
+├── 10-compute-binding-affinities.R
+├── 9-crispr-screen-intersection.R
 ├── README.md
 ├── input
 │   ├── CCMA_crispr_genedependency_042024.csv
@@ -60,19 +57,14 @@ bash run_module.sh
 │   ├── CLK1_targets_ora_dotplot.func-sites.pdf
 │   ├── clk1-crispr-swoosh-7316-1746.pdf
 │   ├── clk1-crispr-swoosh-7316-1763.pdf
-│   ├── clk1-crispr-swoosh-7316-1769.pdf
 │   ├── clk1-crispr-swoosh-7316-195.pdf
-│   ├── clk1-crispr-swoosh-7316-3058.pdf
-│   ├── clk1-crispr-swoosh-7316-388.pdf
-│   ├── clk1-crispr-swoosh-7316-5335.pdf
-│   ├── clk1-crispr-swoosh-7316-6349.pdf
-│   ├── clk1-crispr-swoosh-7316-6475.pdf
+│   ├── clk1-crispr-swoosh-7316-2141.pdf
+│   ├── clk1-crispr-swoosh-7316-2187.pdf
 │   ├── clk1-crispr-swoosh-7316-85.pdf
-│   ├── clk1-crispr-swoosh-pHGG.pdf
+│   ├── clk1-crispr-swoosh-all.pdf
+│   ├── clk1_diff_splice_events_by_type.pdf
 │   ├── ctrl_vs_clk1-morp_volcano.pdf
 │   ├── dPSI-distr-func-goi.pdf
-│   ├── dPSI-distr-func.pdf
-│   ├── dPSI_distr.pdf
 │   ├── des-dex-venn-func.pdf
 │   ├── des-dex-venn.pdf
 │   ├── ds-de-crispr-venn.pdf
@@ -88,8 +80,7 @@ bash run_module.sh
 │   ├── gsva_heatmap_kegg.pdf
 │   ├── gsva_heatmap_kegg_de.pdf
 │   ├── gsva_heatmap_kegg_sp.pdf
-│   ├── gsva_heatmap_kegg_sp_onc.pdf
-│   └── splice-types.pdf
+│   └── gsva_heatmap_kegg_sp_onc.pdf
 ├── results
 │   ├── clk1-de-ds-crispr-targets.txt
 │   ├── common_genes_de_ds_functional.txt
@@ -97,6 +88,7 @@ bash run_module.sh
 │   ├── ctrl_vs_morpho.rsem.genes.collapsed.rds
 │   ├── ctrl_vs_treated.de.formatted.tsv
 │   ├── ctrl_vs_treated.de.tsv
+│   ├── de_ds_genes.txt
 │   ├── de_genes.tsv
 │   ├── dex-sign-goi.tsv
 │   ├── differential_splice_by_goi_category.tsv
@@ -126,11 +118,12 @@ bash run_module.sh
 │   ├── gsva_score_diff_kegg_de.tsv
 │   ├── gsva_score_diff_kegg_sp.tsv
 │   ├── gsva_score_diff_kegg_sp_onc.tsv
-│   ├── morpholino_splice_NF1_0.1_psi_diff_transcripts.tsv
 │   ├── splice-events-significant.tsv
 │   ├── splicing_events.morpho.A3SS.intersectUnip.ggplot.txt
 │   ├── splicing_events.morpho.A5SS.intersectUnip.ggplot.txt
+│   ├── splicing_events.morpho.MXE.intersectUnip.ggplot.txt
 │   ├── splicing_events.morpho.RI.intersectUnip.ggplot.txt
-│   └── splicing_events.morpho.SE.intersectUnip.ggplot.txt
+│   ├── splicing_events.morpho.SE.intersectUnip.ggplot.txt
+│   └── splicing_events.morpho.total.intersectUnip.ggplot.txt
 └── run_module.sh
 ```

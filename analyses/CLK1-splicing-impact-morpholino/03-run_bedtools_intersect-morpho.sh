@@ -1,6 +1,6 @@
 #!/bin/sh
 
-events=("SE" "RI" "A5SS" "A3SS")
+events=("SE" "RI" "A5SS" "A3SS" "MXE")
 
 for event in "${events[@]}"; do
     # Determine the column numbers based on the event type
@@ -12,6 +12,10 @@ for event in "${events[@]}"; do
         col1=6
         col2=14
         col3=15
+    elif [ "$event" = "MXE" ]; then
+        col1=6
+        col2=10
+        col3=11
     else
         col1=6
         col2=20

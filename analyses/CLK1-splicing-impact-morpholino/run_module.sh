@@ -3,9 +3,6 @@
 set -e
 set -o pipefail
 
-## Identify the transcripts of interest per splice variants of interest
-Rscript --vanilla 00-get-splice-transcripts.R
-
 ## perform diff expression on ctrl vs clk1-morph
 Rscript --vanilla 01-diffExpr-ctrl_vs_morph.R
 echo -e "gene\tlog2FoldChange\tpadj" > results/ctrl_vs_treated.de.formatted.tsv
@@ -32,14 +29,11 @@ Rscript --vanilla 06-conduct-gsva-analysis.R
 echo "GSVA comparisons and plots"
 Rscript -e "rmarkdown::render('07-run-gsva-comparisons.Rmd', clean = TRUE)"
 
-## lolliplot of splicing cases
-Rscript --vanilla 08-plot_total-splicing-cases.R
-
 ## intersect DE and DS
-Rscript --vanilla 09-intersection-dex-des.R
+Rscript --vanilla 08-intersection-dex-des.R
 
 ## intersect with crispr scores from CCMA
-Rscript --vanilla 10-crispr-screen-intersection.R
+Rscript --vanilla 9-crispr-screen-intersection.R
 
 ## calculate deltaG for CLK1 morpholino
-Rscript --vanilla 11-compute-binding-affinities.R
+Rscript --vanilla 10-compute-binding-affinities.R
