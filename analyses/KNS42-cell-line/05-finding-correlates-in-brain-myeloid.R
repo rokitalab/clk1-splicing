@@ -383,9 +383,11 @@ background_genes <- unique(gene_table$gene)
 background_ids <- get_entrez_ids(background_genes)
 
 # Subset genes
-genes_both    <- gene_table %>% filter(cell_lines == "Both") %>% distinct(gene) %>% pull(gene)
-genes_cns     <- gene_table %>% filter(cell_lines == "CNS/Brain")  %>% distinct(gene) %>% pull(gene)
-genes_myeloid <- gene_table %>% filter(cell_lines == "Myeloid") %>% distinct(gene) %>% pull(gene)
+genes_both         <- gene_table %>% filter(cell_lines == "Both") %>% distinct(gene) %>% pull(gene)
+genes_cns_only     <- gene_table %>% filter(cell_lines == "CNS/Brain")  %>% distinct(gene) %>% pull(gene)
+genes_myeloid_only <- gene_table %>% filter(cell_lines == "Myeloid") %>% distinct(gene) %>% pull(gene)
+genes_cns          <- gene_table %>% filter(cell_lines %in% c("CNS/Brain", "Both"))  %>% distinct(gene) %>% pull(gene)
+genes_myeloid      <- gene_table %>% filter(cell_lines %in% c("Myeloid", "Both")) %>% distinct(gene) %>% pull(gene)
 
 run_go_enrichment <- function(gene_list, universe_ids, ont="BP") {
   enrichGO(
@@ -428,11 +430,16 @@ plot_go_dot <- function(ego_object, top_n = 15, title = "GO Enrichment", plot_pa
                   dpi=300)
 }
 
-ego_both    <- run_go_enrichment(genes_both, universe_ids = background_ids)
-ego_cns     <- run_go_enrichment(genes_cns, universe_ids = background_ids)
-ego_myeloid <- run_go_enrichment(genes_myeloid, universe_ids = background_ids)
+ego_both         <- run_go_enrichment(genes_both, universe_ids = background_ids)
+ego_cns          <- run_go_enrichment(genes_cns, universe_ids = background_ids)
+ego_cns_only     <- run_go_enrichment(genes_cns_only, universe_ids = background_ids)
+ego_myeloid      <- run_go_enrichment(genes_myeloid, universe_ids = background_ids)
+ego_myeloid_only <- run_go_enrichment(genes_myeloid_only, universe_ids = background_ids)
 
 # Generate plots
-plot_go_dot(ego_both, title = "GO Enrichment — Shared (Both lineages)", plot_path = file.path(plots_dir,"GO_BP_dotplot_Both.pdf"), height = 6, width = 9, label_char = 50)
-plot_go_dot(ego_cns, title = "GO Enrichment — CNS-only", plot_path = file.path(plots_dir,"GO_BP_dotplot_CNS.pdf"), height = 4)
-plot_go_dot(ego_myeloid, title = "GO Enrichment — Myeloid-only", plot_path = file.path(plots_dir,"GO_BP_dotplot_Myeloid.pdf"))
+plot_go_dot(ego_both, title = "GO Enrichment — Shared (Both lineages)", plot_path = file.path(plots_dir,"GO_BP_dotplot_Both.pdf"))
+plot_go_dot(ego_cns, title = "GO Enrichment — CNS", plot_path = file.path(plots_dir,"GO_BP_dotplot_CNS.pdf"), height = 4)
+plot_go_dot(ego_cns_only, title = "GO Enrichment — CNS Only", plot_path = file.path(plots_dir,"GO_BP_dotplot_CNS_only.pdf"), height = 4)
+plot_go_dot(ego_myeloid, title = "GO Enrichment — Myeloid", plot_path = file.path(plots_dir,"GO_BP_dotplot_Myeloid.pdf"))
+plot_go_dot(ego_myeloid_only, title = "GO Enrichment — Myeloid Only", plot_path = file.path(plots_dir,"GO_BP_dotplot_Myeloid_only.pdf"))
+
