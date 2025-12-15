@@ -8,11 +8,11 @@
 
 ## libraries needed
 suppressPackageStartupMessages({
-  library("dplyr")
-  library("ggplot2")
-  library("dplyr")
-  library("tidyverse")
-  
+  library(dplyr)
+  library(ggplot2)
+  library(dplyr)
+  library(tidyverse)
+  library(vroom)
 })
 
 # Get `magrittr` pipe
