@@ -7,15 +7,14 @@
      4788 results/splicing_events.A5SS.total.pos.intersect_UP000005640_9606_signal.wo.txt
    131181 results/splicing_events.A3SS.total.neg.intersect_UP000005640_9606_domain.wo.txt
     31199 results/splicing_events.RI.total.neg.intersect_UP000005640_9606_mod_res.wo.txt
-    17312 results/splicing_events.SE.total.neg.intersectunip.ggplot.txt
     21118 results/splicing_events.SE.total.neg.intersect_UP000005640_9606_signal.wo.txt
     86841 results/splicing_events.A3SS.total.pos.intersect_UP000005640_9606_domain.wo.txt
     14259 results/splicing_events.SE.total.pos.intersect_UP000005640_9606_mod_res.wo.txt
      6619 results/splicing_events.RI.total.pos.intersect_UP000005640_9606_signal.wo.txt
     28221 results/splicing_events.A3SS.total.neg.intersect_UP000005640_9606_mod_res.wo.txt
+   166195 results/splice_events.diff.RI.txt
     50039 results/splicing_events.total.neg.intersectunip.ggplot.txt
     44564 results/splicing_events.SE.total.neg.intersect_UP000005640_9606_disulfid.wo.txt
-     2875 results/splicing_events.SE.total.pos.intersectunip.ggplot.txt
      4982 results/splicing_events.A3SS.total.pos.intersect_UP000005640_9606_disulfid.wo.txt
     79139 results/splicing_events.A5SS.total.neg.intersect_UP000005640_9606_domain.wo.txt
     49485 results/splicing_events.RI.total.pos.intersect_UP000005640_9606_mod_res.wo.txt
@@ -30,6 +29,7 @@
     95928 results/splicing_events.A3SS.total.neg.bed
      8430 results/splicing_events.RI.total.neg.intersect_UP000005640_9606_disulfid.wo.txt
    584503 results/splicing_events.SE.total.neg.intersect_UP000005640_9606_domain.wo.txt
+   111299 results/splice_events.diff.A5SS.txt
      3787 results/splicing_events.SE.total.pos.intersect_UP000005640_9606_signal.wo.txt
     66933 results/splicing_events.A3SS.total.pos.bed
    206198 results/splicing_events.RI.total.pos.intersect_UP000005640_9606_domain.wo.txt
@@ -37,11 +37,13 @@
     81319 results/splicing_events.SE.total.neg.intersect_UP000005640_9606_mod_res.wo.txt
    130670 results/splicing_events.RI.total.neg.intersect_UP000005640_9606_domain.wo.txt
      1763 results/kinases-functional_sites.tsv
+   898397 results/splice_events.diff.SE.txt
     14283 results/splicing_events.total.pos.intersectunip.ggplot.txt
      3321 results/splicing_events.A3SS.total.pos.intersect_UP000005640_9606_signal.wo.txt
     17312 results/splicing_events.RI.total.pos.intersect_UP000005640_9606_disulfid.wo.txt
    101874 results/splicing_events.RI.total.pos.bed
     15814 results/splicing_events.A5SS.total.neg.intersect_UP000005640_9606_mod_res.wo.txt
+   162862 results/splice_events.diff.A3SS.txt
      7387 results/splicing_events.A3SS.total.neg.intersect_UP000005640_9606_disulfid.wo.txt
        73 results/splicing-factor-kinases-functional_sites.tsv
-  3262762 total
+  4581328 total
