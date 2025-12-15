@@ -33,8 +33,8 @@ echo "make tab for ggplot ...";
 perl 03-format_for_ggplot.pl
 
 ## make plots
-echo "make plots ...";
-Rscript 04-plot_splicing_across_functional_sites.R
+echo "get kinases ...";
+Rscript 04-functional-sites-kinases.R 
 
 ## make plots
 echo "plot splice patterns";
@@ -44,5 +44,4 @@ Rscript --vanilla 05-plot-splice-patterns.R
 find results/ -type f ! -name 'line_count.txt' -exec wc -l {} + > results/line_count.txt
 
 ##rm intermediatery files
-#rm results/splicing_events*.wo.txt
-#rm results/*bed
+rm results/splicing_events*.wo.txt
