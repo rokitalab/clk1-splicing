@@ -1,4 +1,4 @@
-# 11-compute-binding-affinities.R
+# 10-compute-binding-affinities.R
 # This script computes the binding affinity of a primer to two target sequences.
 # The script performs the following:
 # - Calculates a basic alignment score based on mismatches

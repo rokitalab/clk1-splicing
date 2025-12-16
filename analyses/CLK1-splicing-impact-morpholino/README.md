@@ -34,8 +34,8 @@ bash run_module.sh
 ├── 07-run-gsva-comparisons.Rmd
 ├── 07-run-gsva-comparisons.html
 ├── 08-intersection-dex-des.R
+├── 09-crispr-screen-intersection.R
 ├── 10-compute-binding-affinities.R
-├── 9-crispr-screen-intersection.R
 ├── README.md
 ├── input
 │   ├── CCMA_crispr_genedependency_042024.csv
