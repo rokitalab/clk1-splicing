@@ -37,7 +37,6 @@ figures_dir <- file.path(root_dir, "figures")
 source(file.path(figures_dir, "theme_for_plots.R"))
 
 ## define output files
-file_dpsi_plot <- file.path(plots_dir,"dPSI-distr-func.pdf")
 file_dpsi_goi_plot <- file.path(plots_dir,"dPSI-distr-func-goi.pdf")
 
 ## get and setup input
@@ -46,18 +45,20 @@ file_psi_SE_func <- file.path(results_dir,"splicing_events.morpho.SE.intersectUn
 file_psi_RI_func <- file.path(results_dir,"splicing_events.morpho.RI.intersectUnip.ggplot.txt")
 file_psi_A5SS_func <- file.path(results_dir,"splicing_events.morpho.A5SS.intersectUnip.ggplot.txt")
 file_psi_A3SS_func <- file.path(results_dir,"splicing_events.morpho.A3SS.intersectUnip.ggplot.txt")
+file_psi_MXE_func <- file.path(results_dir,"splicing_events.morpho.MXE.intersectUnip.ggplot.txt")
+file_total_func <- file.path(results_dir, "splicing_events.morpho.total.intersectUnip.ggplot.txt")
 
 ## gene categories file 
 oncokb_gene_ref <- read_tsv(file.path(results_dir, "gene_categories.tsv"))
 
 ## combine all splice types together, everything relative to CLK1 exon 4 cells (untreated)
-dpsi_unip_incl <- vroom(c(file_psi_SE_func, file_psi_RI_func, file_psi_A5SS_func, file_psi_A3SS_func)) %>%
+dpsi_unip_incl <- vroom(c(file_psi_SE_func, file_psi_RI_func, file_psi_A5SS_func, file_psi_A3SS_func, file_psi_MXE_func)) %>%
   mutate(gene=str_match(SpliceID, "(\\w+[\\.\\d]*)\\:")[, 2]) %>%
   filter(dPSI<0) %>% 
   mutate(Preference='Inclusion',
          dPSI=abs(dPSI)) 
 
-dpsi_unip_skp <- vroom(c(file_psi_SE_func, file_psi_RI_func, file_psi_A5SS_func, file_psi_A3SS_func)) %>% 
+dpsi_unip_skp <- vroom(c(file_psi_SE_func, file_psi_RI_func, file_psi_A5SS_func, file_psi_A3SS_func, file_psi_MXE_func)) %>% 
   mutate(gene=str_match(SpliceID, "(\\w+[\\.\\d]*)\\:")[, 2]) %>%
   filter(dPSI>0) %>% 
   mutate(Preference='Skipping')
@@ -68,48 +69,16 @@ psi_comb <- rbind(dpsi_unip_incl,dpsi_unip_skp) %>%
                              Uniprot == 'mod_res' ~ 'Modification',
                              Uniprot == 'signal' ~ 'Signal',
                              .default = Uniprot),
-         Uniprot_wrapped = stringr::str_wrap(Uniprot, width = 10)
-  )
-
-## ggstatplot across functional sites
-set.seed(123)
-counts_psi_comb <- psi_comb %>% 
-  dplyr::count(Type, Uniprot_wrapped, Preference) %>%
-  # add n = for first n
-  mutate(n = as.character(n),
-         n = case_when(Type == "A3SS" & Uniprot_wrapped == "Disulfide\nBond" & Preference == "Inclusion" ~ paste0("n = ",n),
-                       TRUE ~ as.character(n)))
-
-# Your ggplot code with adjustments
-plot_dsp <- ggplot(psi_comb, aes(x = Uniprot_wrapped, y = dPSI * 100, fill = Preference)) +
-  geom_boxplot(aes(color = Preference), position = position_dodge(width = 0.9), outlier.shape = NA, size = 0.5, alpha = 0.4) +
-  ggforce::geom_sina(aes(color = Preference), pch = 16, size = 3, position = position_dodge(width = 0.9), alpha = 0.4) +
-  facet_wrap(~Type, nrow = 1) +
-  scale_color_manual(name = "Preference (CLK1 exon 4 high)", values = c(Skipping = "#0C7BDC", Inclusion = "#FFC20A")) +
-  scale_fill_manual(name = "Preference (CLK1 exon 4 high)", values = c(Skipping = "#0C7BDC", Inclusion = "#FFC20A")) +
-  theme_Publication() +
-  labs(y = "Percent Spliced In (PSI)", x = "Uniprot-defined Functional Site") +
-  geom_text(data = counts_psi_comb, aes(label = paste(n), x = Uniprot_wrapped, y = 10), vjust = 3, size = 3, position = position_dodge(width = 0.9)) +
-  theme(
-    legend.position = "top",  # Move legend to the top
-    legend.direction = "horizontal",
-    axis.text.x = element_text(angle = 45, hjust = 1)
-  ) +
-  ylim(c(-15, 100))
-
-# Save plot as PDF
-pdf(file_dpsi_plot, 
-    width = 12, height = 4)
-print (plot_dsp)
-dev.off()
-
+         #Uniprot_wrapped = stringr::str_wrap(Uniprot, width = 10)
+  ) %>%
+  write_tsv(file_total_func)
 
 psi_comb_goi <- psi_comb %>% 
   inner_join(oncokb_gene_ref, by="gene") %>% 
   unique() %>%
-  select(-Uniprot_wrapped) %>%
-# write for supplemental 
-write_tsv(file.path(results_dir, "differential_splice_by_goi_category.tsv"))
+  #select(-Uniprot_wrapped) %>%
+  # write for supplemental 
+  write_tsv(file.path(results_dir, "differential_splice_by_goi_category.tsv"))
 
 psi_comb_goi_subset_for_plot <- psi_comb_goi %>%
   select(gene, Preference, classification) %>%

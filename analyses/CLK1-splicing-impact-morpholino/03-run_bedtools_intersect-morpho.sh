@@ -1,6 +1,6 @@
 #!/bin/sh
 
-events=("SE" "RI" "A5SS" "A3SS")
+events=("SE" "RI" "A5SS" "A3SS" "MXE")
 
 for event in "${events[@]}"; do
     # Determine the column numbers based on the event type
@@ -12,6 +12,10 @@ for event in "${events[@]}"; do
         col1=6
         col2=14
         col3=15
+    elif [ "$event" = "MXE" ]; then
+        col1=6
+        col2=10
+        col3=11
     else
         col1=6
         col2=20
@@ -20,11 +24,19 @@ for event in "${events[@]}"; do
 
     # Generate the bed file
     cat ../../data/morpholno.merged.rmats.tsv | grep "^$event" | awk -F "\t" '{if( ($36 < -.10) || ($36 >.10) ){ print $0}}' | awk -F "\t" '{if($32 < 0.05 && $33< 0.05){ print $0}}' |awk -F "\t" -v col1="$col1" -v col2="$col2" -v col3="$col3" '{print $col1"\t"$col2"\t"$col3"\t"$5":"$col2"-"$col3"\t"$36"\t"$7}' | perl -pe 's/\"//g' > input/morpho.diff.$event.bed
-
+    
+    # Add 2nd exon to MXE file
+    if [ "$event" = "MXE" ]; then
+        col2=12
+        col3=13
+        
+        cat ../../data/morpholno.merged.rmats.tsv | grep "^$event" | awk -F "\t" '{if( ($36 < -.10) || ($36 >.10) ){ print $0}}' | awk -F "\t" '{if($32 < 0.05 && $33< 0.05){ print $0}}' |awk -F "\t" -v col1="$col1" -v col2="$col2" -v col3="$col3" '{print $col1"\t"$col2"\t"$col3"\t"$5":"$col2"-"$col3"\t"$36"\t"$7}' | perl -pe 's/\"//g' >> input/morpho.diff.$event.bed
+    fi
+    
     # Intersect with functional site beds
     for functional_site in "mod_res" "disulfid" "signal" "domain"; do
         bedtools intersect -wo -a input/morpho.diff.$event.bed -b ../splicing_events_functional_sites/input/UP000005640_9606_$functional_site.bed | sort -u > results/splicing_events.morpho.$event.intersectUnip$functional_site.wo.txt
-        done
+    done
 
     # Generate ggplot data
     echo -e "SpliceID\tdPSI\tUniprot\tType" > results/splicing_events.morpho.$event.intersectUnip.ggplot.txt

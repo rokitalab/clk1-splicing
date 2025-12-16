@@ -34,65 +34,57 @@ if(!dir.exists(plots_dir)){
 
 
 ##theme for all plots
-# source function for theme for plots survival
+# source function for theme for plots
 figures_dir <- file.path(root_dir, "figures")
 source(file.path(figures_dir, "theme_for_plots.R"))
 
 ## define output files
-file_dpsi_plot <- file.path(plots_dir,"dPSI_distr.pdf")
-
+de_events_plot_path <- file.path(plots_dir, "clk1_diff_splice_events_by_type.pdf")
+  
 ## get and setup input
 ## rmats file
-rmats_merged_file  <- file.path(data_dir,"morpholno.merged.rmats.tsv")
+rmats_merged_file  <- file.path(data_dir,"ctrl-vs-morpholino-merged-rmats.tsv")
 
 ## extract strong splicing changes 
 splicing_df  <-  vroom(rmats_merged_file, comment = "#", delim="\t") %>% 
                  filter(FDR < 0.05 & PValue < 0.05) 
 
 ## extract strong differential splicing cases (dPSI >= |.10|) and use CLK1 high exon 4 as a reference (eg. -dPSI means there more inclusion in CLK1 exon 4)
-splicing_df_ES <- splicing_df %>% filter(IncLevelDifference  >= .10) %>% mutate(Preference="Skipping")
-splicing_df_EI <- splicing_df %>% filter(IncLevelDifference <= -.10) %>% mutate(Preference="Inclusion",
+splicing_df_skip <- splicing_df %>% filter(IncLevelDifference  >= .10) %>% mutate(Preference="Skipping")
+splicing_df_incl <- splicing_df %>% filter(IncLevelDifference <= -.10) %>% mutate(Preference="Inclusion",
                                                                                 IncLevelDifference = abs(IncLevelDifference) )
 
-psi_comb <- rbind(splicing_df_EI,splicing_df_ES)
+psi_comb <- rbind(splicing_df_incl,splicing_df_skip) %>%
+  dplyr::mutate(
+    splice_id = case_when(splicing_case == "RI" ~ glue::glue("{GeneID}:{riExonStart_0base}-{riExonEnd}_{upstreamES}-{upstreamEE}_{downstreamES}-{downstreamEE}"),
+                          splicing_case == "SE" ~ glue::glue("{GeneID}:{exonStart_0base}-{exonEnd}_{upstreamES}-{upstreamEE}_{downstreamES}-{downstreamEE}"),
+                          splicing_case == "MXE" ~ glue::glue("{GeneID}:{`1stExonStart_0base`}-{`1stExonEnd`}_{`2ndExonStart_0base`}-{`2ndExonEnd`}_{upstreamES}-{upstreamEE}_{downstreamES}-{downstreamEE}"),
+                          TRUE ~ glue::glue("{GeneID}:{longExonStart_0base}-{longExonEnd}_{shortES}-{shortEE}_{flankingES}-{flankingEE}"))
+  )
 
-## ggstatplot across functional sites
-set.seed(123)
+## splicing cases
+splicing_case <- psi_comb %>% 
+  count(Preference, splicing_case)
+
 counts_psi_comb <- psi_comb %>% 
-  dplyr::count(splicing_case, Preference)
+  dplyr::count(splicing_case, Preference)  %>%
+  mutate(splicing_case = factor(splicing_case, levels = c("RI", "A5SS", "A3SS", "MXE", "SE")))
 
-## ggstatplot across functional sites
-set.seed(123)
-plot_dsp <-  ggplot(psi_comb,aes(splicing_case, IncLevelDifference*100) ) +  
-  ylab(expression(Delta*"PSI"))+
-  ggforce::geom_sina(aes(color = Preference, alpha = 0.4), pch = 16, size = 4, method="density") +
-  geom_boxplot(outlier.shape = NA, color = "black", size = 0.5, coef = 0, aes(alpha = 0.4)) +
-  facet_wrap("Preference") +
-  stat_compare_means(method = "wilcox.test", comparisons = list(c("A3SS", "A5SS"),
-                                                                c("A3SS", "MXE"),
-                                                                c("A3SS", "RI"),
-                                                                c("A3SS", "SE"),
-                                                                c("A5SS", "MXE"),
-                                                                c("A5SS", "RI"),
-                                                                c("A5SS", "SE"),
-                                                                c("MXE", "RI"),
-                                                                c("MXE", "SE"),
-                                                                c("SE", "A5SS"),
-                                                                c("SE", "A3SS"),
-                                                                c("SE", "RI"))) + 
-  scale_color_manual(name = "Preference (CLK1 exon 4 high)", values = c(Inclusion = "#FFC20A", Skipping = "#0C7BDC"))  + 
+table(splicing_case$Preference, splicing_case$splicing_case)
+
+# Create the side-by-side bar plot with custom colors
+pdf(de_events_plot_path, height = 3, width = 5.5)
+ggplot(counts_psi_comb, aes(x = Preference, y = n, fill = splicing_case)) +
+  geom_bar(stat = "identity", position = position_stack()) +
+  scale_fill_manual(name = "Splicing Case", values = c(SE = "#0C7BDC", MXE = "orchid3", RI = "#00A5A5", A3SS = "#FFC20A", A5SS = "#E04C2F"))+ 
+  labs(x = "Preference",
+       y = "Differential Splice Events") +
   theme_Publication() + 
-  geom_text(data = counts_psi_comb, aes(label = paste("n =",n), x = splicing_case, y = 0), vjust = 2, size = 4, hjust=.5) +
-  
-  labs(x= "Splicing Case") + 
-  theme(legend.position="none") +
-  ylim(c(0,170))
-
-
-# Save plot as PDF
-pdf(file_dpsi_plot, 
-    width = 15, height = 7)
-plot_dsp
+  coord_flip()+
+  ylim(c(0,5000)) +
+  theme(legend.position = c(0.4, 1.04), # shift legend to the left to fit
+        legend.direction = "horizontal") +
+  guides(fill = guide_legend(reverse = TRUE))
 dev.off()
 
 # annotate significant splice events for TSG/Oncogene
