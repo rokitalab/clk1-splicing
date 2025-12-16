@@ -187,11 +187,23 @@ filter_and_annotate <- function(cor_results, threshold = 0.3, p_threshold = 0.05
 cor_cns_filtered <- filter_and_annotate(cor_results_cns)
 cor_myeloid_filtered <- filter_and_annotate(cor_results_myeloid)
 
+# Extract gene names from transcript IDs
+extract_gene <- function(transcript) {
+  sapply(strsplit(transcript, " "), `[`, 1)
+}
+
+# Prepare datasets with gene names
+cor_myeloid_with_gene <- cor_myeloid_filtered %>%
+  mutate(gene = extract_gene(transcript))
+
+cor_cns_with_gene <- cor_cns_filtered %>%
+  mutate(gene = extract_gene(transcript))
+
 # =============================================================================
 # Venn Diagram Visualization
 # =============================================================================
 
-venn_diag <- ggVennDiagram(x = list(unique(cor_myeloid_filtered$transcript), unique(cor_cns_filtered$transcript)),
+venn_diag <- ggVennDiagram(x = list(unique(cor_myeloid_with_gene$gene), unique(cor_cns_with_gene$gene)),
                            edge_lty = "dashed",
                            edge_size = 1,
                            label_size = 6,
@@ -201,7 +213,8 @@ venn_diag <- ggVennDiagram(x = list(unique(cor_myeloid_filtered$transcript), uni
   scale_fill_gradient(
     low = "#ffffff",
     high = "steelblue1",
-    name = expression(bold("Transcript count"))
+    name = expression(bold("Gene count")),
+    limits = c(0, NA)
   ) +
   labs(title = expression(bold("Correlations with CLK1 (|r| > 0.4)"))) +
   # keep normal left/right orientation; also prevent clipping of labels
@@ -236,18 +249,6 @@ ggplot2::ggsave(
 # =============================================================================
 # Create Comprehensive Gene Table
 # =============================================================================
-
-# Extract gene names from transcript IDs
-extract_gene <- function(transcript) {
-  sapply(strsplit(transcript, " "), `[`, 1)
-}
-
-# Prepare datasets with gene names
-cor_myeloid_with_gene <- cor_myeloid_filtered %>%
-  mutate(gene = extract_gene(transcript))
-
-cor_cns_with_gene <- cor_cns_filtered %>%
-  mutate(gene = extract_gene(transcript))
 
 # Get all unique transcripts from both datasets
 all_transcripts <- unique(c(

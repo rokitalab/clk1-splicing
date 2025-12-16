@@ -39,19 +39,25 @@ DepMap, Broad (2024). DepMap 24Q4 Public. Figshare+. Dataset. https://doi.org/10
 ├── input
 │   ├── 2023-03-22 162604_JLRmod_20240218.xls
 │   ├── CLK1_CRISPR_depmap_score.csv
-│   ├── CRISPRGeneEffect.csv
 │   ├── Model.csv
 │   ├── OmicsDefaultModelProfiles.csv
 │   ├── cell_prolif_res.tsv
 │   ├── qpcr-results-raw-ct.csv
 │   └── tam_etal_clk1_targets.txt
 ├── plots
+│   ├── CLK1_correlation_venn.pdf
+│   ├── GO_BP_dotplot_Both.pdf
+│   ├── GO_BP_dotplot_CNS.pdf
+│   ├── GO_BP_dotplot_CNS_only.pdf
+│   ├── GO_BP_dotplot_Myeloid.pdf
+│   ├── GO_BP_dotplot_Myeloid_only.pdf
 │   ├── cell_viability-barplot.pdf
 │   ├── depmap_score_CLK1_vs_score_KNS42.pdf
 │   ├── depmap_score_all_cell_lines.pdf
 │   ├── depmap_score_cns_cell_lines.pdf
 │   └── qPCR-morp.pdf
 ├── results
+│   ├── CLK1_correlated_genes_comprehensive.tsv
 │   ├── clk1_consensus_targets.tsv
 │   ├── mean_ped_glioma_crispr_scores_func_kinase_splice_events.csv
 │   └── splice_genes_functional.tsv
