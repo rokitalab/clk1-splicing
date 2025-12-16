@@ -49,29 +49,46 @@ depmap_data <- vroom(depmap_file, show_col_types = FALSE) %>%
   dplyr::rename("ModelID" = `Depmap ID`,
                 "Cell line"=`Cell Line Name`,
                 Histology = `Lineage Subtype`) 
-depmap_glioma <- depmap_data %>% 
-  filter(Histology == "Diffuse Glioma")
+depmap_brain <- depmap_data %>% 
+  filter(Lineage == "CNS/Brain")
 
 ## general Depmap CLK1 Pertubation
-depmap_data_KNS42 <- depmap_glioma %>% 
+depmap_data_KNS42 <- depmap_brain %>% 
   filter(`Cell line` =="KNS42")
 
 gene_score_plot <- ggplot(data=depmap_glioma, 
                           aes(reorder(`Cell line`,`CRISPR (DepMap Public 23Q2+Score, Chronos)`),`CRISPR (DepMap Public 23Q2+Score, Chronos)`,  
-                              group=1)) +
-  #geom_line() + 
-  geom_point(size=3, colour="gray89") + 
-  geom_point(size=3, colour = "gray50", pch = 21) + 
-  geom_point(data=depmap_data_KNS42, colour="red", size = 3) +
-  geom_point(data=depmap_data_KNS42, colour="black", size = 3, pch = 21) +
-  xlab("Cell Line") + 
+                              group=1, fill = Histology)) +
+  geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_point(
+    size = 3,
+    shape = 21,
+    colour = "black"
+  ) +
+  ## highlight KNS42 on top
+  geom_point(
+    data = depmap_data_KNS42,
+    size = 3.5,
+    shape = 21,
+    fill = "black",
+    colour = "white"
+  ) +
+  scale_fill_manual(
+    values = c(
+      "Diffuse Glioma" = "#ff40d9",  # blue
+      "Embryonal Tumor"       = "#b08ccf",  # orange
+      "Meningothelial Tumor"       = "#7fbf00"),
+    name = "Histology"
+  ) +
+  xlab("Brain Tumor Cell Line") + 
   ylab("CRISPR Dependency Score") + 
   ggtitle("CLK1 Perturbation") +
   theme_Publication() + 
-  theme(axis.text.x=element_text(angle = 75, hjust = 1, size = 8)) 
+  theme(axis.text.x=element_text(angle = 75, hjust = 1, size = 7.5)) 
+gene_score_plot
 
 # Save plot as pdf
-pdf(file_expr_vs_score_plot, height = 4, width = 7.5)
+pdf(file_expr_vs_score_plot, height = 5, width = 12)
 gene_score_plot
 dev.off()
 
@@ -97,6 +114,7 @@ depMap_transcr_CLK1_pct_expr <- depMap_transcr_expr %>%
   dplyr::rename("CRISPR_score" = `CRISPR (DepMap Public 23Q2+Score, Chronos)`) %>%
   dplyr::select(ModelID, 
                 Lineage,
+                Histology,
                 `CLK1 (ENST00000321356)`,
                 `CLK1 (ENST00000409769)`,
                 `CLK1 (ENST00000409769)`,
@@ -143,13 +161,12 @@ boxplot_expr_vs_score <- ggplot(clk1_rm_low_n,
   ggforce::geom_sina(aes(color = Expression_level) , size = 3) +
   facet_wrap(~Lineage, nrow = 3, labeller = label_wrap_gen(15)) +
   scale_color_manual(values = c(high = "#FFC20A", low = "#0C7BDC")) +
-  stat_compare_means(position = "identity", label.y = 0.2, label.sep = " ") + 
+  stat_compare_means(position = "identity", label.y = 0.17, label.sep = " ", size = 3) + 
   ylab("CRISPR Dependency Score") + 
   xlab(expression(bold(bolditalic("CLK1")~"ENST00000321356 Expression"))) +
   theme_Publication() +
   theme(legend.position = "none",
         strip.text = element_text(size = 10))
-
 
 # save plot pdf version
 pdf(file_depmap_all_score_plot, height = 10, width = 12)
@@ -163,22 +180,47 @@ clk1_by_quartiles_brain <- clk1_by_quartiles %>%
 clk1_box <- ggplot(clk1_by_quartiles_brain, 
                                 aes(x = Expression_level, 
                                     y = CRISPR_score, 
-                                    color = Expression_level)) + 
+                                    color = Histology)) + 
   geom_boxplot(outlier.size = 0,
                size = 0.5,
                alpha = 0,
                color = "black",
                coef = 0) +
-  ggforce::geom_sina(aes(color = Expression_level) , size = 3) +
-  scale_color_manual(values = c(high = "#FFC20A", low = "#0C7BDC")) +
-  stat_compare_means(position = "identity", label.y = 0.2, label.sep = " ") + 
+  ggforce::geom_sina(
+    size = 3,
+    aes(group = Expression_level)
+  ) + 
+  # KNS-42 highlighted in black (aka ACH-000622)
+  geom_point(
+    data = subset(clk1_by_quartiles_brain, ModelID == "ACH-000622"),
+    aes(x = Expression_level,
+        y = CRISPR_score,
+        color = "KNS-42"),
+    size = 3
+  ) +
+  scale_color_manual(
+    values = c(
+      "Diffuse Glioma" = "#ff40d9",
+      "Embryonal Tumor" = "#b08ccf",  
+      "Meningothelial Tumor" = "#7fbf00",
+      "KNS-42" = "black"),
+    breaks = c(
+      "Diffuse Glioma",
+      "Embryonal Tumor",
+      "Meningothelial Tumor",
+      "KNS-42"
+    ),
+    name = "Histology"
+  ) +
+  stat_compare_means(comparisons = list(c("low", "high")),
+                     label.y = 0.17, label.sep = " ") + 
   ylab("CRISPR Dependency Score") + 
   xlab(expression(bold(atop(bolditalic("CLK1"), 
                             "ENST00000321356 Expression")))) +
-  theme_Publication() +
-  theme(legend.position = "none")
+  theme_Publication() 
+clk1_box
 
 # save plot pdf version
-pdf(file_depmap_cns_score_plot, height = 4, width = 4)
+pdf(file_depmap_cns_score_plot, height = 5, width = 6)
 print(clk1_box)
 dev.off()
