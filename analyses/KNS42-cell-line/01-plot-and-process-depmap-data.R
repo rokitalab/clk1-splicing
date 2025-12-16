@@ -56,28 +56,35 @@ depmap_brain <- depmap_data %>%
 depmap_data_KNS42 <- depmap_brain %>% 
   filter(`Cell line` =="KNS42")
 
-gene_score_plot <- ggplot(data=depmap_glioma, 
+gene_score_plot <- ggplot(data=depmap_brain, 
                           aes(reorder(`Cell line`,`CRISPR (DepMap Public 23Q2+Score, Chronos)`),`CRISPR (DepMap Public 23Q2+Score, Chronos)`,  
                               group=1, fill = Histology)) +
   geom_hline(yintercept = 0, linetype = "dashed") +
+  geom_point(size = 3, shape = 21, colour = "black") +
+  # highlight KNS42 on top (filled black)
   geom_point(
+    data = subset(depmap_brain, `Cell line` == "KNS42"),
+    aes(
+      reorder(`Cell line`, `CRISPR (DepMap Public 23Q2+Score, Chronos)`),
+      `CRISPR (DepMap Public 23Q2+Score, Chronos)`,
+      fill = "KNS-42"
+    ),
+    inherit.aes = FALSE,
     size = 3,
     shape = 21,
     colour = "black"
-  ) +
-  ## highlight KNS42 on top
-  geom_point(
-    data = depmap_data_KNS42,
-    size = 3.5,
-    shape = 21,
-    fill = "black",
-    colour = "white"
   ) +
   scale_fill_manual(
     values = c(
       "Diffuse Glioma" = "#ff40d9",  # blue
       "Embryonal Tumor"       = "#b08ccf",  # orange
-      "Meningothelial Tumor"       = "#7fbf00"),
+      "Meningothelial Tumor"       = "#7fbf00",
+      "KNS-42" = "black"),
+    breaks = c(
+      "Diffuse Glioma",
+      "Embryonal Tumor",
+      "Meningothelial Tumor",
+      "KNS-42"),
     name = "Histology"
   ) +
   xlab("Brain Tumor Cell Line") + 
@@ -85,7 +92,6 @@ gene_score_plot <- ggplot(data=depmap_glioma,
   ggtitle("CLK1 Perturbation") +
   theme_Publication() + 
   theme(axis.text.x=element_text(angle = 75, hjust = 1, size = 7.5)) 
-gene_score_plot
 
 # Save plot as pdf
 pdf(file_expr_vs_score_plot, height = 5, width = 12)
@@ -218,7 +224,6 @@ clk1_box <- ggplot(clk1_by_quartiles_brain,
   xlab(expression(bold(atop(bolditalic("CLK1"), 
                             "ENST00000321356 Expression")))) +
   theme_Publication() 
-clk1_box
 
 # save plot pdf version
 pdf(file_depmap_cns_score_plot, height = 5, width = 6)
