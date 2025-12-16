@@ -33,7 +33,7 @@ Rscript -e "rmarkdown::render('07-run-gsva-comparisons.Rmd', clean = TRUE)"
 Rscript --vanilla 08-intersection-dex-des.R
 
 ## intersect with crispr scores from CCMA
-Rscript --vanilla 9-crispr-screen-intersection.R
+Rscript --vanilla 09-crispr-screen-intersection.R
 
 ## calculate deltaG for CLK1 morpholino
 Rscript --vanilla 10-compute-binding-affinities.R
