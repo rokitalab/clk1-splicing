@@ -383,7 +383,8 @@ clk1_ex4_expr %>%
              labeller = labeller(cluster = label_wrap_gen(18))) + 
   scale_color_manual(values = plotgroup_palette, breaks = names(plotgroup_palette)) + 
   ylim(c(-1,4)) +
-  theme_Publication()
+  theme_Publication() +
+  theme(axis.text.x = element_text(angle = 70, hjust = 1, vjust = 1))
 
 # save plot
 ggsave(file.path(plots_dir,
