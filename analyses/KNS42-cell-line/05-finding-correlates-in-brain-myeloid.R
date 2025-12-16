@@ -192,7 +192,7 @@ cor_myeloid_filtered <- filter_and_annotate(cor_results_myeloid)
 # =============================================================================
 
 venn_diag <- ggVennDiagram(x = list(unique(cor_myeloid_filtered$transcript), unique(cor_cns_filtered$transcript)),
-                           edge_lty = "solid",
+                           edge_lty = "dashed",
                            edge_size = 1,
                            label_size = 6,
                            set_size = 5,
@@ -201,7 +201,7 @@ venn_diag <- ggVennDiagram(x = list(unique(cor_myeloid_filtered$transcript), uni
   scale_fill_gradient(
     low = "#ffffff",
     high = "steelblue1",
-    name = expression(bold("Gene count"))
+    name = expression(bold("Transcript count"))
   ) +
   labs(title = expression(bold("Correlations with CLK1 (|r| > 0.4)"))) +
   # keep normal left/right orientation; also prevent clipping of labels
