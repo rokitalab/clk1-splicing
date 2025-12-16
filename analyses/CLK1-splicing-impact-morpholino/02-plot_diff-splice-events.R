@@ -55,9 +55,11 @@ splicing_df_incl <- splicing_df %>% filter(IncLevelDifference <= -.10) %>% mutat
                                                                                 IncLevelDifference = abs(IncLevelDifference) )
 
 psi_comb <- rbind(splicing_df_incl,splicing_df_skip) %>%
-  dplyr::mutate(splice_id = case_when(splicing_case == "RI" ~ glue::glue("{GeneID}:{riExonStart_0base}-{riExonEnd}_{upstreamES}-{upstreamEE}_{downstreamES}-{downstreamEE}"),
-                                      splicing_case == "SE" ~ glue::glue("{GeneID}:{exonStart_0base}-{exonEnd}_{upstreamES}-{upstreamEE}_{downstreamES}-{downstreamEE}"),
-                                      TRUE ~ glue::glue("{GeneID}:{longExonStart_0base}-{longExonEnd}_{shortES}-{shortEE}_{flankingES}-{flankingEE}"))
+  dplyr::mutate(
+    splice_id = case_when(splicing_case == "RI" ~ glue::glue("{GeneID}:{riExonStart_0base}-{riExonEnd}_{upstreamES}-{upstreamEE}_{downstreamES}-{downstreamEE}"),
+                          splicing_case == "SE" ~ glue::glue("{GeneID}:{exonStart_0base}-{exonEnd}_{upstreamES}-{upstreamEE}_{downstreamES}-{downstreamEE}"),
+                          splicing_case == "MXE" ~ glue::glue("{GeneID}:{`1stExonStart_0base`}-{`1stExonEnd`}_{`2ndExonStart_0base`}-{`2ndExonEnd`}_{upstreamES}-{upstreamEE}_{downstreamES}-{downstreamEE}"),
+                          TRUE ~ glue::glue("{GeneID}:{longExonStart_0base}-{longExonEnd}_{shortES}-{shortEE}_{flankingES}-{flankingEE}"))
   )
 
 ## splicing cases
