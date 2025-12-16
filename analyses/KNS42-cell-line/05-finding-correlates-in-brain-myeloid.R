@@ -311,9 +311,9 @@ gene_table <- tibble(transcript = all_transcripts) %>%
   arrange(cell_lines, gene)
 
 # Save as tab-delimited file
-write_tsv(
-  gene_table,
-  file.path(results_dir, "CLK1_correlated_genes_comprehensive.tsv")
+gene_table %>%
+  filter(!is.na(cell_lines)) %>%
+  write_tsv(file.path(results_dir, "CLK1_correlated_genes_comprehensive.tsv")
 )
 
 ## GO Enrichment
