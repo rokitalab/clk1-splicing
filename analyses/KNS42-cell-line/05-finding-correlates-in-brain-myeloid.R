@@ -252,8 +252,8 @@ ggplot2::ggsave(
 
 # Get all unique transcripts from both datasets
 all_transcripts <- unique(c(
-  cor_myeloid_filtered$transcript,
-  cor_cns_filtered$transcript
+  cor_results_myeloid$transcript,
+  cor_results_cns$transcript
 ))
 
 # Create comprehensive table
@@ -354,7 +354,7 @@ run_go_enrichment <- function(gene_list, universe_ids, ont="BP") {
   )
 }
 
-plot_go_dot <- function(ego_object, top_n = 15, title = "GO Enrichment", plot_path = "", height = 6, width = 8, label_char = 30) {
+plot_go_dot <- function(ego_object, top_n = 15, title = "GO Enrichment", plot_path = "", height = 6, width = 9, label_char = 50) {
  
   options(enrichplot.colours = c("darkorange","blue"))
   plot <- enrichplot::dotplot(ego_object,
@@ -389,8 +389,8 @@ ego_myeloid_only <- run_go_enrichment(genes_myeloid_only, universe_ids = backgro
 
 # Generate plots
 plot_go_dot(ego_both, title = "GO Enrichment — Shared (Both lineages)", plot_path = file.path(plots_dir,"GO_BP_dotplot_Both.pdf"))
-plot_go_dot(ego_cns, title = "GO Enrichment — CNS", plot_path = file.path(plots_dir,"GO_BP_dotplot_CNS.pdf"), height = 4)
-plot_go_dot(ego_cns_only, title = "GO Enrichment — CNS Only", plot_path = file.path(plots_dir,"GO_BP_dotplot_CNS_only.pdf"), height = 4)
+plot_go_dot(ego_cns, title = "GO Enrichment — CNS", plot_path = file.path(plots_dir,"GO_BP_dotplot_CNS.pdf"))
+plot_go_dot(ego_cns_only, title = "GO Enrichment — CNS Only", plot_path = file.path(plots_dir,"GO_BP_dotplot_CNS_only.pdf"))
 plot_go_dot(ego_myeloid, title = "GO Enrichment — Myeloid", plot_path = file.path(plots_dir,"GO_BP_dotplot_Myeloid.pdf"))
 plot_go_dot(ego_myeloid_only, title = "GO Enrichment — Myeloid Only", plot_path = file.path(plots_dir,"GO_BP_dotplot_Myeloid_only.pdf"))
 
