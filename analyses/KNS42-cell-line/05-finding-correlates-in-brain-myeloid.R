@@ -22,6 +22,7 @@ suppressPackageStartupMessages({
   library(dplyr)
   library(clusterProfiler)
   library(org.Hs.eg.db)
+  library(ggVennDiagram)
 })
 
 # Setup directories -----------------------------------------------------------
@@ -190,97 +191,46 @@ cor_myeloid_filtered <- filter_and_annotate(cor_results_myeloid)
 # Venn Diagram Visualization
 # =============================================================================
 
-# Function to create Venn diagram ---------------------------------------------
-create_venn_plot <- function(set1, set2, label1, label2, title, colors) {
-  
-  # Calculate overlaps
-  overlap <- length(intersect(set1, set2))
-  only1 <- length(setdiff(set1, set2))
-  only2 <- length(setdiff(set2, set1))
-  
-  # Create circle data
-  circle_data <- data.frame(
-    x = c(-0.5, 0.5),
-    y = c(0, 0),
-    r = c(1, 1),
-    label = c(label1, label2),
-    fill = colors
+venn_diag <- ggVennDiagram(x = list(unique(cor_myeloid_filtered$transcript), unique(cor_cns_filtered$transcript)),
+                           edge_lty = "solid",
+                           edge_size = 1,
+                           label_size = 6,
+                           set_size = 5,
+                           category.names = c("Myeloid", "CNS/Brain"),
+                           label_percent_digit = 1) +
+  scale_fill_gradient(
+    low = "#ffffff",
+    high = "steelblue1",
+    name = expression(bold("Gene count"))
+  ) +
+  labs(title = expression(bold("Correlations with CLK1 (|r| > 0.4)"))) +
+  # keep normal left/right orientation; also prevent clipping of labels
+  coord_flip(clip = "off") +
+  theme(
+    # extra left margin so label never gets cut off
+    plot.margin = margin(t = 0, r = 6, b = 0, l = 18, unit = "mm"),
+    # remove axes completely
+    axis.title = element_blank(),
+    axis.text  = element_blank(),
+    axis.ticks = element_blank(),
+    axis.line  = element_blank()
   )
   
-  # Create plot
-  p <- ggplot(circle_data) +
-    geom_circle(
-      aes(x0 = x, y0 = y, r = r, fill = fill),
-      alpha = 0.3, color = "black", size = 1.5
-    ) +
-    scale_fill_identity() +
-    coord_fixed() +
-    theme_void() +
-    theme(
-      plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
-      plot.margin = margin(20, 20, 20, 20)
-    ) +
-    labs(title = title)
+## remove gray boxes: convert geom_label -> geom_text
+venn_diag$layers <- lapply(venn_diag$layers, function(l) {
+  if (inherits(l$geom, "GeomLabel")) {
+    l$geom <- ggplot2::GeomText
+  }
+  l
+})
   
-  # Add count labels
-  p <- p +
-    annotate("text", x = -0.9, y = 0, label = only1,
-             size = 10, fontface = "bold", color = colors[1]) +
-    annotate("text", x = 0.9, y = 0, label = only2,
-             size = 10, fontface = "bold", color = colors[2]) +
-    annotate("text", x = 0, y = 0, label = overlap,
-             size = 10, fontface = "bold", color = "#2C3E50")
-  
-  # Add category labels
-  p <- p +
-    annotate("text", x = -0.9, y = 1.5, label = label1,
-             size = 5, fontface = "bold", color = colors[1]) +
-    annotate("text", x = 0.9, y = 1.5, label = label2,
-             size = 5, fontface = "bold", color = colors[2])
-  
-  return(p)
-}
-
-# Separate transcripts by direction -------------------------------------------
-myeloid_pos <- cor_myeloid_filtered %>%
-  filter(direction == "positive") %>%
-  pull(transcript)
-
-myeloid_neg <- cor_myeloid_filtered %>%
-  filter(direction == "negative") %>%
-  pull(transcript)
-
-cns_pos <- cor_cns_filtered %>%
-  filter(direction == "positive") %>%
-  pull(transcript)
-
-cns_neg <- cor_cns_filtered %>%
-  filter(direction == "negative") %>%
-  pull(transcript)
-
-# Create Venn diagrams --------------------------------------------------------
-venn_positive <- create_venn_plot(
-  myeloid_pos, cns_pos,
-  "Myeloid", "CNS/Brain",
-  "Positive Correlations with CLK1 (r > 0.4)",
-  colors = c("#E74C3C", "#E67E22")
-)
-
-venn_negative <- create_venn_plot(
-  myeloid_neg, cns_neg,
-  "Myeloid", "CNS/Brain",
-  "Negative Correlations with CLK1 (r < -0.4)",
-  colors = c("#3498DB", "#9B59B6")
-)
-
-## venn diagram plot
-combined_venn_horizontal <- venn_positive | venn_negative
-
-# Save Venn diagrams
-ggsave(
-  file.path(plots_dir, "CLK1_correlation_venn_horizontal.pdf"),
-  combined_venn_horizontal,
-  width = 14, height = 7
+ggplot2::ggsave(
+  file.path(plots_dir, "CLK1_correlation_venn.pdf"),
+  plot = venn_diag,
+  width = 6.5,
+  height = 3.5,
+  device = "pdf",
+  dpi = 300
 )
 
 # =============================================================================
