@@ -33,27 +33,29 @@ source(file.path(figures_dir, "theme_for_plots.R"))
 source(file.path(analysis_dir, "util", "function-create-scatter-plot.R"))
 
 ## define input files
-clin_file <- file.path(data_dir,"histologies.tsv")
+clin_file <- file.path(data_dir,"histologies-plot-group.tsv")
 rsem_counts <- file.path(data_dir,"gene-expression-rsem-tpm-collapsed.rds")
 rmats_file <- file.path(data_dir, "clk1-splice-events-rmats.tsv")
 
 ## read in histology file and count data
 ## filter histology file for all HGG, only stranded samples
+all_bsids <- read_tsv(clin_file) %>%
+  filter(experimental_strategy == "RNA-Seq") %>%
+  pull(Kids_First_Biospecimen_ID)
+
 all_hgg_bsids <- read_tsv(clin_file, guess_max = 10000) %>% 
-  filter(short_histology == "HGAT",
-         RNA_library == "stranded",
-         cohort == "PBTA") %>%
+  filter(cancer_group %in% c("Diffuse midline glioma", "Other high-grade glioma")) %>%
+  filter(experimental_strategy == "RNA-Seq") %>%
   select(Kids_First_Biospecimen_ID, CNS_region)
 
 # keep only hgg ids
 rsem_df <- readRDS(rsem_counts) %>%
-  select(all_hgg_bsids$Kids_First_Biospecimen_ID)
+  select(all_of(all_bsids))
 
 ## load rmats input for CLK1
 clk1_rmats <- fread(rmats_file) %>%
   # filter for CLK1 and exon 4
-  filter(sample_id %in% all_hgg_bsids$Kids_First_Biospecimen_ID,
-         geneSymbol=="CLK1",
+  filter(geneSymbol=="CLK1",
          exonStart_0base=="200860124", 
          exonEnd=="200860215") %>% 
   # select minimal info
@@ -63,22 +65,27 @@ clk1_rmats <- fread(rmats_file) %>%
 set.seed(2023)
 
 ## combine RNA with psi values for scatter plot/correlation for goi 
-goi_list <- c("CLK1", "SRSF1", "SRSF2", "SRSF10")
-region_list <- c("midline", "all")
+goi_list <- c("CLK1", "SRSF1", "SRSF2", "SRSF10", "SRSF11")
+region_list <- c("hgg_midline", "hgg_all", "full_cohort")
 
 for (gene in goi_list) {
-  for (brain_region in region_list) {
+  for (samples in region_list) {
     
-    if (brain_region == "all"){
+    if (samples == "hgg_all"){
       # take all hgg bs ids
       bs_id_list <- all_hgg_bsids$Kids_First_Biospecimen_ID
     }
     
-    else if (brain_region == "midline"){
+    else if (samples == "hgg_midline"){
       # take only midline bs ids
       bs_id_list <- all_hgg_bsids %>%
         filter(CNS_region == "Midline") %>%
         pull(Kids_First_Biospecimen_ID)
+    }
+    
+    else if (samples == "full_cohort"){
+      # take all bs ids
+      bs_id_list <- all_bsids
     }
     
     # filter RMATs file for the bs ids of interest
@@ -100,7 +107,7 @@ for (gene in goi_list) {
     # make scatterplot
     p <- create_scatterplot(rmats_exp_df) 
     # save plot 
-    pdf(file.path(paste(plots_dir, "/", gene, "_exp_vs_CLK1_psi_", brain_region, "_hgg.pdf", sep = "")), width = 4.5, height = 4.5)
+    pdf(file.path(paste(plots_dir, "/", gene, "_exp_vs_CLK1_psi_", samples, ".pdf", sep = "")), width = 4.5, height = 4.5)
     print(p)
     dev.off()
   }
