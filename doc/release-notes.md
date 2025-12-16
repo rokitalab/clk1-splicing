@@ -1,10 +1,12 @@
 # release notes
 ## current release (v12)
 - Data release date: 2025-12-10
+- Updated date: 2025-12-16
 - status: available
 
 Modifications:
 - `histologies-plot-group.tsv` update to remove ambiguous RNA library samples and reduce to independent specimens
+- 12/16/25: add `CRISPRGeneEffect.csv` to data; remove `morpholno.merged.rmats.tsv and `nf1-splice-events-rmats.tsv`
 
 ```
 .
@@ -12,6 +14,7 @@ Modifications:
 ├── clk1-splice-events-rmats.tsv
 ├── consensus_wgs_plus_freec_wxs_plus_freec_tumor_only.tsv.gz
 ├── control-rna-isoform-expression-rsem-counts-tpm.rds
+├── CRISPRGeneEffect.csv
 ├── cptac-protein-imputed-phospho-expression-log2-ratio.tsv.gz
 ├── cptac-protein-imputed-prot-expression-abundance.tsv.gz
 ├── ctrl_vs_morpho.rsem.genes.results.tsv
@@ -70,8 +73,6 @@ Modifications:
 ├── independent-specimens.wgswxspanel.relapse.prefer.wgs.tsv
 ├── independent-specimens.wgswxspanel.relapse.prefer.wxs.tsv
 ├── md5sum.txt
-├── morpholno.merged.rmats.tsv
-├── nf1-splice-events-rmats.tsv
 ├── OmicsDefaultModelProfiles.csv
 ├── OmicsExpressionTranscriptsTPMLogp1Profile.csv
 ├── release-notes.md
