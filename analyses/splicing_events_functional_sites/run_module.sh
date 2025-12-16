@@ -10,9 +10,7 @@ script_directory="$(perl -e 'use File::Basename;
   print dirname(abs_path(@ARGV[0]));' -- "$0")"
 cd "$script_directory" || exit
 
-## histology input file (column orders important)
-#input_file="../cohort_summary/results/histologies-plot-group.tsv"
-#primary_specimens="../../data/independent-specimens.rnaseqpanel.primary.tsv"
+## input files
 rmats_file="../../data/splice-events-rmats.tsv.gz"
 cluster_file="../sample-psi-clustering/results/sample-cluster-metadata-top-5000-events-stranded.tsv"
 
@@ -35,8 +33,8 @@ echo "make tab for ggplot ...";
 perl 03-format_for_ggplot.pl
 
 ## make plots
-echo "make plots ...";
-Rscript 04-plot_splicing_across_functional_sites.R
+echo "get kinases ...";
+Rscript 04-functional-sites-kinases.R 
 
 ## make plots
 echo "plot splice patterns";
@@ -47,4 +45,3 @@ find results/ -type f ! -name 'line_count.txt' -exec wc -l {} + > results/line_c
 
 ##rm intermediatery files
 rm results/splicing_events*.wo.txt
-rm results/*bed

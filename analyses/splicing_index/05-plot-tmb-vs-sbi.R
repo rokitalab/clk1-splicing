@@ -18,7 +18,6 @@ suppressPackageStartupMessages({
 ## set up directories
 root_dir <- rprojroot::find_root(rprojroot::has_dir(".git"))
 analysis_dir <- file.path(root_dir, "analyses", "splicing_index")
-map_dir <- file.path(root_dir, "analyses", "cohort_summary", "results")
 data_dir <- file.path(root_dir, "data")
 tmb_dir <- file.path(root_dir, "analyses", "oncoprint", "input")
 results_dir <- file.path(analysis_dir, "results")
@@ -38,7 +37,7 @@ corplot_sbi_vs_tmb_by_cg_file <- file.path(plots_dir, "corplot_sbi-tmb-by-cg.pdf
 indep_rna_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
 indep_wgs_file <- file.path(data_dir, "independent-specimens.wgswxspanel.primary.prefer.wgs.tsv")
 tmb_coding_file  <- file.path(data_dir,"snv-mutation-tmb-coding.tsv") # OPC v15 TMB file
-sbi_coding_file  <- file.path(results_dir,"splicing_index.SE.txt")
+sbi_total_file  <- file.path(results_dir,"splicing_index.total.txt")
 palette_file <- file.path(data_dir,"histologies-plot-group.tsv") 
 
 # read in files
@@ -74,7 +73,7 @@ tmb_coding_df  <-  read_tsv(tmb_coding_file)  %>%
   dplyr::rename(Kids_First_Biospecimen_ID_DNA = Kids_First_Biospecimen_ID)
 
 
-sbi_coding_df  <-  read_tsv(sbi_coding_file) %>% 
+sbi_df  <-  read_tsv(sbi_total_file) %>% 
   dplyr::rename(Kids_First_Biospecimen_ID = Sample) %>%
   left_join(hist_pal[,c("Kids_First_Biospecimen_ID", "match_id")]) %>%
   dplyr::select(-Histology) %>%
@@ -85,7 +84,7 @@ sbi_coding_df  <-  read_tsv(sbi_coding_file) %>%
 
 ## intersect tmb values with SBI tumors 
 sbi_vs_tmb_innerjoin_df <- tmb_coding_df %>%
-  inner_join(sbi_coding_df, by=c("Kids_First_Participant_ID", "match_id")) %>%
+  inner_join(sbi_df, by=c("Kids_First_Participant_ID", "match_id")) %>%
   dplyr::rename(Kids_First_Biospecimen_ID = Kids_First_Biospecimen_ID_RNA) %>%
   # add histology
   left_join(hist_pal) %>%
@@ -108,7 +107,7 @@ for (each_df in df_list) {
                          add = "reg.line", 
                          conf.int = TRUE, 
                          cor.coef = TRUE, 
-                         cor.method = "pearson",
+                         cor.method = "pearson", 
                          add.params = list(color = "red",
                                            fill = NA),
                          ticks = TRUE,
@@ -141,12 +140,12 @@ high_vs_low_df$SBI_level <- factor(high_vs_low_df$SBI_level, levels = c("Low", "
 sbi_tmb_plot <- ggplot(high_vs_low_df, aes(SBI_level, log10(tmb))) +  
   ggforce::geom_sina(aes(color = SBI_level, alpha = 0.4), pch = 16, size = 4, method="density") +
   geom_boxplot(outlier.shape = NA, color = "black", size = 0.5, coef = 0, aes(alpha = 0.4)) +
-  stat_compare_means(label.y = 2.9) + 
+  stat_compare_means(label.y = 2.9, size = 4) + 
   facet_wrap("mutation_status") +
   scale_color_manual(name = "SBI_level", values = c(High = "#0C7BDC", Low = "#FFC20A")) + 
   theme_Publication() + 
   labs(y = expression(bold(Log[10] ~ "Tumor Mutation Burden")),
-       x="Splicing Burden Level") + 
+       x="Splicing Burden Index") + 
   ylim(c(-3,3)) +
   theme(legend.position="none")
 
@@ -176,7 +175,7 @@ by_hist <- quantile_data %>%
                                SI < lower_quantile ~ "Low",
                                TRUE ~ "Mid")) %>%
   filter(SBI_level != "Mid") %>%
-  filter(plot_group != "Other tumor",
+  filter(plot_group != "Rare CNS tumor",
          plot_group != "Non−neoplastic tumor")
 
 # relevel for plotting
@@ -195,19 +194,19 @@ pdf(boxplot_sbi_vs_tmb_by_cg_file, width = 12.5, height = 5.5)
 ggplot(by_hist, aes(SBI_level, log10(tmb))) +  
   ggforce::geom_sina(aes(color = SBI_level, alpha = 0.4), pch = 16, size = 4, method="density") +
   geom_boxplot(outlier.shape = NA, color = "black", size = 0.5, coef = 0, aes(alpha = 0.4)) +
-  stat_compare_means(label.y = 2,size = 3) + 
+  stat_compare_means(label.y = 2, size = 3.5) + 
   facet_wrap("plot_group", labeller = labeller(plot_group = label_wrap_gen(width = 18)), nrow  = 2) +
   scale_color_manual(name = "SBI_level", values = c(High = "#0C7BDC", Low = "#FFC20A")) + 
   theme_Publication() + 
   labs(y = expression(bold(Log[10] ~ "Tumor Mutation Burden")),
-         x="Splicing Burden Level") + 
+         x="Splicing Burden Index") + 
   ylim(c(-2,2.5)) +
   theme(legend.position = "none", strip.text = element_text(size = 10))  # Adjust the size here
 dev.off()
 
 # plot cancer group corplots
 sbi_tmb_no_hyper_subset <- sbi_tmb_no_hyper %>%
-  filter(plot_group != "Other tumor",
+  filter(plot_group != "Rare CNS tumor",
          plot_group != "Non−neoplastic tumor")
 
 pdf(corplot_sbi_vs_tmb_by_cg_file, width = 16, height = 8)

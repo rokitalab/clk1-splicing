@@ -39,13 +39,8 @@ if(!dir.exists(results_dir)){
 # file paths
 clin_file  <- file.path(data_dir,
                         "histologies-plot-group.tsv")
-sbi_file <- file.path(root_dir,
-                      "analyses", 
-                      "splicing_index",
-                      "results",
-                      "splicing_index.SE.txt")
-indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
-indep_df <- read_tsv(indep_file)
+sbi_file <- file.path(results_dir,
+                      "splicing_index.total.txt")
 gsva_file <- file.path(root_dir,
                        "analyses",
                        "sample-psi-clustering",
@@ -63,9 +58,7 @@ cluster_df <- read_tsv(cluster_file) %>%
   select(Kids_First_Biospecimen_ID, cluster)
 
 histologies_df  <-  read_tsv(clin_file, guess_max = 100000) %>%
-  filter(cohort == "PBTA",
-         experimental_strategy == "RNA-Seq",
-         Kids_First_Biospecimen_ID %in% indep_df$Kids_First_Biospecimen_ID) %>%
+  filter(experimental_strategy == "RNA-Seq") %>%
   left_join(cluster_df)
 
 ## Load SBI file
@@ -97,10 +90,12 @@ scatterplot_score_sbi <- ggscatter(gsva_scores_df,
                          conf.int = TRUE, 
                          cor.coef = TRUE, 
                          cor.method = "pearson",
+                         cor.coef.coord = c(-6.75, 0.75),
                          add.params = list(color = "red",
                                            fill = "pink"),
                          ticks = TRUE,
-                         size = 2.5, alpha = 0.6) + 
+                         size = 2.5, 
+                         alpha = 0.6) + 
   xlab(expression(bold(Log[2] ~ "Splicing Burden Index"))) +
   ylab("Spliceosome GSVA Score") +
   theme_Publication() 
@@ -125,7 +120,7 @@ gsva_scores_df %>%
     labs(x = expression(bold(Log[2] ~ "Splicing Burden Index")),
          y = "Spliceosome GSVA Score") + 
     stat_cor(method = "pearson",
-             label.x = -9, label.y = 1, size = 3) +
+             label.x = -6.5, label.y = 1, size = 3) +
     facet_wrap(~Histology, nrow = 4,
                labeller = labeller(Histology = label_wrap_gen(18))) + 
     theme_Publication()
@@ -149,12 +144,12 @@ gsva_scores_df %>%
   labs(x = expression(bold(Log[2] ~ "Splicing Burden Index")),
        y = "Spliceosome GSVA Score") + 
   stat_cor(method = "pearson",
-           label.x = -9, label.y = 1, size = 3) +
-  facet_wrap(~cluster, nrow = 3) + 
+           label.x = -6.5, label.y = 1, size = 3) +
+  facet_wrap(~cluster, nrow = 2) + 
   theme_Publication()
 
 ggsave(file.path(plots_dir, "corplot-sbi-vs-gsva-spliceosome-by-cluster.pdf"),
-       width = 10, height = 9)
+       width = 12, height = 6)
 
 
 ## print session info

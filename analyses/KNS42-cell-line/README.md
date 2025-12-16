@@ -9,7 +9,7 @@ bash run_module.sh
 
 ### Input
 ```
-input/CLK1_CRISPR_depmap_score.csv
+data/CLK1_CRISPR_depmap_score.csv
 input/OmicsDefaultModelProfiles.csv
 input/cell_prolif_res.tsv
 input/qpcr-raw-triplicates.tsv
@@ -25,6 +25,7 @@ input/qpcr-raw-triplicates.tsv
 Current DepMap Release data, including CRISPR Screens, PRISM Drug Screens, Copy Number, Mutation, Expression, and Fusions
 DepMap, Broad (2024). DepMap 24Q4 Public. Figshare+. Dataset. https://doi.org/10.25452/figshare.plus.27993248.v1
 
+## CRISPR file from "https://plus.figshare.com/ndownloader/files/51064667/CLK1_CRISPR_depmap_score.csv"
 
 ## Directory Structure
 ```

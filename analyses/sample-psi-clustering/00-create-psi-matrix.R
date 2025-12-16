@@ -20,27 +20,31 @@ hist_file <- file.path(root_dir, "analyses",
 indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
 
 rmats_file <- file.path(data_dir, "splice-events-rmats.tsv.gz")
-  
-# wrangle data
-samples <- read_tsv(indep_file) %>%
-  filter(cohort == "PBTA") %>%
+
+stranded_samples <- read_tsv(hist_file) %>%
+  dplyr::filter(cohort == "PBTA",
+                experimental_strategy == "RNA-Seq",
+                RNA_library == "stranded") %>%
+  pull(Kids_First_Biospecimen_ID)
+
+include_samples <- read_tsv(indep_file) %>%
+  dplyr::filter(Kids_First_Biospecimen_ID %in% stranded_samples) %>%
   pull(Kids_First_Biospecimen_ID)
 
 # Load rmats, filter for samples of interest and SE events, and select relevant columns
 rmats <- data.table::fread(rmats_file) %>%
-  dplyr::filter(sample_id %in% samples,
-                splicing_case == "SE") %>%
-  dplyr::select(sample_id, geneSymbol, chr,
-                strand, exonStart_0base, exonEnd,
-                upstreamES, upstreamEE,
-                downstreamES, downstreamEE,
-                IncLevel1)
+  dplyr::filter(sample_id %in% include_samples)
 
 # create splice_id column
 rmats <- rmats %>%
-  dplyr::mutate(exonStart_0base = exonStart_0base + 1) %>%
-  dplyr::mutate(splice_id = glue::glue("{chr}:{geneSymbol}_{exonStart_0base}-{exonEnd}_{upstreamES}-{upstreamEE}_{downstreamES}-{downstreamEE}_{strand}")) %>%
-  dplyr::select(sample_id, splice_id, IncLevel1)
+#  dplyr::mutate(exonStart_0base = exonStart_0base + 1) %>%
+  dplyr::mutate(splice_id = case_when(
+    splicing_case == "SE" ~ glue::glue("{splicing_case}:{chr}:{geneSymbol}_{exonStart_0base}-{exonEnd}_{upstreamES}-{upstreamEE}_{downstreamES}-{downstreamEE}_{strand}"),
+    splicing_case == "RI" ~ glue::glue("{splicing_case}:{chr}:{geneSymbol}_{riExonStart_0base}-{riExonEnd}_{upstreamES}-{upstreamEE}_{downstreamES}-{downstreamEE}_{strand}"),
+    splicing_case %in% c("A3SS", "A5SS") ~ glue::glue("{splicing_case}:{chr}:{geneSymbol}_{longExonStart_0base}-{longExonEnd}_{shortES}-{shortEE}_{flankingES}-{flankingEE}_{strand}")
+    )) %>%
+  dplyr::select(sample_id, splice_id, IncLevel1) %>%
+  distinct(sample_id, splice_id, .keep_all = TRUE)
 
 # generate sample PSI matrix
 psi_mat <- rmats %>%

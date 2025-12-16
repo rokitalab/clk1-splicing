@@ -13,18 +13,16 @@ The purpose of this module is to identify splicing events that result in loss/ga
 
 *Input files:*
 ```
-data/histologies.tsv
+data/histologies-plot-group.tsv
 data/splice-events-rmats.tsv.gz
 ```
 
 *Output files:*
 ```
-results/splice_events.diff.SE.HGG.txt
-results/splicing_events.SE.total.HGG.pos.bed
-results/splicing_events.SE.total.HGG.neg.bed
-results/splicing_events.total.HGG.pos.intersectUnip.ggplot.txt
-results/splicing_events.total.HGG.neg.intersectUnip.ggplot.txt
-
+results/splicing_events.total.neg.intersectunip.ggplot.txt # All overlapping events < -2 z-scores, "skipping events"
+results/splicing_events.total.pos.intersectunip.ggplot.txt # All overlapping events > 2 z-scores, "inclusion events"
+results/kinases-functional_sites.tsv # Functional sites in kinases
+results/splicing-factor-kinases-functional_sites.tsv # Functional sites in kinase splicing factors
 ```
 
 ## Folder content
@@ -33,7 +31,7 @@ results/splicing_events.total.HGG.neg.intersectUnip.ggplot.txt
 * `01-extract_recurrent_splicing_events_hgg.pl` processing output from rMATS with filters and constructs data table for all downstream analysis and output file to `results/splicing_events.total*`
 * `02-run_bedtools_intersect.sh` runs bedtools intersect to find exon coordinates corresponding to Uniprot sites
 * `03-format_for_ggplot.sh` formats and appends file into table for plotting
-* `04-plot_splicing_across_functional_sites.R` generates ggplot violin plots of average dPSI per event identidied overlapping a functional site, outputting to `plots/*png`
+* `04-functional-sites-kinases.R` subsets the functional site results down to kinases
 * `05-plot-splice-patterns` generates plots for visualizing splicing event types into `plots` folder
 
 ## Directory structure
@@ -41,7 +39,6 @@ results/splicing_events.total.HGG.neg.intersectUnip.ggplot.txt
 .
 ├── 00-get-uniprot.sh
 ├── 01-extract_recurrent_splicing_events_cluster.pl
-├── 01-extract_recurrent_splicing_events_hgg.pl
 ├── 02-run_bedtools_intersect.sh
 ├── 03-format_for_ggplot.pl
 ├── 04-plot_splicing_across_functional_sites.R
@@ -54,19 +51,26 @@ results/splicing_events.total.HGG.neg.intersectUnip.ggplot.txt
 │   ├── UP000005640_9606_signal.bed
 │   └── gene_lists.tsv
 ├── plots
-│   ├── dPSI_across_functional_sites.pdf
-│   ├── dPSI_across_functional_sites_kinase.pdf
 │   ├── kinases-ora-plot.pdf
 │   └── splicing_pattern_plot.pdf
 ├── results
-│   ├── Naqvi-CLK1-workflow.pdf
 │   ├── kinases-functional_sites.tsv
+│   ├── line_count.txt
 │   ├── splice_events.diff.A3SS.txt
 │   ├── splice_events.diff.A5SS.txt
 │   ├── splice_events.diff.RI.txt
 │   ├── splice_events.diff.SE.txt
 │   ├── splicing-factor-kinases-functional_sites.tsv
-│   ├── splicing_events.SE.total.neg.intersectunip.ggplot.txt
-│   └── splicing_events.SE.total.pos.intersectunip.ggplot.txt
+│   ├── splicing_events.A3SS.total.neg.bed
+│   ├── splicing_events.A3SS.total.pos.bed
+│   ├── splicing_events.A5SS.total.neg.bed
+│   ├── splicing_events.A5SS.total.pos.bed
+│   ├── splicing_events.RI.total.neg.bed
+│   ├── splicing_events.RI.total.pos.bed
+│   ├── splicing_events.SE.total.neg.bed
+│   ├── splicing_events.SE.total.pos.bed
+│   ├── splicing_events.total.neg.intersectunip.ggplot.txt
+│   └── splicing_events.total.pos.intersectunip.ggplot.txt
 └── run_module.sh
+
 ```

@@ -59,7 +59,7 @@ func_sites_filt_splice <- func_sites_filt %>%
   write_tsv(file.path(res_dir, "splice_genes_functional.tsv"))
   
 # explore whether any of these also overlap as dependencies
-dep <- read_csv(file.path(input_dir, "CRISPRGeneEffect.csv"))
+dep <- read_csv(file.path(data_dir, "CRISPRGeneEffect.csv"))
 models <- read_csv(file.path(input_dir, "Model.csv")) %>%
 # filter for pediatric, AYA
     filter(Age < 40,

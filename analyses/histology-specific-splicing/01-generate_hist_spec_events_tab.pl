@@ -3,33 +3,14 @@
 use Statistics::Lite qw(:all);
 #use warnings;
 ############################################################################################################
-# 04-generate_hist_spec_events_tab.pl
+# 01-generate_hist_spec_events_tab.pl
 #
-# ./04-generate_hist_spec_events_tab.pl <hist file> <rmats file> <indep_samples-plus>
+# ./01-generate_hist_spec_events_tab.pl <hist file> <rmats file>
 ############################################################################################################
-my ($histology,$rmats_tsv,$primary_tumor_dat) = ($ARGV[0], $ARGV[1],$ARGV[2]);
+my ($histology,$rmats_tsv) = ($ARGV[0], $ARGV[1]);
 my (@broad_hist, @bs_id, @splicing_events);
 my (%histology_ids, %inc_levels, %bs_id_hist, %hist_check, %hist_count);
 my %splicing_psi;
-
-  my %primary_initial_sample_list;
-
-  ## store primary tumor samples
-  open(FIL,$primary_tumor_dat) || die("Cannot Open File");
-  while(<FIL>)
-  {
-    chomp;
-    my @header = split "\t";
-    my $bs_id = $header[1];
-    my $cohort = $header[2];
-    my $exp_strategy = $header[4];
-    my $tumor_descr = $header[5];
-
-    next unless ($cohort=~/PBTA/);
-    $primary_initial_sample_list{$bs_id} = $bs_id;
-
-  }
-  close(FIL);
 
 print "annotate and store histology information... ".localtime(time)."\n";
   # annotate histology file #
@@ -50,12 +31,11 @@ my %column_index;
 while (<FIL>) {
   chomp;
   my @cols       = split "\t";
-  my $hist      = $cols[$column_index{'plot_group'}];
+  my $hist       = $cols[$column_index{'plot_group'}];
   my $bs_id      = $cols[$column_index{'Kids_First_Biospecimen_ID'}];
   my $CNS_region = $cols[$column_index{'CNS_region'}];
   my $RNA_libr   = $cols[$column_index{'RNA_library'}];
 
-  next unless ($primary_initial_sample_list{$bs_id});
   next unless ($RNA_libr eq "stranded");
 
   ## make an array and store histology information and BS IDs
@@ -83,38 +63,68 @@ while(<FIL>)
 {
   chomp;
 
-  ##only look at exon splicing events
-  next unless($_=~/^SE/);
-
   my @cols  = split "\t";
-  my $bs_id = $cols[1];
-  my $ctrl  = $cols[2];
+  my $splice_case = $cols[0];
+  my $bs_id       = $cols[1];
+  my $ctrl        = $cols[2];
 
-  next unless  $bs_id_hist{$bs_id};
+  next unless exists $bs_id_hist{$bs_id};
+  next unless $splice_case =~ /^(SE|A3SS|A5SS|RI)$/;
+  
   ## get gene name
   my $gene         = $cols[4];
   $gene=~s/\"//g; # remove quotation marks
 
-  ## retrieve exon coordinates
+## retrieve exon coordinates
   my $chr          = $cols[5];
   my $str          = $cols[6];
-  my $exonStart    = $cols[7]+1; ## its 0-based so add 1
-  my $exonEnd      = $cols[8];
-  my $upstreamES   = $cols[15];
-  my $upstreamEE   = $cols[16];
-  my $downstreamES = $cols[17];
-  my $downstreamEE = $cols[18];
 
-  ## remove decimals if needed
-  $exonStart =~s/\.0//;
-  $exonEnd =~s/\.0//;
-  $upstreamES =~s/\.0//;
-  $upstreamEE =~s/\.0//;
-  $downstreamES =~s/\.0//;
-  $downstreamEE =~s/\.0//;
+  my $Start    = "";
+  my $End      = "";
+  my $prevES   = "";
+  my $prevEE   = "";
+  my $nextES = "";
+  my $nextEE = "";
+
+  if($splice_case=~/SE/)
+  {
+    $Start    = $cols[7]+1; ## its 0-based so add 1
+    $End      = $cols[8];
+    $prevES   = $cols[15];
+    $prevEE   = $cols[16];
+    $nextES = $cols[17];
+    $nextEE = $cols[18];
+  }
+  elsif($splice_case=~/RI/)
+  {
+    $Start    = $cols[13]+1; ## its 0-based so add 1
+    $End      = $cols[14];
+    $prevES   = $cols[15];
+    $prevEE   = $cols[16];
+    $nextES = $cols[17];
+    $nextEE = $cols[18];
+  }
+  elsif($splice_case=~/A5SS/)
+  {
+    $Start    = $cols[19]+1; ## its 0-based so add 1
+    $End      = $cols[20];
+    $prevES   = $cols[21];
+    $prevEE   = $cols[22];
+    $nextES = $cols[23];
+    $nextEE = $cols[24];
+
+  }
+  else{
+    $Start    = $cols[19]+1; ## its 0-based so add 1
+    $End      = $cols[20];
+    $prevES   = $cols[21];
+    $prevEE   = $cols[22];
+    $nextES = $cols[23];
+    $nextEE = $cols[24];
+  }
 
   ## retrieve inclusion level and junction count info
-  my $inc_level = $cols[33];
+  my $inc_level  = $cols[33];
   my $IJC        = $cols[25];
   my $SJC        = $cols[26];
 
@@ -124,7 +134,10 @@ while(<FIL>)
   my $thr_diff = $cols[-1];
 
   ## create unique ID for splicing change
-  my $splice_id = $gene.":".$exonStart."-".$exonEnd."_".$upstreamES."-".$upstreamEE."_".$downstreamES."-".$downstreamEE;
+
+  my $splice_id = $splice_case."=".$gene.":".$Start."-".$End."_".$prevES."-".$prevEE."_".$nextES."-".$nextEE;
+  $splice_id=~s/\.0//g;
+
   $inc_levels{$splice_id}{$bs_id} = $inc_level;
 
   #print $splice_id,"\t",$inc_level,"\n";
@@ -221,8 +234,8 @@ foreach $hist (@broad_hist_uniq)
 
 
           {
-            print TAB $event,"\t",$hist,"\tinclusion\t";
-            print TAB $event_count,"\n";
+            print TAB "$event\t$hist\tinclusion\t$event_count\n";
+
 
 
           }
@@ -243,8 +256,7 @@ foreach $hist (@broad_hist_uniq)
           if( ($event_count) >= 2 )
 
           {
-            print TAB $event,"\t",$hist,"\tskipping\t";
-            print TAB $event_count,"\n";
+            print TAB "$event\t$hist\tskipping\t$event_count\n";
 
           }
         }
