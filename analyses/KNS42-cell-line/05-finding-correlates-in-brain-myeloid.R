@@ -48,18 +48,18 @@ set.seed(2023)
 
 # Load DepMap CRISPR data -----------------------------------------------------
 depmap_file <- file.path(data_dir, "CLK1-CRISPR-DepMap-score.csv")
-depmap_model_file <- file.path(input_dir, "Model.csv")
+#depmap_model_file <- file.path(input_dir, "Model.csv")
 
-depmap_models <- vroom(depmap_model_file, show_col_types = FALSE)
+#depmap_models <- vroom(depmap_model_file, show_col_types = FALSE)
 depmap_data <- vroom(depmap_file, show_col_types = FALSE) %>%   
   dplyr::rename(
     ModelID = `Depmap ID`,
     `Cell line` = `Cell Line Name`,
     Histology = `Lineage Subtype`,
     CRISPR_Score = `CRISPR (DepMap Public 23Q2+Score, Chronos)`
-  ) %>%
-  left_join(depmap_models) %>%
-  filter(Age < 40) 
+  ) #%>%
+  #left_join(depmap_models) %>%
+  #filter(Age < 40) 
   
 # Filter for glioma cell lines
 depmap_glioma <- depmap_data %>%
