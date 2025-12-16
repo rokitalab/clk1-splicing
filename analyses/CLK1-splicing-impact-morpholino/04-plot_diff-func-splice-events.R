@@ -69,16 +69,16 @@ psi_comb <- rbind(dpsi_unip_incl,dpsi_unip_skp) %>%
                              Uniprot == 'mod_res' ~ 'Modification',
                              Uniprot == 'signal' ~ 'Signal',
                              .default = Uniprot),
-         Uniprot_wrapped = stringr::str_wrap(Uniprot, width = 10)
+         #Uniprot_wrapped = stringr::str_wrap(Uniprot, width = 10)
   ) %>%
   write_tsv(file_total_func)
 
 psi_comb_goi <- psi_comb %>% 
   inner_join(oncokb_gene_ref, by="gene") %>% 
   unique() %>%
-  select(-Uniprot_wrapped) %>%
-# write for supplemental 
-write_tsv(file.path(results_dir, "differential_splice_by_goi_category.tsv"))
+  #select(-Uniprot_wrapped) %>%
+  # write for supplemental 
+  write_tsv(file.path(results_dir, "differential_splice_by_goi_category.tsv"))
 
 psi_comb_goi_subset_for_plot <- psi_comb_goi %>%
   select(gene, Preference, classification) %>%

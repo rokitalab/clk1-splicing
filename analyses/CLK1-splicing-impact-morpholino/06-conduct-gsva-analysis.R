@@ -1,5 +1,5 @@
 ################################################################################
-# 05-conduct-gsva-analysis.R
+# 06-conduct-gsva-analysis.R
 # Performs gsva analysis on cells treated with control morpholino 
 # or morpholinos targeting CLK1
 #
