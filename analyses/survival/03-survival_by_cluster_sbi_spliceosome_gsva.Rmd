@@ -211,9 +211,7 @@ Subset `metadata` for LGG, and only include clusters with >= 10 samples
 lgg <- metadata %>%
   dplyr::filter(plot_group == "Low-grade glioma") %>%
   dplyr::mutate(cluster = factor(cluster)) %>%
-  dplyr::mutate(mol_sub_group = fct_relevel(mol_sub_group, c("Wildtype", "BRAF V600E", "BRAF fusion",
-                                                                "Other alteration", "SEGA"
-                                                                )))
+  dplyr::mutate(mol_sub_group = fct_relevel(mol_sub_group, "Wildtype", after = 0))
 
 retain_clusters_lgg <- lgg %>%
   dplyr::count(cluster) %>%
@@ -281,13 +279,7 @@ Subset `metadata` for HGG and retain cluster with n >= 10
 hgg <- metadata %>%
   dplyr::filter(plot_group %in% c("Other high-grade glioma", "Diffuse midline glioma")) %>%
   dplyr::mutate(cluster = factor(cluster)) %>%
-  dplyr::mutate(mol_sub_group = fct_relevel(mol_sub_group, c("HGG, H3 wildtype", "HGG, H3 wildtype, TP53",
-                                                             "DMG, H3 K28", "DMG, H3 K28, TP53",
-                                                                "DHG, H3 G35", "DHG, H3 G35, TP53",
-                                                                "HGG, IDH, TP53", "HGG, PXA", "HGG, PXA, TP53", 
-                                                                "IHG, ALK-altered", "IHG, NTRK-altered",
-                                                                "IHG, ROS1-altered"
-                                                                ))) %>%
+  dplyr::mutate(mol_sub_group = fct_relevel(mol_sub_group, "HGG, H3 wildtype", after = 0)) %>%
   dplyr::filter(!is.na(OS_days) | !is.na(EFS_days))
 
 retain_clusters_hgg <- hgg %>%
@@ -589,10 +581,7 @@ Assess EFS and OS by SBI or spliceosome GSVA score in multivariate models and ge
 add_model_c7_efs <- fit_save_model(cluster7_df %>% 
                                       dplyr::filter(extent_of_tumor_resection != "Unavailable",
                                                     spliceosome_group %in% c("Splice GSVA 4th Q", "Splice GSVA 1st Q")) %>%
-                                      dplyr::mutate(plot_group = fct_relevel(plot_group,
-                                                                            c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
-                                                                              "Diffuse midline glioma", "Ependymoma", "Mesenchymal tumor",
-                                                                              "Other CNS embryonal tumor", "Low-grade glioma"))),
+                                      dplyr::mutate(plot_group = fct_relevel(plot_group, "Low-grade glioma", after = 0)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+spliceosome_group",
                                file.path(results_dir, "cox_hgg_EFS_additive_terms_subtype_cluster_spliceosome_score.RDS"),
                                "multivariate",
@@ -608,10 +597,7 @@ ggsave(file.path(plot_dir, "forest_add_EFS_cluster7_histology_resection_spliceos
 
 add_model_c7_os <- fit_save_model(cluster7_df %>% 
                                     dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")) %>%
-                                    dplyr::mutate(plot_group = fct_relevel(plot_group,
-                                                                            c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
-                                                                              "Diffuse midline glioma", "Ependymoma", "Mesenchymal tumor",
-                                                                              "Other CNS embryonal tumor", "Low-grade glioma"))),
+                                    dplyr::mutate(plot_group = fct_relevel(plot_group, "Low-grade glioma", after = 0)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+SBI",
                                file.path(results_dir, "cox_hgg_OS_additive_terms_subtype_cluster_si_group.RDS"),
                                "multivariate",

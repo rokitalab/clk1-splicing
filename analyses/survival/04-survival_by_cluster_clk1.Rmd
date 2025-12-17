@@ -45,6 +45,7 @@ if (!dir.exists(results_dir)) {
 }
 
 source(file.path(analysis_dir, "util", "survival_models.R"))
+knitr::opts_chunk$set(cache = FALSE)
 ```
 
 Set metadata and cluster assignment file paths
@@ -90,7 +91,7 @@ all_clk4_transcr_counts <- readRDS(tpm_file) %>%
   mutate(
     transcript_id = case_when(
       transcript_id %in% c("ENST00000321356.9", "ENST00000434813.3", "ENST00000409403.6") ~ "Exon 4",
-#      transcript_id == "ENST00000321356.9" ~ "Exon 4",
+      # transcript_id == "ENST00000321356.9" ~ "Exon 4",
       TRUE ~ "Other"
     )
   ) %>%
@@ -111,8 +112,9 @@ metadata <- metadata %>%
                                           spliceosome_gsva_score),
             by = c("Kids_First_Biospecimen_ID" = "sample_id")) %>% 
   dplyr::mutate(cluster = glue::glue("Cluster {cluster}")) %>%
-  dplyr::mutate(cluster = fct_relevel(cluster,
-                                               paste0("Cluster ", 1:n_clust))) %>%
+  # dplyr::mutate(cluster = fct_relevel(cluster,
+  #                                             paste0("Cluster ", 1:n_clust))) %>%
+  dplyr::mutate(cluster = forcats::fct_relevel(cluster, "Cluster 6", after = 0)) %>%
   dplyr::mutate(lgg_group = case_when(
     plot_group == "Low-grade glioma" ~ "LGG",
     TRUE ~ "non-LGG"
@@ -305,7 +307,7 @@ for (each in models) {
          width = 10, height = 6, units = "in",
          device = "pdf")
 
-models2 <- c("SBI", "CLK1_Ex4_TPM")
+models2 <- c("SBI", "CLK1_Ex4_TPM", "CLK1_ex4_PSI")
 for (each in models2) {
   #### by spliceosome_gsva_score
   int_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
@@ -368,6 +370,7 @@ ggsave(file.path(plot_dir, "forest_add_OS_resection_lgg_group_cluster_assignment
 Filter for clusters
 
 ```{r}
+
 cluster_list <- unique(metadata$cluster)
 
 for (each in cluster_list) {
@@ -385,9 +388,14 @@ cluster_df <- metadata %>%
   dplyr::mutate(CLK1_TPM_group = fct_relevel(CLK1_TPM_group,
                                                  c("Low CLK1 TPM", "High CLK1 TPM")),
                 CLK1_PSI_group = fct_relevel(CLK1_PSI_group,
-                                                 c("Low CLK1 PSI", "High CLK1 PSI")))
+                                                 c("Low CLK1 PSI", "High CLK1 PSI"))) %>%
+ # collapse groups which do not have min N
+   dplyr::mutate(
+    plot_group = forcats::fct_drop(plot_group),
+    plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed")
+  )
 
-safe_each <- gsub("[^A-Za-z0-9_-]+", "_", each)
+ safe_each <- gsub("[^A-Za-z0-9_-]+", "_", each)
 
 # Generate KM models with `CLK1_TPM_group` as covariate
 # Generate kaplan meier survival models for OS and EFS, and save outputs
@@ -632,8 +640,8 @@ ggsave(file.path(plot_dir, paste0( "forest_add_OS_", each, "_histology_resection
 ```
 
 
-Print session 0o
+# Print session Info
 
 ```{r}
-session0o()
+sessionInfo()
 ```
