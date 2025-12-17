@@ -39,10 +39,6 @@ results_dir <- file.path(analysis_dir, "results")
 Set file paths
 
 ```{r}
-sbi_A3SS_file <- file.path(root_dir, "analyses", "splicing_index", "results", "splicing_index.A3SS.txt")
-sbi_A5SS_file <- file.path(root_dir, "analyses", "splicing_index", "results", "splicing_index.A5SS.txt")
-sbi_RI_file <- file.path(root_dir, "analyses", "splicing_index", "results", "splicing_index.RI.txt")
-sbi_SE_file <- file.path(root_dir, "analyses", "splicing_index", "results", "splicing_index.SE.txt")
 sbi_total_file <- file.path(root_dir, "analyses", "splicing_index", "results", "splicing_index.total.txt")
 
 histologies_file <- file.path(root_dir, "analyses",
