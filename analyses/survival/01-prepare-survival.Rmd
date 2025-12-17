@@ -41,39 +41,14 @@ Set file paths
 ```{r}
 sbi_total_file <- file.path(root_dir, "analyses", "splicing_index", "results", "splicing_index.total.txt")
 
-histologies_file <- file.path(root_dir, "analyses",
-                              "cohort_summary", "results",
-                              "histologies-plot-group.tsv")
+histologies_file <- file.path(data_dir, "histologies-plot-group.tsv")
 ```
 
 Read in splicing index file, histologies, and updated survival files
 ```{r}
-si_A3SS <- read_tsv(sbi_A3SS_file) %>%
-  rename("Kids_First_Biospecimen_ID"= Sample,
-         SI_A3SS = SI)
-si_A5SS <- read_tsv(sbi_A5SS_file) %>%
-  dplyr::filter(!is.na(Histology)) %>%
-  rename("Kids_First_Biospecimen_ID"= Sample,
-         SI_A5SS = SI) %>%
-  dplyr::mutate(SI_A5SS = as.double(SI_A5SS))
-si_RI <- read_tsv(sbi_RI_file) %>%
-  dplyr::filter(!is.na(Histology)) %>%
-  rename("Kids_First_Biospecimen_ID"= Sample,
-         SI_RI = SI) %>%
-  dplyr::mutate(SI_RI = as.double(SI_RI))
-si_SE <- read_tsv(sbi_SE_file) %>%
-  rename("Kids_First_Biospecimen_ID"= Sample,
-         SI_SE = SI)
-si_total <- read_tsv(sbi_total_file) %>%
+splice_index <- read_tsv(sbi_total_file) %>%
   rename("Kids_First_Biospecimen_ID"= Sample,
          SI_Total = SI)
-
-splice_index <- si_A3SS %>%
-  left_join(si_A5SS[,c("Kids_First_Biospecimen_ID", "SI_A5SS")]) %>%
-  left_join(si_RI[,c("Kids_First_Biospecimen_ID", "SI_RI")]) %>%
-  left_join(si_SE[,c("Kids_First_Biospecimen_ID", "SI_SE")]) %>%
-  left_join(si_total[,c("Kids_First_Biospecimen_ID", "SI_Total")])
-
 ```
 
 Use `diagnoses` to code in `EFS_status` (event-free status) column indicating event/no event
