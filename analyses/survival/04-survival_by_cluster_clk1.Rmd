@@ -495,13 +495,8 @@ ggsave(file.path(plot_dir, paste0("km_", safe_each, "_EFS_clk1_psi_group.pdf")),
 
 add_model_cluster_efs <- fit_save_model(cluster_df %>% 
                                       dplyr::filter(extent_of_tumor_resection != "Unavailable",
-                                                    CLK1_TPM_group %in% c("High CLK1 TPM", "Low CLK1 TPM")
-                                                    ),
-                                      # %>%
-                                     # dplyr::mutate(plot_group = fct_relevel(plot_group,
-                                      #                                      c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
-                                       #                                       "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
-                                        #                                      "Other CNS embryonal tumor", "Low-grade glioma"))),
+                                                    CLK1_TPM_group %in% c("High CLK1 TPM", "Low CLK1 TPM")) %>%
+                                 dplyr::mutate(plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_TPM_group",
                                file.path(results_dir, paste0( "cox_EFS_additive_terms_subtype_", safe_each, "_clk1_tpm_group.RDS")),
                                "multivariate",
@@ -516,12 +511,8 @@ ggsave(file.path(plot_dir, paste0("forest_add_EFS_", safe_each, "_histology_rese
        device = "pdf")
 
 add_model_cluster_os <- fit_save_model(cluster_df %>% 
-                                    dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")),
-                                    # %>%
-                              #      dplyr::mutate(plot_group = fct_relevel(plot_group,
-                               #                                             c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
-                                #                                              "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
-                                 #                                             "Other CNS embryonal tumor", "Low-grade glioma"))),
+                                    dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")) %>%
+                                 dplyr::mutate(plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_TPM_group",
                                file.path(results_dir, paste0( "cox_OS_additive_terms_subtype_", safe_each, "_clk1_tpm_group.RDS")),
                                "multivariate",
@@ -539,12 +530,8 @@ ggsave(file.path(plot_dir, paste0( "forest_add_OS_", safe_each, "_histology_rese
 
 add_model_cluster_efs <- fit_save_model(cluster_df %>% 
                                       dplyr::filter(extent_of_tumor_resection != "Unavailable",
-                                                    CLK1_PSI_group %in% c("High CLK1 PSI", "Low CLK1 PSI")),
-                                      # %>%
-                                     # dplyr::mutate(plot_group = fct_relevel(plot_group,
-                                      #                                      c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
-                                       #                                       "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
-                                        #                                      "Other CNS embryonal tumor", "Low-grade glioma"))),
+                                                    CLK1_PSI_group %in% c("High CLK1 PSI", "Low CLK1 PSI"))%>%
+                                 dplyr::mutate(plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_PSI_group",
                                file.path(results_dir, paste0( "cox_EFS_additive_terms_subtype_", safe_each, "_clk1_psi_group.RDS")),
                                "multivariate",
@@ -559,12 +546,8 @@ ggsave(file.path(plot_dir, paste0( "forest_add_EFS_", safe_each, "_histology_res
        device = "pdf")
 
 add_model_cluster_os <- fit_save_model(cluster_df %>% 
-                                    dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")), 
-                                    # %>%
-                                  #  dplyr::mutate(plot_group = fct_relevel(plot_group,
-                                   #                                         c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
-                                    #                                          "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
-                                     #                                         "Other CNS embryonal tumor", "Low-grade glioma"))),
+                                    dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")) %>%
+                                 dplyr::mutate(plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_PSI_group",
                                file.path(results_dir, paste0( "cox_OS_additive_terms_subtype_", safe_each, "_clk1_psi_group.RDS")),
                                "multivariate",
@@ -581,12 +564,8 @@ ggsave(file.path(plot_dir, paste0( "forest_add_OS_", safe_each, "_histology_rese
 # Assess EFS and OS by CLK1 ex 4 TPM in multivariate models and generate forest plots
 
 add_model_cluster_efs <- fit_save_model(cluster_df %>% 
-                                      dplyr::filter(extent_of_tumor_resection != "Unavailable"), 
-                                   #   %>%
-                                    #  dplyr::mutate(plot_group = fct_relevel(plot_group,
-                                     #                                       c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
-                                      #                                        "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
-                                       #                                       "Other CNS embryonal tumor", "Low-grade glioma"))),
+                                      dplyr::filter(extent_of_tumor_resection != "Unavailable") %>%
+                                 dplyr::mutate(plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_Ex4_TPM",
                                file.path(results_dir, paste0( "cox_EFS_additive_terms_subtype_", safe_each, "_clk1_tpm.RDS")),
                                "multivariate",
@@ -601,12 +580,8 @@ ggsave(file.path(plot_dir, paste0( "forest_add_EFS_", safe_each, "_histology_res
        device = "pdf")
 
 add_model_cluster_os <- fit_save_model(cluster_df %>% 
-                                    dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")), 
-                                    #%>%
-                                 #   dplyr::mutate(plot_group = fct_relevel(plot_group,
-                                  #                                          c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
-                                   #                                           "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
-                                    #                                          "Other CNS embryonal tumor", "Low-grade glioma"))),
+                                    dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")) %>%
+                                 dplyr::mutate(plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_Ex4_TPM",
                                file.path(results_dir, paste0( "cox_OS_additive_terms_subtype_", safe_each, "_clk1_tpm.RDS")),
                                "multivariate",
@@ -623,12 +598,8 @@ ggsave(file.path(plot_dir, paste0( "forest_add_OS_", safe_each, "_histology_rese
 # Assess EFS and OS by CLK1 ex 4 PSI in multivariate models and generate forest plots
 
 add_model_cluster_efs <- fit_save_model(cluster_df %>% 
-                                      dplyr::filter(extent_of_tumor_resection != "Unavailable"),
-                                      # %>%
-                                 #     dplyr::mutate(plot_group = fct_relevel(plot_group,
-                                  #                                          c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
-                                   #                                           "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
-                                    #                                          "Other CNS embryonal tumor", "Low-grade glioma"))),
+                                      dplyr::filter(extent_of_tumor_resection != "Unavailable") %>%
+                                 dplyr::mutate(plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_ex4_PSI",
                                file.path(results_dir, paste0( "cox_EFS_additive_terms_subtype_", safe_each, "_clk1_psi.RDS")),
                                "multivariate",
@@ -643,12 +614,8 @@ ggsave(file.path(plot_dir, paste0( "forest_add_EFS_", safe_each, "_histology_res
        device = "pdf")
 
 add_model_cluster_os <- fit_save_model(cluster_df %>% 
-                                    dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")),
-                                    # %>%
-                               #     dplyr::mutate(plot_group = fct_relevel(plot_group,
-                                #                                            c("Other high-grade glioma", "Atypical Teratoid Rhabdoid Tumor",
-                                 #                                             "DIPG or DMG", "Ependymoma", "Mesenchymal tumor",
-                                  #                                            "Other CNS embryonal tumor", "Low-grade glioma")),                                 ),
+                                    dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")) %>%
+                                 dplyr::mutate(plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_ex4_PSI",
                                file.path(results_dir, paste0( "cox_OS_additive_terms_subtype_", safe_each, "_clk1_psi.RDS")),
                                "multivariate",
@@ -665,8 +632,8 @@ ggsave(file.path(plot_dir, paste0( "forest_add_OS_", each, "_histology_resection
 ```
 
 
-Print session info
+Print session 0o
 
 ```{r}
-sessionInfo()
+session0o()
 ```
