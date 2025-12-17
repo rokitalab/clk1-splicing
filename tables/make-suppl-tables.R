@@ -20,8 +20,8 @@ if(!dir.exists(supp_tables_dir)){
 }
 
 # define input files
-histology_file <- file.path(data_dir, "histologies.tsv")
-histology_se_events <- file.path(analysis_dir, "histology-specific-splicing", "results", "unique_events.SE.tsv")
+histology_file <- file.path(data_dir, "histologies-plot-group.tsv")
+histology_events <- file.path(analysis_dir, "histology-specific-splicing", "results", "unique_events.tsv")
 cluster_membership <- file.path(analysis_dir, "sample-psi-clustering", "results", "sample-cluster-metadata-top-5000-events-stranded.tsv")
 gsva <- file.path(analysis_dir, "sample-psi-clustering", "results", "all_gsva_de_results_stranded.tsv")
 CNS_match_json <- file.path(table_dir, "input", "CNS_primary_site_match.json")
@@ -31,10 +31,10 @@ sf_list_file <- file.path(root_dir, "analyses","splicing-factor_dysregulation", 
 hugo_file <- file.path(root_dir, "analyses", "oncoprint", "input", "hgnc-symbol-check.csv")
 hugo_maf_file <- file.path(root_dir, "analyses", "oncoprint", "results", "hugo-all-samples.maf")
 sf_maf_file <- file.path(root_dir, "analyses", "oncoprint", "results", "sf-all-samples.maf")
-deseq2_sf_file <- file.path(analysis_dir, "splicing-factor_dysregulation", "results", "cluster6-diffSFs_sig_genes.txt")
+deseq2_sf_file <- file.path(analysis_dir, "splicing-factor_dysregulation", "results", "all_cohort-diffSFs_sig_genes.txt")
 
-func_sites_es_file <- file.path(analysis_dir, "splicing_events_functional_sites", "results", "splicing_events.SE.total.neg.intersectunip.ggplot.txt") 
-func_sites_ei_file <- file.path(analysis_dir, "splicing_events_functional_sites", "results", "splicing_events.SE.total.pos.intersectunip.ggplot.txt") 
+func_sites_skipping_file <- file.path(analysis_dir, "splicing_events_functional_sites", "results", "splicing_events.total.neg.intersectunip.ggplot.txt") 
+func_sites_inclusion_file <- file.path(analysis_dir, "splicing_events_functional_sites", "results", "splicing_events.total.pos.intersectunip.ggplot.txt") 
 kinase_func_sites_file <- file.path(analysis_dir, "splicing_events_functional_sites", "results", "splicing-factor-kinases-functional_sites.tsv")
 clk1_ex4_psi_file <- file.path(analysis_dir, "CLK1-splicing_correlations", "results", "clk1-exon4-psi.tsv")
 
@@ -45,9 +45,11 @@ func_sites_SE_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-mo
 func_sites_A5SS_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","splicing_events.morpho.A5SS.intersectUnip.ggplot.txt")
 func_sites_A3SS_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","splicing_events.morpho.A3SS.intersectUnip.ggplot.txt")
 func_sites_RI_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","splicing_events.morpho.RI.intersectUnip.ggplot.txt")
+func_sites_MXE_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","splicing_events.morpho.MXE.intersectUnip.ggplot.txt")
 de_ds_genes_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","de_ds_genes.txt")
 
-cluster_cor_file <- file.path(root_dir, "analyses/splicing-factor_dysregulation/results/se-sbi-sf-expr-correlations.tsv")
+cluster_cor_file <- file.path(root_dir, "analyses/splicing-factor_dysregulation/results/total-sbi-sf-expr-correlations-clusters.tsv")
+hist_cor_file <- file.path(root_dir, "analyses/splicing-factor_dysregulation/results/total-sbi-sf-expr-correlations-plot_groups.tsv")
 
 func_sites_goi_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results", "differential_splice_by_goi_category.tsv")
 primers_file <-  file.path(input_dir,"primers.tsv")
@@ -58,14 +60,14 @@ table_s1_file <- file.path(supp_tables_dir, "TableS1-histologies.xlsx")
 table_s2_file <- file.path(supp_tables_dir, "TableS2-histology-specific-splice-events.xlsx")
 table_s3_file <- file.path(supp_tables_dir, "TableS3-SF-dysreg.xlsx")
 table_s4_file <- file.path(supp_tables_dir, "TableS4-functional-sites.xlsx")
-table_s5_file <- file.path(supp_tables_dir, "TableS5-cluster-expr-correlations.xlsx")
+table_s5_file <- file.path(supp_tables_dir, "TableS5-SF-expr-correlations.xlsx")
 table_s6_file <- file.path(supp_tables_dir, "TableS6-CLK1-ex4-splicing-impact-morpholino.xlsx")
 
 ## write table for histologies
 # Sheet 1: README tab
-histology_df <- read_tsv(histology_file, guess_max = 100000)
-histology_df_tumor <- histology_df %>%
-  filter(!is.na(pathology_diagnosis))
+histology_df <- read_tsv(histology_file, guess_max = 100000) %>%
+  select(-c(cancer_group_abbreviation, broad_histology_display, broad_histology_hex, 
+            broad_histology_order, plot_group, plot_group_hex, oncoprint_group))
 
 readme <- tribble(
   ~`Histology column`,~Definition,~`Possible values`,
@@ -150,8 +152,9 @@ write.xlsx(list_s1_table,
            keepNA=TRUE)
 
 ## Table 2 histology specific splicing events
-## sheet 1, se events splicing
-se_events_df <- vroom(histology_se_events)
+## sheet 1, events splicing
+histology_events_df <- vroom(histology_events) %>%
+  extract(SpliceID, into = c("Case", "SpliceID", "Event"), regex = "^(.*)=(.*)_(inclusion|skipping)$")
 
 ## sheet 2, cluster membership
 cluster_membership_df <- read_tsv(cluster_membership) %>%
@@ -173,7 +176,7 @@ gsva_df <- read_tsv(gsva) %>%
   arrange(Cluster)
           
 # Combine and output
-list_s2_table <- list(A_se_events = se_events_df,
+list_s2_table <- list(A_hist_events = histology_events_df,
                       B_clust_memb = cluster_membership_df,
                       C_gsva_scores = gsva_df)
 
@@ -200,7 +203,7 @@ hugo_maf <- read_tsv(hugo_maf_file)
 # tab 5
 sf_maf <- read_tsv(sf_maf_file)
 
-## tab 6, exon inclusion splicing
+## tab 6, differentially expressed SFs
 deseq_df <- vroom(deseq2_sf_file) %>%
   dplyr::select(-Significant)
 
@@ -217,16 +220,12 @@ write.xlsx(list_s3_table,
            overwrite=TRUE,
            keepNA=TRUE)
 
-## Table 4 Differential HGG splicing events impacting functional sites
-## sheet 1, exon inclusion events
-ds_events_es_df <- vroom(func_sites_es_file)
-ds_events_ei_df <- vroom(func_sites_ei_file)
-ds_events_A3SS_df <- vroom(func_sites_A3SS_morpho_tsv_file)
-ds_events_RI_df <- vroom(func_sites_RI_morpho_tsv_file)
+## Table 4 Differential splicing events impacting functional sites
+## sheet 1, exon skipping events
+skipping_events_df <- vroom(func_sites_skipping_file)
 
-
-## sheet 2, exon skipping events
-es_events_df <- vroom(func_sites_es_file)
+## sheet 2, exon inclusion events
+inclusion_events_df <- vroom(func_sites_inclusion_file)
 
 ##sheet 3 kinases
 kinase_events_df <- vroom(kinase_func_sites_file)
@@ -235,8 +234,8 @@ kinase_events_df <- vroom(kinase_func_sites_file)
 clk1_ex4_psi_df <- vroom(clk1_ex4_psi_file)
 
 # Combine and output
-list_s4_table <- list(A_ds_skipping = ds_events_es_df,
-                      B_ds_inclusion = ds_events_ei_df,
+list_s4_table <- list(A_ds_skipping = skipping_events_df,
+                      B_ds_inclusion = inclusion_events_df,
                       C_prioritized_sf_kinases = kinase_events_df,
                       D_clk1_ex4_psi = clk1_ex4_psi_df)
 
@@ -247,8 +246,10 @@ write.xlsx(list_s4_table,
 
 ## Table 5 Cluster expression correlations
 cluster_cor_df <- read_tsv(cluster_cor_file)
+hist_cor_df <- read_tsv(hist_cor_file)
 
-list_s5_table <- list(A_cluster_exp_cor = cluster_cor_df)
+list_s5_table <- list(A_cluster_exp_cor = cluster_cor_df,
+                      B_hist_exp_cor = hist_cor_df)
 
 write.xlsx(list_s5_table,
            table_s5_file,
@@ -271,6 +272,7 @@ ds_events_SE_df <- vroom(func_sites_SE_morpho_tsv_file)
 ds_events_A5SS_df <- vroom(func_sites_A5SS_morpho_tsv_file)
 ds_events_A3SS_df <- vroom(func_sites_A3SS_morpho_tsv_file)
 ds_events_RI_df <- vroom(func_sites_RI_morpho_tsv_file)
+ds_events_MXE_df <- vroom(func_sites_MXE_morpho_tsv_file)
 de_ds_genes_file_df <- read_lines(de_ds_genes_file)
 
 primers_df <- vroom(primers_file, delim = "\t")
@@ -286,10 +288,11 @@ list_s6_table <- list(A_deseq2_morp = deseq2_morpholino_df,
                       D_ds_A5SS = ds_events_A5SS_df,
                       E_ds_A3SS = ds_events_A3SS_df,
                       F_ds_RI = ds_events_RI_df,
-                      G_de_ds_genes = de_ds_genes_file_df,
-                      H_primers = primers_df,
-                      I_intersect_de_ds_crispr = ds_de_crispr_df,
-                      J_clk1_targets = consensus_targets_df)
+                      G_ds_MXE = ds_events_MXE_df,
+                      H_de_ds_genes = de_ds_genes_file_df,
+                      I_primers = primers_df,
+                      J_intersect_de_ds_crispr = ds_de_crispr_df,
+                      K_clk1_targets = consensus_targets_df)
 
 write.xlsx(list_s6_table,
            table_s6_file,

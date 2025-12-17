@@ -16,7 +16,7 @@ Rscript --vanilla make-suppl-tables.R
 `TableS2-histology-specific-splice-events.xlsx` Histology specific splicing events <br>
 `TableS3-DeSeq2-sbi-SFs.xlsx` DeSeq2 results of high vs low SBI tumors, focusing on splicing factors <br>
 `TableS4-functional-sites.xlsx` Splicing events that correspond to functional site (uniprot) <br>
-`TableS5-cluster-expr-correlations.xlsx` Correlations between cluster and gene expression <br>
+`TableS5-SF-expr-correlations.xlsx` Correlations between gene expression, cluster, and histology <br>
 `TableS6-CLK1-ex4-splicing-impact-morpholino.xlsx` DeSeq2 and rMATs results from comparing treated (morpholinos) vs untreated cells <br>
 
 ## Folder content
@@ -34,7 +34,7 @@ Rscript --vanilla make-suppl-tables.R
 │   ├── TableS2-histology-specific-splice-events.xlsx
 │   ├── TableS3-SF-dysreg.xlsx
 │   ├── TableS4-functional-sites.xlsx
-│   ├── TableS5-cluster-expr-correlations.xlsx
+│   ├── TableS5-SF-expr-correlations.xlsx
 │   └── TableS6-CLK1-ex4-splicing-impact-morpholino.xlsx
 └── README.md
 ```
