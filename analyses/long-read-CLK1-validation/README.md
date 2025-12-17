@@ -21,23 +21,24 @@ KNS42.CLK1.aln
 
 ## Folder content
 * `00-pre-process-aln.sh` processes and re-formats *aln files for plotting script
-* `01-plot_ont_vs_short_CLK1-Ex4_psi.R` plot CLK1 Exon 4 included/skipped isoforms categorized by RNA-seq sequencing strategy (long vs short sequencing)
+* `01-plot_ont_vs_short_CLK1-Ex4_psi.R` get CLK1 Exon 4 included/skipped isoforms categorized by RNA-seq sequencing strategy (long vs short sequencing)
 
 ## Directory structure
 ```
 .
 ├── 00-pre-process-aln.sh
 ├── 01-plot_ont_vs_short_CLK1-Ex4_psi.R
-├── README.md
 ├── input
 │   ├── 7316_1763.CLK1.aln
-│   ├── 7316_1763.CLK1.processed.txt
 │   ├── 7316_1769.CLK1.aln
-│   ├── 7316_1769.CLK1.processed.txt
-│   ├── KNS42.CLK1.aln
-│   ├── KNS42.CLK1.processed.txt
-│   └── ont_vs_rmats.ggplot.tsv
+│   └── KNS42.CLK1.aln
 ├── plots
 │   └── isoform-barplot.pdf
+├── README.md
+├── results
+│   ├── 7316_1763.CLK1.processed.txt
+│   ├── 7316_1769.CLK1.processed.txt
+│   ├── KNS42.CLK1.processed.txt
+│   └── long-vs-short-CLK1-ex4-inclusion.tsv
 └── run_module.sh
 ```
