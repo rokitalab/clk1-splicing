@@ -41,9 +41,9 @@ file_barplot = file.path(plots_dir,"isoform-barplot.pdf")
 file_barplot = file.path(plots_dir,"isoform-barplot.pdf")
 
 ## retrive stringtie2 results for each cell line
-cl_7316_1763_file = file.path(input_dir,"7316_1763.CLK1.processed.txt")
-cl_7316_1769_file = file.path(input_dir,"7316_1769.CLK1.processed.txt")
-cl_KNS42_file     = file.path(input_dir,"KNS42.CLK1.processed.txt")
+cl_7316_1763_file = file.path(results_dir,"7316_1763.CLK1.processed.txt")
+cl_7316_1769_file = file.path(results_dir,"7316_1769.CLK1.processed.txt")
+cl_KNS42_file     = file.path(results_dir,"KNS42.CLK1.processed.txt")
 
 ## load KNS42 dataset
 depmap_file = file.path(data_dir, "CLK1-CRISPR-DepMap-score.csv")
@@ -64,7 +64,7 @@ depMap_transcr_expr <- vroom(tpm_file,show_col_types = FALSE) %>%
   inner_join(omics_id_mapping_df,by="ProfileID")
 
 ## load and store patient tumor cell line data
-histology_file <- file.path(data_dir,'histologies.tsv')
+histology_file <- file.path(data_dir,'histologies.tsv') # needs to be this one to have cell lines
 rmats_file     <- file.path(data_dir, 'clk1-splice-events-rmats.tsv')
 
 histology_df <- vroom(histology_file) %>%
@@ -80,7 +80,9 @@ rmats_df <- vroom(rmats_file) %>%
                    exonStart_0base=="200860124", 
                    exonEnd=="200860215",
                    row_number() <= n()-1
-            ) 
+            ) %>%
+            mutate(IncLevel1 = round(IncLevel1, 3))
+
 psi_1763 <- rmats_df %>% dplyr::filter(sample_id =='BS_DRY58DTF') %>% dplyr::select(IncLevel1)
 psi_1769 <- rmats_df %>% dplyr::filter(sample_id =='BS_40MP5BWR') %>% dplyr::select(IncLevel1)
 
@@ -139,10 +141,11 @@ cl_KNS42_df <- vroom(cl_KNS42_file,comment = "#",
                         add_row( cell_line = "KNS42", type = "short", Isoform="Inclusion", PSI = CLK1_expr_KNS42$Ex4_expr * 100 ) 
 
 
-cell_lines_df <- rbind(cl_KNS42_df,cl_7316_1769_df,cl_7316_1763_df)
+cell_lines_df <- rbind(cl_KNS42_df,cl_7316_1769_df,cl_7316_1763_df) %>%
+  dplyr::filter(Isoform == "Inclusion")
 
 ## make plot
-barplot <- ggplot(cell_lines_df %>% dplyr::filter(Isoform == "Inclusion"),
+barplot <- ggplot(cell_lines_df,
   aes(fill=type, y=PSI, x=type)) + 
   geom_bar(stat="identity", color = "black") +
   scale_fill_manual(values = c("#0C7BDC", "#FFC20A")) +
@@ -153,3 +156,14 @@ barplot <- ggplot(cell_lines_df %>% dplyr::filter(Isoform == "Inclusion"),
   theme_Publication() +
   theme(axis.title.y = element_markdown(),
         legend.position = "none")  
+
+## save table
+cell_lines_df %>% 
+  select(cell_line, type, PSI) %>%
+  mutate(PSI = round(PSI, digits = 1)) %>%
+  pivot_wider(names_from = cell_line, values_from = PSI) %>%
+  column_to_rownames("type") %>%
+  t() %>%
+  as.data.frame() %>%
+  rownames_to_column("cell_line") %>%
+  write_tsv(file = file.path(results_dir, "long-vs-short-CLK1-ex4-inclusion.tsv"))
