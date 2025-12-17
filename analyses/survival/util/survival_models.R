@@ -420,7 +420,7 @@ plotKM <- function(model,
     km_plot_graph <- km_plot$plot + 
       ggplot2::annotate("text", 
                         ifelse(p_pos == "topright",
-                               3700, 200),
+                               3500, 200),
                         ifelse(p_pos == "topright",
                                0.95, 0.15), 
                         label = pvalue_label) +
