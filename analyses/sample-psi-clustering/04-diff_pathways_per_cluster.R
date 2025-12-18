@@ -162,10 +162,13 @@ for (libtype in names(cluster_files)){
     heat_colors <- color_palette(6)
     
     # sort cluster df and differential expression matrix by cluster and histology
-    cluster_df <- cluster_df %>%
-      dplyr::arrange(cluster, plot_group)
+    #cluster_df <- cluster_df %>%
+    #  dplyr::arrange(cluster, plot_group)
+    #DEpwys_es <- DEpwys_es[,cluster_df$sample_id]
     
-    DEpwys_es <- DEpwys_es[,cluster_df$sample_id]
+    # pull and sort by cluster heatmap column order (from 01)
+    col_order <- read_lines(file.path(results_dir, glue::glue("colorder-top-5000-events-{libtype}.txt")), skip = 1)
+    DEpwys_es <- DEpwys_es[,col_order]  
   
     # plot pathway heatmap
     pheatmap::pheatmap(DEpwys_es, scale = "row", 
@@ -174,7 +177,7 @@ for (libtype in names(cluster_files)){
                        show_colnames = F, 
                        annotation = DEpwys_annot, 
                        annotation_colors = mycolors, 
-                       cluster_cols = FALSE, 
+                       cluster_cols = FALSE,
                        color = heat_colors,
                        name = "GSVA score",
                        filename = file.path(paste0(plot_dir, "/top", 5, "_pathways_", libtype, ".pdf")), 
@@ -210,7 +213,9 @@ for (libtype in names(cluster_files)){
     print(boxplot_tpm)
     dev.off()
     
-    boxplot_tpm_cluster <- ggplot(spliceosome_gsva_scores, aes(x = cluster, y = score)) +
+    boxplot_tpm_cluster <- ggplot(spliceosome_gsva_scores, 
+                                  aes(x = reorder(cluster, score, FUN = median, na.rm = TRUE), 
+                                      y = score)) +
       geom_boxplot(aes(fill = cluster, group = cluster), outlier.shape = NA, alpha = 0.5) +
       geom_jitter(aes(fill = plot_group), width = 0.2, size = 2, shape = 21, color = "black", alpha = 0.7) + # Add actual data points
       labs(x = "Cluster", y = "Spliceosome GSVA Score", fill = "Histology") +

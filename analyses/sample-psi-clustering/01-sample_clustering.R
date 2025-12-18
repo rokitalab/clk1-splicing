@@ -156,6 +156,12 @@ for (library in names(library_type)){
                   heatmap_legend_param = list(legend_gp = gpar(fontsize = 10),
                                               labels_gp = gpar(fontsize = 10)))
     
+    ht_drawn <- draw(ht)
+    col_order <- column_order(ht_drawn)
+    ordered_colnames <- colnames(cluster_mat)[col_order] %>%
+      as.data.frame() %>%
+      write_tsv(file.path(results_dir, glue::glue("colorder-top-{n}-events-{library}.txt")))
+    
     pdf(NULL)
     
     pdf(file.path(plot_dir,
@@ -165,6 +171,8 @@ for (library in names(library_type)){
     print(ht)
     
     dev.off()
+    
+    
     
     # plot enrichment of tumor histologies within clusters
     histology_enr <- plot_enr(cluster_df, 

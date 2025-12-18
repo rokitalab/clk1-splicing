@@ -128,6 +128,7 @@ bash run-module.sh
 │   ├── cluster_8_pathway_stranded.tsv
 │   ├── cluster_9_pathway_poly-A-stranded.tsv
 │   ├── cluster_9_pathway_stranded.tsv
+│   ├── colorder-top-5000-events-stranded.txt
 │   ├── gsva_output_poly-A-stranded.tsv
 │   ├── gsva_output_stranded.tsv
 │   ├── hallmark_kegg_splice_geneset_mrna.rds
