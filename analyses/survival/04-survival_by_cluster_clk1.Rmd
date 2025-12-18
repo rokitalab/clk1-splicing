@@ -112,9 +112,7 @@ metadata <- metadata %>%
                                           spliceosome_gsva_score),
             by = c("Kids_First_Biospecimen_ID" = "sample_id")) %>% 
   dplyr::mutate(cluster = glue::glue("Cluster {cluster}")) %>%
-  # dplyr::mutate(cluster = fct_relevel(cluster,
-  #                                             paste0("Cluster ", 1:n_clust))) %>%
-  dplyr::mutate(cluster = forcats::fct_relevel(cluster, "Cluster 6", after = 0)) %>%
+  dplyr::mutate(cluster = fct_relevel(cluster, paste0("Cluster ", 1:n_clust))) %>%
   dplyr::mutate(lgg_group = case_when(
     plot_group == "Low-grade glioma" ~ "LGG",
     TRUE ~ "non-LGG"
