@@ -112,9 +112,7 @@ metadata <- metadata %>%
                                           spliceosome_gsva_score),
             by = c("Kids_First_Biospecimen_ID" = "sample_id")) %>% 
   dplyr::mutate(cluster = glue::glue("Cluster {cluster}")) %>%
-  # dplyr::mutate(cluster = fct_relevel(cluster,
-  #                                             paste0("Cluster ", 1:n_clust))) %>%
-  dplyr::mutate(cluster = forcats::fct_relevel(cluster, "Cluster 6", after = 0)) %>%
+  dplyr::mutate(cluster = fct_relevel(cluster, paste0("Cluster ", 1:n_clust))) %>%
   dplyr::mutate(lgg_group = case_when(
     plot_group == "Low-grade glioma" ~ "LGG",
     TRUE ~ "non-LGG"
@@ -388,20 +386,19 @@ cluster_df <- metadata %>%
   dplyr::mutate(CLK1_TPM_group = fct_relevel(CLK1_TPM_group,
                                                  c("Low CLK1 TPM", "High CLK1 TPM")),
                 CLK1_PSI_group = fct_relevel(CLK1_PSI_group,
-                                                 c("Low CLK1 PSI", "High CLK1 PSI"))) %>%
- # collapse groups which do not have min N
-   dplyr::mutate(
-    plot_group = forcats::fct_drop(plot_group),
-    plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed")
-  )
-
+                                                 c("Low CLK1 PSI", "High CLK1 PSI")))
  safe_each <- gsub("[^A-Za-z0-9_-]+", "_", each)
 
 # Generate KM models with `CLK1_TPM_group` as covariate
 # Generate kaplan meier survival models for OS and EFS, and save outputs
 cluster_clk_tpm_kap_os <- survival_analysis(
   metadata  = cluster_df %>% 
-    dplyr::filter(!is.na(CLK1_TPM_group)),
+    dplyr::filter(!is.na(CLK1_TPM_group)) %>%
+ # collapse groups which do not have min N
+   dplyr::mutate(
+    plot_group = forcats::fct_drop(plot_group),
+    plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed")
+  ),
   ind_var = "CLK1_TPM_group",
   test = "kap.meier",
   metadata_sample_col = "Kids_First_Biospecimen_ID",
@@ -414,7 +411,12 @@ readr::write_rds(cluster_clk_tpm_kap_os,
 
 cluster_clk_tpm_kap_efs <- survival_analysis(
   metadata  = cluster_df %>% 
-    dplyr::filter(!is.na(CLK1_TPM_group)),
+    dplyr::filter(!is.na(CLK1_TPM_group)) %>%
+ # collapse groups which do not have min N
+   dplyr::mutate(
+    plot_group = forcats::fct_drop(plot_group),
+    plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed")
+  ),
   ind_var = "CLK1_TPM_group",
   test = "kap.meier",
   metadata_sample_col = "Kids_First_Biospecimen_ID",
@@ -429,7 +431,12 @@ readr::write_rds(cluster_clk_tpm_kap_efs,
 # Generate kaplan meier survival models for OS and EFS, and save outputs
 cluster_clk_psi_kap_os <- survival_analysis(
   metadata  = cluster_df %>% 
-    dplyr::filter(!is.na(CLK1_PSI_group)),
+    dplyr::filter(!is.na(CLK1_PSI_group)) %>%
+ # collapse groups which do not have min N
+   dplyr::mutate(
+    plot_group = forcats::fct_drop(plot_group),
+    plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed")
+  ),
   ind_var = "CLK1_PSI_group",
   test = "kap.meier",
   metadata_sample_col = "Kids_First_Biospecimen_ID",
@@ -442,7 +449,12 @@ readr::write_rds(cluster_clk_psi_kap_os,
 
 cluster_clk_psi_kap_efs <- survival_analysis(
   metadata  = cluster_df %>% 
-    dplyr::filter(!is.na(CLK1_PSI_group)),
+    dplyr::filter(!is.na(CLK1_PSI_group)) %>%
+ # collapse groups which do not have min N
+   dplyr::mutate(
+    plot_group = forcats::fct_drop(plot_group),
+    plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed")
+  ),
   ind_var = "CLK1_PSI_group",
   test = "kap.meier",
   metadata_sample_col = "Kids_First_Biospecimen_ID",
@@ -456,7 +468,7 @@ readr::write_rds(cluster_clk_psi_kap_efs,
 # Generate cluster KM SI_group plots
 
 km_cluster_clk_tpm_os_plot <- plotKM(model = cluster_clk_tpm_kap_os,
-                    variable = "CLK1_TPM_group",
+                    variable = "CLK1_TPM_group", 
                     combined = F, 
                     title = paste0(each, ", overall survival"),
                     p_pos = "topright")
@@ -502,9 +514,13 @@ ggsave(file.path(plot_dir, paste0("km_", safe_each, "_EFS_clk1_psi_group.pdf")),
 # Assess EFS and OS by CLK1 TPM group in multivariate models and generate forest plots
 
 add_model_cluster_efs <- fit_save_model(cluster_df %>% 
-                                      dplyr::filter(extent_of_tumor_resection != "Unavailable",
+                                      dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),
                                                     CLK1_TPM_group %in% c("High CLK1 TPM", "Low CLK1 TPM")) %>%
-                                 dplyr::mutate(plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
+ # collapse groups which do not have min N
+   dplyr::mutate(
+    plot_group = forcats::fct_drop(plot_group),
+    plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed"),
+    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_TPM_group",
                                file.path(results_dir, paste0( "cox_EFS_additive_terms_subtype_", safe_each, "_clk1_tpm_group.RDS")),
                                "multivariate",
@@ -519,8 +535,13 @@ ggsave(file.path(plot_dir, paste0("forest_add_EFS_", safe_each, "_histology_rese
        device = "pdf")
 
 add_model_cluster_os <- fit_save_model(cluster_df %>% 
-                                    dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")) %>%
-                                 dplyr::mutate(plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
+                                    dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),
+                                                                                    CLK1_TPM_group %in% c("High CLK1 TPM", "Low CLK1 TPM")) %>%
+ # collapse groups which do not have min N
+   dplyr::mutate(
+    plot_group = forcats::fct_drop(plot_group),
+    plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed"),
+    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = Inf)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_TPM_group",
                                file.path(results_dir, paste0( "cox_OS_additive_terms_subtype_", safe_each, "_clk1_tpm_group.RDS")),
                                "multivariate",
@@ -537,9 +558,13 @@ ggsave(file.path(plot_dir, paste0( "forest_add_OS_", safe_each, "_histology_rese
 #Assess EFS and OS by CLK1 PSI group in multivariate models and generate forest plots
 
 add_model_cluster_efs <- fit_save_model(cluster_df %>% 
-                                      dplyr::filter(extent_of_tumor_resection != "Unavailable",
-                                                    CLK1_PSI_group %in% c("High CLK1 PSI", "Low CLK1 PSI"))%>%
-                                 dplyr::mutate(plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
+                                      dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),
+                                                    CLK1_PSI_group %in% c("High CLK1 PSI", "Low CLK1 PSI")) %>%
+ # collapse groups which do not have min N
+   dplyr::mutate(
+    plot_group = forcats::fct_drop(plot_group),
+    plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed"),
+    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_PSI_group",
                                file.path(results_dir, paste0( "cox_EFS_additive_terms_subtype_", safe_each, "_clk1_psi_group.RDS")),
                                "multivariate",
@@ -554,8 +579,13 @@ ggsave(file.path(plot_dir, paste0( "forest_add_EFS_", safe_each, "_histology_res
        device = "pdf")
 
 add_model_cluster_os <- fit_save_model(cluster_df %>% 
-                                    dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")) %>%
-                                 dplyr::mutate(plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
+                                    dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),
+                                                    CLK1_PSI_group %in% c("High CLK1 PSI", "Low CLK1 PSI")) %>%
+ # collapse groups which do not have min N
+   dplyr::mutate(
+    plot_group = forcats::fct_drop(plot_group),
+    plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed"),
+    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = Inf)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_PSI_group",
                                file.path(results_dir, paste0( "cox_OS_additive_terms_subtype_", safe_each, "_clk1_psi_group.RDS")),
                                "multivariate",
@@ -572,8 +602,12 @@ ggsave(file.path(plot_dir, paste0( "forest_add_OS_", safe_each, "_histology_rese
 # Assess EFS and OS by CLK1 ex 4 TPM in multivariate models and generate forest plots
 
 add_model_cluster_efs <- fit_save_model(cluster_df %>% 
-                                      dplyr::filter(extent_of_tumor_resection != "Unavailable") %>%
-                                 dplyr::mutate(plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
+                                      dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")) %>%
+ # collapse groups which do not have min N
+   dplyr::mutate(
+    plot_group = forcats::fct_drop(plot_group),
+    plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed"),
+    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_Ex4_TPM",
                                file.path(results_dir, paste0( "cox_EFS_additive_terms_subtype_", safe_each, "_clk1_tpm.RDS")),
                                "multivariate",
@@ -589,7 +623,11 @@ ggsave(file.path(plot_dir, paste0( "forest_add_EFS_", safe_each, "_histology_res
 
 add_model_cluster_os <- fit_save_model(cluster_df %>% 
                                     dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")) %>%
-                                 dplyr::mutate(plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
+ # collapse groups which do not have min N
+   dplyr::mutate(
+    plot_group = forcats::fct_drop(plot_group),
+    plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed"),
+    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = Inf)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_Ex4_TPM",
                                file.path(results_dir, paste0( "cox_OS_additive_terms_subtype_", safe_each, "_clk1_tpm.RDS")),
                                "multivariate",
@@ -606,8 +644,12 @@ ggsave(file.path(plot_dir, paste0( "forest_add_OS_", safe_each, "_histology_rese
 # Assess EFS and OS by CLK1 ex 4 PSI in multivariate models and generate forest plots
 
 add_model_cluster_efs <- fit_save_model(cluster_df %>% 
-                                      dplyr::filter(extent_of_tumor_resection != "Unavailable") %>%
-                                 dplyr::mutate(plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
+                                      dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")) %>%
+ # collapse groups which do not have min N
+   dplyr::mutate(
+    plot_group = forcats::fct_drop(plot_group),
+    plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed"),
+    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_ex4_PSI",
                                file.path(results_dir, paste0( "cox_EFS_additive_terms_subtype_", safe_each, "_clk1_psi.RDS")),
                                "multivariate",
@@ -623,7 +665,11 @@ ggsave(file.path(plot_dir, paste0( "forest_add_EFS_", safe_each, "_histology_res
 
 add_model_cluster_os <- fit_save_model(cluster_df %>% 
                                     dplyr::filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")) %>%
-                                 dplyr::mutate(plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
+ # collapse groups which do not have min N
+   dplyr::mutate(
+    plot_group = forcats::fct_drop(plot_group),
+    plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed"),
+    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = Inf)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_ex4_PSI",
                                file.path(results_dir, paste0( "cox_OS_additive_terms_subtype_", safe_each, "_clk1_psi.RDS")),
                                "multivariate",
