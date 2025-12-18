@@ -99,6 +99,8 @@ bash run-module.sh
 │   ├── sample-psi-heatmap-top-5000-events-all_libraries.pdf
 │   ├── sample-psi-heatmap-top-5000-events-poly-A_stranded.pdf
 │   ├── sample-psi-heatmap-top-5000-events-stranded.pdf
+│   ├── spliceosome-gsva-clusters-stranded.pdf
+│   ├── spliceosome-gsva-histology-stranded.pdf
 │   ├── top5_pathways_poly-A-stranded.pdf
 │   └── top5_pathways_stranded.pdf
 ├── README.md
@@ -126,6 +128,7 @@ bash run-module.sh
 │   ├── cluster_8_pathway_stranded.tsv
 │   ├── cluster_9_pathway_poly-A-stranded.tsv
 │   ├── cluster_9_pathway_stranded.tsv
+│   ├── colorder-top-5000-events-stranded.txt
 │   ├── gsva_output_poly-A-stranded.tsv
 │   ├── gsva_output_stranded.tsv
 │   ├── hallmark_kegg_splice_geneset_mrna.rds

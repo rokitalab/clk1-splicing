@@ -14,6 +14,8 @@ analysis_dir <- file.path(root_dir, "analyses", "sample-psi-clustering")
 results_dir <- file.path(analysis_dir, "results")
 plot_dir <- file.path(analysis_dir, "plots")
 
+source(file.path(root_dir, "figures", "theme_for_plots.R"))
+
 # Set file paths
 expr_file <- file.path(data_dir,
                        "gene-expression-rsem-tpm-collapsed.rds")
@@ -160,10 +162,13 @@ for (libtype in names(cluster_files)){
     heat_colors <- color_palette(6)
     
     # sort cluster df and differential expression matrix by cluster and histology
-    cluster_df <- cluster_df %>%
-      dplyr::arrange(cluster, plot_group)
+    #cluster_df <- cluster_df %>%
+    #  dplyr::arrange(cluster, plot_group)
+    #DEpwys_es <- DEpwys_es[,cluster_df$sample_id]
     
-    DEpwys_es <- DEpwys_es[,cluster_df$sample_id]
+    # pull and sort by cluster heatmap column order (from 01)
+    col_order <- read_lines(file.path(results_dir, glue::glue("colorder-top-5000-events-{libtype}.txt")), skip = 1)
+    DEpwys_es <- DEpwys_es[,col_order]  
   
     # plot pathway heatmap
     pheatmap::pheatmap(DEpwys_es, scale = "row", 
@@ -172,10 +177,60 @@ for (libtype in names(cluster_files)){
                        show_colnames = F, 
                        annotation = DEpwys_annot, 
                        annotation_colors = mycolors, 
-                       cluster_cols = FALSE, 
+                       cluster_cols = FALSE,
                        color = heat_colors,
                        name = "GSVA score",
                        filename = file.path(paste0(plot_dir, "/top", 5, "_pathways_", libtype, ".pdf")), 
                        width = 12, height = 5.5)
   
+    # Plot Spliceosome GSVA score
+    spliceosome_gsva_scores <- gsva_scores %>%
+      filter(geneset == 'KEGG_SPLICEOSOME') %>%
+      left_join(cluster_df) %>%
+      mutate(cluster = factor(cluster))
+    
+    
+    boxplot_tpm <- ggplot(spliceosome_gsva_scores, 
+                          aes(x = reorder(plot_group, score, FUN = median, na.rm = TRUE), 
+                              y = score, 
+                              fill = plot_group)) +
+      geom_boxplot(outlier.shape = NA, alpha = 0.5) +
+      geom_jitter(width = 0.2, size = 2, shape = 21, color = "black", alpha = 0.7) +
+      labs(x = "Histology", y = "Spliceosome GSVA Score") +
+      theme_Publication() +
+      theme(
+        legend.position = "none",
+        axis.text.x = element_text(angle = 75, hjust = 1)
+      ) +
+      scale_fill_manual(values = mycolors[['Histology']]) +
+      scale_x_discrete(
+        labels = function(x) sapply(x, function(l) str_wrap(l, width = 22))
+      )
+    
+    # Save plot as PDF
+    pdf(file.path(paste0(plot_dir, "/spliceosome-gsva-histology-", libtype, ".pdf")), 
+        width = 8, height = 6)
+    print(boxplot_tpm)
+    dev.off()
+    
+    boxplot_tpm_cluster <- ggplot(spliceosome_gsva_scores, 
+                                  aes(x = reorder(cluster, score, FUN = median, na.rm = TRUE), 
+                                      y = score)) +
+      geom_boxplot(aes(fill = cluster, group = cluster), outlier.shape = NA, alpha = 0.5) +
+      geom_jitter(aes(fill = plot_group), width = 0.2, size = 2, shape = 21, color = "black", alpha = 0.7) + # Add actual data points
+      labs(x = "Cluster", y = "Spliceosome GSVA Score", fill = "Histology") +
+      theme_Publication() + 
+      theme(legend.position = "right") +
+      scale_fill_manual(
+        values = c(mycolors[['Histology']], mycolors[['Cluster']]),
+        breaks = names(mycolors[['Histology']])  # ensures only plot_group shows
+      ) +
+      scale_x_discrete(labels = function(x) sapply(x, function(l) str_wrap(l, width = 22))) # Wrap x-axis labels 
+    
+    # Save plot as PDF
+    pdf(file.path(paste0(plot_dir, "/spliceosome-gsva-clusters-", libtype, ".pdf")), 
+        width = 8, height = 4)
+    print(boxplot_tpm_cluster)
+    dev.off()
+    
 }
