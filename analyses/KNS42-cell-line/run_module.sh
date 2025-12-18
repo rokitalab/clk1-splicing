@@ -11,3 +11,6 @@ Rscript --vanilla 03-plot-qPCR-results.R
 
 ## Run depmap prioritization
 Rscript --vanilla 04-prioritization-depmap-morph.R
+
+# identifies and compares CLK1-correlated transcripts across cell line types
+Rscript --vanilla 05-finding-correlates-in-brain-myeloid.R
