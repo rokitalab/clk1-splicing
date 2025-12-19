@@ -220,6 +220,46 @@ ggsave(file.path(plot_dir, "forest_add_EFS_resection_plot_group_cluster_assignme
        device = "pdf")
 ```
 
+Generate interaction coxph models including extent of tumor resection, plot group, and cluster assignment as covariates
+
+```{r}
+add_model_os <- fit_save_model(metadata %>%
+                                 filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")) %>%
+                                 mutate(plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
+                              terms = "extent_of_tumor_resection+plot_group*cluster+age_at_diagnosis_days",
+                               file.path(results_dir, "cox_OS_int_terms_resection_plot_group_cluster.RDS"),
+                               "multivariate",
+                               years_col = "OS_years",
+                               status_col = "OS_status")
+
+forest_os <- plotForest(readRDS(file.path(results_dir, "cox_OS_int_terms_resection_plot_group_cluster.RDS")))
+
+forest_os
+
+ggsave(file.path(plot_dir, "forest_int_OS_resection_plot_group_cluster_assignment.pdf"),
+       forest_os,
+       width = 25, height = 15, units = "in",
+       device = "pdf")
+
+add_model_efs <- fit_save_model(metadata %>%
+                                 filter(!extent_of_tumor_resection %in% c("Not Reported", "Unavailable")) %>%
+                                 mutate(plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
+                              terms = "extent_of_tumor_resection+plot_group*cluster+age_at_diagnosis_days",
+                               file.path(results_dir, "cox_EFS_int_terms_resection_plot_group_cluster.RDS"),
+                               "multivariate",
+                               years_col = "EFS_years",
+                               status_col = "EFS_status")
+
+forest_efs <- plotForest(readRDS(file.path(results_dir, "cox_EFS_int_terms_resection_plot_group_cluster.RDS")))
+
+forest_efs
+
+ggsave(file.path(plot_dir, "forest_int_EFS_resection_plot_group_cluster_assignment.pdf"),
+       forest_efs,
+       width = 25, height = 15, units = "in",
+       device = "pdf")
+```
+
 
 Subset `metadata` for LGG, and only include clusters with >= 10 samples
 
