@@ -40,16 +40,12 @@ bash run-module.sh
 ├── 07-plot-celltype-dist-by-cluster-histology.R
 ├── 08-plot-cell-fraction-enr-across-clusters.R
 ├── 09-cell-type-PSI-variance.R
-├── README.md
 ├── input
 │   ├── genesets.tsv
 │   ├── lgg-braf-fusion-breakpoint-annotation.tsv
 │   ├── mb_shh_molecular_subtypes.tsv
 │   └── subtype_hex.tsv
 ├── plots
-│   ├── atrt-sample-cluster-subtype-enr-top-1000-events-all_libraries.pdf
-│   ├── atrt-sample-cluster-subtype-enr-top-1000-events-stranded.pdf
-│   ├── atrt-sample-cluster-subtype-enr-top-5000-events-all_libraries.pdf
 │   ├── atrt-sample-cluster-subtype-enr-top-5000-events-stranded.pdf
 │   ├── brain-cell-type-fraction-cluster-enr-heatmap-stranded.pdf
 │   ├── brain-cell-type-fraction-hgg-cluster-enr-heatmap-stranded.pdf
@@ -58,95 +54,42 @@ bash run-module.sh
 │   ├── celltype_max_variance.pdf
 │   ├── celltype_total_variance.pdf
 │   ├── celltype_variance_contribution.pdf
-│   ├── cluster_membership-subtypes_poly-A-stranded.pdf
-│   ├── cluster_membership-subtypes_stranded.pdf
-│   ├── cluster_membership_poly-A-stranded.pdf
 │   ├── cluster_membership_stranded.pdf
-│   ├── cluster_membership-subtypes_poly-A-stranded.pdf
 │   ├── cluster_membership-subtypes_stranded.pdf
-│   ├── hgg-dmg-sample-cluster-subtype-enr-top-1000-events-all_libraries.pdf
-│   ├── hgg-dmg-sample-cluster-subtype-enr-top-1000-events-poly-A_stranded.pdf
-│   ├── hgg-dmg-sample-cluster-subtype-enr-top-1000-events-stranded.pdf
-│   ├── hgg-dmg-sample-cluster-subtype-enr-top-5000-events-all_libraries.pdf
-│   ├── hgg-dmg-sample-cluster-subtype-enr-top-5000-events-poly-A_stranded.pdf
+│   ├── hgg-dmg-cell-proportions-by-cluster.pdf
 │   ├── hgg-dmg-sample-cluster-subtype-enr-top-5000-events-stranded.pdf
-│   ├── lgg-braf-fusion-breakpoint-cluster-enr-top-5000-events-poly-A-stranded.pdf
 │   ├── lgg-braf-fusion-breakpoint-cluster-enr-top-5000-events-stranded.pdf
-│   ├── lgg-sample-cluster-subtype-enr-top-1000-events-all_libraries.pdf
-│   ├── lgg-sample-cluster-subtype-enr-top-1000-events-poly-A_stranded.pdf
-│   ├── lgg-sample-cluster-subtype-enr-top-1000-events-stranded.pdf
-│   ├── lgg-sample-cluster-subtype-enr-top-5000-events-all_libraries.pdf
-│   ├── lgg-sample-cluster-subtype-enr-top-5000-events-poly-A_stranded.pdf
 │   ├── lgg-sample-cluster-subtype-enr-top-5000-events-stranded.pdf
-│   ├── mb-group34-subgroup-cluster-enr-top-5000-events-poly-A-stranded.pdf
 │   ├── mb-group34-subgroup-cluster-enr-top-5000-events-stranded.pdf
-│   ├── mb-sample-cluster-subtype-enr-top-1000-events-all_libraries.pdf
-│   ├── mb-sample-cluster-subtype-enr-top-1000-events-poly-A_stranded.pdf
-│   ├── mb-sample-cluster-subtype-enr-top-1000-events-stranded.pdf
-│   ├── mb-sample-cluster-subtype-enr-top-5000-events-all_libraries.pdf
-│   ├── mb-sample-cluster-subtype-enr-top-5000-events-poly-A_stranded.pdf
 │   ├── mb-sample-cluster-subtype-enr-top-5000-events-stranded.pdf
 │   ├── mb-shh-subgroup-cluster-enr-top-5000-events-stranded.pdf
-│   ├── sample-cluster-histology-enr-top-1000-events-all_libraries.pdf
-│   ├── sample-cluster-histology-enr-top-1000-events-poly-A_stranded.pdf
-│   ├── sample-cluster-histology-enr-top-1000-events-stranded.pdf
-│   ├── sample-cluster-histology-enr-top-5000-events-all_libraries.pdf
-│   ├── sample-cluster-histology-enr-top-5000-events-poly-A_stranded.pdf
 │   ├── sample-cluster-histology-enr-top-5000-events-stranded.pdf
-│   ├── sample-psi-heatmap-top-1000-events-all_libraries.pdf
-│   ├── sample-psi-heatmap-top-1000-events-poly-A_stranded.pdf
-│   ├── sample-psi-heatmap-top-1000-events-stranded.pdf
-│   ├── sample-psi-heatmap-top-5000-events-all_libraries.pdf
-│   ├── sample-psi-heatmap-top-5000-events-poly-A_stranded.pdf
 │   ├── sample-psi-heatmap-top-5000-events-stranded.pdf
 │   ├── spliceosome-gsva-clusters-stranded.pdf
 │   ├── spliceosome-gsva-histology-stranded.pdf
-│   ├── top5_pathways_poly-A-stranded.pdf
 │   └── top5_pathways_stranded.pdf
 ├── README.md
 ├── results
 │   ├── all_gsva_de_results_stranded.tsv
-│   ├── cell-type-variance-top-5000-events-stranded.tsv
 │   ├── cell-proportion-estimate-stranded.tsv
-│   ├── cluster_1_pathway_poly-A-stranded.tsv
+│   ├── cell-type-variance-top-5000-events-stranded.tsv
 │   ├── cluster_1_pathway_stranded.tsv
 │   ├── cluster_10_pathway_stranded.tsv
-│   ├── cluster_11_pathway_stranded.tsv
-│   ├── cluster_2_pathway_poly-A-stranded.tsv
 │   ├── cluster_2_pathway_stranded.tsv
-│   ├── cluster_3_pathway_poly-A-stranded.tsv
 │   ├── cluster_3_pathway_stranded.tsv
-│   ├── cluster_4_pathway_poly-A-stranded.tsv
 │   ├── cluster_4_pathway_stranded.tsv
-│   ├── cluster_5_pathway_poly-A-stranded.tsv
 │   ├── cluster_5_pathway_stranded.tsv
-│   ├── cluster_6_pathway_poly-A-stranded.tsv
 │   ├── cluster_6_pathway_stranded.tsv
-│   ├── cluster_7_pathway_poly-A-stranded.tsv
 │   ├── cluster_7_pathway_stranded.tsv
-│   ├── cluster_8_pathway_poly-A-stranded.tsv
 │   ├── cluster_8_pathway_stranded.tsv
-│   ├── cluster_9_pathway_poly-A-stranded.tsv
 │   ├── cluster_9_pathway_stranded.tsv
 │   ├── colorder-top-5000-events-stranded.txt
-│   ├── gsva_output_poly-A-stranded.tsv
 │   ├── gsva_output_stranded.tsv
 │   ├── hallmark_kegg_splice_geneset_mrna.rds
-│   ├── lgg-braf-fusion-cluster-membership-poly-A-stranded.tsv
 │   ├── lgg-braf-fusion-cluster-membership-stranded.tsv
-│   ├── mb-subgroup-cluster-membership-poly-A-stranded.tsv
 │   ├── mb-subgroup-cluster-membership-stranded.tsv
-│   ├── psi-matrix-top-1000-events-all_libraries.rds
-│   ├── psi-matrix-top-1000-events-poly-A_stranded.rds
 │   ├── psi-matrix-top-1000-events-stranded.rds
-│   ├── psi-matrix-top-5000-events-all_libraries.rds
-│   ├── psi-matrix-top-5000-events-poly-A_stranded.rds
 │   ├── psi-matrix-top-5000-events-stranded.rds
-│   ├── sample-cluster-metadata-top-1000-events-all_libraries.tsv
-│   ├── sample-cluster-metadata-top-1000-events-poly-A_stranded.tsv
-│   ├── sample-cluster-metadata-top-1000-events-stranded.tsv
-│   ├── sample-cluster-metadata-top-5000-events-all_libraries.tsv
-│   ├── sample-cluster-metadata-top-5000-events-poly-A_stranded.tsv
 │   └── sample-cluster-metadata-top-5000-events-stranded.tsv
 ├── run-module.sh
 └── util
