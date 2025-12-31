@@ -40,7 +40,8 @@ clk1_ex4_psi_file <- file.path(analysis_dir, "CLK1-splicing_correlations", "resu
 
 deseq2_morph_file <- file.path(root_dir,"analyses/CLK1-splicing-impact-morpholino","results","ctrl_vs_treated.de.tsv")
 rmats_tsv_file <- file.path(data_dir,"ctrl-vs-morpholino-merged-rmats.tsv")
-clk1_consens_targets_file<-file.path(root_dir,"analyses/KNS42-cell-line/results/clk1_consensus_targets.tsv")
+clk1_consens_targets_file <- file.path(root_dir,"analyses/KNS42-cell-line/results/clk1_consensus_targets.tsv")
+clk1_correlated_genes_file <- file.path(root_dir, "analyses/KNS42-cell-line/results/CLK1_correlated_genes_comprehensive.tsv")
 func_sites_SE_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","splicing_events.morpho.SE.intersectUnip.ggplot.txt")
 func_sites_A5SS_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","splicing_events.morpho.A5SS.intersectUnip.ggplot.txt")
 func_sites_A3SS_morpho_tsv_file <- file.path(analysis_dir,"CLK1-splicing-impact-morpholino","results","splicing_events.morpho.A3SS.intersectUnip.ggplot.txt")
@@ -245,11 +246,13 @@ write.xlsx(list_s4_table,
            keepNA=TRUE)
 
 ## Table 5 Cluster expression correlations
+clk1_cor_df <- read_tsv(clk1_correlated_genes_file)
 cluster_cor_df <- read_tsv(cluster_cor_file)
 hist_cor_df <- read_tsv(hist_cor_file)
 
 list_s5_table <- list(A_cluster_exp_cor = cluster_cor_df,
-                      B_hist_exp_cor = hist_cor_df)
+                      B_hist_exp_cor = hist_cor_df,
+                      C_clk1_exp_cor_genes_depmap = clk1_cor_df)
 
 write.xlsx(list_s5_table,
            table_s5_file,

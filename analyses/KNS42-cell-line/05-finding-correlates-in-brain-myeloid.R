@@ -312,7 +312,9 @@ gene_table <- tibble(transcript = all_transcripts) %>%
 
 # Save as tab-delimited file
 gene_table %>%
-  filter(!is.na(cell_lines)) %>%
+  filter(!is.na(cell_lines),
+         # remove this since it cor to itself is 1.0
+         transcript != "CLK1 (ENST00000321356)") %>%
   write_tsv(file.path(results_dir, "CLK1_correlated_genes_comprehensive.tsv")
 )
 
