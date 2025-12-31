@@ -121,40 +121,69 @@ for (group in names(vars)){
     }
     
   }
-  
+
   # calculate by-cluster false discovery rates
-  fdr_mat <- apply(p_mat, 2, function(x) p.adjust(x, "BH"))
+  fdr_mat <- apply(p_mat, 2, function(x) p.adjust(x, method = "BH"))
+  fdr_mat <- as.matrix(fdr_mat)
+  rownames(fdr_mat) <- rownames(p_mat)
+  colnames(fdr_mat) <- colnames(p_mat)
   
-  # For plotting, we can limit to most significantly correlated SFs
-  gois_level <- unique(as.vector(apply(fdr_mat, 2, function(x) head(names(sort(x)), n = 5))))
-  plot_mat <- cor_mat[gois_level,]
-  plot_mat <- plot_mat[rowSums(is.nan(plot_mat)) == 0,]
+  fdr_thresh <- 0.05
+  r_cutoff   <- 0.50
+  max_genes  <- 50
   
-  fdr_plot_mat <- fdr_mat[rownames(plot_mat),]
+  # align fdr_mat and cor_mat (shared genes + shared clusters)
+  common_genes <- intersect(rownames(fdr_mat), rownames(cor_mat))
+  common_cols  <- intersect(colnames(fdr_mat), colnames(cor_mat))
+  
+  fdr2 <- fdr_mat[common_genes, common_cols, drop = FALSE]
+  cor2 <- cor_mat[common_genes, common_cols, drop = FALSE]
+  
+  # genes that pass both thresholds in at least one cluster
+  pass <- (fdr2 < fdr_thresh) & (abs(cor2) >= r_cutoff)
+  keep <- rownames(fdr2)[rowSums(pass, na.rm = TRUE) > 0]
+  
+  # if still too many, rank by best (lowest) FDR among cells that also pass r cutoff
+  if (length(keep) > max_genes) {
+    best_fdr <- sapply(keep, function(g) {
+      idx <- abs(cor2[g, ]) >= r_cutoff
+      min(fdr2[g, idx], na.rm = TRUE)
+    })
+    keep <- names(sort(best_fdr))[1:max_genes]
+  }
+  
+  gois_level <- keep
+  
+  plot_mat <- cor2[gois_level, , drop = FALSE]
+  plot_mat <- plot_mat[rowSums(is.nan(plot_mat)) == 0, , drop = FALSE]
+  
+  fdr_plot_mat <- fdr2[rownames(plot_mat), colnames(plot_mat), drop = FALSE]
   
   col_fun <- colorRamp2(c(-1, 0, 1), c("blue", "white", "red"))
   
   # Create the heatmap
-  heatmap <- Heatmap(t(plot_mat),
-                     name = "Pearson\nCorrelation",
-                     col = col_fun,
-                     show_row_names = TRUE,
-                     show_column_names = TRUE,
-                     cluster_rows = TRUE,
-                     cluster_columns = TRUE,
-                     cell_fun = function(j, i, x, y, w, h, fill) {
-                       if(t(fdr_plot_mat)[i, j] < 1e-5) {
-                         grid.text("**", x, y)
-                       } else if(t(fdr_plot_mat)[i, j] < 0.05) {
-                         grid.text("*", x, y)
-                       }
-                     }
+  heatmap <- Heatmap(
+    plot_mat,
+    name = "Pearson\nCorrelation",
+    col = col_fun,
+    show_row_names = TRUE,
+    show_column_names = TRUE,
+    column_names_rot = 70,
+    cluster_rows = TRUE,
+    cluster_columns = TRUE,
+    cell_fun = function(j, i, x, y, w, h, fill) {
+      if (fdr_plot_mat[i, j] < 1e-5) {
+        grid.text("**", x, y)
+      } else if (fdr_plot_mat[i, j] < 0.05) {
+        grid.text("*", x, y)
+      }
+    }
   )
   
   # save to output
   pdf(NULL)
   pdf(file.path(plots_dir, glue::glue("sbi-sf-correlation-heatmap-by-{group}.pdf")),
-      width = 14, height = 5)
+      width = 5, height = 13)
   
   print(heatmap)
   
@@ -185,7 +214,8 @@ for (group in names(vars)){
   sbi_sf_cor_df <- sbi_sf_cor_df %>%
     left_join(sbi_sf_p_df) %>%
     left_join(sbi_sf_fdr_df) %>%
-    filter(!is.na(pearson_r)) %>%
+    filter(!is.na(pearson_r),
+           pearson_fdr < 0.05) %>%
     arrange(desc(abs(pearson_r)))
   
   write_tsv(sbi_sf_cor_df,
