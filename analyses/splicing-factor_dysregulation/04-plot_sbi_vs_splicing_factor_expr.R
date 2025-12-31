@@ -185,7 +185,8 @@ for (group in names(vars)){
   sbi_sf_cor_df <- sbi_sf_cor_df %>%
     left_join(sbi_sf_p_df) %>%
     left_join(sbi_sf_fdr_df) %>%
-    arrange(desc(pearson_r))
+    filter(!is.na(pearson_r)) %>%
+    arrange(desc(abs(pearson_r)))
   
   write_tsv(sbi_sf_cor_df,
             file.path(results_dir,
