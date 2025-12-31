@@ -130,7 +130,7 @@ for (group in names(vars)){
   
   fdr_thresh <- 0.05
   r_cutoff   <- 0.50
-  max_genes  <- 50
+  max_genes  <- 40
   
   # align fdr_mat and cor_mat (shared genes + shared clusters)
   common_genes <- intersect(rownames(fdr_mat), rownames(cor_mat))
@@ -161,6 +161,22 @@ for (group in names(vars)){
   
   col_fun <- colorRamp2(c(-1, 0, 1), c("blue", "white", "red"))
   
+  # set some separate params
+  if (group == "clusters") {
+    set_width = 6
+    set_height = 8
+    set_rotation = 0
+    set_title = "Cluster"
+  }
+  
+  if (group == "plot_groups") {
+    set_width = 7
+    set_height = 11
+    set_rotation = 70
+    set_title = "Histology"
+  }
+  
+  
   # Create the heatmap
   heatmap <- Heatmap(
     plot_mat,
@@ -168,7 +184,11 @@ for (group in names(vars)){
     col = col_fun,
     show_row_names = TRUE,
     show_column_names = TRUE,
-    column_names_rot = 70,
+    row_names_gp = gpar(fontface = "italic"), 
+    column_names_rot = set_rotation,
+    column_title = set_title,
+    column_title_side = "bottom",
+    column_title_gp = gpar(fontface = "bold"),
     cluster_rows = TRUE,
     cluster_columns = TRUE,
     cell_fun = function(j, i, x, y, w, h, fill) {
@@ -183,7 +203,7 @@ for (group in names(vars)){
   # save to output
   pdf(NULL)
   pdf(file.path(plots_dir, glue::glue("sbi-sf-correlation-heatmap-by-{group}.pdf")),
-      width = 5, height = 13)
+      width = set_width, height = set_height)
   
   print(heatmap)
   
