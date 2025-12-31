@@ -290,9 +290,9 @@ list_s6_table <- list(A_deseq2_morp = deseq2_morpholino_df,
                       F_ds_RI = ds_events_RI_df,
                       G_ds_MXE = ds_events_MXE_df,
                       H_de_ds_genes = de_ds_genes_file_df,
-                      I_primers = primers_df,
+                      I_clk1_targets = consensus_targets_df,
                       J_intersect_de_ds_crispr = ds_de_crispr_df,
-                      K_clk1_targets = consensus_targets_df)
+                      K_primers = primers_df)
 
 write.xlsx(list_s6_table,
            table_s6_file,
