@@ -325,8 +325,6 @@ for (each in models2) {
          device = "pdf")
 }
   
-
-
 add_model_efs <- fit_save_model(metadata[!metadata$extent_of_tumor_resection %in% c("Not Reported", "Unavailable"),],
                               terms = "extent_of_tumor_resection+lgg_group+cluster+age_at_diagnosis_years+spliceosome_gsva_score+CLK1_Ex4_TPM",
                                file.path(results_dir, "cox_EFS_additive_terms_resection_lgg_group_cluster_spliceosome_score_CLK1_Ex4_TPM.RDS"),
@@ -520,7 +518,7 @@ add_model_cluster_efs <- fit_save_model(cluster_df %>%
    dplyr::mutate(
     plot_group = forcats::fct_drop(plot_group),
     plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed"),
-    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
+    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", "Neurofibroma plexiform", after = 0)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_TPM_group",
                                file.path(results_dir, paste0( "cox_EFS_additive_terms_subtype_", safe_each, "_clk1_tpm_group.RDS")),
                                "multivariate",
@@ -541,7 +539,8 @@ add_model_cluster_os <- fit_save_model(cluster_df %>%
    dplyr::mutate(
     plot_group = forcats::fct_drop(plot_group),
     plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed"),
-    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = Inf)),
+    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = Inf),
+    plot_group = forcats::fct_relevel(plot_group, "Other high-grade glioma", "Neurofibroma plexiform", after = 0)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_TPM_group",
                                file.path(results_dir, paste0( "cox_OS_additive_terms_subtype_", safe_each, "_clk1_tpm_group.RDS")),
                                "multivariate",
@@ -564,7 +563,7 @@ add_model_cluster_efs <- fit_save_model(cluster_df %>%
    dplyr::mutate(
     plot_group = forcats::fct_drop(plot_group),
     plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed"),
-    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
+    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", "Neurofibroma plexiform", after = 0)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_PSI_group",
                                file.path(results_dir, paste0( "cox_EFS_additive_terms_subtype_", safe_each, "_clk1_psi_group.RDS")),
                                "multivariate",
@@ -585,8 +584,9 @@ add_model_cluster_os <- fit_save_model(cluster_df %>%
    dplyr::mutate(
     plot_group = forcats::fct_drop(plot_group),
     plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed"),
-    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = Inf)),
-                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_PSI_group",
+    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = Inf),
+    plot_group = forcats::fct_relevel(plot_group, "Other high-grade glioma", "Neurofibroma plexiform", after = 0)),
+                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_PSI_group",
                                file.path(results_dir, paste0( "cox_OS_additive_terms_subtype_", safe_each, "_clk1_psi_group.RDS")),
                                "multivariate",
                                years_col = "OS_years",
@@ -607,7 +607,7 @@ add_model_cluster_efs <- fit_save_model(cluster_df %>%
    dplyr::mutate(
     plot_group = forcats::fct_drop(plot_group),
     plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed"),
-    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
+    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", "Neurofibroma plexiform", after = 0)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_Ex4_TPM",
                                file.path(results_dir, paste0( "cox_EFS_additive_terms_subtype_", safe_each, "_clk1_tpm.RDS")),
                                "multivariate",
@@ -627,8 +627,9 @@ add_model_cluster_os <- fit_save_model(cluster_df %>%
    dplyr::mutate(
     plot_group = forcats::fct_drop(plot_group),
     plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed"),
-    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = Inf)),
-                              terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_Ex4_TPM",
+    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = Inf),
+    plot_group = forcats::fct_relevel(plot_group, "Other high-grade glioma", "Neurofibroma plexiform", after = 0)),
+                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_Ex4_TPM",
                                file.path(results_dir, paste0( "cox_OS_additive_terms_subtype_", safe_each, "_clk1_tpm.RDS")),
                                "multivariate",
                                years_col = "OS_years",
@@ -649,7 +650,7 @@ add_model_cluster_efs <- fit_save_model(cluster_df %>%
    dplyr::mutate(
     plot_group = forcats::fct_drop(plot_group),
     plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed"),
-    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = 0)),
+    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", "Neurofibroma plexiform", after = 0)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_ex4_PSI",
                                file.path(results_dir, paste0( "cox_EFS_additive_terms_subtype_", safe_each, "_clk1_psi.RDS")),
                                "multivariate",
@@ -669,7 +670,8 @@ add_model_cluster_os <- fit_save_model(cluster_df %>%
    dplyr::mutate(
     plot_group = forcats::fct_drop(plot_group),
     plot_group = forcats::fct_lump_min(plot_group, min = 3, other_level = "Collapsed"),
-    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = Inf)),
+    plot_group = forcats::fct_relevel(plot_group, "Low-grade glioma", after = Inf),
+    plot_group = forcats::fct_relevel(plot_group, "Other high-grade glioma", "Neurofibroma plexiform", "Ependymoma", after = 0)),
                               terms = "extent_of_tumor_resection+age_at_diagnosis_years+plot_group+CLK1_ex4_PSI",
                                file.path(results_dir, paste0( "cox_OS_additive_terms_subtype_", safe_each, "_clk1_psi.RDS")),
                                "multivariate",
