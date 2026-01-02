@@ -13,18 +13,14 @@ analysis_dir <- file.path(root_dir, "analyses", "sample-psi-clustering")
 results_dir <- file.path(analysis_dir, "results")
 
 # Set file paths
-hist_file <- file.path(root_dir, "analyses",
-                       "cohort_summary", "results",
-                       "histologies-plot-group.tsv")
+hist_file <- file.path(data_dir, "histologies-plot-group.tsv")
 
 indep_file <- file.path(data_dir, "independent-specimens.rnaseqpanel.primary.tsv")
 
 rmats_file <- file.path(data_dir, "splice-events-rmats.tsv.gz")
 
 stranded_samples <- read_tsv(hist_file) %>%
-  dplyr::filter(cohort == "PBTA",
-                experimental_strategy == "RNA-Seq",
-                RNA_library == "stranded") %>%
+  dplyr::filter(experimental_strategy == "RNA-Seq") %>%
   pull(Kids_First_Biospecimen_ID)
 
 include_samples <- read_tsv(indep_file) %>%

@@ -23,7 +23,7 @@ source(file.path(analysis_dir,
 psi_mat_file <- file.path(results_dir,
                           "pbta-splice-event-psis.RDS")
 
-histologies_file <- file.path(root_dir, "analyses", "cohort_summary", "results", "histologies-plot-group.tsv")
+histologies_file <- file.path(data_dir, "histologies-plot-group.tsv")
 
 # wrangle data
 
