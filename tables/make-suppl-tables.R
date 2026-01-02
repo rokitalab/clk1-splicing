@@ -60,8 +60,8 @@ ds_de_crispr_events_file <-  file.path(analysis_dir,"CLK1-splicing-impact-morpho
 table_s1_file <- file.path(supp_tables_dir, "TableS1-histologies.xlsx")
 table_s2_file <- file.path(supp_tables_dir, "TableS2-histology-specific-splice-events.xlsx")
 table_s3_file <- file.path(supp_tables_dir, "TableS3-SF-dysreg.xlsx")
-table_s4_file <- file.path(supp_tables_dir, "TableS4-functional-sites.xlsx")
-table_s5_file <- file.path(supp_tables_dir, "TableS5-SF-expr-correlations.xlsx")
+table_s4_file <- file.path(supp_tables_dir, "TableS4-SF-expr-correlations.xlsx")
+table_s5_file <- file.path(supp_tables_dir, "TableS5-functional-sites.xlsx")
 table_s6_file <- file.path(supp_tables_dir, "TableS6-CLK1-ex4-splicing-impact-morpholino.xlsx")
 
 ## write table for histologies
@@ -221,7 +221,21 @@ write.xlsx(list_s3_table,
            overwrite=TRUE,
            keepNA=TRUE)
 
-## Table 4 Differential splicing events impacting functional sites
+## Table 4 Cluster expression correlations
+clk1_cor_df <- read_tsv(clk1_correlated_genes_file)
+cluster_cor_df <- read_tsv(cluster_cor_file)
+hist_cor_df <- read_tsv(hist_cor_file)
+
+list_s4_table <- list(A_cluster_exp_cor = cluster_cor_df,
+                      B_hist_exp_cor = hist_cor_df,
+                      C_clk1_exp_cor_genes_depmap = clk1_cor_df)
+
+write.xlsx(list_s4_table,
+           table_s4_file,
+           overwrite=TRUE,
+           keepNA=TRUE)
+
+## Table 5 Differential splicing events impacting functional sites
 ## sheet 1, exon skipping events
 skipping_events_df <- vroom(func_sites_skipping_file)
 
@@ -235,24 +249,10 @@ kinase_events_df <- vroom(kinase_func_sites_file)
 clk1_ex4_psi_df <- vroom(clk1_ex4_psi_file)
 
 # Combine and output
-list_s4_table <- list(A_ds_skipping = skipping_events_df,
+list_s5_table <- list(A_ds_skipping = skipping_events_df,
                       B_ds_inclusion = inclusion_events_df,
                       C_prioritized_sf_kinases = kinase_events_df,
                       D_clk1_ex4_psi = clk1_ex4_psi_df)
-
-write.xlsx(list_s4_table,
-           table_s4_file,
-           overwrite=TRUE,
-           keepNA=TRUE)
-
-## Table 5 Cluster expression correlations
-clk1_cor_df <- read_tsv(clk1_correlated_genes_file)
-cluster_cor_df <- read_tsv(cluster_cor_file)
-hist_cor_df <- read_tsv(hist_cor_file)
-
-list_s5_table <- list(A_cluster_exp_cor = cluster_cor_df,
-                      B_hist_exp_cor = hist_cor_df,
-                      C_clk1_exp_cor_genes_depmap = clk1_cor_df)
 
 write.xlsx(list_s5_table,
            table_s5_file,
