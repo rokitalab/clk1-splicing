@@ -31,7 +31,7 @@ psi_mat <- readRDS(psi_mat_file)
 
 histologies <- read_tsv(histologies_file) %>%
   dplyr::mutate(molecular_subtype = case_when(
-    short_histology == "Oligodendroglioma" ~ "OG",
+    short_histology == "Oligodendroglioma" ~ "ODG",
     TRUE ~ molecular_subtype
   ))
 
