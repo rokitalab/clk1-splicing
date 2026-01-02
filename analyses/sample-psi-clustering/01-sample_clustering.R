@@ -23,13 +23,17 @@ source(file.path(analysis_dir,
 psi_mat_file <- file.path(results_dir,
                           "pbta-splice-event-psis.RDS")
 
-histologies_file <- file.path(root_dir, "analyses", "cohort_summary", "results", "histologies-plot-group.tsv")
+histologies_file <- file.path(data_dir, "histologies-plot-group.tsv")
 
 # wrangle data
 
 psi_mat <- readRDS(psi_mat_file)
 
-histologies <- read_tsv(histologies_file)
+histologies <- read_tsv(histologies_file) %>%
+  dplyr::mutate(molecular_subtype = case_when(
+    short_histology == "Oligodendroglioma" ~ "ODG",
+    TRUE ~ molecular_subtype
+  ))
 
 plotgroup_palette <- unique(histologies$plot_group_hex)
 names(plotgroup_palette) <- unique(histologies$plot_group)
@@ -105,7 +109,7 @@ for (library in names(library_type)){
     cluster_df <- cluster_df %>%
       left_join(hist_ct) %>%
       dplyr::mutate(plot_group_n = glue::glue("{plot_group} (n = {group_n})")) %>%
-      dplyr::mutate(plot_group_n = str_replace(plot_group_n, "Atypical Teratoid Rhabdoid Tumor",
+      dplyr::mutate(plot_group_n = str_replace(plot_group_n, "Atypical teratoid rhabdoid tumor",
                                                "ATRT"))
     
     # define plot group palette
@@ -200,6 +204,7 @@ for (library in names(library_type)){
       dplyr::mutate(molecular_subtype = str_replace(molecular_subtype, ", TP53", "")) %>%
       dplyr::mutate(mol_sub_group = case_when(
         grepl("IHG", molecular_subtype) ~ "IHG",
+        grepl("DIPG", molecular_subtype) ~ str_replace(molecular_subtype, "DIPG", "DMG"),
         TRUE ~ molecular_subtype
       ))
     
