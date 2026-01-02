@@ -117,12 +117,14 @@ for (each in gene_list_names) {
     dplyr::filter(Hugo_Symbol %in% gene_list[[each]],
                   Tumor_Sample_Barcode  %in% sample_list[[sample]],
                   Variant_Classification %in% names(colors)) %>%
-    dplyr::mutate(pred_deleterious = case_when((grepl("dam", PolyPhen) | grepl("deleterious\\(", SIFT)) ~ "yes",
-                                   PolyPhen == "" & SIFT == "" ~ "yes",
-                                   TRUE ~ "no")) #%>%
-    #dplyr::filter(pred_deleterious == "yes")
+    dplyr::mutate(pred_deleterious = case_when((grepl("dam", PolyPhen) & grepl("deleterious\\(", SIFT)) ~ "yes",
+                                   TRUE ~ "no")) %>%
+    dplyr::filter(pred_deleterious == "yes")
   
-    print(nrow(maf_filtered))
+    print(each) # which gene list
+    print(sample) # which cohort
+    print(length(unique(maf_filtered$Hugo_Symbol))) # n genes
+    print(length(unique(maf_filtered$Tumor_Sample_Barcode))) # n tumors with mutations
     write_tsv(maf_filtered, file.path(paste0(results_dir, "/", each, "-", sample, "-samples.maf")))
     
   }

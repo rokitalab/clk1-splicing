@@ -1,6 +1,6 @@
 # Oncoprint
 
-Module authors: Ammar Naqvi (@naqvia), Jo Lynne Rokita (@jharenza)
+Module authors: Ammar Naqvi (@naqvia), Jo Lynne Rokita (@jharenza), Patricia Sullivan (@pj-sullivan)
 
 The purpose of this module is to assess the cohort's mutation status
 
@@ -21,7 +21,7 @@ bash run-oncoprint.sh
 
 ## Scripts
 * `01-oncoprint.R` generates oncoprint with gender, molecular subtype, CNS region and mutation status information across the cohort
-* `02-SF-mutations.R` extracts mutations in HUGO spliceosome or all SFs for cluster 7 and all samples.
+* `02-SF-mutations.R` extracts predicted damaging/deleterious mutations in HUGO spliceosome or all SFs for cluster 7 and all samples.
 
 ## Directory Structure
 .
@@ -37,7 +37,6 @@ bash run-oncoprint.sh
 │   ├── oncoprint-hist-cluster.pdf
 │   ├── oncoprint-hist-cluster1.pdf
 │   ├── oncoprint-hist-cluster10.pdf
-│   ├── oncoprint-hist-cluster11.pdf
 │   ├── oncoprint-hist-cluster2.pdf
 │   ├── oncoprint-hist-cluster3.pdf
 │   ├── oncoprint-hist-cluster4.pdf

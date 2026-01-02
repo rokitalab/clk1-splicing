@@ -49,6 +49,11 @@ fus_file <- file.path(data_dir, "fusion-putative-oncogenic.tsv")
 cluster_file <- file.path(root_dir, "analyses", 
                           "sample-psi-clustering", "results", 
                           "sample-cluster-metadata-top-5000-events-stranded.tsv")
+sf_file <- file.path(root_dir, "analyses","splicing-factor_dysregulation/input","splicing_factors.txt")
+hugo_file <- file.path(input_dir, "hgnc-symbol-check.csv")
+
+# read in files
+histologies_df <- read_tsv(clin_file, guess_max = 100000)
 
 ## color for barplot
 source(file.path(input_dir, "mutation-colors.R"))
@@ -59,15 +64,24 @@ histologies_df <- read_tsv(clin_file, guess_max = 100000) %>%
                                            cancer_predispositions == "Li-Fraumeni syndrome (TP53)" ~ "LFS",
                                            cancer_predispositions == "Other inherited conditions NOS" ~ "Other",
                                            Kids_First_Participant_ID == "PT_3CHB9PK5" ~ "CMMRD",
-                                           #  Kids_First_Participant_ID == "PT_D5KKHPAE" ~ "BRCA1",
-                                           # Kids_First_Participant_ID == "PT_7WT6P5M8" ~ "PNKP",
                                            Kids_First_Participant_ID == "PT_JNEV57VK" ~ "LS",
                                            Kids_First_Participant_ID == "PT_ZH3SBJPZ" ~ NA_character_,
                                            TRUE ~ NA_character_))
 
-goi <- read_csv(goi_file) %>%
-  pull(HGAT) %>%
+## get splicing factor list + CLKs and SRPKs
+hugo_genes <- read_csv(hugo_file, skip = 1) %>%
+  pull(`Approved symbol`)
+sf_genes <- readLines(sf_file) %>%
   unique()
+
+goi <- read_csv(goi_file)%>%
+  select(LGAT, `Embryonal tumor`, HGAT, Other) %>%
+  pivot_longer(everything(), values_to = "gene") %>%
+  pull(gene) %>%
+  unique()
+
+# cat genes
+all_goi <- unique(c(hugo_genes, sf_genes, goi))
 
 cluster_df <- read_tsv(cluster_file) %>%
   rename(Kids_First_Biospecimen_ID = sample_id)
@@ -80,6 +94,9 @@ matched_dna_samples <- histologies_df %>%
   filter(experimental_strategy %in% c("WGS", "WXS", "Targeted Panel"),
          match_id %in% cohort_hist$match_id)
 
+# n DNA samples - 657
+print(length(unique(matched_dna_samples$Kids_First_Participant_ID)))
+
 tmb_df <- read_tsv(tmb_file) %>%
   filter(Tumor_Sample_Barcode %in% matched_dna_samples$Kids_First_Biospecimen_ID) %>%
   dplyr::rename(Kids_First_Biospecimen_ID = Tumor_Sample_Barcode) %>%
@@ -88,10 +105,11 @@ tmb_df <- read_tsv(tmb_file) %>%
                                 tmb >=10 & tmb < 100 ~ "Hypermutant",
                                 tmb >= 100 ~ "Ultra-hypermutant"))
 
-# read in cnv file and reformat to add to maf
+# read in cnv file and reformat to add to maf, collapse to autosomes only bc of false dels in X:
 cnv_df <- read_tsv(cnv_file) %>%
-  # select only goi, DNA samples of interest
-  filter(gene_symbol %in% goi,
+  # select all goi, DNA samples of interest
+  filter(!grepl("Xp|Xq|Yp|Yq", cytoband),
+         gene_symbol %in% all_goi,
          biospecimen_id %in% matched_dna_samples$Kids_First_Biospecimen_ID) %>%
   mutate(Variant_Classification = case_when(status %in% c("amplification", "Amplification") ~ "Amp",
                                             copy_number > 2*ploidy ~ "Amp",
@@ -104,7 +122,7 @@ cnv_df <- read_tsv(cnv_file) %>%
 
 # read in fusion file and reformat to add to maf
 fus_df <- read_tsv(fus_file) %>%
-  # select only goi, RNA samples of interest
+  # select all goi, RNA samples of interest
   filter(Sample %in% cohort_hist$Kids_First_Biospecimen_ID) %>%
   mutate(Variant_Classification = "Fusion") %>%
   dplyr::rename(Kids_First_Biospecimen_ID = Sample) %>%
@@ -114,7 +132,7 @@ fus_df <- read_tsv(fus_file) %>%
                names_to = "colname", 
                values_to = "Hugo_Symbol") %>%
   filter(!is.na(Hugo_Symbol),
-         Hugo_Symbol %in% goi) %>%
+         Hugo_Symbol %in% all_goi) %>%
   select(Kids_First_Biospecimen_ID, Hugo_Symbol, Variant_Classification) %>%
   unique()
 
@@ -152,10 +170,10 @@ maf <- cons_maf %>%
 
 ## filter maf for samples with RNA splicing
 maf_filtered <- maf %>%
-  dplyr::filter(Hugo_Symbol %in% goi,
+  dplyr::filter(Hugo_Symbol %in% all_goi,
                 Tumor_Sample_Barcode %in% matched_dna_samples$Kids_First_Biospecimen_ID,
                 Variant_Classification %in% names(colors)) %>%
-  dplyr::mutate(keep = case_when(Variant_Classification == "Missense_Mutation" & (grepl("dam", PolyPhen) | grepl("deleterious\\(", SIFT)) ~ "yes",
+  dplyr::mutate(keep = case_when(Variant_Classification == "Missense_Mutation" & (grepl("dam", PolyPhen) & grepl("deleterious\\(", SIFT)) ~ "yes",
                                  Variant_Classification == "Missense_Mutation" & PolyPhen == "" & SIFT == "" ~ "yes",
                                  Variant_Classification != "Missense_Mutation" ~ "yes",
                                  TRUE ~ "no")) %>%
@@ -194,6 +212,10 @@ rownames(gene_matrix) <- gene_matrix$Hugo_Symbol
 
 gene_matrix <- gene_matrix %>%
   select(-c(Sort_Order, Hugo_Symbol)) 
+
+# how many of top 30 genes are sfs? 
+sort(unique(intersect(rownames(gene_matrix[1:30,]), unique(c(sf_genes, hugo_genes)))))
+#  "CHD2"   "CHD3"   "DDX1"   "FIP1L1" "MACF1"  "PRKDC"  "QKI"
 
 # mutate the dataframe for plotting
 histologies_df_sorted <- cohort_hist %>%
@@ -359,6 +381,8 @@ for (group_n in unique(histologies_df_sorted2$Cluster)) {
                                            "Other CNS embryonal tumor" =        "#b08ccf",       
                                            "Germ cell tumor" =                  "#0074d9"),
                            "Predisposition" = c("LFS" = "red",
+                                                "LS" = "#7fbf00",
+                                                "CMMRD" = "#0074d9",
                                                 "NF-1" = "black",
                                                 "Other" = "grey"),
                            "CNS Region" = loc_cols,
