@@ -1,5 +1,5 @@
 ################################################################################
-# 07-plot-cell-fraction-enr-across-clusters.R
+# 08-plot-cell-fraction-enr-across-clusters.R
 # Plot the distribution of high- and low-expressed cell type groups across splicing clusters
 #
 # Author: Ryan Corbett
@@ -221,7 +221,7 @@ plot_cols <- stranded_cluster_long_df %>%
 hgg_barplot <- stranded_cluster_long_df %>%
   dplyr::mutate(cluster = as.factor(cluster)) %>%
   dplyr::filter(plot_group %in% c("Diffuse midline glioma", "Other high-grade glioma"),
-                cluster %in% c(2, 6, 7)) %>%
+                cluster %in% c(2, 3, 6, 7)) %>%
   
   ggplot(aes(x = cluster, y = proportion_estimates, fill = plot_group)) +
   geom_boxplot(outlier.shape = NA) +
@@ -234,6 +234,7 @@ hgg_barplot <- stranded_cluster_long_df %>%
   ) +
   stat_compare_means(method = "wilcox",
                      comparisons = list(c("7", "2"),
+                                        c("7", "3"),
                                         c("7", "6")),
                      label = "p.signif",
                      method.args = list(alternative = "two.sided"),
@@ -249,7 +250,7 @@ ggsave(file.path(plots_dir,
        hgg_barplot,
        width = 10, height = 6)
 
-# plot cluster 8 cell proportions by histology
+# plot cluster 7 cell proportions by histology
 cluster7_barplot <- stranded_cluster_long_df %>%
   dplyr::mutate(cluster = as.factor(cluster)) %>%
   dplyr::filter(cluster == 7,
