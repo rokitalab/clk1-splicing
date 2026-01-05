@@ -1,9 +1,9 @@
 ################################################################################
-# 07-plot-clk1-ex4-transcripts-hgg-normals 
+# 07-plot-clk1-ex4-transcripts-normals 
 # Plot CLK1 exon 4 transcript expression with normals/ctrls
 #
 # written by Ammar S Naqvi, Patricia Sullivan
-# Usage: Rscript 07-plot-clk1-ex4-transcripts-hgg-normals
+# Usage: Rscript 07-plot-clk1-ex4-transcripts-normals.R
 ################################################################################
 
 # Load libraries
@@ -245,7 +245,25 @@ color_pal <- c(
   "Evo-Devo" = "mediumseagreen",
   "GTEx" = "#6ca6da")
 
-# Get stats
+
+# Get stats across cohorts
+stat.tests.cohort <- transcript_expr_CLK1_combined_df %>%
+  rename(clk1_ex4_proportion = proportion) %>%
+  wilcox_test(clk1_ex4_proportion ~ group, p.adjust.method = "BH")
+
+# Get stats for age bins across cohorts
+stat.tests.all <- transcript_expr_CLK1_combined_df %>%
+  rename(clk1_ex4_proportion = proportion) %>%
+  mutate(full_group = paste0(group, ": ", plot_group)) %>%
+  wilcox_test(clk1_ex4_proportion ~ full_group, p.adjust.method = "BH") %>%
+  write_tsv(file = file.path(results_dir, "clk1-exon4-psi-normals-stats.tsv"))
+
+# Save both
+bind_rows(stat.tests.cohort, stat.tests.all) %>%
+  write_tsv(file = file.path(results_dir, "clk1-exon4-psi-normals-stats.tsv"))
+
+
+# Get stats within groups for plot
 stat.tests <- transcript_expr_CLK1_combined_df %>%
   group_by(group) %>%
   wilcox_test(proportion ~ plot_group, p.adjust.method = "BH") %>%
