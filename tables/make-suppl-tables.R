@@ -37,6 +37,7 @@ func_sites_skipping_file <- file.path(analysis_dir, "splicing_events_functional_
 func_sites_inclusion_file <- file.path(analysis_dir, "splicing_events_functional_sites", "results", "splicing_events.total.pos.intersectunip.ggplot.txt") 
 kinase_func_sites_file <- file.path(analysis_dir, "splicing_events_functional_sites", "results", "splicing-factor-kinases-functional_sites.tsv")
 clk1_ex4_psi_file <- file.path(analysis_dir, "CLK1-splicing_correlations", "results", "clk1-exon4-psi.tsv")
+clk1_ex4_psi_normal_stats <- file.path(analysis_dir, "CLK1-splicing_correlations", "results", "clk1-exon4-psi-normals-stats.tsv")
 
 deseq2_morph_file <- file.path(root_dir,"analyses/CLK1-splicing-impact-morpholino","results","ctrl_vs_treated.de.tsv")
 rmats_tsv_file <- file.path(data_dir,"ctrl-vs-morpholino-merged-rmats.tsv")
@@ -248,11 +249,15 @@ kinase_events_df <- vroom(kinase_func_sites_file)
 ## sheet 4 exon 4 PSI
 clk1_ex4_psi_df <- vroom(clk1_ex4_psi_file)
 
+## sheet 5 exon 4 normal comparisons
+clk1_ex4_normal_stats_df <- vroom(clk1_ex4_psi_normal_stats)
+
 # Combine and output
 list_s5_table <- list(A_ds_skipping = skipping_events_df,
                       B_ds_inclusion = inclusion_events_df,
                       C_prioritized_sf_kinases = kinase_events_df,
-                      D_clk1_ex4_psi = clk1_ex4_psi_df)
+                      D_clk1_ex4_psi = clk1_ex4_psi_df,
+                      E_clk1_ex4_normal_stats = clk1_ex4_normal_stats_df)
 
 write.xlsx(list_s5_table,
            table_s5_file,
