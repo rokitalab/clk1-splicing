@@ -248,18 +248,17 @@ color_pal <- c(
 
 # Get stats across cohorts
 stat.tests.cohort <- transcript_expr_CLK1_combined_df %>%
-  rename(clk1_ex4_proportion = proportion) %>%
-  wilcox_test(clk1_ex4_proportion ~ group, p.adjust.method = "BH")
+  wilcox_test(proportion ~ group, p.adjust.method = "BH")
 
 # Get stats for age bins across cohorts
 stat.tests.all <- transcript_expr_CLK1_combined_df %>%
-  rename(clk1_ex4_proportion = proportion) %>%
   mutate(full_group = paste0(group, ": ", plot_group)) %>%
-  wilcox_test(clk1_ex4_proportion ~ full_group, p.adjust.method = "BH") %>%
+  wilcox_test(proportion ~ full_group, p.adjust.method = "BH") %>%
   write_tsv(file = file.path(results_dir, "clk1-exon4-psi-normals-stats.tsv"))
 
 # Save both
 bind_rows(stat.tests.cohort, stat.tests.all) %>%
+  select(-`.y.`) %>%
   write_tsv(file = file.path(results_dir, "clk1-exon4-psi-normals-stats.tsv"))
 
 
