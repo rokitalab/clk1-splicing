@@ -9,6 +9,7 @@
 ## libraries used 
 suppressPackageStartupMessages({
   library("tidyverse")
+  library("rstatix")
 })
 
 # Get `magrittr` pipe
@@ -51,25 +52,6 @@ qpcr_dct_rep <- qpcr_fc_df %>%
   )
 
 # -------------------------------
-# T test: 10uM vs 1uM per primer
-# -------------------------------
-sign_test_df <- qpcr_dct_rep %>%
-  filter(Treatment %in% c("1uM","10uM")) %>%
-  group_by(Primers) %>%
-  summarise(
-    p_val = t.test(dCT ~ Treatment)$p.value,
-    .groups = "drop"
-  ) %>%
-  mutate(
-    p_label = case_when(
-      p_val < 0.001 ~ "***",
-      p_val < 0.01  ~ "**",
-      p_val < 0.05  ~ "*",
-      TRUE          ~ "ns"
-    )
-  )
-
-# -------------------------------
 # Compute FC
 # -------------------------------
 fc <- qpcr_dct_rep %>%
@@ -79,11 +61,11 @@ fc <- qpcr_dct_rep %>%
             .groups = "drop") %>%
   group_by(Primers) %>%
   mutate(
-    dCT_ref = mean_dCT[Treatment == "Control"][1],
-    se_ref    = se_dCT[Treatment == "Control"][1],
+    dCT_ref     = mean_dCT[Treatment == "Control"][1],
+    se_ref      = se_dCT[Treatment == "Control"][1],
     
-    ddCT = mean_dCT - dCT_ref,
-    se_ddCT   = sqrt(se_dCT^2 + se_ref^2),
+    ddCT        = mean_dCT - dCT_ref,
+    se_ddCT     = sqrt(se_dCT^2 + se_ref^2),
     
     fold_change = 2^(-ddCT),
     SE_FC       = fold_change * log(2) * se_ddCT
@@ -91,6 +73,29 @@ fc <- qpcr_dct_rep %>%
   ungroup()
 
 fc$Treatment <- factor(fc$Treatment, levels = c("Control","1uM","5uM","10uM"))
+
+# -------------------------------
+# T test
+# -------------------------------
+pvals_vs_ctrl <- qpcr_dct_rep %>%
+  group_by(Primers) %>%
+  t_test(dCT ~ Treatment, ref.group = "Control") %>%
+  adjust_pvalue(method = "BH") %>%
+  dplyr::rename(Treatment = group2)
+
+sign_test_df <- fc %>%
+  left_join(
+    pvals_vs_ctrl %>% select(Primers, Treatment, p.adj.signif),
+    by = c("Primers", "Treatment")
+  ) %>%
+  group_by(Primers, Treatment) %>%
+  mutate(
+    p_label = if_else(Treatment == "Control", " ", p.adj.signif),
+    y_pos = fold_change + SE_FC + 0.08
+  ) %>%
+  ungroup()
+
+sign_test_df$Treatment <- factor(sign_test_df$Treatment, levels = c("Control","1uM","5uM","10uM"))
 
 
 # -------------------------------
@@ -100,15 +105,20 @@ qpcr_plot <- ggplot(fc, aes(x = Primers, y = fold_change, fill = Treatment)) +
   geom_bar(position = position_dodge(width = 0.9), stat = "identity", color = "black") +
   geom_errorbar(aes(ymin = fold_change - SE_FC, ymax = fold_change + SE_FC),
                 position = position_dodge(width = 0.9), width = 0.25) +
-  geom_text(data = sign_test_df,
-            aes(x = Primers, y = max(fc$fold_change) + 0.15, label = p_label),
-            inherit.aes = FALSE, vjust = 0, fontface = "bold") +
+  geom_text(
+    data = sign_test_df,
+    aes(x = Primers, y = y_pos, label = p_label, group = Treatment),
+    position = position_dodge(width = 0.9),
+    vjust = 0,
+    fontface = "bold",
+    size = 4,
+    inherit.aes = FALSE
+  ) +
   ylab("Fold Change") + 
   xlab(expression(bold(bolditalic("CLK1")~"exon-exon junction"))) +
   theme_Publication() +
   scale_fill_manual(values = c("lightgrey", "lightblue", "#0C7BDC", "blue3")) +
-  guides(fill = guide_legend(title = "Morpholino\nTreatment")) +
-  ylim(c(0, max(fc$fold_change) + 0.3))
+  guides(fill = guide_legend(title = "Morpholino\nTreatment"))
 
 # Save plot
 pdf(file_plot, width = 6.5, height = 4)
