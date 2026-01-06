@@ -154,6 +154,11 @@ calculate_clk1_correlations <- function(lineage_name) {
   
   cat("Calculated", nrow(cor_results), "correlations\n")
   
+  cor_results <- cor_results %>%
+    mutate(
+      p_adj = p.adjust(p_value, method = "BH")
+    )
+  
   return(cor_results)
 }
 
@@ -173,7 +178,8 @@ filter_and_annotate <- function(cor_results, threshold = 0.3, p_threshold = 0.05
   cor_results %>%
     filter(
       abs(corr_with_CLK1) > threshold,
-      p_value < p_threshold  # Use unadjusted p-value
+      p_value < p_threshold,  # Use adjusted p-value
+      transcript != "Expression Public 23Q2"
     ) %>%
     mutate(
       direction = case_when(
@@ -203,7 +209,7 @@ cor_cns_with_gene <- cor_cns_filtered %>%
 # Venn Diagram Visualization
 # =============================================================================
 
-venn_diag <- ggVennDiagram(x = list(unique(cor_myeloid_with_gene$gene), unique(cor_cns_with_gene$gene)),
+venn_diag <- ggVennDiagram(x = list(unique(cor_myeloid_with_gene$transcript), unique(cor_cns_with_gene$transcript)),
                            edge_lty = "dashed",
                            edge_size = 1,
                            label_size = 6,
@@ -213,10 +219,10 @@ venn_diag <- ggVennDiagram(x = list(unique(cor_myeloid_with_gene$gene), unique(c
   scale_fill_gradient(
     low = "#ffffff",
     high = "steelblue1",
-    name = expression(bold("Gene count")),
+    name = expression(bold("Transcript count")),
     limits = c(0, NA)
   ) +
-  labs(title = expression(bold("Correlations with CLK1 (|r| > 0.4)"))) +
+  labs(title = expression(bold("Correlations with CLK1 (|R| > 0.3)"))) +
   # keep normal left/right orientation; also prevent clipping of labels
   coord_flip(clip = "off") +
   theme(
@@ -238,7 +244,7 @@ venn_diag$layers <- lapply(venn_diag$layers, function(l) {
 })
   
 ggplot2::ggsave(
-  file.path(plots_dir, "CLK1_correlation_venn.pdf"),
+  file.path(plots_dir, "CLK1_correlation_venn_transcript.pdf"),
   plot = venn_diag,
   width = 6.5,
   height = 3.5,
@@ -262,13 +268,13 @@ gene_table <- tibble(transcript = all_transcripts) %>%
   left_join(
     cor_myeloid_filtered %>% 
       dplyr::select(transcript, myeloid_corr = corr_with_CLK1, myeloid_dir = direction,
-             myeloid_pval = p_value, myeloid_n = n_samples),
+                    myeloid_pvalue = p_value, myeloid_padj = p_adj, myeloid_n = n_samples),
     by = "transcript"
   ) %>%
   left_join(
     cor_cns_filtered %>% 
       dplyr::select(transcript, cns_corr = corr_with_CLK1, cns_dir = direction,
-             cns_pval = p_value, cns_n = n_samples),
+                    cns_pvalue = p_value, cns_padj = p_adj, cns_n = n_samples),
     by = "transcript"
   ) %>%
   mutate(
@@ -301,11 +307,13 @@ gene_table <- tibble(transcript = all_transcripts) %>%
     overall_direction,
     myeloid_direction,
     myeloid_corr,
-    myeloid_pval,
+    myeloid_pvalue,
+    myeloid_padj,
     myeloid_n,
     cns_direction,
     cns_corr,
-    cns_pval,
+    cns_pvalue,
+    cns_padj,
     cns_n
   ) %>%
   arrange(cell_lines, gene)
@@ -336,11 +344,12 @@ background_genes <- unique(gene_table$gene)
 background_ids <- get_entrez_ids(background_genes)
 
 # Subset genes
-genes_both         <- gene_table %>% filter(cell_lines == "Both") %>% distinct(gene) %>% pull(gene)
-genes_cns_only     <- gene_table %>% filter(cell_lines == "CNS/Brain")  %>% distinct(gene) %>% pull(gene)
-genes_myeloid_only <- gene_table %>% filter(cell_lines == "Myeloid") %>% distinct(gene) %>% pull(gene)
-genes_cns          <- gene_table %>% filter(cell_lines %in% c("CNS/Brain", "Both"))  %>% distinct(gene) %>% pull(gene)
-genes_myeloid      <- gene_table %>% filter(cell_lines %in% c("Myeloid", "Both")) %>% distinct(gene) %>% pull(gene)
+genes_cns          <- gene_table %>% filter(!is.na(cns_corr)) %>% distinct(gene) %>% pull(gene)
+genes_myeloid      <- gene_table %>% filter(!is.na(myeloid_corr)) %>% distinct(gene) %>% pull(gene)
+genes_all          <- c(genes_cns, genes_myeloid)
+genes_both         <- genes_all[duplicated(genes_all)]
+genes_cns_only     <- genes_cns[!(genes_cns %in% genes_myeloid)]
+genes_myeloid_only <- genes_myeloid[!(genes_myeloid %in% genes_cns)]
 
 run_go_enrichment <- function(gene_list, universe_ids, ont="BP") {
   enrichGO(
