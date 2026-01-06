@@ -1,9 +1,9 @@
 ################################################################################
-# 03-plot-qPCR-res.R
+# 03-plot-qPCR-results.R
 # script that generates barplot of fold change for qRT-PCR
 # written by Ammar Naqvi, Jo Lynne Rokita
 #
-# usage: Rscript 03-plot-qPCR-res.R
+# usage: Rscript 03-plot-qPCR-results.R
 ################################################################################
 
 ## libraries used 
@@ -33,36 +33,16 @@ qpcr_fc_df <- read_csv(qpcr_res_file)
 # -------------------------------
 # Compute per-replicate FC
 # -------------------------------
-
-# Get HPRT per replicate for dCT
-library(dplyr)
-library(tidyr)
-library(ggplot2)
-
-# -------------------------------
-# Compute per-replicate FC
-# -------------------------------
 hprt_ct <- qpcr_fc_df %>%
-  filter(Primers == "HPRT") %>%
-  select(Treatment, CT)
+  dplyr::filter(Primers == "HPRT") %>%
+  group_by(Treatment) %>%
+  summarise(mean_hprt = mean(CT), .groups = "drop")
 
 qpcr_dct_rep <- qpcr_fc_df %>%
-  filter(Primers != "HPRT") %>%
-  left_join(hprt_ct, by = "Treatment", suffix = c("", "_HPRT")) %>%
-  mutate(dCT = CT - CT_HPRT)
-
-control_dct <- qpcr_dct_rep %>%
-  filter(Treatment == "Control") %>%
-  select(Primers, dCT) %>%
-  rename(control_dCT = dCT)
-
-qpcr_ddct_rep <- qpcr_dct_rep %>%
-  left_join(control_dct, by = "Primers") %>%
-  mutate(
-    ddCT = dCT - control_dCT,
-    FC = 2^-ddCT
-  ) %>%
-  mutate(
+  dplyr::filter(Primers != "HPRT") %>%
+  left_join(hprt_ct, by = "Treatment") %>%
+  dplyr::mutate(dCT = CT - mean_hprt) %>%
+  dplyr::mutate(
     Primers = case_when(
       Primers == "Exons 3-5 set 1" ~ "Exons 3-5 (A)",
       Primers == "Exons 3-5 set 2" ~ "Exons 3-5 (B)",
@@ -70,27 +50,14 @@ qpcr_ddct_rep <- qpcr_dct_rep %>%
     )
   )
 
-qpcr_ddct_rep$Treatment <- factor(qpcr_ddct_rep$Treatment, levels = c("Control","1uM","5uM","10uM"))
-
 # -------------------------------
-# Summary for plotting (mean + SE)
+# T test: 10uM vs 1uM per primer
 # -------------------------------
-qpcr_summary <- qpcr_ddct_rep %>%
-  group_by(Primers, Treatment) %>%
-  summarise(
-    FC_mean = mean(FC),
-    SE_FC   = sd(FC)/sqrt(n()),
-    .groups = "drop"
-  )
-
-# -------------------------------
-# Paired Wilcoxon test: 10uM vs 1uM per primer
-# -------------------------------
-sign_test_df <- qpcr_ddct_rep %>%
+sign_test_df <- qpcr_dct_rep %>%
   filter(Treatment %in% c("1uM","10uM")) %>%
   group_by(Primers) %>%
   summarise(
-    p_val = wilcox.test(FC[Treatment=="10uM"], FC[Treatment=="1uM"], paired = TRUE)$p.value,
+    p_val = t.test(dCT ~ Treatment)$p.value,
     .groups = "drop"
   ) %>%
   mutate(
@@ -102,23 +69,46 @@ sign_test_df <- qpcr_ddct_rep %>%
     )
   )
 
+# -------------------------------
+# Compute FC
+# -------------------------------
+fc <- qpcr_dct_rep %>%
+  group_by(Primers, Treatment) %>%
+  summarise(mean_dCT = mean(dCT, na.rm = TRUE),
+            se_dCT   = sd(dCT, na.rm = TRUE) / sqrt(n()),
+            .groups = "drop") %>%
+  group_by(Primers) %>%
+  mutate(
+    dCT_ref = mean_dCT[Treatment == "Control"][1],
+    se_ref    = se_dCT[Treatment == "Control"][1],
+    
+    ddCT = mean_dCT - dCT_ref,
+    se_ddCT   = sqrt(se_dCT^2 + se_ref^2),
+    
+    fold_change = 2^(-ddCT),
+    SE_FC       = fold_change * log(2) * se_ddCT
+  ) %>%
+  ungroup()
+
+fc$Treatment <- factor(fc$Treatment, levels = c("Control","1uM","5uM","10uM"))
+
 
 # -------------------------------
 # Plot
 # -------------------------------
-qpcr_plot <- ggplot(qpcr_summary, aes(x = Primers, y = FC_mean, fill = Treatment)) + 
+qpcr_plot <- ggplot(fc, aes(x = Primers, y = fold_change, fill = Treatment)) + 
   geom_bar(position = position_dodge(width = 0.9), stat = "identity", color = "black") +
-  geom_errorbar(aes(ymin = FC_mean - SE_FC, ymax = FC_mean + SE_FC),
+  geom_errorbar(aes(ymin = fold_change - SE_FC, ymax = fold_change + SE_FC),
                 position = position_dodge(width = 0.9), width = 0.25) +
   geom_text(data = sign_test_df,
-            aes(x = Primers, y = max(qpcr_summary$FC_mean) + 0.15, label = p_label),
+            aes(x = Primers, y = max(fc$fold_change) + 0.15, label = p_label),
             inherit.aes = FALSE, vjust = 0, fontface = "bold") +
   ylab("Fold Change") + 
   xlab(expression(bold(bolditalic("CLK1")~"exon-exon junction"))) +
   theme_Publication() +
   scale_fill_manual(values = c("lightgrey", "lightblue", "#0C7BDC", "blue3")) +
   guides(fill = guide_legend(title = "Morpholino\nTreatment")) +
-  ylim(c(0, max(qpcr_summary$FC_mean) + 0.3))
+  ylim(c(0, max(fc$fold_change) + 0.3))
 
 # Save plot
 pdf(file_plot, width = 6.5, height = 4)
