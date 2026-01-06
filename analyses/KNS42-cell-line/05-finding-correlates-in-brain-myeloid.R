@@ -2,13 +2,13 @@
 # 05-finding-correlates-in-brain-myeloid.R
 #
 # Identify and compare CLK1-correlated transcripts across cell line types
-# - Calculate transcript-level correlations with CLK1 expression (|r| > 0.4)
+# - Calculate transcript-level correlations with CLK1 expression (|R| > 0.3)
 # - Include p-value testing with multiple testing correction
 # - Separate positive and negative correlations by cell lineage
 # - Generate Venn diagrams showing overlap between CNS/Brain and Myeloid lines
 # - Export comprehensive tables of correlated genes and transcripts
 #
-# Author: Ammar S Naqvi
+# Author: Ammar S Naqvi, Patricia Sullivan
 ################################################################################
 
 # Load libraries --------------------------------------------------------------
@@ -244,7 +244,7 @@ venn_diag$layers <- lapply(venn_diag$layers, function(l) {
 })
   
 ggplot2::ggsave(
-  file.path(plots_dir, "CLK1_correlation_venn_transcript.pdf"),
+  file.path(plots_dir, "CLK1_correlation_venn.pdf"),
   plot = venn_diag,
   width = 6.5,
   height = 3.5,
