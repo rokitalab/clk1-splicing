@@ -236,7 +236,7 @@ foreach my $sample(@bs_ids_uniq)
       
       # dPSI filter
       my $dpsi = $psi_tumor-$mean_psi;
-      next unless $dpsi > 0.1;
+      next unless $dpsi > 0.2;
       
       print EVENTS $splice_event,"\t".$splice_case,"\t",$sample,"\t",$bs_id_cluster{$sample},"\t",$cns_regions{$sample},"\tInclusion\t",$dpsi,"\n";
       print BEDPOS $chr{$splice_event},"\t";
@@ -256,7 +256,7 @@ foreach my $sample(@bs_ids_uniq)
       
       # dPSI filter
       my $dpsi = $mean_psi-$psi_tumor;
-      next unless $dpsi > 0.1;
+      next unless $dpsi > 0.2;
       
       print EVENTS $splice_event,"\t".$splice_case,"\t",$sample,"\t",$bs_id_cluster{$sample},"\t",$cns_regions{$sample},"\tSkipping\t",$dpsi,"\n";
       print BEDNEG $chr{$splice_event},"\t";
