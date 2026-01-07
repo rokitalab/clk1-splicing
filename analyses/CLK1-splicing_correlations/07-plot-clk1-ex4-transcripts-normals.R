@@ -56,265 +56,281 @@ plots_dir   <- file.path(analysis_dir, "plots")
 # Source function for plots theme
 source(file.path(root_dir, "figures/theme_for_plots.R"))
 
-## to get under 40 samples
-gtex_rmats <- vroom(gtex_rmats_file) %>%
-  # Select CLK1 gene
-  filter(geneSymbol=="CLK1") %>%
-  # Select exon 4
-  filter(exonStart_0base=="200860124", exonEnd=="200860215") %>%
-  # Select "sample", "geneSymbol", and "IncLevel1" columns
-  select(sample_id, geneSymbol, IncLevel1) %>%
-  dplyr::rename(gene_symbol=geneSymbol)
+get_normals_psi <- function(gene, exon_no, transcript_list) {
 
-all_bs_id <- read_tsv(cluster_file) %>%
-	pull(sample_id)
-
-indep_df <- read_tsv(indep_file)
-hist_indep_rna_df  <-  read_tsv(clin_file) %>%
-  filter(cohort == "PBTA",
-	 Kids_First_Biospecimen_ID %in% all_bs_id)
-
-gtex_brain <- read_tsv(gtex_hist_file)  %>% 
-  dplyr::filter(gtex_group == "Brain")
-
-
-all_clk4_transcr_counts <- readRDS(expr_tpm_tumor_file) %>%
-  filter(grepl("^CLK1", gene_symbol)) %>%
-  mutate(
-    transcript_id = case_when(
-      transcript_id %in% c("ENST00000321356.9", "ENST00000434813.3", "ENST00000409403.6") ~ "Exon 4",  # Rename specified transcripts
-      TRUE ~ "Other"  # All other transcripts are renamed to "Other"
+  all_bs_id <- read_tsv(cluster_file) %>%
+  	pull(sample_id)
+  
+  indep_df <- read_tsv(indep_file)
+  hist_indep_rna_df  <-  read_tsv(hist_file) %>%
+    filter(cohort == "PBTA",
+  	       Kids_First_Biospecimen_ID %in% indep_df$Kids_First_Biospecimen_ID)
+  
+  gtex_brain <- read_tsv(gtex_hist_file)  %>% 
+    dplyr::filter(gtex_group == "Brain")
+  
+  
+  pbta_transcr_counts <- readRDS(expr_tpm_tumor_file) %>%
+    filter(sub("-[^-]+$", "", gene_symbol) == gene) %>%
+    mutate(
+      transcript_id = case_when(
+        transcript_id %in% transcript_list ~ "Target",  # Rename specified transcripts
+        TRUE ~ "Other"  # All other transcripts are renamed to "Other"
+      )
+    ) %>%
+    group_by(transcript_id) %>%
+    summarise(across(starts_with("BS"), sum, na.rm = TRUE)) %>%
+    pivot_longer(
+      cols = -transcript_id,
+      names_to = "Kids_First_Biospecimen_ID",
+      values_to = "TPM"
     )
-  ) %>%
-  group_by(transcript_id) %>%
-  summarise(across(starts_with("BS"), sum, na.rm = TRUE)) %>%
-  pivot_longer(
-    cols = -transcript_id,
-    names_to = "Kids_First_Biospecimen_ID",
-    values_to = "TPM"
-  ) %>%
-  inner_join(hist_indep_rna_df, by="Kids_First_Biospecimen_ID") %>%
-  mutate(
-    age_years = age_at_diagnosis_days / 365,
-    group = "PBTA",
-    plot_group = cut(
-      age_years,
-      breaks = c(0, 14, 18, 39),
-      labels = c("0-14", "15-18", "19-39"),
-      right = TRUE
-    ),
-  ) %>%
-  select(Kids_First_Biospecimen_ID, group, plot_group, transcript_id, TPM) %>%
-  na.omit()
-
-
-gtex_clk1_transc_counts <- readRDS(gtex_trans_file) %>%
-  filter(grepl("^CLK1", gene_symbol)) %>%
-  mutate(
-    transcript_id = case_when(
-      transcript_id %in% c("ENST00000321356.9", "ENST00000434813.3", "ENST00000409403.6") ~ "Exon 4",  # Rename specified transcripts
-      TRUE ~ "Other"  # All other transcripts are renamed to "Other"
-    )
-  ) %>%
-  group_by(transcript_id) %>%
-  summarise(across(starts_with("GTEX"), sum, na.rm = TRUE)) %>%
-  pivot_longer(
-    cols = -transcript_id,
-    names_to = "Kids_First_Biospecimen_ID",
-    values_to = "TPM"
-  ) %>%
-  inner_join(gtex_brain, by="Kids_First_Biospecimen_ID") %>%
-  dplyr::mutate(group="GTEx",
-                plot_group=AGE) %>%
-  dplyr::select(transcript_id,Kids_First_Biospecimen_ID, TPM, group, plot_group)
-
+  
+  pbta_stranded_transcr_counts <- pbta_transcr_counts %>%
+    inner_join(hist_indep_rna_df, by="Kids_First_Biospecimen_ID") %>%
+    filter(RNA_library == "stranded") %>%
+    mutate(
+      age_years = age_at_diagnosis_days / 365,
+      group = "PBTA stranded",
+      plot_group = cut(
+        age_years,
+        breaks = c(0, 14, 18, 39),
+        labels = c("0-14", "15-18", "19-39"),
+        right = TRUE
+      ),
+    ) %>%
+    select(Kids_First_Biospecimen_ID, group, plot_group, transcript_id, TPM) %>%
+    na.omit()
+  
+  pbta_polyA_transcr_counts <- pbta_transcr_counts %>%
+    inner_join(hist_indep_rna_df, by="Kids_First_Biospecimen_ID") %>%
+    filter(RNA_library %in% c("poly-A stranded", "poly-A")) %>%
+    mutate(
+      age_years = age_at_diagnosis_days / 365,
+      group = "PBTA polyA",
+      plot_group = cut(
+        age_years,
+        breaks = c(0, 14, 18, 39),
+        labels = c("0-14", "15-18", "19-39"),
+        right = TRUE
+      ),
+    ) %>%
+    select(Kids_First_Biospecimen_ID, group, plot_group, transcript_id, TPM) %>%
+    na.omit()
   
   
-evo_devo_tpm <- readRDS(expr_evodevo_file) %>%
-  filter(grepl("^CLK1", gene_symbol)) %>%  # Filter for CLK1 genes
-  mutate(
-    transcript_id = case_when(
-      transcript_id %in% c("ENST00000321356.9", "ENST00000434813.3", "ENST00000409403.6") ~ "Exon 4",  # Rename specified transcripts
-      TRUE ~ "Other" ) ) %>% # All other transcripts are renamed to "Other"  
-  group_by(transcript_id) %>%
-  summarise(across(starts_with("SAMEA"), sum, na.rm = TRUE)) %>%
-  rownames_to_column("Kids_First_Biospecimen_ID") %>%
-  filter(Kids_First_Biospecimen_ID != "transcript_id") %>%  # Remove the "transcript_id" row
-  pivot_longer(cols = starts_with("SAMEA"),  # Assuming your sample columns start with "SAMEA"
-               names_to = "Sample_ID",
-               values_to = "TPM") %>%
-  select(transcript_id, Sample_ID, transcript_id, TPM) %>%
-  dplyr::rename(Kids_First_Biospecimen_ID=Sample_ID) # Select necessary columns
-
-### Postnatally we sampled neonates, “infants” (6-9 months), “toddlers” (2-4 years), “school” (7-9 years), “teenagers” (13-19 years), and then adults from each decade until 63 years of age (Supplementary Tables 1–2).... ‘ya’ young adult (25-32 years) and ‘sen’ senior (58-63 years)....“yma” young middle age (39-41 years)
-### https://pmc.ncbi.nlm.nih.gov/articles/PMC6658352/#S7
-
-evodevo_histology_df <- vroom(evodevo_hist_file) 
-evodevo_clk1_transc_counts <- inner_join(evodevo_histology_df,evo_devo_tpm, by="Kids_First_Biospecimen_ID") %>%
-  dplyr::filter(primary_site=='Hindbrain') %>%
-  dplyr::mutate(group="Evo-Devo",
-                plot_group = case_when(
-                pathology_free_text_diagnosis %in% c(
-                "4 Week Post Conception", "5 Week Post Conception", "6 Week Post Conception",
-                "7 Week Post Conception", "8 Week Post Conception", "9 Week Post Conception",
-                "10 Week Post Conception", "11 Week Post Conception", "12 Week Post Conception",
-                "13 Week Post Conception", "16 Week Post Conception"
-              ) ~ "Fetal",
-              pathology_free_text_diagnosis %in% c("Neonate", "Infant", "Toddler") ~ "0-4",
-              pathology_free_text_diagnosis %in% c("School Age Child", "Adolescent") ~ "7-19",
-              pathology_free_text_diagnosis %in% c("Young Adult") ~ "25-32",
-              pathology_free_text_diagnosis %in% c("Middle Adult", "Elderly") ~ "39-63",
-              TRUE ~ NA)) %>%
-  dplyr::select(Kids_First_Biospecimen_ID,TPM,plot_group,group,transcript_id) 
-
-## pediatric metadata
-#metadata_ped <- vroom(metadata_pedr_file)
-
-# Create a conversion table as a dataframe
-#sra_mapping <- data.frame(
-#  GSM = c("GSM7794191", "GSM7794190", "GSM7794185", "GSM7794180", "GSM7794176", "GSM7794214", "GSM7794155"),
-#  SRR = c("SRR26129063", "SRR26129064", "SRR26129066", "SRR26129078", "SRR26129084", "SRR26129123", "SRR26129178")
-#) %>% inner_join(metadata_ped,by=c("GSM" = "Kids_First_Biospecimen_ID")) %>%
-#  dplyr::select(SRR, aliquot_id) %>%
-#  mutate(
-#    plot_group = case_when(
-#      grepl("CEREB", aliquot_id, ignore.case = TRUE) ~ "Cerebellum",
-#      grepl("PIT", aliquot_id, ignore.case = TRUE) ~ "Pituitary",
-#      grepl("PONS", aliquot_id, ignore.case = TRUE) ~ "Pons",
-#      grepl("frontal", aliquot_id, ignore.case = TRUE) ~ "Frontal_Cortex",
-#      TRUE ~ NA_character_  # Default to NA if no match
-#    )
-#  ) %>%
-#  dplyr::select(-aliquot_id) 
+  gtex_transc_counts <- readRDS(gtex_trans_file) %>%
+    filter(sub("-[^-]+$", "", gene_symbol) == gene) %>%
+    mutate(
+      transcript_id = case_when(
+        transcript_id %in% transcript_list ~ "Target",  # Rename specified transcripts
+        TRUE ~ "Other"  # All other transcripts are renamed to "Other"
+      )
+    ) %>%
+    group_by(transcript_id) %>%
+    summarise(across(starts_with("GTEX"), sum, na.rm = TRUE)) %>%
+    pivot_longer(
+      cols = -transcript_id,
+      names_to = "Kids_First_Biospecimen_ID",
+      values_to = "TPM"
+    ) %>%
+    inner_join(gtex_brain, by="Kids_First_Biospecimen_ID") %>%
+    dplyr::mutate(group="GTEx",
+                  plot_group=AGE) %>%
+    dplyr::select(transcript_id,Kids_First_Biospecimen_ID, TPM, group, plot_group)
   
-# ENST00000434813.3, ENST00000321356.9, ENST00000409403.6, ENST00000434813.3
-#ped_clk1_transcr_counts <- readRDS(ped_trans_file) %>%
-#  filter(grepl("^CLK1", gene_symbol)) %>%
-#  mutate(
-#    transcript_id = case_when(
-#      transcript_id %in% c("ENST00000321356.9","ENST00000434813.3", "ENST00000409403.6") ~ "Exon 4",  # Rename specified transcripts
-#      TRUE ~ "Other"  # All other transcripts are renamed to "Other"
-#    ) ) %>%
-#  group_by(transcript_id) %>%
-#  summarise(across(starts_with("SRR"), sum, na.rm = TRUE)) %>%
-#  #select(-gene_symbol) %>% # Remove 'gene_symbol'
-#  pivot_longer(
-#    cols = -transcript_id,
-#    names_to = "Sample",
-#    values_to = "TPM"
-#  ) %>%
-#  dplyr::mutate(group="Pediatric normals") %>%
-#  dplyr::rename(Kids_First_Biospecimen_ID=Sample) %>%
-#  inner_join(sra_mapping,by=c("Kids_First_Biospecimen_ID" = "SRR"))
-
-#pons_counts <- vroom(pons_trans_file) %>%
-#  filter(grepl("_CLK1", transcript_id)) %>%
-#  mutate(transcript_id = ifelse(
-#    grepl("ENST00000321356.9|ENST00000434813.3|ENST00000409403.6", transcript_id),
-#    "Exon 4",  # Rename specified transcripts
-#    "Other"    # All other transcripts are renamed to "Other"
-#  )) %>%
-#  group_by(transcript_id) %>%
-#  dplyr::select(-gene_id) %>% # Remove 'gene_symbol'
-#  summarise(TPM = sum(TPM, na.rm = TRUE)) %>%
-#  dplyr::mutate(group="Pediatric normals",
-#                plot_group="Pons",
-#                Kids_First_Biospecimen_ID="BA_KFWTGZPC") %>%
-#  dplyr::select(Kids_First_Biospecimen_ID,transcript_id,TPM,group,plot_group)
-
-#ped_clk1_transcr_counts <- rbind(ped_clk1_transcr_counts, pons_counts) %>% 
-#  unique()
-
-transcript_expr_CLK1_combined_df <- rbind(all_clk4_transcr_counts,gtex_clk1_transc_counts,evodevo_clk1_transc_counts) %>% 
-  group_by(Kids_First_Biospecimen_ID) %>%
-  mutate(total_TPM = sum(TPM[transcript_id %in% c("Exon 4", "Other")], na.rm = TRUE)) %>%
-  mutate(proportion = ifelse(transcript_id == "Exon 4", TPM, 0) / total_TPM) %>%
-  ungroup() %>% 
-  filter(transcript_id=='Exon 4')#,
-        # total_TPM > quantile(total_TPM, 0.25))
-
-# Define the desired order for groups
-transcript_expr_CLK1_combined_df$plot_group <- factor(
-  transcript_expr_CLK1_combined_df$plot_group,
- # levels = c("0-14", "15-18", "19-39", "Fetal", "Early Childhood", "School Age", "Adult", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79")
-  levels = c("0-14", "15-18", "19-39", "Fetal", "0-4", "7-19", "25-32", "39-63", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79")
-)
-
-color_pal <- c(
-  "PBTA" = "#FDBF6F",
-  "Evo-Devo" = "mediumseagreen",
-  "GTEx" = "#6ca6da")
-
-
-# Get stats across cohorts
-stat.tests.cohort <- transcript_expr_CLK1_combined_df %>%
-  wilcox_test(proportion ~ group, p.adjust.method = "BH")
-
-# Get stats for age bins across cohorts
-stat.tests.all <- transcript_expr_CLK1_combined_df %>%
-  mutate(full_group = paste0(group, ": ", plot_group)) %>%
-  wilcox_test(proportion ~ full_group, p.adjust.method = "BH") %>%
-  write_tsv(file = file.path(results_dir, "clk1-exon4-psi-normals-stats.tsv"))
-
-# Save both
-bind_rows(stat.tests.cohort, stat.tests.all) %>%
-  select(-`.y.`) %>%
-  write_tsv(file = file.path(results_dir, "clk1-exon4-psi-normals-stats.tsv"))
-
-
-# Get stats within groups for plot
-stat.tests <- transcript_expr_CLK1_combined_df %>%
-  group_by(group) %>%
-  wilcox_test(proportion ~ plot_group, p.adjust.method = "BH") %>%
-  filter(p.adj < 0.05)
-
-# get position by each facet
-stat.tests <- stat.tests %>%
-  group_by(group) %>%
-  mutate(
-    x    = as.numeric(factor(group1, levels = unique(transcript_expr_CLK1_combined_df$plot_group))),
-    xend = as.numeric(factor(group2, levels = unique(transcript_expr_CLK1_combined_df$plot_group))),
-    y_base   = max(transcript_expr_CLK1_combined_df$proportion[transcript_expr_CLK1_combined_df$group == first(group)]),
     
-    # compute y-adjustment for overlapping comparisons within a facet
-    step_h   = y_base * 0.05,
-    comp_id  = row_number(),                           
-    y.position = y_base * 1.05 + (comp_id - 1) * step_h
-  ) %>%
-  ungroup() %>%                                       
-  select(-y_base, -step_h, -comp_id)
+    
+  evo_devo_tpm <- readRDS(expr_evodevo_file) %>%
+    filter(sub("-[^-]+$", "", gene_symbol) == gene) %>%  # Filter for gene
+    mutate(
+      transcript_id = case_when(
+        transcript_id %in% transcript_list ~ "Target",  # Rename specified transcripts
+        TRUE ~ "Other" ) ) %>% # All other transcripts are renamed to "Other"  
+    group_by(transcript_id) %>%
+    summarise(across(starts_with("SAMEA"), sum, na.rm = TRUE)) %>%
+    rownames_to_column("Kids_First_Biospecimen_ID") %>%
+    filter(Kids_First_Biospecimen_ID != "transcript_id") %>%  # Remove the "transcript_id" row
+    pivot_longer(cols = starts_with("SAMEA"),  # Assuming your sample columns start with "SAMEA"
+                 names_to = "Sample_ID",
+                 values_to = "TPM") %>%
+    select(transcript_id, Sample_ID, transcript_id, TPM) %>%
+    dplyr::rename(Kids_First_Biospecimen_ID=Sample_ID) # Select necessary columns
+  
+  ### Postnatally we sampled neonates, “infants” (6-9 months), “toddlers” (2-4 years), “school” (7-9 years), “teenagers” (13-19 years), and then adults from each decade until 63 years of age (Supplementary Tables 1–2).... ‘ya’ young adult (25-32 years) and ‘sen’ senior (58-63 years)....“yma” young middle age (39-41 years)
+  ### https://pmc.ncbi.nlm.nih.gov/articles/PMC6658352/#S7
+  
+  evodevo_histology_df <- vroom(evodevo_hist_file) 
+  evodevo_transc_counts <- inner_join(evodevo_histology_df,evo_devo_tpm, by="Kids_First_Biospecimen_ID") %>%
+    dplyr::filter(primary_site=='Hindbrain') %>%
+    dplyr::mutate(group="Evo-Devo",
+                  plot_group = case_when(
+                    pathology_free_text_diagnosis %in% c(
+                      "4 Week Post Conception", "5 Week Post Conception", "6 Week Post Conception",
+                      "7 Week Post Conception", "8 Week Post Conception", "9 Week Post Conception",
+                      "10 Week Post Conception", "11 Week Post Conception", "12 Week Post Conception",
+                      "13 Week Post Conception", "16 Week Post Conception") ~ "Fetal",
+                pathology_free_text_diagnosis %in% c("Neonate", "Infant", "Toddler") ~ "0-4",
+                pathology_free_text_diagnosis %in% c("School Age Child", "Adolescent") ~ "7-19",
+                pathology_free_text_diagnosis == "Young Adult" ~ "25-32",
+                pathology_free_text_diagnosis %in% c("Middle Adult", "Elderly") ~ "39-63",
+                TRUE ~ NA)) %>%
+    dplyr::select(Kids_First_Biospecimen_ID,TPM,plot_group,group,transcript_id) 
+  
+  ## pediatric metadata
+  #metadata_ped <- vroom(metadata_pedr_file)
+  
+  # Create a conversion table as a dataframe
+  #sra_mapping <- data.frame(
+  #  GSM = c("GSM7794191", "GSM7794190", "GSM7794185", "GSM7794180", "GSM7794176", "GSM7794214", "GSM7794155"),
+  #  SRR = c("SRR26129063", "SRR26129064", "SRR26129066", "SRR26129078", "SRR26129084", "SRR26129123", "SRR26129178")
+  #) %>% inner_join(metadata_ped,by=c("GSM" = "Kids_First_Biospecimen_ID")) %>%
+  #  dplyr::select(SRR, aliquot_id) %>%
+  #  mutate(
+  #    plot_group = case_when(
+  #      grepl("CEREB", aliquot_id, ignore.case = TRUE) ~ "Cerebellum",
+  #      grepl("PIT", aliquot_id, ignore.case = TRUE) ~ "Pituitary",
+  #      grepl("PONS", aliquot_id, ignore.case = TRUE) ~ "Pons",
+  #      grepl("frontal", aliquot_id, ignore.case = TRUE) ~ "Frontal_Cortex",
+  #      TRUE ~ NA_character_  # Default to NA if no match
+  #    )
+  #  ) %>%
+  #  dplyr::select(-aliquot_id) 
+    
+  # ENST00000434813.3, ENST00000321356.9, ENST00000409403.6, ENST00000434813.3
+  #ped_clk1_transcr_counts <- readRDS(ped_trans_file) %>%
+  #  filter(grepl("^CLK1", gene_symbol)) %>%
+  #  mutate(
+  #    transcript_id = case_when(
+  #      transcript_id %in% c("ENST00000321356.9","ENST00000434813.3", "ENST00000409403.6") ~ "Exon 4",  # Rename specified transcripts
+  #      TRUE ~ "Other"  # All other transcripts are renamed to "Other"
+  #    ) ) %>%
+  #  group_by(transcript_id) %>%
+  #  summarise(across(starts_with("SRR"), sum, na.rm = TRUE)) %>%
+  #  #select(-gene_symbol) %>% # Remove 'gene_symbol'
+  #  pivot_longer(
+  #    cols = -transcript_id,
+  #    names_to = "Sample",
+  #    values_to = "TPM"
+  #  ) %>%
+  #  dplyr::mutate(group="Pediatric normals") %>%
+  #  dplyr::rename(Kids_First_Biospecimen_ID=Sample) %>%
+  #  inner_join(sra_mapping,by=c("Kids_First_Biospecimen_ID" = "SRR"))
+  
+  #pons_counts <- vroom(pons_trans_file) %>%
+  #  filter(grepl("_CLK1", transcript_id)) %>%
+  #  mutate(transcript_id = ifelse(
+  #    grepl("ENST00000321356.9|ENST00000434813.3|ENST00000409403.6", transcript_id),
+  #    "Exon 4",  # Rename specified transcripts
+  #    "Other"    # All other transcripts are renamed to "Other"
+  #  )) %>%
+  #  group_by(transcript_id) %>%
+  #  dplyr::select(-gene_id) %>% # Remove 'gene_symbol'
+  #  summarise(TPM = sum(TPM, na.rm = TRUE)) %>%
+  #  dplyr::mutate(group="Pediatric normals",
+  #                plot_group="Pons",
+  #                Kids_First_Biospecimen_ID="BA_KFWTGZPC") %>%
+  #  dplyr::select(Kids_First_Biospecimen_ID,transcript_id,TPM,group,plot_group)
+  
+  #ped_clk1_transcr_counts <- rbind(ped_clk1_transcr_counts, pons_counts) %>% 
+  #  unique()
+  
+  transcript_expr_combined_df <- rbind(pbta_stranded_transcr_counts,pbta_polyA_transcr_counts,gtex_transc_counts,evodevo_transc_counts) %>% 
+    group_by(Kids_First_Biospecimen_ID) %>%
+    mutate(total_TPM = sum(TPM[transcript_id %in% c("Target", "Other")], na.rm = TRUE)) %>%
+    mutate(proportion = ifelse(transcript_id == "Target", TPM, 0) / total_TPM) %>%
+    ungroup() %>% 
+    filter(transcript_id=='Target')#,
+          # total_TPM > quantile(total_TPM, 0.25))
+  
+  # Define the desired order for groups
+  transcript_expr_combined_df$plot_group <- factor(
+    transcript_expr_combined_df$plot_group,
+   # levels = c("0-14", "15-18", "19-39", "Fetal", "Early Childhood", "School Age", "Adult", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79")
+    levels = c("0-14", "15-18", "19-39", "Fetal", "0-4", "7-19", "25-32", "39-63", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79")
+  )
+  
+  color_pal <- c(
+    "PBTA stranded" = "#FDBF6F",
+    "PBTA polyA" = "coral",
+    "Evo-Devo" = "mediumseagreen",
+    "GTEx" = "#6ca6da")
+  
+  
+  # Get stats across cohorts
+  stat.tests.cohort <- transcript_expr_combined_df %>%
+    wilcox_test(proportion ~ group, p.adjust.method = "BH")
+  
+  # Get stats for age bins across cohorts
+  stat.tests.all <- transcript_expr_combined_df %>%
+    mutate(full_group = paste0(group, ": ", plot_group)) %>%
+    wilcox_test(proportion ~ full_group, p.adjust.method = "BH")
+  
+  # Save both
+  bind_rows(stat.tests.cohort, stat.tests.all) %>%
+    select(-`.y.`) %>%
+    write_tsv(file = file.path(results_dir, paste0(gene, "-exon", exon_no, "-psi-normals-stats.tsv")))
+  
+  # Get stats within groups for plot
+  stat.tests <- transcript_expr_combined_df %>%
+    group_by(group) %>%
+    wilcox_test(proportion ~ plot_group, p.adjust.method = "BH") %>%
+    filter(p.adj < 0.05)
+  
+  # get position by each facet
+  stat.tests <- stat.tests %>%
+    group_by(group) %>%
+    mutate(
+      x    = as.numeric(factor(group1, levels = unique(transcript_expr_combined_df$plot_group))),
+      xend = as.numeric(factor(group2, levels = unique(transcript_expr_combined_df$plot_group))),
+      y_base   = max(transcript_expr_combined_df$proportion[transcript_expr_combined_df$group == first(group)]),
+      
+      # compute y-adjustment for overlapping comparisons within a facet
+      step_h   = y_base * 0.05,
+      comp_id  = row_number(),                           
+      y.position = y_base * 1.05 + (comp_id - 1) * step_h
+    ) %>%
+    ungroup() %>%                                       
+    select(-y_base, -step_h, -comp_id)
+  
+  ## make plot for proportion
+  tpm_plot <- ggplot(transcript_expr_combined_df, aes(x = plot_group, y = proportion)) +
+    geom_jitter(
+      aes(color = group),   # Use precomputed colors for jitter points
+      width = 0.2, size = 1.5) +
+    geom_boxplot(
+      aes(group = plot_group),  # Create boxplots for each group
+      width = 0.6,              # Adjust the width of the boxplots
+      color = "black",          # Set the color of the boxplot borders
+      fill = "white",           # Fill color for the boxplots
+      alpha = 0.2,
+      outlier.shape = NA) +
+    labs(
+      x = "Age",
+      y = paste0("Proportion <i>", gene, "</i> exon ", exon_no, "<br>inclusion in transcript")
+     ) +
+    theme_Publication() +
+    theme(
+      legend.position = "none", 
+      axis.text.x = element_text(angle = 45, hjust = 1),
+      plot.title = ggtext::element_markdown(),
+      axis.title.y = ggtext::element_markdown()
+    ) +
+    scale_color_manual(values = color_pal) +
+    facet_wrap(~group, scales = "free_x", nrow = 1) +
+    stat_pvalue_manual(stat.tests,
+                       tip.length   = 0.01) + 
+    scale_y_continuous(
+                         limits = c(0.0, 1.0),
+                         breaks = seq(0.0, 1.0, by = 0.25)  # Adjust the step as needed
+                       )
+  
+  pdf(file.path(plots_dir, paste0(gene, "-exon", exon_no, "-tpm-ctrls-summary.pdf")), height = 3.5, width = 9)
+    print(tpm_plot)
+  dev.off()
+}
 
-## make plot for proportion
-tpm_plot <- ggplot(transcript_expr_CLK1_combined_df, aes(x = plot_group, y = proportion)) +
-  geom_jitter(
-    aes(color = group),   # Use precomputed colors for jitter points
-    width = 0.2, size = 1.5) +
-  geom_boxplot(
-    aes(group = plot_group),  # Create boxplots for each group
-    width = 0.6,              # Adjust the width of the boxplots
-    color = "black",          # Set the color of the boxplot borders
-    fill = "white",           # Fill color for the boxplots
-    alpha = 0.2,
-    outlier.shape = NA) +
-  labs(
-    x = "Age",
-    y = "Proportion <i>CLK1</i> exon 4<br>inclusion in transcript") +
-  theme_Publication() +
-  theme(
-    legend.position = "none", 
-    axis.text.x = element_text(angle = 45, hjust = 1),
-    plot.title = ggtext::element_markdown(),
-    axis.title.y = ggtext::element_markdown()
-  ) +
-  scale_color_manual(values = color_pal) +
-  facet_wrap(~group, scales = "free_x") +
-  stat_pvalue_manual(stat.tests,
-                     tip.length   = 0.01) + 
-  scale_y_continuous(
-                       limits = c(0.0, 1.0),
-                       breaks = seq(0.0, 1.0, by = 0.25)  # Adjust the step as needed
-                     )
+# Gene symbol, exon number, transcripts exon is included in
+get_normals_psi("CLK1", "4", c("ENST00000321356.9", "ENST00000434813.3", "ENST00000409403.6"))
+get_normals_psi("PRKDC", "80", c("ENST00000314191.7", "ENST00000521331.5"))
 
-pdf(file.path(plots_dir,"clk1_ex4-tpm-ctrls-summary.pdf"), height = 3.5, width = 9)
-tpm_plot
-dev.off()
