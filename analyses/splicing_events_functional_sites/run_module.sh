@@ -43,5 +43,8 @@ Rscript --vanilla 05-plot-splice-patterns.R
 # save event counts for figure generation
 find results/ -type f ! -name 'line_count.txt' -exec wc -l {} + > results/line_count.txt
 
+echo "plot candidate exon PSIs against normal cohorts"
+Rscript --vanilla 06-plot-exon-PSI-cohorts.R
+
 ##rm intermediatery files
 rm results/splicing_events*.wo.txt
