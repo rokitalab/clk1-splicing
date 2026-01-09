@@ -61,12 +61,14 @@ create_splice_pattern_plot <- function(psi_tab_file, psi_func_incl_file, psi_fun
     
     unidirectional_skip_events_func_df <- psi_skip_func %>%
       unique() %>%
+      dplyr::filter(!SpliceID %in% mixed_events_func_df$SpliceID) %>%
       mutate(type = "Skipping") %>%
       dplyr::select("SpliceID", type) %>%
       mutate(Impact = 'Functional')
     
     unidirectional_incl_events_func_df <- psi_incl_func %>%
       unique() %>%
+      dplyr::filter(!SpliceID %in% mixed_events_func_df$SpliceID) %>%
       mutate(type = "Inclusion") %>%
       dplyr::select("SpliceID", type) %>%
       mutate(Impact = 'Functional')
@@ -100,7 +102,8 @@ create_splice_pattern_plot <- function(psi_tab_file, psi_func_incl_file, psi_fun
                               unidirectional_incl_events_df,
                               mixed_events_func_df,
                               unidirectional_skip_events_func_df,
-                              unidirectional_incl_events_func_df)
+                              unidirectional_incl_events_func_df) %>%
+      distinct(SpliceID, Impact, type)
 
         plot_pattern <- ggplot(psi_events_total,
                            aes(x = type, fill = Impact)) +
@@ -116,7 +119,7 @@ create_splice_pattern_plot <- function(psi_tab_file, psi_func_incl_file, psi_fun
       geom_text(stat = 'count', aes(label = ..count..), position = position_fill(vjust = 0.5)) +
       theme_Publication()
     # Save plot as PDF
-    pdf(output_file, width = 6, height = 4)
+    pdf(output_file, width = 6, height = 3)
     print(plot_pattern)
     dev.off()
 
