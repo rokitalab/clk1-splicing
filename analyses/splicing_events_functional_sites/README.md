@@ -33,6 +33,7 @@ results/splicing-factor-kinases-functional_sites.tsv # Functional sites in kinas
 * `03-format_for_ggplot.sh` formats and appends file into table for plotting
 * `04-functional-sites-kinases.R` subsets the functional site results down to kinases
 * `05-plot-splice-patterns` generates plots for visualizing splicing event types into `plots` folder
+* `06-plot-exon-PSI-cohorts.R` plots candidate splicing events PSI across cohorts
 
 ## Directory structure
 ```
@@ -43,17 +44,23 @@ results/splicing-factor-kinases-functional_sites.tsv # Functional sites in kinas
 ├── 03-format_for_ggplot.pl
 ├── 04-plot_splicing_across_functional_sites.R
 ├── 05-plot-splice-patterns.R
+├── 06-plot-exon-PSI-cohorts.R
 ├── README.md
 ├── input
 │   ├── UP000005640_9606_disulfid.bed
 │   ├── UP000005640_9606_domain.bed
 │   ├── UP000005640_9606_mod_res.bed
 │   ├── UP000005640_9606_signal.bed
-│   └── gene_lists.tsv
+│   ├── gene_lists.tsv
+│   └── gtex-samples-by-age.tsv
 ├── plots
+│   ├── CLK1-exon4-tpm-ctrls-summary.pdf
+│   ├── PRKDC-exon80-tpm-ctrls-summary.pdf
 │   ├── kinases-ora-plot.pdf
 │   └── splicing_pattern_plot.pdf
 ├── results
+│   ├── CLK1-exon4-psi-normals-stats.tsv
+│   ├── PRKDC-exon80-psi-normals-stats.tsv
 │   ├── kinases-functional_sites.tsv
 │   ├── line_count.txt
 │   ├── splice_events.diff.A3SS.txt
