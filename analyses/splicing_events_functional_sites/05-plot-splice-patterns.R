@@ -119,7 +119,7 @@ create_splice_pattern_plot <- function(psi_tab_file, psi_func_incl_file, psi_fun
       geom_text(stat = 'count', aes(label = ..count..), position = position_fill(vjust = 0.5)) +
       theme_Publication()
     # Save plot as PDF
-    pdf(output_file, width = 6, height = 4)
+    pdf(output_file, width = 6, height = 3)
     print(plot_pattern)
     dev.off()
 
