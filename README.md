@@ -1,6 +1,8 @@
 # Alternative splicing in pediatric central nervous system tumors highlights oncofetal candidate _CLK1_ exon 4
 
-Ammar S. Naqvi, Patricia J. Sullivan, Ryan J. Corbett, Priyanka Seghal, Karina L. Conkrite, Komal S. Rathi, Brian M. Ennis, Katharina E Hayer, Bo Zhang, Miguel A. Brown, Daniel P. Miller, Alex Sickler, Adam A. Kraya, Kaleem L. Coleman, Joseph M. Dybas, Zhuangzhuang Geng, Christopher Blackden, Shehbeel Arif, Antonia Chroni, Aditya Lahiri, Madison L. Hollawell, Phillip B. Storm, Dalia Haydar, Jessica B. Foster, Mateusz Koptyra, Peter J. Madsen, Sharon J. Diskin, Andrei Thomas-Tikhonenko, Adam C. Resnick, Jo Lynne Rokita
+Ammar S. Naqvi^, Patricia J. Sullivan^, Ryan J. Corbett, Priyanka Seghal, Karina L. Conkrite, Komal S. Rathi, Brian M. Ennis, Katharina E Hayer, Bo Zhang, Miguel A. Brown, Daniel P. Miller, Alex Sickler, Adam A. Kraya, Kaleem L. Coleman, Joseph M. Dybas, Zhuangzhuang Geng, Christopher Blackden, Shehbeel Arif, Antonia Chroni, Aditya Lahiri, Madison L. Hollawell, Phillip B. Storm, Dalia Haydar, Jessica B. Foster, Mateusz Koptyra, Peter J. Madsen, Sharon J. Diskin, Andrei Thomas-Tikhonenko, Adam C. Resnick, Jo Lynne Rokita
+
+^Co-first authors
 
 :tada: This work has been published in [NeuroOncology Pediatrics](https://academic.oup.com/neuro-onc-peds/advance-article/doi/10.1093/neuped/wuag009/8497224).
 
